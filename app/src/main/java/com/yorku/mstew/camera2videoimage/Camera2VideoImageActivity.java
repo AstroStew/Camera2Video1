@@ -1367,7 +1367,6 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                                             ColorSpaceBlue1 = TempWhiteBalanceInputEditText7;
                                             ColorSpaceBlue2 = TempWhiteBalanceInputEditText8;
                                             ColorSpaceBlue3 = TempWhiteBalanceInputEditText9;
-                                            
                                             startPreview();
 
 
