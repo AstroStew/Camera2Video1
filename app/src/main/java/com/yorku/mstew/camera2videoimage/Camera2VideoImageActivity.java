@@ -58,6 +58,7 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.telecom.VideoProfile;
 import android.text.Editable;
 import android.text.Layout;
@@ -273,7 +274,10 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
     boolean ForwardMatrixInputBoolean=false;
     boolean SensorColorTransformInputBoolean=false;
     Bitmap WhiteBalanceBallInspector;
+    boolean isItOka=true;
     float BallInspectorx, BallInspectory;
+    float alphafloat=(float)0;
+    SurfaceHolder holder;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -282,15 +286,17 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
     }
 
 
-    public class NewClassExample extends SurfaceView implements Runnable {
-        Thread t = null;
+    /*public class NewClassExample extends SurfaceView implements Runnable,SurfaceHolder.Callback
 
-        SurfaceHolder holder;
+    {
+        Thread t = null;
         boolean isItOka=false;
 
         public NewClassExample(Context context) {
             super(context);
             holder=getHolder();
+            holder.addCallback(this);
+            //SurfaceView i=(SurfaceView) findViewById(R.id.surfaceView);
         }
 
         @Override
@@ -300,7 +306,8 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
                     continue;
                 }
                 Canvas c=holder.lockCanvas();
-                c.drawARGB(100,100,100,100);
+                c.drawARGB(255,0,100,100);
+                c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx,BallInspectory, null);
                 holder.unlockCanvasAndPost(c);
 
 
@@ -308,8 +315,23 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
 
 
         }
-    }
 
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+
+        }
+    }
+*/
 
 
     //firstly we want to make the window sticky. We acheive this by making system flags
@@ -665,22 +687,85 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
         }
     }
 
+    //NewClassExample v;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
+        BallInspectorx=BallInspectory=600;
+        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.isopic1600);
+
+        //v=new NewClassExample(this);
+        //v.setOnTouchListener(this);
         setContentView(R.layout.activity_camera2_video_image);
+         SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
+        final SurfaceHolder holder=k.getHolder();
+        final Surface g=holder.getSurface();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isItOka){
+                if(g.isValid()) {
+                    Canvas c = holder.lockCanvas();
+
+                    c.drawARGB(0, 1, 100, 100);
+                    if(WhiteBalanceBallInspector!=null){
+                    c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx, BallInspectory, null);}
+                    holder.unlockCanvasAndPost(c);
+                }
+
+            }}
+        }).start();
+
+
+
+
+
+
+        /*
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(isItOka==true){
+                    if (!holder.getSurface().isValid()){
+                        continue;
+                    }
+                    Canvas c=holder.lockCanvas();
+                    c.drawARGB(255,0,100,100);
+                    c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx,BallInspectory, null);
+                    holder.unlockCanvasAndPost(c);
+
+
+                }
+
+            }
+        }).start();*/
+
+
+        Log.i(TAG, "Hello");
+
+
+
+
+
+
+
+
+
 
 
         //setContentView(R.layout.bottom_navigation_bar);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         mMediaRecorder = new MediaRecorder();
         //mIsAuto2=false;
         //this is new
@@ -692,14 +777,23 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
         mFlashButtonOnOff = (ImageButton) findViewById(R.id.FlashButton);
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
         mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
-        NewClassExample v;
-        v=new NewClassExample(this);
-        v.setOnTouchListener(this);
 
 
-        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
+
+
+        //final SurfaceView j=(SurfaceView)findViewById(R.id.surfaceView);
+        //j.setVisibility(View.INVISIBLE);
+        //j.setAlpha(alphafloat);
+
+
+
+
+
+       // j.setBackgroundColor();
+
+
         //WhiteBalanceBallInspector.setConfig(Bitmap.Config.ARGB_8888);
-        BallInspectorx=BallInspectory=0;
+
 
 
         final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
@@ -908,30 +1002,6 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
 
         mFocusTextView = (TextView)findViewById(R.id.infoTextView);
         //we have to create a new thread in order to get real time info from ISO SS adn Aperature
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!Thread.interrupted()){
-                    /*if(!holder.getSurface().isValid()){
-                        continue;
-                    }
-                    Canvas c=holder.lockCanvas();
-                    c.drawARGB(100,150,150,150);
-                    holder.unlockCanvasAndPost(c); */
-
-
-
-                }
-
-            }
-        })).start();
-
-
-
-
-
-
-
 
         (new Thread(new Runnable() {
             @Override
