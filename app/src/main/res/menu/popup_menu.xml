@@ -5,6 +5,8 @@
     android:id="@+id/getCameraInfo"
     android:title="Camera Info">
 
+</item>
+
 
 
 
@@ -79,6 +81,12 @@
             android:id="@+id/ColorSpaceInput"
             android:title="Color Space">
         </item>
+        <item
+            android:id="@+id/ForwardMatrixInput"
+            android:title="Forward Matrix"/>
+        <item
+            android:id="@+id/SensorColorTransform"
+            android:title="Sensor Color Transform"/>
 
         <item
             android:id="@+id/CustomWhiteBalance"
@@ -207,7 +215,7 @@
 
 
     </item>
-</item>
+
     <item
         android:id="@+id/ChangeWhiteBalance"
         android:title="White Balance">

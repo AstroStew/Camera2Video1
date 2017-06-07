@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/cameraInfoTextView2"
         android:layout_width="287dp"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         android:layout_gravity="center"
         android:layout_weight="0.10"
         android:text="Supported Scene Modes"
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/cameraInfoTextView3"
         android:layout_width="287dp"
-        android:layout_height="wrap_content"
+        android:layout_height="15dp"
         android:layout_gravity="center"
         android:layout_weight="0.10"
         android:maxLines="20"
@@ -44,5 +44,17 @@
         android:maxLines="20"
         android:scrollbars="vertical"
         android:text="Supported Face Detections" />
+
+    <TextView
+        android:layout_width="287dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/MoreInfo"
+        android:scrollbars="vertical"
+        android:text="MoreInfo"
+        android:maxLines="20"
+
+
+
+        />
 
 </LinearLayout>

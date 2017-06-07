@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -173,6 +174,7 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
     private TextView mCameraInfoTextView2;
     private TextView mCameraInfoTextView3;
     private TextView mCameraInfoTextView4;
+    private TextView mCameraInfoTextView5;
     private SeekBar mISOseekbar;
     private int ISOprogressValue;
     private int ISOseekProgress;
@@ -210,6 +212,7 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
     private int AutoLocks=0;
     private int mCameraEffect=0;
     private long mCurrentSSvalue=500000000;
+    private ColorSpaceTransform mCurrentSensorColorTranform;
     private int mCurrentAutoFocus;
     private Integer afStateRealTime;
     private int mNumberofFaces;
@@ -260,6 +263,8 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
     EditText mColorSpaceText8;
     EditText mColorSpaceText9;
     boolean ColorSpaceInputBoolean=false;
+    boolean ForwardMatrixInputBoolean=false;
+    boolean SensorColorTransformInputBoolean=false;
 
 
 
@@ -1303,6 +1308,30 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
 
 
                                 break;
+                            case R.id.ForwardMatrixInput:
+                                if(ForwardMatrixInputBoolean){
+                                    ForwardMatrixInputBoolean=false;
+                                    Toast.makeText(getApplicationContext(), "Forward Matrix Turned Off", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    ForwardMatrixInputBoolean=true;
+                                    Toast.makeText(getApplicationContext(), "Forward Matrix Turned On", Toast.LENGTH_SHORT).show();
+                                }
+                                startPreview();
+                                break;
+                            case R.id.SensorColorTransform:
+                                if(SensorColorTransformInputBoolean){
+                                    SensorColorTransformInputBoolean=false;
+                                    Toast.makeText(getApplicationContext(), "Sensor Color Transform off", Toast.LENGTH_SHORT).show();
+
+                                }else{
+                                    SensorColorTransformInputBoolean=true;
+                                    Toast.makeText(getApplicationContext(), "Sensor Color Transform ON", Toast.LENGTH_SHORT).show();
+                                }
+                                startPreview();
+
+
+
+                                break;
                             case R.id.ColorSpaceInput:
 
                                 if(ColorSpaceInputBoolean){
@@ -1761,7 +1790,7 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                                 LayoutInflater inflater2 = LayoutInflater.from(Camera2VideoImageActivity.this);
                                 View cameraInfoSubView = inflater2.inflate(R.layout.camera_info_alertdialog, null);
                                 mCameraInfoTextView = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView);
-                                mCameraInfoTextView.setText("Camera Resolutions;");
+                                mCameraInfoTextView.setText("Camera Resolutions:");
                                 mCameraInfoTextView.setMovementMethod(new ScrollingMovementMethod());
                                 mCameraInfoTextView2 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView2);
                                 mCameraInfoTextView2.setText("Supported Camera Scenes:");
@@ -1772,19 +1801,21 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                                 mCameraInfoTextView4 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView4);
                                 mCameraInfoTextView4.setText("Supported Face Detections");
                                 mCameraInfoTextView4.setMovementMethod(new ScrollingMovementMethod());
-
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                builder.setTitle("Camera Information");
-                                builder.setMessage("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
-                                        + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
-                                        + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
-                                        + "\n" + "Standard reference illuminant:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)
-                                        + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
-                                        + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
-                                        + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
-
+                                mCameraInfoTextView5 =(TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
+                                mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
+                                    + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
+                                    + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
+                                    + "\n" + "Standard reference illuminant:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)
+                                    + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
+                                    + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
+                                    + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
+                                    + "\n" + "SENSOR_COLOR_TRANSFORM_1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
+                                    + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
+                                    + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
+                                    + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
+                                    + "\n"
                                 );
+                                mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
                                 StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                                 final Size previewSizes[] = scmap.getOutputSizes(ImageFormat.JPEG);
 
@@ -1804,8 +1835,11 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                                     String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
                                     mCameraInfoTextView3.setText(newText3);
                                 }
-                                builder.setView(cameraInfoSubView);
 
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                builder.setView(cameraInfoSubView);
+                                builder.setTitle("Camera Information");
                                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
@@ -2193,6 +2227,10 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY,ISOvalue);
 
             }
+            if(SensorColorTransformInputBoolean){
+
+
+            }
 
             final CameraCaptureSession.CaptureCallback PreCaptureCall = new CameraCaptureSession.CaptureCallback() {
                 @Override
@@ -2201,6 +2239,8 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                     mCurrentFocusDistance=result.get(CaptureResult.LENS_FOCUS_DISTANCE);
                     mCurrentISOValue=result.get(CaptureResult.SENSOR_SENSITIVITY);
                     mCurrentSSvalue=result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
+
+
 
                     Integer mode = result.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
                     Face [] faces = result.get(CaptureResult.STATISTICS_FACES);
@@ -2949,6 +2989,7 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
         txform.postTranslate(xoff, yoff);
         mTextureView.setTransform(txform);
     }
+
 
 
 }
