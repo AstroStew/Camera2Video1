@@ -1,12 +1,16 @@
 package com.yorku.mstew.camera2videoimage;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Camera;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
@@ -71,6 +75,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
@@ -105,6 +111,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.zip.Inflater;
 
+import static android.R.attr.bitmap;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AF_MODE_AUTO;
@@ -148,7 +155,7 @@ import static java.lang.StrictMath.toIntExact;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Camera2VideoImageActivity extends AppCompatActivity {
+public class Camera2VideoImageActivity extends Activity implements View.OnTouchListener{
     private Button mModebutton;
     private int ISOvalue = 0;
     private int progressValue;
@@ -265,9 +272,43 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
     boolean ColorSpaceInputBoolean=false;
     boolean ForwardMatrixInputBoolean=false;
     boolean SensorColorTransformInputBoolean=false;
+    Bitmap WhiteBalanceBallInspector;
+    float BallInspectorx, BallInspectory;
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        return false;
+    }
 
 
+    public class NewClassExample extends SurfaceView implements Runnable {
+        Thread t = null;
 
+        SurfaceHolder holder;
+        boolean isItOka=false;
+
+        public NewClassExample(Context context) {
+            super(context);
+            holder=getHolder();
+        }
+
+        @Override
+        public void run() {
+            while(isItOka==true){
+                if (!holder.getSurface().isValid()){
+                    continue;
+                }
+                Canvas c=holder.lockCanvas();
+                c.drawARGB(100,100,100,100);
+                holder.unlockCanvasAndPost(c);
+
+
+            }
+
+
+        }
+    }
 
 
 
@@ -636,6 +677,8 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_camera2_video_image);
+
+
         //setContentView(R.layout.bottom_navigation_bar);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mMediaRecorder = new MediaRecorder();
@@ -649,8 +692,14 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
         mFlashButtonOnOff = (ImageButton) findViewById(R.id.FlashButton);
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
         mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
+        NewClassExample v;
+        v=new NewClassExample(this);
+        v.setOnTouchListener(this);
 
 
+        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
+        //WhiteBalanceBallInspector.setConfig(Bitmap.Config.ARGB_8888);
+        BallInspectorx=BallInspectory=0;
 
 
         final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
@@ -859,6 +908,31 @@ public class Camera2VideoImageActivity extends AppCompatActivity {
 
         mFocusTextView = (TextView)findViewById(R.id.infoTextView);
         //we have to create a new thread in order to get real time info from ISO SS adn Aperature
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!Thread.interrupted()){
+                    /*if(!holder.getSurface().isValid()){
+                        continue;
+                    }
+                    Canvas c=holder.lockCanvas();
+                    c.drawARGB(100,150,150,150);
+                    holder.unlockCanvasAndPost(c); */
+
+
+
+                }
+
+            }
+        })).start();
+
+
+
+
+
+
+
+
         (new Thread(new Runnable() {
             @Override
             public void run() {
