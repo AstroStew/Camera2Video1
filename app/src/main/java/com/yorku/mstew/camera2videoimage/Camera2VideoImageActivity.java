@@ -156,7 +156,7 @@ import static java.lang.StrictMath.toIntExact;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Camera2VideoImageActivity extends Activity implements View.OnTouchListener{
+public class Camera2VideoImageActivity extends Activity {
     private Button mModebutton;
     private int ISOvalue = 0;
     private int progressValue;
@@ -278,14 +278,6 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
     float BallInspectorx, BallInspectory;
     float alphafloat=(float)0;
     SurfaceHolder holder;
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        return false;
-    }
-
-
     /*public class NewClassExample extends SurfaceView implements Runnable,SurfaceHolder.Callback
 
     {
@@ -709,6 +701,15 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
         //v.setOnTouchListener(this);
         setContentView(R.layout.activity_camera2_video_image);
          SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
+        k.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                BallInspectorx=event.getX();
+                BallInspectory=event.getY();
+
+                return false;
+            }
+        });
         final SurfaceHolder holder=k.getHolder();
         final Surface g=holder.getSurface();
         new Thread(new Runnable() {
@@ -716,11 +717,14 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
             public void run() {
                 while (isItOka){
                 if(g.isValid()) {
-                    Canvas c = holder.lockCanvas();
 
-                    c.drawARGB(0, 1, 100, 100);
+                    Canvas c = holder.lockCanvas();
+                    c.drawARGB(100,255,0,255);
+
+
+
                     if(WhiteBalanceBallInspector!=null){
-                    c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx, BallInspectory, null);}
+                    c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx-(WhiteBalanceBallInspector.getWidth()/2), BallInspectory-(WhiteBalanceBallInspector.getHeight()/2), null);}
                     holder.unlockCanvasAndPost(c);
                 }
 
@@ -3133,6 +3137,7 @@ public class Camera2VideoImageActivity extends Activity implements View.OnTouchL
         txform.postTranslate(xoff, yoff);
         mTextureView.setTransform(txform);
     }
+
 
 
 
