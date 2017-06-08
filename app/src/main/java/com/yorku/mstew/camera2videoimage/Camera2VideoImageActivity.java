@@ -15,6 +15,8 @@ import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -701,17 +703,35 @@ public class Camera2VideoImageActivity extends Activity {
         //v.setOnTouchListener(this);
         setContentView(R.layout.activity_camera2_video_image);
          SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
+        k.setZOrderOnTop(true);
+        final SurfaceHolder holder=k.getHolder();
+        holder.setFormat(PixelFormat.TRANSLUCENT);
+
+
+        final Surface g=holder.getSurface();
         k.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                BallInspectorx=event.getX();
-                BallInspectory=event.getY();
 
-                return false;
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        BallInspectorx=event.getX();
+                        BallInspectory=event.getY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        BallInspectorx=event.getX();
+                        BallInspectory=event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        BallInspectorx=event.getX();
+                        BallInspectory=event.getY();
+                        break;
+                }
+
+                return true;
             }
         });
-        final SurfaceHolder holder=k.getHolder();
-        final Surface g=holder.getSurface();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -719,13 +739,18 @@ public class Camera2VideoImageActivity extends Activity {
                 if(g.isValid()) {
 
                     Canvas c = holder.lockCanvas();
-                    c.drawARGB(100,255,0,255);
+                    c.drawARGB(255,0,100,255);
+                    //
+                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
 
 
 
                     if(WhiteBalanceBallInspector!=null){
                     c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx-(WhiteBalanceBallInspector.getWidth()/2), BallInspectory-(WhiteBalanceBallInspector.getHeight()/2), null);}
+
                     holder.unlockCanvasAndPost(c);
+
                 }
 
             }}
