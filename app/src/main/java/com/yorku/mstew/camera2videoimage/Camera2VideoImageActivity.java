@@ -236,6 +236,9 @@ public class Camera2VideoImageActivity extends Activity {
     int redPixelData;
     int bluePixelData;
     int greePixelData;
+    int AverageredPixelData;
+    int AveragebluePixelData;
+    int AveragegreenPixelData;
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
     private int mCurrentAutoFocus;
@@ -1010,7 +1013,8 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 if (MovementButtonnBoolen==false){
                                     PixelValues="Red Value: "+ redPixelData
-                                            +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData;
+                                            +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData
+                                            + "Average Red Vale :" + AverageredPixelData;
                                 }else{
                                     PixelValues="";
                                 }
@@ -2579,21 +2583,49 @@ public class Camera2VideoImageActivity extends Activity {
                     mCurrentISOValue=result.get(CaptureResult.SENSOR_SENSITIVITY);
                     mCurrentSSvalue=result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
                     mCurrentAperatureValue=result.get(CaptureResult.LENS_APERTURE);
+                    Integer mode = result.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
+                    Face [] faces = result.get(CaptureResult.STATISTICS_FACES);
+                    rggbChannelVector=result.get(CaptureResult.COLOR_CORRECTION_GAINS);
+                    ColorCorrectionTransform=result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
+                    mNumberofFaces=faces.length;
                     Bitmap bitmappy= mTextureView.getBitmap();
                     int pixel;
                     pixel=bitmappy.getPixel((int)BallInspectorx,(int)BallInspectory);
                     redPixelData=Color.red(pixel);
                     bluePixelData=Color.blue(pixel);
                     greePixelData=Color.green(pixel);
+                    AverageredPixelData=0;
+                    AveragegreenPixelData=0;
+                    AveragebluePixelData=0;
 
 
+                    int counter=0;
+                   int totalheight= WhiteBalanceBallInspector.getHeight();
+                   int totalwidth= WhiteBalanceBallInspector.getWidth();
+                    int totalbitmapspace= totalheight*totalwidth;
+                    int topleftheightstatic=(int)BallInspectory-(int)(totalheight/2);
+                    int topleftwidthstatic=(int)BallInspectorx-(int)(totalwidth/2);
+                    int topleftheight;
+                    int topeleftwidth;
+                    /*
+                    for (topleftheight=(int)BallInspectory-(int)(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
+                        for (topeleftwidth=(int)BallInspectory-(int)(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
+                            int pixel2;
+                            pixel2=bitmappy.getPixel((int)topeleftwidth,(int)topleftheight);
+                            AverageredPixelData=AverageredPixelData+Color.red(pixel2);
+                            AveragegreenPixelData=AveragegreenPixelData+Color.green(pixel2);
+                            AveragebluePixelData=AveragebluePixelData+Color.blue(pixel2);
+                            counter++;
 
 
-                    Integer mode = result.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
-                    Face [] faces = result.get(CaptureResult.STATISTICS_FACES);
-                    rggbChannelVector=result.get(CaptureResult.COLOR_CORRECTION_GAINS);
-                    ColorCorrectionTransform=result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
-                    mNumberofFaces=faces.length;
+                        }
+                    }
+                    AverageredPixelData=(AverageredPixelData/counter);
+                    AveragebluePixelData=AveragebluePixelData/counter;
+                    AveragegreenPixelData=AveragegreenPixelData/counter;
+                    //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();*/
+
+
                 }
             };
 
