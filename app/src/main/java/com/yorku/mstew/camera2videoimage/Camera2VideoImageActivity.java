@@ -280,53 +280,8 @@ public class Camera2VideoImageActivity extends Activity {
     float BallInspectorx, BallInspectory;
     float alphafloat=(float)0;
     SurfaceHolder holder;
-    /*public class NewClassExample extends SurfaceView implements Runnable,SurfaceHolder.Callback
-
-    {
-        Thread t = null;
-        boolean isItOka=false;
-
-        public NewClassExample(Context context) {
-            super(context);
-            holder=getHolder();
-            holder.addCallback(this);
-            //SurfaceView i=(SurfaceView) findViewById(R.id.surfaceView);
-        }
-
-        @Override
-        public void run() {
-            while(isItOka==true){
-                if (!holder.getSurface().isValid()){
-                    continue;
-                }
-                Canvas c=holder.lockCanvas();
-                c.drawARGB(255,0,100,100);
-                c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx,BallInspectory, null);
-                holder.unlockCanvasAndPost(c);
-
-
-            }
-
-
-        }
-
-        @Override
-        public void surfaceCreated(SurfaceHolder holder) {
-
-        }
-
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-        }
-
-        @Override
-        public void surfaceDestroyed(SurfaceHolder holder) {
-
-        }
-    }
-*/
-
+    ImageButton MovementButtonn;
+    boolean MovementButtonnBoolen=true;
 
     //firstly we want to make the window sticky. We acheive this by making system flags
     //Making the window sticky
@@ -695,12 +650,10 @@ public class Camera2VideoImageActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
         BallInspectorx=BallInspectory=600;
         WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.whitebalancething);
-
-        //v=new NewClassExample(this);
-        //v.setOnTouchListener(this);
         setContentView(R.layout.activity_camera2_video_image);
          SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
         k.setZOrderOnTop(true);
@@ -732,7 +685,7 @@ public class Camera2VideoImageActivity extends Activity {
             }
         });
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 while (isItOka){
@@ -741,59 +694,24 @@ public class Camera2VideoImageActivity extends Activity {
                     Canvas c = holder.lockCanvas();
                     c.drawARGB(255,0,100,255);
                     //
+
                     c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
 
 
-
-                    if(WhiteBalanceBallInspector!=null){
-                    c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx-(WhiteBalanceBallInspector.getWidth()/2), BallInspectory-(WhiteBalanceBallInspector.getHeight()/2), null);}
+                    if(!MovementButtonnBoolen) {
+                        if (WhiteBalanceBallInspector != null) {
+                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                        }
+                    }
 
                     holder.unlockCanvasAndPost(c);
 
                 }
 
             }}
-        }).start();
-
-
-
-
-
-
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(isItOka==true){
-                    if (!holder.getSurface().isValid()){
-                        continue;
-                    }
-                    Canvas c=holder.lockCanvas();
-                    c.drawARGB(255,0,100,100);
-                    c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx,BallInspectory, null);
-                    holder.unlockCanvasAndPost(c);
-
-
-                }
-
-            }
         }).start();*/
 
-
-        Log.i(TAG, "Hello");
-
-
-
-
-
-
-
-
-
-
-
-        //setContentView(R.layout.bottom_navigation_bar);
 
         mMediaRecorder = new MediaRecorder();
         //mIsAuto2=false;
@@ -806,24 +724,23 @@ public class Camera2VideoImageActivity extends Activity {
         mFlashButtonOnOff = (ImageButton) findViewById(R.id.FlashButton);
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
         mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
+        MovementButtonn=(ImageButton)findViewById(R.id.MovementButton);
+        MovementButtonn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MovementButtonnBoolen){
+                    MovementButtonnBoolen=false;
+                    MovementButtonn.setImageResource(R.drawable.ic_all_out_black_24dp);
+                    Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned on", Toast.LENGTH_SHORT).show();
 
+                }else{
+                    MovementButtonnBoolen=true;
+                    MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
+                    Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
 
-
-
-        //final SurfaceView j=(SurfaceView)findViewById(R.id.surfaceView);
-        //j.setVisibility(View.INVISIBLE);
-        //j.setAlpha(alphafloat);
-
-
-
-
-
-       // j.setBackgroundColor();
-
-
-        //WhiteBalanceBallInspector.setConfig(Bitmap.Config.ARGB_8888);
-
-
+                }
+            }
+        });
 
         final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
         //final
@@ -1037,11 +954,30 @@ public class Camera2VideoImageActivity extends Activity {
             public void run() {
                 while (!Thread.interrupted()) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(200);
                         runOnUiThread(new Runnable() {
                             @Override
 
                             public void run() {
+                                if(g.isValid()) {
+
+                                    Canvas c = holder.lockCanvas();
+                                    //c.drawARGB(255,0,100,255);
+                                    //
+
+                                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+
+
+                                    if(!MovementButtonnBoolen) {
+                                        if (WhiteBalanceBallInspector != null) {
+                                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                                        }
+                                    }
+
+                                    holder.unlockCanvasAndPost(c);
+
+                                }
                                 String convertSS;
 
 
