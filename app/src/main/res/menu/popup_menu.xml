@@ -227,6 +227,11 @@
                 android:checkable="true"
                 />
             <item
+                android:id="@+id/SpotLockWhiteBalance"
+                android:title="Spot Lock White Balance"
+                android:icon="@drawable/ic_all_out_black_24dp"
+                android:checkable="true"/>
+            <item
                 android:id="@+id/ChooseWhiteBalance"
                 android:title="Choose White Balance"
                 android:icon="@drawable/ic_list_black_24dp"

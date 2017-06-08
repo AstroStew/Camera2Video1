@@ -1006,6 +1006,15 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 }
                                 String convertSS;
+                                String PixelValues;
+
+                                if (MovementButtonnBoolen==false){
+                                    PixelValues="Red Value: "+ redPixelData
+                                            +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData;
+                                }else{
+                                    PixelValues="";
+                                }
+
 
 
                                 if (1000000000 / mCurrentSSvalue <= 1) {
@@ -1015,15 +1024,16 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n"+ "Red Value: "+ redPixelData
-                                          +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData
-
+                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
                                     );
-                                } else {
+
+                                } else if(1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed: " + convertSS + "\n" + "Focus Distance: " + "INFINITE"
-                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue
+                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue+ "\n" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
+
+
                             }
                         });
                     } catch (Exception e) {
