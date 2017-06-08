@@ -1052,12 +1052,12 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform
+                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory
 
                                     );
                                 } else {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed: " + convertSS + "\n" + "Focus Distance: " + "INFINITE"
-                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform
+                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory
                                     ); // this action have to be in UI thread
                                 }
                             }
