@@ -697,7 +697,7 @@ public class Camera2VideoImageActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
         BallInspectorx=BallInspectory=600;
-        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.isopic1600);
+        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.whitebalancething);
 
         //v=new NewClassExample(this);
         //v.setOnTouchListener(this);
