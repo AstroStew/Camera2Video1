@@ -90,6 +90,7 @@ import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -231,6 +232,11 @@ public class Camera2VideoImageActivity extends Activity {
     private int AutoLocks=0;
     private int mCameraEffect=0;
     private long mCurrentSSvalue=500000000;
+    private float mCurrentAperatureValue;
+    int redPixelData;
+    int bluePixelData;
+    int greePixelData;
+
     private ColorSpaceTransform mCurrentSensorColorTranform;
     private int mCurrentAutoFocus;
     private Integer afStateRealTime;
@@ -290,7 +296,20 @@ public class Camera2VideoImageActivity extends Activity {
     float alphafloat=(float)0;
     SurfaceHolder holder;
     ImageButton MovementButtonn;
+    private CameraCharacteristics mCameraCharacteristics;
     boolean MovementButtonnBoolen=true;
+    boolean ControlAWBmodecloudydaylightavailableboolean=false;
+    boolean ControlAWBmodedaylightavailableboolean=false;
+    boolean ControlAWBmodefluorescentavailableboolean=false;
+    boolean ControlAWBmodeincandescentavailableboolean=false;
+    boolean ControlAWBmodeshadeavailableboolean=false;
+    boolean ControlAWBmodewarmfluorescentavailableboolean=false;
+    boolean ControlAWBmodetwilightavailableboolean=false;
+    boolean WBrunOnce=true;
+
+
+
+
 
     //firstly we want to make the window sticky. We acheive this by making system flags
     //Making the window sticky
@@ -693,35 +712,6 @@ public class Camera2VideoImageActivity extends Activity {
                 return true;
             }
         });
-
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isItOka){
-                if(g.isValid()) {
-
-                    Canvas c = holder.lockCanvas();
-                    c.drawARGB(255,0,100,255);
-                    //
-
-                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-
-
-                    if(!MovementButtonnBoolen) {
-                        if (WhiteBalanceBallInspector != null) {
-                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
-                        }
-                    }
-
-                    holder.unlockCanvasAndPost(c);
-
-                }
-
-            }}
-        }).start();*/
-
-
         mMediaRecorder = new MediaRecorder();
         //mIsAuto2=false;
         //this is new
@@ -734,6 +724,34 @@ public class Camera2VideoImageActivity extends Activity {
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
         mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
         MovementButtonn=(ImageButton)findViewById(R.id.MovementButton);
+
+
+        /*for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
+                ControlAWBmodeincandescentavailableboolean = true;
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 3) {
+                ControlAWBmodefluorescentavailableboolean = true;
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 4) {
+                ControlAWBmodewarmfluorescentavailableboolean = true;
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 5) {
+                ControlAWBmodedaylightavailableboolean = true;
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 6) {
+                ControlAWBmodecloudydaylightavailableboolean = true;
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 7) {
+                ControlAWBmodetwilightavailableboolean = true;
+
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 8) {
+                ControlAWBmodeshadeavailableboolean = true;
+
+            }
+        }*/
+        //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
         MovementButtonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -997,12 +1015,13 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory
+                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n"+ "Red Value: "+ redPixelData
+                                          +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData
 
                                     );
                                 } else {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed: " + convertSS + "\n" + "Focus Distance: " + "INFINITE"
-                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory
+                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue
                                     ); // this action have to be in UI thread
                                 }
                             }
@@ -1162,25 +1181,60 @@ public class Camera2VideoImageActivity extends Activity {
                 //Toast.makeText(Camera2VideoImageActivity.this, "clicked", Toast.LENGTH_SHORT).show();
                 final PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-
                 SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0,100, 0, "Available Effects");
+                if(WBrunOnce){
+                    for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
+                            ControlAWBmodeincandescentavailableboolean = true;
+                        }
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 3) {
+                            ControlAWBmodefluorescentavailableboolean = true;
+                        }
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 4) {
+                            ControlAWBmodewarmfluorescentavailableboolean = true;
+                        }
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 5) {
+                            ControlAWBmodedaylightavailableboolean = true;
+                        }
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 6) {
+                            ControlAWBmodecloudydaylightavailableboolean = true;
+                        }
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 7) {
+                            ControlAWBmodetwilightavailableboolean = true;
+
+                        }
+                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 8) {
+                            ControlAWBmodeshadeavailableboolean = true;
+
+                        }
+                    }
+                    WBrunOnce=false;
+                }
+
 
                 final MenuItem AutoWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
                 AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
                 final MenuItem WhiteBalanceCloudyDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
                 WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
+                WhiteBalanceCloudyDaylightItem.setEnabled(ControlAWBmodecloudydaylightavailableboolean);
                 final MenuItem WhiteBalanceDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceDaylight);
                 WhiteBalanceDaylightItem.setChecked(WhiteBalanceDaylightBoolean);
+                WhiteBalanceDaylightItem.setEnabled(ControlAWBmodedaylightavailableboolean);
                 final MenuItem WhiteBalanceFluorescentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceFluorescent);
                 WhiteBalanceFluorescentItem.setChecked(WhiteBalanceFluorescentBoolean);
+                WhiteBalanceFluorescentItem.setEnabled(ControlAWBmodefluorescentavailableboolean);
                 final MenuItem WhiteBalanceShadeItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceShade);
                 WhiteBalanceShadeItem.setChecked(WhiteBalanceShadeBoolean);
+                WhiteBalanceShadeItem.setEnabled(ControlAWBmodeshadeavailableboolean);
                 final MenuItem WhiteBalanceTwilightitem=popupMenu.getMenu().findItem(R.id.WhiteBalanceTwilight);
                 WhiteBalanceTwilightitem.setChecked(WhiteBalanceTwilightBoolean);
+                WhiteBalanceTwilightitem.setEnabled(ControlAWBmodetwilightavailableboolean);
                 final MenuItem WhiteBalanceWarmFluorescentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceWarmFluorescent);
                 WhiteBalanceWarmFluorescentItem.setChecked(WhiteBalanceWarmFluorescentBoolean);
+                WhiteBalanceWarmFluorescentItem.setEnabled(ControlAWBmodewarmfluorescentavailableboolean);
                 final MenuItem WhiteBalanceIncandenscentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceIncandenscent);
                 WhiteBalanceIncandenscentItem.setChecked(WhiteBalanceIncandenscentBoolean);
+                WhiteBalanceIncandenscentItem.setEnabled(ControlAWBmodeincandescentavailableboolean);
                 final MenuItem WhiteBalanceAutoItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
                 WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
 
@@ -2100,11 +2154,11 @@ public class Camera2VideoImageActivity extends Activity {
                                     String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
                                     mCameraInfoTextView3.setText(newText3);
                                 }
-                                //mCameraInfoTextView.setText("Supported White Balances:");
+
                                 for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++){
                                     String oldTextView4= mCameraInfoTextView5.getText().toString();
                                     String newText4=oldTextView4+ " "+ mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] +" ";
-
+                                    //AWBArr[i]=mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i];
                                     mCameraInfoTextView5.setText(newText4);
                                 }
 
@@ -2514,6 +2568,14 @@ public class Camera2VideoImageActivity extends Activity {
                     mCurrentFocusDistance=result.get(CaptureResult.LENS_FOCUS_DISTANCE);
                     mCurrentISOValue=result.get(CaptureResult.SENSOR_SENSITIVITY);
                     mCurrentSSvalue=result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
+                    mCurrentAperatureValue=result.get(CaptureResult.LENS_APERTURE);
+                    Bitmap bitmappy= mTextureView.getBitmap();
+                    int pixel;
+                    pixel=bitmappy.getPixel((int)BallInspectorx,(int)BallInspectory);
+                    redPixelData=Color.red(pixel);
+                    bluePixelData=Color.blue(pixel);
+                    greePixelData=Color.green(pixel);
+
 
 
 
@@ -3224,7 +3286,7 @@ public class Camera2VideoImageActivity extends Activity {
     private static File mRawImageFile;
     private static File mImageFile;
 
-    private CameraCharacteristics mCameraCharacteristics;
+
     CameraCharacteristics cameraCharacteristics;
     //RAW Image Capture part2
     private CaptureResult mCaptureResult;
