@@ -190,6 +190,15 @@ public class Camera2VideoImageActivity extends Activity {
     private int ISOseekProgress;
     private boolean ISOinputboolean=false;
     private int mWBMode = CONTROL_AWB_MODE_AUTO;
+    boolean WhiteBalanceCloudyDaylightBoolean=false;
+    boolean WhiteBalanceDaylightBoolean=false;
+    boolean WhiteBalanceFluorescentBoolean=false;
+    boolean WhiteBalanceShadeBoolean=false;
+    boolean WhiteBalanceTwilightBoolean=false;
+    boolean WhiteBalanceWarmFluorescentBoolean=false;
+    boolean WhiteBalanceIncandenscentBoolean=false;
+    boolean WhiteBalanceAutoBoolean=true;
+
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
     private EditText mISOEditText;
@@ -1151,13 +1160,30 @@ public class Camera2VideoImageActivity extends Activity {
                 menuonline = true;
 
                 //Toast.makeText(Camera2VideoImageActivity.this, "clicked", Toast.LENGTH_SHORT).show();
-                PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
+                final PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
 
                 SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0,100, 0, "Available Effects");
 
                 final MenuItem AutoWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
                 AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
+                final MenuItem WhiteBalanceCloudyDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
+                WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
+                final MenuItem WhiteBalanceDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceDaylight);
+                WhiteBalanceDaylightItem.setChecked(WhiteBalanceDaylightBoolean);
+                final MenuItem WhiteBalanceFluorescentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceFluorescent);
+                WhiteBalanceFluorescentItem.setChecked(WhiteBalanceFluorescentBoolean);
+                final MenuItem WhiteBalanceShadeItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceShade);
+                WhiteBalanceShadeItem.setChecked(WhiteBalanceShadeBoolean);
+                final MenuItem WhiteBalanceTwilightitem=popupMenu.getMenu().findItem(R.id.WhiteBalanceTwilight);
+                WhiteBalanceTwilightitem.setChecked(WhiteBalanceTwilightBoolean);
+                final MenuItem WhiteBalanceWarmFluorescentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceWarmFluorescent);
+                WhiteBalanceWarmFluorescentItem.setChecked(WhiteBalanceWarmFluorescentBoolean);
+                final MenuItem WhiteBalanceIncandenscentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceIncandenscent);
+                WhiteBalanceIncandenscentItem.setChecked(WhiteBalanceIncandenscentBoolean);
+                final MenuItem WhiteBalanceAutoItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
+                WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
+
 
 
 
@@ -1514,9 +1540,6 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
 
                                 break;
-                            /*
-
-                             */
                             case R.id.BasicManualMode:
                                 if (AutoNumber == 0) {
                                     AutoNumber = 1;
@@ -1606,38 +1629,169 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             case R.id.WhiteBalanceCloudyDaylight:
-                                mWBMode = CONTROL_AWB_MODE_CLOUDY_DAYLIGHT;
+                                if(!WhiteBalanceCloudyDaylightBoolean) {
+                                    mWBMode = CONTROL_AWB_MODE_CLOUDY_DAYLIGHT;
+                                    WhiteBalanceCloudyDaylightBoolean = true;
+                                }else{
+                                    WhiteBalanceAutoBoolean=true;
+                                    mWBMode=CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceCloudyDaylightBoolean=false;
+
+
+                                }
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceIncandenscentBoolean=false;
+                                WhiteBalanceWarmFluorescentBoolean=false;
+                                WhiteBalanceTwilightBoolean=false;
+                                WhiteBalanceShadeBoolean=false;
+                                WhiteBalanceFluorescentBoolean=false;
+
+                                WhiteBalanceDaylightBoolean=false;
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceDaylight:
-                                mWBMode = CONTROL_AWB_MODE_DAYLIGHT;
+
+                                if(!WhiteBalanceDaylightBoolean){
+                                    mWBMode = CONTROL_AWB_MODE_DAYLIGHT;
+                                WhiteBalanceDaylightBoolean=true;}
+                                else{
+                                    WhiteBalanceAutoBoolean=true;
+                                    mWBMode=CONTROL_AWB_MODE_AUTO;
+
+
+                                    WhiteBalanceDaylightBoolean=false;
+                                }
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceIncandenscentBoolean=false;
+                                WhiteBalanceWarmFluorescentBoolean=false;
+                                WhiteBalanceTwilightBoolean=false;
+                                WhiteBalanceShadeBoolean=false;
+                                WhiteBalanceFluorescentBoolean=false;
+                                WhiteBalanceCloudyDaylightBoolean=false;
+
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceFluorescent:
-                                mWBMode = CONTROL_AWB_MODE_FLUORESCENT;
+
+                                if(!WhiteBalanceFluorescentBoolean) {
+
+                                    WhiteBalanceFluorescentBoolean = true;
+                                    mWBMode = CONTROL_AWB_MODE_FLUORESCENT;
+                                    WhiteBalanceAutoBoolean=false;
+                                    //put the rest
+                                }else{
+                                    WhiteBalanceFluorescentBoolean=false;
+                                    mWBMode= CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean=true;
+
+                                }
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceIncandenscentBoolean=false;
+                                WhiteBalanceWarmFluorescentBoolean=false;
+                                WhiteBalanceTwilightBoolean=false;
+                                WhiteBalanceShadeBoolean=false;
+
+                                WhiteBalanceCloudyDaylightBoolean=false;
+                                WhiteBalanceDaylightBoolean=false;
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceShade:
-                                mWBMode = CONTROL_AWB_MODE_SHADE;
+
+                                if(!WhiteBalanceShadeBoolean){
+                                    WhiteBalanceShadeBoolean=true;
+                                    mWBMode = CONTROL_AWB_MODE_SHADE;
+                                }else{
+                                    WhiteBalanceShadeBoolean=false;
+
+                                    mWBMode= CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean=true;
+                                }
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceIncandenscentBoolean=false;
+                                WhiteBalanceWarmFluorescentBoolean=false;
+                                WhiteBalanceTwilightBoolean=false;
+                                WhiteBalanceFluorescentBoolean=false;
+                                WhiteBalanceCloudyDaylightBoolean=false;
+                                WhiteBalanceDaylightBoolean=false;
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceTwilight:
-                                mWBMode = CONTROL_AWB_MODE_TWILIGHT;
+                                if(!WhiteBalanceTwilightBoolean){
+                                    mWBMode = CONTROL_AWB_MODE_TWILIGHT;
+                                    WhiteBalanceTwilightBoolean=true;
+
+                                }else{
+                                    WhiteBalanceTwilightBoolean=false;
+                                    mWBMode= CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean=true;
+                                }
+                                WhiteBalanceIncandenscentBoolean=false;
+                                WhiteBalanceWarmFluorescentBoolean=false;
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceShadeBoolean=false;
+                                WhiteBalanceFluorescentBoolean=false;
+                                WhiteBalanceCloudyDaylightBoolean=false;
+                                WhiteBalanceDaylightBoolean=false;
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceWarmFluorescent:
-                                mWBMode = CONTROL_AWB_MODE_WARM_FLUORESCENT;
+                                if(!WhiteBalanceWarmFluorescentBoolean){
+                                    mWBMode = CONTROL_AWB_MODE_WARM_FLUORESCENT;
+                                    WhiteBalanceWarmFluorescentBoolean=true;
+
+                                }else{
+                                    WhiteBalanceWarmFluorescentBoolean=false;
+                                    mWBMode= CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean=true;
+                                }
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceIncandenscentBoolean=false;
+                                WhiteBalanceTwilightBoolean=false;
+                                WhiteBalanceShadeBoolean=false;
+                                WhiteBalanceFluorescentBoolean=false;
+                                WhiteBalanceCloudyDaylightBoolean=false;
+                                WhiteBalanceDaylightBoolean=false;
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceIncandenscent:
-                                mWBMode = CONTROL_AWB_MODE_INCANDESCENT;
+                                if(!WhiteBalanceIncandenscentBoolean){
+                                    mWBMode = CONTROL_AWB_MODE_INCANDESCENT;
+                                    WhiteBalanceIncandenscentBoolean=true;
+
+                                }else{
+                                    WhiteBalanceIncandenscentBoolean=false;
+                                    mWBMode= CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean=true;
+                                }
+                                WhiteBalanceAutoBoolean=false;
+                                WhiteBalanceWarmFluorescentBoolean=false;
+                                WhiteBalanceTwilightBoolean=false;
+                                WhiteBalanceShadeBoolean=false;
+                                WhiteBalanceFluorescentBoolean=false;
+                                WhiteBalanceCloudyDaylightBoolean=false;
+                                WhiteBalanceDaylightBoolean=false;
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceAuto:
                                 if (mWBMode != CONTROL_AWB_MODE_AUTO) {
                                     mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean=true;
+                                    WhiteBalanceIncandenscentBoolean=false;
+                                    WhiteBalanceWarmFluorescentBoolean=false;
+                                    WhiteBalanceTwilightBoolean=false;
+                                    WhiteBalanceShadeBoolean=false;
+                                    WhiteBalanceFluorescentBoolean=false;
+                                    WhiteBalanceCloudyDaylightBoolean=false;
+                                    WhiteBalanceDaylightBoolean=false;
+
                                 } else {
                                     Toast.makeText(getApplicationContext(), "AUTO is already on", Toast.LENGTH_SHORT).show();
+
                                 }
                                 startPreview();
                                 break;
@@ -1911,6 +2065,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 mCameraInfoTextView4.setText("Supported Face Detections");
                                 mCameraInfoTextView4.setMovementMethod(new ScrollingMovementMethod());
                                 mCameraInfoTextView5 =(TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
+
                                 mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
                                     + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
                                     + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
@@ -1922,7 +2077,8 @@ public class Camera2VideoImageActivity extends Activity {
                                     + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
                                     + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
                                     + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
-                                    + "\n"
+                                    + "\n" + "Supported Auto White Balances"
+
                                 );
                                 mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
                                 StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
@@ -1943,6 +2099,13 @@ public class Camera2VideoImageActivity extends Activity {
                                     String oldTextView3 = mCameraInfoTextView3.getText().toString();
                                     String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
                                     mCameraInfoTextView3.setText(newText3);
+                                }
+                                //mCameraInfoTextView.setText("Supported White Balances:");
+                                for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++){
+                                    String oldTextView4= mCameraInfoTextView5.getText().toString();
+                                    String newText4=oldTextView4+ " "+ mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] +" ";
+
+                                    mCameraInfoTextView5.setText(newText4);
                                 }
 
 
@@ -2290,10 +2453,13 @@ public class Camera2VideoImageActivity extends Activity {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
                 }
             if(!AutoWhiteBalancelockBoolean) {
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, false);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
             }
             if(AutoWhiteBalancelockBoolean){
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CONTROL_AWB_MODE_AUTO);
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK,true);
+                //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
             }
 
             if (AutoNumber == 2) {
