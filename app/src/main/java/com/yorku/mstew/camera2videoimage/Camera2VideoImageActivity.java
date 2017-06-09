@@ -211,8 +211,9 @@ public class Camera2VideoImageActivity extends Activity {
     private SeekBar mChangeFocusSeekBar;
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
+    private float mFocusDistanceMem=20;
     private double getmFocusDistanceMem = 20;
-    boolean mUnlockFocus = false;
+    boolean manualFocusEnableIsChecked = false;
     boolean mBurstOn = false;
     private int mBurstNumber = 0;
     private int ChronoCount = 0;
@@ -226,7 +227,7 @@ public class Camera2VideoImageActivity extends Activity {
     private int VideoTimelapsSecondStep = 2;
     private ImageButton mFlashButtonOnOff;
     private int mFlashMode = 0;
-    private boolean BooleanAutoFocusLock = false;
+    private boolean lockFocusEnableIsChecked = false;
     private boolean BooleanOpticalStabilizationOn = true;
     private TextView mTimeInterval;
     private int AutoLocks=0;
@@ -451,10 +452,10 @@ public class Camera2VideoImageActivity extends Activity {
 
                             mCaptureState = STATE_PREVIEW;
                              startStillCaptureRequest();
+                            
+                            /*if(!manualFocusEnableIsChecked) {
 
-                            /*if(!mUnlockFocus) {
-
-                                if (!BooleanAutoFocusLock) {
+                                if (!lockFocusEnableIsChecked) {
                                     //unLockFocus();
                                 }
                             }
@@ -1366,8 +1367,8 @@ public class Camera2VideoImageActivity extends Activity {
                         switch (position) {
                             case R.id.LockAutoFocus:
 
-                                if (!BooleanAutoFocusLock) {
-                                    BooleanAutoFocusLock = true;
+                                if (!lockFocusEnableIsChecked) {
+                                    lockFocusEnableIsChecked = true;
                                     Toast.makeText(getApplicationContext(), "AutoFocus lock Enabled", Toast.LENGTH_SHORT).show();
                                     //UnlockFocusSpecialBooleanCaptureon=true;
 
@@ -1376,8 +1377,8 @@ public class Camera2VideoImageActivity extends Activity {
                                     startPreview();
 
 
-                                } else if (BooleanAutoFocusLock) {
-                                    BooleanAutoFocusLock = false;
+                                } else if (lockFocusEnableIsChecked) {
+                                    lockFocusEnableIsChecked = false;
                                     Toast.makeText(getApplicationContext(), "AutoFocus Unlock Enabled", Toast.LENGTH_SHORT).show();
 
                                     //mFocusTextView.setVisibility(View.INVISIBLE);
@@ -1391,14 +1392,14 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             case R.id.manualFocus:
-                                if (!mUnlockFocus) {
-                                    mUnlockFocus = true;
+                                if (!manualFocusEnableIsChecked) {
+                                    manualFocusEnableIsChecked = true;
                                     mFocusTextView.setVisibility(View.VISIBLE);
                                     Toast.makeText(getApplicationContext(), "Manual Focus Activated", Toast.LENGTH_SHORT).show();
 
                                     startPreview();
-                                } else if (mUnlockFocus) {
-                                    mUnlockFocus = false;
+                                } else if (manualFocusEnableIsChecked) {
+                                    manualFocusEnableIsChecked = false;
                                     mFocusTextView.setVisibility(View.INVISIBLE);
                                     Toast.makeText(getApplicationContext(), "Auto Focus Enabled", Toast.LENGTH_SHORT).show();
                                     startPreview();
@@ -1450,14 +1451,14 @@ public class Camera2VideoImageActivity extends Activity {
                                 manualinputalert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if (!mUnlockFocus) {
-                                            mUnlockFocus = true;
+                                        if (!manualFocusEnableIsChecked) {
+                                            manualFocusEnableIsChecked = true;
                                             mFocusTextView.setVisibility(View.VISIBLE);
                                             Toast.makeText(getApplicationContext(), "Manual Focus Activated", Toast.LENGTH_SHORT).show();
 
 
-                                        } else if (mUnlockFocus) {
-                                            mUnlockFocus = false;
+                                        } else if (manualFocusEnableIsChecked) {
+                                            manualFocusEnableIsChecked = false;
                                             mFocusTextView.setVisibility(View.INVISIBLE);
                                             Toast.makeText(getApplicationContext(), "Auto Focus Enabled", Toast.LENGTH_SHORT).show();
 
@@ -2460,10 +2461,7 @@ public class Camera2VideoImageActivity extends Activity {
             if(isSupports_face_detection_mode_full){
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_FULL);
             }
-            if(!mUnlockFocus){
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_CANCEL);
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AF_MODE_AUTO);
-            }
+
             if (AutoNumber == 0) {
                 //AutoSettings
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
@@ -2485,14 +2483,23 @@ public class Camera2VideoImageActivity extends Activity {
             } else if (!BooleanOpticalStabilizationOn) {
                 mCaptureRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
             }
-            if (mUnlockFocus) {
+            if (manualFocusEnableIsChecked ) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, (float) ((float) 1 / (float )mFocusDistance));
                 //Toast.makeText(getApplicationContext(), "CONTROL AF OFF", Toast.LENGTH_SHORT).show();
+                mFocusDistanceMem= (float) mFocusDistance;
+            }
+            if (!manualFocusEnableIsChecked && lockFocusEnableIsChecked) {
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_OFF);
+                mCaptureRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, (float) mCurrentFocusDistance);
+                mFocusDistanceMem= (float) mFocusDistance;
                 }
-            if (!mUnlockFocus) {
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
+            if(!manualFocusEnableIsChecked && !lockFocusEnableIsChecked){
+                {
+                    mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_CANCEL);
+                    mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AF_MODE_AUTO);
                 }
+            }
             if(!AutoWhiteBalancelockBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, false);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
@@ -2934,8 +2941,9 @@ public class Camera2VideoImageActivity extends Activity {
     private void lockFocus() {
          {
             Toast.makeText(getApplicationContext(), "Focus Locked", Toast.LENGTH_SHORT).show();
+             startStillCaptureRequest();
             mCaptureState = STATE_WAIT_LOCK;
-            if(!mUnlockFocus){
+            if(!manualFocusEnableIsChecked){
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START);
             }
             try {
@@ -2948,6 +2956,7 @@ public class Camera2VideoImageActivity extends Activity {
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
+            //startStillCaptureRequest();
 
 
         }
@@ -3026,33 +3035,26 @@ public class Camera2VideoImageActivity extends Activity {
     }
 
     private void startStillCaptureRequest() {
-
-
-        mIsWritingImage = false;
-        mIsWritingRawImage = false;
         try {
             if (mIsRecording || mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_VIDEO_SNAPSHOT);
 
-            } else if(!mIsRecording||!mIsTimelapse) {
+            } else if(!mIsRecording ||!mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_STILL_CAPTURE);
             }
 
-
+            mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             if(mRawImageCaptureon){
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
-                mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
+                //mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
 
 
             } else {
-
-                mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
-
-
-
+                //mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             }
+
 
 
             mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mTotalRotation);
@@ -3073,15 +3075,13 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             try {
-                                if(UnlockFocusSpecialBooleanCaptureon){
+
                                 createImageFileName(); //forImage
                                 if (mRawImageCaptureon) {
                                     createRawImageFileName(); //for RawImage
                                 }
-                                }
-                                else{
-                                    UnlockFocusSpecialBooleanCaptureon=true;
-                                }
+
+
 
 
                             } catch (IOException e) {
@@ -3139,7 +3139,7 @@ public class Camera2VideoImageActivity extends Activity {
                             fileOutputStream.write(bytes);
                             Toast.makeText(getApplicationContext(), "JPEG saved", Toast.LENGTH_SHORT).show();
 
-                            if (!BooleanAutoFocusLock){
+                            if (!lockFocusEnableIsChecked){
                                // unLockFocus();
                             }else {
                                 AutoLocks = 0;
@@ -3225,8 +3225,8 @@ public class Camera2VideoImageActivity extends Activity {
 
                         case STATE_WAIT_LOCK:
                         {
-                            if (!mUnlockFocus) {
-                                if (!BooleanAutoFocusLock) {
+                            if (!manualFocusEnableIsChecked) {
+                                if (!lockFocusEnableIsChecked) {
                                   //  unLockFocus();
                                 }
                             }
@@ -3238,7 +3238,7 @@ public class Camera2VideoImageActivity extends Activity {
                             }
 
 
-                            startStillCaptureRequest();
+                            //startStillCaptureRequest();
 
 
 
