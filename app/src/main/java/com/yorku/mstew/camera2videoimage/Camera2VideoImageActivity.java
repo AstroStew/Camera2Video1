@@ -2608,6 +2608,7 @@ public class Camera2VideoImageActivity extends Activity {
                     int topleftheight;
                     int topeleftwidth;
                     /*
+                    ///
                     for (topleftheight=(int)BallInspectory-(int)(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
                         for (topeleftwidth=(int)BallInspectory-(int)(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
                             int pixel2;
