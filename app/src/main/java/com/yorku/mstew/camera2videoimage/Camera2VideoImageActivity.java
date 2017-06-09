@@ -448,20 +448,25 @@ public class Camera2VideoImageActivity extends Activity {
                             //Do nothing
                             break;
                         case STATE_WAIT_LOCK:
-                            if(!mUnlockFocus) {
+
+                            mCaptureState = STATE_PREVIEW;
+                             startStillCaptureRequest();
+
+                            /*if(!mUnlockFocus) {
+
                                 if (!BooleanAutoFocusLock) {
-                                    unLockFocus();
+                                    //unLockFocus();
                                 }
                             }
-                            mCaptureState = STATE_PREVIEW;
+
                             Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                             if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED) {
                                 Toast.makeText(getApplicationContext(), "Autofocus locked", Toast.LENGTH_SHORT).show();
                             }
                             if (afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
                                 Toast.makeText(getApplicationContext(), "Autofocus not locked!", Toast.LENGTH_SHORT).show();
-                            }
-                            startStillCaptureRequest();
+                            }*/
+
                             break;
                     }
 
@@ -2455,6 +2460,10 @@ public class Camera2VideoImageActivity extends Activity {
             if(isSupports_face_detection_mode_full){
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_FULL);
             }
+            if(!mUnlockFocus){
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_CANCEL);
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AF_MODE_AUTO);
+            }
             if (AutoNumber == 0) {
                 //AutoSettings
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
@@ -2943,7 +2952,7 @@ public class Camera2VideoImageActivity extends Activity {
 
         }
 
-        startStillCaptureRequest();
+        //startStillCaptureRequest();
     }
 
     /*private void unLockFocus() {
@@ -3131,7 +3140,7 @@ public class Camera2VideoImageActivity extends Activity {
                             Toast.makeText(getApplicationContext(), "JPEG saved", Toast.LENGTH_SHORT).show();
 
                             if (!BooleanAutoFocusLock){
-                                unLockFocus();
+                               // unLockFocus();
                             }else {
                                 AutoLocks = 0;
                             }
@@ -3218,7 +3227,7 @@ public class Camera2VideoImageActivity extends Activity {
                         {
                             if (!mUnlockFocus) {
                                 if (!BooleanAutoFocusLock) {
-                                    unLockFocus();
+                                  //  unLockFocus();
                                 }
                             }
                             mCaptureState = STATE_PREVIEW;
