@@ -461,10 +461,6 @@ public class Camera2VideoImageActivity extends Activity {
                             if (afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
                                 Toast.makeText(getApplicationContext(), "Autofocus not locked!", Toast.LENGTH_SHORT).show();
                             }
-                            if(faces.length==0){
-                            }else{
-                                Toast.makeText(getApplicationContext(), "Face(s) Detected", Toast.LENGTH_SHORT).show();
-                            }
                             startStillCaptureRequest();
                             break;
                     }
@@ -684,14 +680,13 @@ public class Camera2VideoImageActivity extends Activity {
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
         BallInspectorx=BallInspectory=600;
-        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.whitebalancething);
+        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.wbselection);
+
         setContentView(R.layout.activity_camera2_video_image);
          SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
         k.setZOrderOnTop(true);
         final SurfaceHolder holder=k.getHolder();
         holder.setFormat(PixelFormat.TRANSLUCENT);
-
-
         final Surface g=holder.getSurface();
         k.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -711,7 +706,6 @@ public class Camera2VideoImageActivity extends Activity {
                         BallInspectory=event.getY();
                         break;
                 }
-
                 return true;
             }
         });
@@ -727,33 +721,6 @@ public class Camera2VideoImageActivity extends Activity {
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
         mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
         MovementButtonn=(ImageButton)findViewById(R.id.MovementButton);
-
-
-        /*for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
-                ControlAWBmodeincandescentavailableboolean = true;
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 3) {
-                ControlAWBmodefluorescentavailableboolean = true;
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 4) {
-                ControlAWBmodewarmfluorescentavailableboolean = true;
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 5) {
-                ControlAWBmodedaylightavailableboolean = true;
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 6) {
-                ControlAWBmodecloudydaylightavailableboolean = true;
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 7) {
-                ControlAWBmodetwilightavailableboolean = true;
-
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 8) {
-                ControlAWBmodeshadeavailableboolean = true;
-
-            }
-        }*/
         //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
         MovementButtonn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -773,9 +740,6 @@ public class Camera2VideoImageActivity extends Activity {
         });
 
         final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
-        //final
-
-
         mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -997,8 +961,6 @@ public class Camera2VideoImageActivity extends Activity {
 
                                     c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-
-
                                     if(!MovementButtonnBoolen) {
                                         if (WhiteBalanceBallInspector != null) {
                                             c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
@@ -1036,7 +998,6 @@ public class Camera2VideoImageActivity extends Activity {
                                      + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue+ "\n" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
-
 
                             }
                         });
@@ -2292,15 +2253,18 @@ public class Camera2VideoImageActivity extends Activity {
                 mStillImageButton.setImageResource(R.mipmap.campic);
                 if (!mBurstOn) {
                     lockFocus();
+                    //startStillCaptureRequest();
                 } else if (mBurstOn) {
                     //Toast.makeText(getApplicationContext(), "Burst Done", Toast.LENGTH_SHORT).show();
                     mBurstOn = false;
                 }
                 if (mChronometer.getVisibility() == View.VISIBLE) {
-                    mTimeInterval.setVisibility(View.INVISIBLE);
+                    if(mBurstOn) {
+                        mTimeInterval.setVisibility(View.INVISIBLE);
 
-                    mChronometer.stop();
-                    mChronometer.setVisibility(View.INVISIBLE);
+                        mChronometer.stop();
+                        mChronometer.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -2957,19 +2921,17 @@ public class Camera2VideoImageActivity extends Activity {
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState = STATE_PREVIEW;
 
+
     private void lockFocus() {
-        if(AutoLocks==0) {
+         {
+            Toast.makeText(getApplicationContext(), "Focus Locked", Toast.LENGTH_SHORT).show();
             mCaptureState = STATE_WAIT_LOCK;
-
-
+            if(!mUnlockFocus){
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START);
-
-
-
+            }
             try {
                 if (mIsRecording) {
                     mRecordCaptureSession.capture(mCaptureRequestBuilder.build(), mRecordCaptureCallback, mBackgroundHandler);
-
 
                 } else {
                     mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), mPreviewCaptureCallback, mBackgroundHandler);
@@ -2980,10 +2942,11 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         }
-        AutoLocks = 1;
+
+        startStillCaptureRequest();
     }
 
-    private void unLockFocus() {
+    /*private void unLockFocus() {
         if (AutoLocks == 1) {
 
             try {
@@ -3006,7 +2969,7 @@ public class Camera2VideoImageActivity extends Activity {
 
         }
         AutoLocks=0;
-    }
+    }*/
 
     private ImageButton mStillImageButton;
     //image capture
@@ -3070,8 +3033,9 @@ public class Camera2VideoImageActivity extends Activity {
 
 
             if(mRawImageCaptureon){
-                mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
+                mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
+
 
             } else {
 
@@ -3104,7 +3068,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 createImageFileName(); //forImage
                                 if (mRawImageCaptureon) {
                                     createRawImageFileName(); //for RawImage
-                                }}
+                                }
+                                }
                                 else{
                                     UnlockFocusSpecialBooleanCaptureon=true;
                                 }
