@@ -267,6 +267,7 @@ public class Camera2VideoImageActivity extends Activity {
     private CheckBox  mRawCheckBox;
     private boolean UnlockFocusSpecialBooleanCaptureon=true;
     private boolean AutoWhiteBalancelockBoolean=false;
+    private boolean SpotLockedWhiteBalanceBoolean=false;
     private boolean CustomeWhiteBalanceBoolean=false;
     private  RggbChannelVector rggbChannelVector;
     private ColorSpaceTransform ColorCorrectionTransform;
@@ -458,7 +459,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                             mCaptureState = STATE_PREVIEW;
                              startStillCaptureRequest();
-                            
+
                             /*if(!manualFocusEnableIsChecked) {
 
                                 if (!lockFocusEnableIsChecked) {
@@ -734,6 +735,25 @@ public class Camera2VideoImageActivity extends Activity {
         mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
         MovementButtonn=(ImageButton)findViewById(R.id.MovementButton);
         //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
+        MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if( CaptureAveragepixelCountBooleanOn==false){
+                    TotalRedPixelData=0;
+                    TotalBluePixelData=0;
+                    TotalGreenPixelData=0;
+                    MovementButtonnBoolen=true;
+                    CaptureAveragepixelCountBooleanOn=true;
+                    Toast.makeText(getApplicationContext(), "Average Pixel Activation", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    //Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
+                }
+
+                return false;
+            }
+        });
+
         MovementButtonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -743,26 +763,20 @@ public class Camera2VideoImageActivity extends Activity {
                     Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned on", Toast.LENGTH_SHORT).show();
 
                 }else{
-                    MovementButtonnBoolen=true;
-                    MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
-                    Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
+                    {
+                        if (!CaptureAveragepixelCountBooleanOn) {
 
+
+                        MovementButtonnBoolen = true;
+                        MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
+                        Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
+                    }
+
+                    }
                 }
             }
         });
-        MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if( CaptureAveragepixelCountBooleanOn==false){
-                    CaptureAveragepixelCountBooleanOn=true; 
-                }else{
-                    Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
-                }
-                
-                return false;
-            }
-        });
-        
+
 
         final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
         mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -986,7 +1000,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                                     c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-                                    if(!MovementButtonnBoolen) {
+                                    if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
                                         if (WhiteBalanceBallInspector != null) {
                                             c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
                                         }
@@ -998,10 +1012,12 @@ public class Camera2VideoImageActivity extends Activity {
                                 String convertSS;
                                 String PixelValues;
 
-                                if (MovementButtonnBoolen==false){
+                                if (MovementButtonnBoolen==false || CaptureAveragepixelCountBooleanOn){
                                     PixelValues="Red Value: "+ redPixelData
                                             +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData
-                                            + "Average Red Vale :" + AverageredPixelData;
+                                            + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
+                                    + AveragebluePixelData
+                                    ;
                                 }else{
                                     PixelValues="";
                                 }
@@ -1214,6 +1230,8 @@ public class Camera2VideoImageActivity extends Activity {
 
                 final MenuItem AutoWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
                 AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
+                final MenuItem WhiteBalanceSpotLocked=popupMenu.getMenu().findItem(R.id.SpotLockWhiteBalance);
+                WhiteBalanceSpotLocked.setChecked(SpotLockedWhiteBalanceBoolean);
                 final MenuItem WhiteBalanceCloudyDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
                 WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
                 WhiteBalanceCloudyDaylightItem.setEnabled(ControlAWBmodecloudydaylightavailableboolean);
@@ -1845,6 +1863,25 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "AUTO is already on", Toast.LENGTH_SHORT).show();
+
+                                }
+                                startPreview();
+                                break;
+                            case  R.id.SpotLockWhiteBalance:
+                                if(!SpotLockedWhiteBalanceBoolean){
+                                    //in progress
+                                    SpotLockedWhiteBalanceBoolean=true;
+                                    WhiteBalanceAutoBoolean=false;
+                                    WhiteBalanceWarmFluorescentBoolean=false;
+                                    WhiteBalanceTwilightBoolean=false;
+                                    WhiteBalanceShadeBoolean=false;
+                                    WhiteBalanceFluorescentBoolean=false;
+                                    WhiteBalanceCloudyDaylightBoolean=false;
+                                    WhiteBalanceDaylightBoolean=false;
+
+                                }else{
+                                    SpotLockedWhiteBalanceBoolean=false;
+                                    WhiteBalanceAutoBoolean=true;
 
                                 }
                                 startPreview();
@@ -2612,19 +2649,19 @@ public class Camera2VideoImageActivity extends Activity {
                             int pixel2;
                             pixel2=bitmappy.getPixel((int)topeleftwidth,(int)topleftheight);
                             if(Color.red(pixel2)<255){
-                                TotalRedPixelData=Color.red(pixel2);
+                                TotalRedPixelData=TotalRedPixelData+Color.red(pixel2);
                                 TotalGreenPixelData=TotalGreenPixelData+Color.green(pixel2);
                                 TotalBluePixelData=TotalBluePixelData+Color.blue(pixel2);
-                                counter++;
+
                             }
                         }
                         
                     }
                      CaptureAveragepixelCountBooleanOn=false;
                     } 
-                    //AverageredPixelData=Color.red(pixel2);
-                    //AveragebluePixelData=(TotalBluePixelData/counter);
-                    //AveragegreenPixelData=(TotalGreenPixelData/counter);
+                    AverageredPixelData=(TotalRedPixelData/(totalheight*totalwidth));
+                    AveragebluePixelData=(TotalBluePixelData/(totalheight*totalwidth));
+                    AveragegreenPixelData=(TotalGreenPixelData/(totalheight*totalwidth));
                     //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();
 
 
