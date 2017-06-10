@@ -237,9 +237,14 @@ public class Camera2VideoImageActivity extends Activity {
     int redPixelData;
     int bluePixelData;
     int greePixelData;
-    int AverageredPixelData;
-    int AveragebluePixelData;
-    int AveragegreenPixelData;
+    int AverageredPixelData=0;
+    int AveragebluePixelData=0;
+    int AveragegreenPixelData=0;
+     int TotalRedPixelData;
+    int TotalBluePixelData;
+    int TotalGreenPixelData;
+
+
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
     private int mCurrentAutoFocus;
@@ -310,6 +315,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean ControlAWBmodewarmfluorescentavailableboolean=false;
     boolean ControlAWBmodetwilightavailableboolean=false;
     boolean WBrunOnce=true;
+    boolean CaptureAveragepixelCountBooleanOn=false;
 
 
 
@@ -744,6 +750,19 @@ public class Camera2VideoImageActivity extends Activity {
                 }
             }
         });
+        MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if( CaptureAveragepixelCountBooleanOn==false){
+                    CaptureAveragepixelCountBooleanOn=true; 
+                }else{
+                    Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
+                }
+                
+                return false;
+            }
+        });
+        
 
         final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
         mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -2574,10 +2593,6 @@ public class Camera2VideoImageActivity extends Activity {
                     redPixelData=Color.red(pixel);
                     bluePixelData=Color.blue(pixel);
                     greePixelData=Color.green(pixel);
-                    AverageredPixelData=0;
-                    AveragegreenPixelData=0;
-                    AveragebluePixelData=0;
-
 
                     int counter=0;
                    int totalheight= WhiteBalanceBallInspector.getHeight();
@@ -2587,24 +2602,30 @@ public class Camera2VideoImageActivity extends Activity {
                     int topleftwidthstatic=(int)BallInspectorx-(int)(totalwidth/2);
                     int topleftheight;
                     int topeleftwidth;
-                    /*
-                    ///
-                    for (topleftheight=(int)BallInspectory-(int)(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
-                        for (topeleftwidth=(int)BallInspectory-(int)(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
+
+
+                    ////*
+                    if(CaptureAveragepixelCountBooleanOn){
+                    
+                    for (topleftheight=(int)BallInspectory-(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
+                        for (topeleftwidth=(int)BallInspectorx-(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
                             int pixel2;
                             pixel2=bitmappy.getPixel((int)topeleftwidth,(int)topleftheight);
-                            AverageredPixelData=AverageredPixelData+Color.red(pixel2);
-                            AveragegreenPixelData=AveragegreenPixelData+Color.green(pixel2);
-                            AveragebluePixelData=AveragebluePixelData+Color.blue(pixel2);
-                            counter++;
-
-
+                            if(Color.red(pixel2)<255){
+                                TotalRedPixelData=Color.red(pixel2);
+                                TotalGreenPixelData=TotalGreenPixelData+Color.green(pixel2);
+                                TotalBluePixelData=TotalBluePixelData+Color.blue(pixel2);
+                                counter++;
+                            }
                         }
+                        
                     }
-                    AverageredPixelData=(AverageredPixelData/counter);
-                    AveragebluePixelData=AveragebluePixelData/counter;
-                    AveragegreenPixelData=AveragegreenPixelData/counter;
-                    //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();*/
+                     CaptureAveragepixelCountBooleanOn=false;
+                    } 
+                    //AverageredPixelData=Color.red(pixel2);
+                    //AveragebluePixelData=(TotalBluePixelData/counter);
+                    //AveragegreenPixelData=(TotalGreenPixelData/counter);
+                    //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();
 
 
                 }
