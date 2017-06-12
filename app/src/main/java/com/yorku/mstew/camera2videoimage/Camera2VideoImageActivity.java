@@ -2953,14 +2953,17 @@ public class Camera2VideoImageActivity extends Activity {
             new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
+                    if(!mIsWritingImage) {
+
 
                         Image image = reader.acquireLatestImage();
-                        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE,mCameraEffect);
+                        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
 
                         if (image != null) {
                             mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
-                    }
 
+                        }
+                    }
                 }
             };
     private ImageReader mRawImageReader;
@@ -3015,7 +3018,7 @@ public class Camera2VideoImageActivity extends Activity {
     private void lockFocus() {
          {
             Toast.makeText(getApplicationContext(), "Focus Locked", Toast.LENGTH_SHORT).show();
-             startStillCaptureRequest();
+             //startStillCaptureRequest();
             mCaptureState = STATE_WAIT_LOCK;
             if(!manualFocusEnableIsChecked){
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START);
@@ -3277,7 +3280,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        //mIsWritingRawImage = false;
+                        mIsWritingRawImage = false;
                     }
                     //mIsWritingRawImage = true;
                     break;
