@@ -37,6 +37,7 @@ import android.media.FaceDetector;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaRecorder;
+import android.media.audiofx.Visualizer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -1719,6 +1720,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 WhiteBalanceFluorescentBoolean=false;
 
                                 WhiteBalanceDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
 
                                 startPreview();
                                 break;
@@ -1741,6 +1744,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 WhiteBalanceShadeBoolean=false;
                                 WhiteBalanceFluorescentBoolean=false;
                                 WhiteBalanceCloudyDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
 
 
                                 startPreview();
@@ -1767,6 +1772,8 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 WhiteBalanceCloudyDaylightBoolean=false;
                                 WhiteBalanceDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceShade:
@@ -1787,6 +1794,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 WhiteBalanceFluorescentBoolean=false;
                                 WhiteBalanceCloudyDaylightBoolean=false;
                                 WhiteBalanceDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceTwilight:
@@ -1806,6 +1815,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 WhiteBalanceFluorescentBoolean=false;
                                 WhiteBalanceCloudyDaylightBoolean=false;
                                 WhiteBalanceDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
 
                                 startPreview();
                                 break;
@@ -1826,6 +1837,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 WhiteBalanceFluorescentBoolean=false;
                                 WhiteBalanceCloudyDaylightBoolean=false;
                                 WhiteBalanceDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
 
                                 startPreview();
                                 break;
@@ -1846,6 +1859,8 @@ public class Camera2VideoImageActivity extends Activity {
                                 WhiteBalanceFluorescentBoolean=false;
                                 WhiteBalanceCloudyDaylightBoolean=false;
                                 WhiteBalanceDaylightBoolean=false;
+                                SpotLockedWhiteBalanceBoolean=false;
+
 
                                 startPreview();
                                 break;
@@ -1860,6 +1875,7 @@ public class Camera2VideoImageActivity extends Activity {
                                     WhiteBalanceFluorescentBoolean=false;
                                     WhiteBalanceCloudyDaylightBoolean=false;
                                     WhiteBalanceDaylightBoolean=false;
+                                    SpotLockedWhiteBalanceBoolean=false;
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "AUTO is already on", Toast.LENGTH_SHORT).show();
@@ -1879,12 +1895,28 @@ public class Camera2VideoImageActivity extends Activity {
                                     WhiteBalanceCloudyDaylightBoolean=false;
                                     WhiteBalanceDaylightBoolean=false;
 
+
+                                    double mosiacRGGBred=((double)redPixelData/255)+1;
+                                    double mosiacRGGBgreen=1;
+                                    double mosiacRGGBblue=((double)bluePixelData/255)+1;
+
+
+
+
+
+
+
                                 }else{
                                     SpotLockedWhiteBalanceBoolean=false;
                                     WhiteBalanceAutoBoolean=true;
 
                                 }
                                 startPreview();
+                                break;
+                            case R.id.AverageSpotLockWhiteBalance:
+
+
+
                                 break;
                             case R.id.ChangeISO:
                                 if(!ISOinputboolean){
@@ -2921,16 +2953,12 @@ public class Camera2VideoImageActivity extends Activity {
             new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
-                    if (!mIsWritingImage) {
-                        mIsWritingImage = true;
+
                         Image image = reader.acquireLatestImage();
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE,mCameraEffect);
 
                         if (image != null) {
                             mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
-
-
-                        }
                     }
 
                 }
@@ -2976,18 +3004,6 @@ public class Camera2VideoImageActivity extends Activity {
         ///needs work
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3146,6 +3162,15 @@ public class Camera2VideoImageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
+                        @Override
+                        public void onCaptureCompleted (CameraCaptureSession session,CaptureRequest request, TotalCaptureResult result)
+                        {
+                            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+
+
+                        }
+
+
                     };
 
             if (mIsRecording || mIsTimelapse) {
@@ -3179,10 +3204,10 @@ public class Camera2VideoImageActivity extends Activity {
 
         @Override
         public void run() {
+
             int format = mImage.getFormat();
             switch(format) {
                 case ImageFormat.JPEG:
-
 
                     ByteBuffer byteBuffer = mImage.getPlanes()[0].getBuffer();
                     byte[] bytes = new byte[byteBuffer.remaining()];
@@ -3191,19 +3216,11 @@ public class Camera2VideoImageActivity extends Activity {
                     FileOutputStream fileOutputStream = null;
                     try {
                         fileOutputStream = new FileOutputStream(mImageFileName);
+                        Toast.makeText(getApplicationContext(), "JPEG saved", Toast.LENGTH_SHORT).show();
                         try {
 
 
                             fileOutputStream.write(bytes);
-                            Toast.makeText(getApplicationContext(), "JPEG saved", Toast.LENGTH_SHORT).show();
-
-                            if (!lockFocusEnableIsChecked){
-                               // unLockFocus();
-                            }else {
-                                AutoLocks = 0;
-                            }
-
-
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -3260,9 +3277,9 @@ public class Camera2VideoImageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        mIsWritingRawImage = false;
+                        //mIsWritingRawImage = false;
                     }
-                    mIsWritingRawImage = true;
+                    //mIsWritingRawImage = true;
                     break;
             }
 
@@ -3283,11 +3300,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                         case STATE_WAIT_LOCK:
                         {
-                            if (!manualFocusEnableIsChecked) {
-                                if (!lockFocusEnableIsChecked) {
-                                  //  unLockFocus();
-                                }
-                            }
+
                             mCaptureState = STATE_PREVIEW;
                             Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                             if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED || afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {

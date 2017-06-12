@@ -82,6 +82,16 @@
             android:title="Color Space">
         </item>
         <item
+            android:id="@+id/SpotLockWhiteBalance"
+            android:title="Color Correction By Pixel"
+            android:icon="@drawable/ic_all_out_black_24dp"
+            android:checkable="true"/>
+        <item
+            android:id="@+id/AverageSpotLockWhiteBalance"
+            android:icon="@drawable/ic_all_out_black_24dp"
+            android:title="Color Correction By Average "
+            android:checkable="true"/>
+        <item
             android:id="@+id/ForwardMatrixInput"
             android:title="Forward Matrix"/>
         <item
@@ -226,11 +236,14 @@
                 android:icon="@drawable/ic_lock_black_24dp"
                 android:checkable="true"
                 />
+
             <item
-                android:id="@+id/SpotLockWhiteBalance"
-                android:title="Spot Lock White Balance"
-                android:icon="@drawable/ic_all_out_black_24dp"
-                android:checkable="true"/>
+                android:checkable="true"
+                android:id="@+id/RawSpotWhiteBalance"
+                android:title="Raw Spot White Balance"
+                android:icon="@drawable/ic_all_out_black_24dp"/>
+
+
             <item
                 android:id="@+id/ChooseWhiteBalance"
                 android:title="Choose White Balance"
