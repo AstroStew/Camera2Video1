@@ -241,7 +241,7 @@ public class Camera2VideoImageActivity extends Activity {
     int AverageredPixelData=0;
     int AveragebluePixelData=0;
     int AveragegreenPixelData=0;
-     int TotalRedPixelData;
+    int TotalRedPixelData;
     int TotalBluePixelData;
     int TotalGreenPixelData;
 
@@ -460,15 +460,13 @@ public class Camera2VideoImageActivity extends Activity {
                         case STATE_WAIT_LOCK:
 
                             mCaptureState = STATE_PREVIEW;
-                             startStillCaptureRequest();
+                            startStillCaptureRequest();
 
                             /*if(!manualFocusEnableIsChecked) {
-
                                 if (!lockFocusEnableIsChecked) {
                                     //unLockFocus();
                                 }
                             }
-
                             Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                             if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED) {
                                 Toast.makeText(getApplicationContext(), "Autofocus locked", Toast.LENGTH_SHORT).show();
@@ -698,7 +696,7 @@ public class Camera2VideoImageActivity extends Activity {
         WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.wbselection);
 
         setContentView(R.layout.activity_camera2_video_image);
-         SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
+        SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
         k.setZOrderOnTop(true);
         final SurfaceHolder holder=k.getHolder();
         holder.setFormat(PixelFormat.TRANSLUCENT);
@@ -769,10 +767,10 @@ public class Camera2VideoImageActivity extends Activity {
                         if (!CaptureAveragepixelCountBooleanOn) {
 
 
-                        MovementButtonnBoolen = true;
-                        MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
-                        Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
-                    }
+                            MovementButtonnBoolen = true;
+                            MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
+                            Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 }
@@ -791,9 +789,9 @@ public class Camera2VideoImageActivity extends Activity {
 
                     case R.id.CameraMenu:
 
-                            mStillImageButton.setVisibility(View.VISIBLE);
-                            mRecordImageButton.setVisibility(View.INVISIBLE);
-                            mSettingsButton.setVisibility(View.INVISIBLE);
+                        mStillImageButton.setVisibility(View.VISIBLE);
+                        mRecordImageButton.setVisibility(View.INVISIBLE);
+                        mSettingsButton.setVisibility(View.INVISIBLE);
 
 
                         break;
@@ -995,11 +993,46 @@ public class Camera2VideoImageActivity extends Activity {
 
                             public void run() {
                                 if(g.isValid()) {
+                                    Bitmap bitmappy= mTextureView.getBitmap();
+                                    int pixel;
+                                    pixel=bitmappy.getPixel((int)BallInspectorx,(int)BallInspectory);
+                                    redPixelData=Color.red(pixel);
+                                    bluePixelData=Color.blue(pixel);
+                                    greePixelData=Color.green(pixel);
+
+                                    int counter=0;
+                                    int totalheight= WhiteBalanceBallInspector.getHeight();
+                                    int totalwidth= WhiteBalanceBallInspector.getWidth();
+                                    int totalbitmapspace= totalheight*totalwidth;
+                                    int topleftheightstatic=(int)BallInspectory-(int)(totalheight/2);
+                                    int topleftwidthstatic=(int)BallInspectorx-(int)(totalwidth/2);
+                                    int topleftheight;
+                                    int topeleftwidth;
+
+
+                                    ////*
+                                    if(CaptureAveragepixelCountBooleanOn){
+
+                                        for (topleftheight=(int)BallInspectory-(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
+                                            for (topeleftwidth=(int)BallInspectorx-(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
+                                                int pixel2;
+                                                pixel2=bitmappy.getPixel((int)topeleftwidth,(int)topleftheight);
+                                                if(Color.red(pixel2)<255){
+                                                    TotalRedPixelData=TotalRedPixelData+Color.red(pixel2);
+                                                    TotalGreenPixelData=TotalGreenPixelData+Color.green(pixel2);
+                                                    TotalBluePixelData=TotalBluePixelData+Color.blue(pixel2);
+
+                                                }
+                                            }
+
+                                        }
+                                        CaptureAveragepixelCountBooleanOn=false;
+                                    }
+                                    AverageredPixelData=(TotalRedPixelData/(totalheight*totalwidth));
+                                    AveragebluePixelData=(TotalBluePixelData/(totalheight*totalwidth));
+                                    AveragegreenPixelData=(TotalGreenPixelData/(totalheight*totalwidth));
 
                                     Canvas c = holder.lockCanvas();
-                                    //c.drawARGB(255,0,100,255);
-                                    //
-
                                     c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
                                     if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
@@ -1018,7 +1051,7 @@ public class Camera2VideoImageActivity extends Activity {
                                     PixelValues="Red Value: "+ redPixelData
                                             +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData
                                             + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
-                                    + AveragebluePixelData
+                                            + AveragebluePixelData
                                     ;
                                 }else{
                                     PixelValues="";
@@ -1033,12 +1066,12 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                    mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
+                                            mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
                                     );
 
                                 } else if(1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed: " + convertSS + "\n" + "Focus Distance: " + "INFINITE"
-                                     + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue+ "\n" + PixelValues
+                                            + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue+ "\n" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
 
@@ -1164,7 +1197,7 @@ public class Camera2VideoImageActivity extends Activity {
                     AutoNumber = 0;
                     Toast.makeText(getApplicationContext(), "AUTO ON", Toast.LENGTH_SHORT).show();
                     mAutobutton.setText("AUTO ON");
-                   ColorSpaceInputBoolean=false;
+                    ColorSpaceInputBoolean=false;
                     startPreview();
 
 
@@ -1505,7 +1538,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                                         double TempManualFocusInput= Double.parseDouble(mManualFocusInput.getText().toString());
                                         mFocusTextView.setText(TempManualFocusInput+"");
-                                    mFocusDistance=TempManualFocusInput;
+                                        mFocusDistance=TempManualFocusInput;
 
                                     }
                                 });
@@ -1677,10 +1710,10 @@ public class Camera2VideoImageActivity extends Activity {
                                             double mWhitebalance2temp=Double.parseDouble(mWhitebalance2.getText().toString());
                                             double mWhitebalance3temp=Double.parseDouble(mWhitebalance3.getText().toString());
                                             double mWhitebalance4temp=Double.parseDouble(mWhitebalance4.getText().toString());
-                                             RggbChannelBlue=mWhitebalance4temp;
-                                             RggbChannelG_even=mWhitebalance2temp;
-                                             RggbChannelG_odd=mWhitebalance3temp;
-                                             RggbChsnnelR=mWhitebalance1temp;
+                                            RggbChannelBlue=mWhitebalance4temp;
+                                            RggbChannelG_even=mWhitebalance2temp;
+                                            RggbChannelG_odd=mWhitebalance3temp;
+                                            RggbChsnnelR=mWhitebalance1temp;
                                             startPreview();
 
 
@@ -1730,7 +1763,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 if(!WhiteBalanceDaylightBoolean){
                                     mWBMode = CONTROL_AWB_MODE_DAYLIGHT;
-                                WhiteBalanceDaylightBoolean=true;}
+                                    WhiteBalanceDaylightBoolean=true;}
                                 else{
                                     WhiteBalanceAutoBoolean=true;
                                     mWBMode=CONTROL_AWB_MODE_AUTO;
@@ -1921,7 +1954,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 break;
                             case R.id.ChangeISO:
                                 if(!ISOinputboolean){
-                                ISOinputboolean=true;}
+                                    ISOinputboolean=true;}
                                 else{
                                     ISOinputboolean=false;
                                 }
@@ -2191,17 +2224,17 @@ public class Camera2VideoImageActivity extends Activity {
                                 mCameraInfoTextView5 =(TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
 
                                 mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
-                                    + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
-                                    + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
-                                    + "\n" + "Standard reference illuminant:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)
-                                    + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
-                                    + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
-                                    + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
-                                    + "\n" + "SENSOR_COLOR_TRANSFORM_1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
-                                    + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
-                                    + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
-                                    + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
-                                    + "\n" + "Supported Auto White Balances"
+                                        + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
+                                        + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
+                                        + "\n" + "Standard reference illuminant:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)
+                                        + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
+                                        + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
+                                        + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
+                                        + "\n" + "SENSOR_COLOR_TRANSFORM_1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
+                                        + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
+                                        + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
+                                        + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
+                                        + "\n" + "Supported Auto White Balances"
 
                                 );
                                 mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
@@ -2545,7 +2578,7 @@ public class Camera2VideoImageActivity extends Activity {
             mCaptureRequestBuilder.addTarget(previewSurface);
 
             if(supports_face_detection_mode_simple && isSupports_face_detection_mode_full==false){
-            mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_SIMPLE);
+                mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_SIMPLE);
             }
             if(isSupports_face_detection_mode_full){
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_FULL);
@@ -2582,7 +2615,7 @@ public class Camera2VideoImageActivity extends Activity {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, (float) mCurrentFocusDistance);
                 mFocusDistanceMem= (float) mFocusDistance;
-                }
+            }
             if(!manualFocusEnableIsChecked && !lockFocusEnableIsChecked){
                 {
                     mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_CANCEL);
@@ -2612,7 +2645,6 @@ public class Camera2VideoImageActivity extends Activity {
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE,mCameraEffect);
-
                 //mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, CaptureRequest )
             }*/
             if (mFlashMode == 0) {
@@ -2657,44 +2689,7 @@ public class Camera2VideoImageActivity extends Activity {
                     rggbChannelVector=result.get(CaptureResult.COLOR_CORRECTION_GAINS);
                     ColorCorrectionTransform=result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
                     mNumberofFaces=faces.length;
-                    Bitmap bitmappy= mTextureView.getBitmap();
-                    int pixel;
-                    pixel=bitmappy.getPixel((int)BallInspectorx,(int)BallInspectory);
-                    redPixelData=Color.red(pixel);
-                    bluePixelData=Color.blue(pixel);
-                    greePixelData=Color.green(pixel);
 
-                    int counter=0;
-                   int totalheight= WhiteBalanceBallInspector.getHeight();
-                   int totalwidth= WhiteBalanceBallInspector.getWidth();
-                    int totalbitmapspace= totalheight*totalwidth;
-                    int topleftheightstatic=(int)BallInspectory-(int)(totalheight/2);
-                    int topleftwidthstatic=(int)BallInspectorx-(int)(totalwidth/2);
-                    int topleftheight;
-                    int topeleftwidth;
-
-
-                    ////*
-                    if(CaptureAveragepixelCountBooleanOn){
-                    
-                    for (topleftheight=(int)BallInspectory-(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
-                        for (topeleftwidth=(int)BallInspectorx-(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
-                            int pixel2;
-                            pixel2=bitmappy.getPixel((int)topeleftwidth,(int)topleftheight);
-                            if(Color.red(pixel2)<255){
-                                TotalRedPixelData=TotalRedPixelData+Color.red(pixel2);
-                                TotalGreenPixelData=TotalGreenPixelData+Color.green(pixel2);
-                                TotalBluePixelData=TotalBluePixelData+Color.blue(pixel2);
-
-                            }
-                        }
-                        
-                    }
-                     CaptureAveragepixelCountBooleanOn=false;
-                    } 
-                    AverageredPixelData=(TotalRedPixelData/(totalheight*totalwidth));
-                    AveragebluePixelData=(TotalBluePixelData/(totalheight*totalwidth));
-                    AveragegreenPixelData=(TotalGreenPixelData/(totalheight*totalwidth));
                     //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();
 
 
@@ -2712,13 +2707,13 @@ public class Camera2VideoImageActivity extends Activity {
                             mPreviewCaptureSession = session;
 
                             try {
-                            if(supports_face_detection_mode_simple){
-                                if (isSupports_face_detection_mode_full) {
-                                    mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CameraMetadata.STATISTICS_FACE_DETECT_MODE_FULL);
-                                } else{
-                                    mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CameraMetadata.STATISTICS_FACE_DETECT_MODE_SIMPLE);
+                                if(supports_face_detection_mode_simple){
+                                    if (isSupports_face_detection_mode_full) {
+                                        mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CameraMetadata.STATISTICS_FACE_DETECT_MODE_FULL);
+                                    } else{
+                                        mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CameraMetadata.STATISTICS_FACE_DETECT_MODE_SIMPLE);
+                                    }
                                 }
-                            }
 
                                 mPreviewCaptureSession.setRepeatingRequest(mCaptureRequestBuilder.build(),
                                         PreCaptureCall, mBackgroundHandler);
@@ -2738,7 +2733,7 @@ public class Camera2VideoImageActivity extends Activity {
         }
         mMinFocusDistance = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
         mMaxFocusDistance = mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_HYPERFOCAL_DISTANCE);
-       //mChangeFocusSeekBar.setMax((int) ((int) (1/mMaxFocusDistance - 1/mMinFocusDistance)/0.05));
+        //mChangeFocusSeekBar.setMax((int) ((int) (1/mMaxFocusDistance - 1/mMinFocusDistance)/0.05));
     }
 
     @Override
@@ -3016,9 +3011,9 @@ public class Camera2VideoImageActivity extends Activity {
 
 
     private void lockFocus() {
-         {
+        {
             Toast.makeText(getApplicationContext(), "Focus Locked", Toast.LENGTH_SHORT).show();
-             //startStillCaptureRequest();
+            //startStillCaptureRequest();
             mCaptureState = STATE_WAIT_LOCK;
             if(!manualFocusEnableIsChecked){
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START);
@@ -3043,16 +3038,11 @@ public class Camera2VideoImageActivity extends Activity {
 
     /*private void unLockFocus() {
         if (AutoLocks == 1) {
-
             try {
                 //mCaptureState=STATE_WAIT_LOCK;
-
                 mCaptureState = STATE_PREVIEW;
-
-
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
                         CameraMetadata.CONTROL_AF_TRIGGER_CANCEL);
-
                 mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), mPreviewCaptureCallback,
                         mBackgroundHandler);
                 //
@@ -3061,7 +3051,6 @@ public class Camera2VideoImageActivity extends Activity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
         AutoLocks=0;
     }*/
@@ -3280,7 +3269,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        //mIsWritingRawImage = false;
+                        mIsWritingRawImage = false;
                     }
                     //mIsWritingRawImage = true;
                     break;
@@ -3311,15 +3300,15 @@ public class Camera2VideoImageActivity extends Activity {
 
 
 
-                            //startStillCaptureRequest();
+                                //startStillCaptureRequest();
 
 
 
 
 
-                        }
+                            }
 
-                        break;
+                            break;
                     }
 
                 }
@@ -3327,8 +3316,8 @@ public class Camera2VideoImageActivity extends Activity {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                     process(result);
-                     mCaptureResult = result;
+                    process(result);
+                    mCaptureResult = result;
 
 
 
@@ -3383,7 +3372,7 @@ public class Camera2VideoImageActivity extends Activity {
 
     private boolean mIsWritingImage = false;
     private boolean mIsWritingRawImage = false;
-//Now Were going to create a pop-up menu
+    //Now Were going to create a pop-up menu
     //ISO CHANGE
 //ASpect Ratio stuff
     private static final String TAG = Camera2VideoImageActivity.TAG;
