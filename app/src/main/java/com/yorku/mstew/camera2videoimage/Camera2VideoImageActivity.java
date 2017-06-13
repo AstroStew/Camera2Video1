@@ -18,6 +18,10 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -85,6 +89,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
@@ -320,6 +325,117 @@ public class Camera2VideoImageActivity extends Activity {
     boolean ControlAWBmodetwilightavailableboolean=false;
     boolean WBrunOnce=true;
     boolean CaptureAveragepixelCountBooleanOn=false;
+    private boolean rotationLockEnableIsChecked=false;
+    ImageButton RotateButton;
+    private int ORIENTATIONS_UNKNOWN= -1;
+    private static final int _DATA_X = 0;
+    private static final int _DATA_Y=1;
+    private static final int _DATA_Z=2;
+    private int tempOrientRounded = -1;
+    private SensorManager sensormanager;
+    public int mOrientationDeg;
+    public static final int PORTRAIT=1;
+    public static final int UPSIDE_DOWN= 3;
+    public static final int LANDSCAPE_RIGHT=4;
+    public static final int LANDSCAPE_LEFT=2;
+    public  int mOrientationRounded;
+    private static int mDeviceOrientation;
+
+
+
+
+
+    public void onSensorChanged(SensorEvent event){
+        Log.d(TAG, "Sensor Changed");
+        float[] values=  event.values;
+        int orientation = ORIENTATIONS_UNKNOWN;
+        float X= -values[_DATA_X];
+        float Y= -values[_DATA_Y];
+        float Z= -values[_DATA_Z];
+        float magnitude = X*X +Y*Y;
+        if(magnitude *4 >= Z*Z){
+            float OneEightOverPi = 57.29577957855f;
+            float angle=(float)Math.atan2(-Y,X)*OneEightOverPi;
+            orientation=90-(int)Math.round(angle);
+            while (orientation>= 360){
+                orientation -= 360;
+            }
+            while (orientation<0){
+                orientation += 360;
+            }
+        }
+        Log.d("Orientation",""+ orientation);
+        if(orientation != mOrientationDeg && !rotationLockEnableIsChecked){
+            mOrientationDeg=orientation;
+            if(orientation == -1){
+
+            }else if(orientation <= 35 || orientation > 325){
+                tempOrientRounded=PORTRAIT;
+            }else if(orientation > 55 && orientation <=125){
+                tempOrientRounded=LANDSCAPE_LEFT;
+            }else if(orientation >145 && orientation <= 215){
+                tempOrientRounded=UPSIDE_DOWN;
+            }else if(orientation > 235 && orientation <= 305){
+                tempOrientRounded=LANDSCAPE_RIGHT;
+            }
+
+        }
+        if(mOrientationRounded != tempOrientRounded && !rotationLockEnableIsChecked){
+            if(tempOrientRounded==LANDSCAPE_LEFT){
+                mDeviceOrientation=90;
+                mInfoTextView.setRotation((90+180)%360);
+                mInfoTextView.setTranslationX(-mInfoTextView.getWidth()/2 + mInfoTextView.getHeight()/2);
+                mInfoTextView.setTranslationY(mInfoTextView.getWidth()/2 - mInfoTextView.getHeight()/2);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+                mInfoTextView.startAnimation(fadeIn);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+            }else if(tempOrientRounded==LANDSCAPE_RIGHT){
+                mDeviceOrientation=270;
+                mInfoTextView.setRotation((270+180)%360);
+                mInfoTextView.setTranslationX(mInfoTextView.getWidth()/2 - mInfoTextView.getHeight()/2);
+                mInfoTextView.setTranslationY(mInfoTextView.getWidth()/2 - mInfoTextView.getHeight()/2);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+                mInfoTextView.startAnimation(fadeIn);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+            }else if(tempOrientRounded==UPSIDE_DOWN){
+                mDeviceOrientation = 180;
+                mInfoTextView.setRotation(180);
+                mInfoTextView.setTranslationX(0);
+                mInfoTextView.setTranslationY(0);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+                mInfoTextView.startAnimation(fadeIn);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+
+            } else if (tempOrientRounded == PORTRAIT) {
+                mDeviceOrientation = 0;
+                mInfoTextView.setRotation(0);
+                mInfoTextView.setTranslationX(0);
+                mInfoTextView.setTranslationY(0);
+                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
+                mInfoTextView.startAnimation(fadeIn);
+                fadeIn.setDuration(1000);
+                fadeIn.setFillAfter(true);
+            }
+            mOrientationRounded= tempOrientRounded;
+        }
+
+
+
+
+
+
+
+    }
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy){
+
+    }
+
+
+
 
 
 
@@ -389,6 +505,10 @@ public class Camera2VideoImageActivity extends Activity {
     protected void onResume() {
         super.onResume();
         startBackgroundThread();
+        if(sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
+            Sensor sensor=sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+            //sensormanager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+        }
         if (mTextureView.isAvailable()) {
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
             connectCamera();
@@ -687,6 +807,11 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         super.onCreate(savedInstanceState);
+        sensormanager=(SensorManager) getSystemService(SENSOR_SERVICE);
+        if(sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
+           Sensor sensor=sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+            //sensormanager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -694,10 +819,11 @@ public class Camera2VideoImageActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
+
+        setContentView(R.layout.activity_camera2_video_image);
         BallInspectorx=BallInspectory=600;
         WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.wbselection);
 
-        setContentView(R.layout.activity_camera2_video_image);
         SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
         k.setZOrderOnTop(true);
         final SurfaceHolder holder=k.getHolder();
@@ -725,6 +851,27 @@ public class Camera2VideoImageActivity extends Activity {
             }
         });
         mMediaRecorder = new MediaRecorder();
+        RotateButton=(ImageButton)findViewById(R.id.RotateButton);
+        RotateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(rotationLockEnableIsChecked){
+                    rotationLockEnableIsChecked=false;
+                    RotateButton.setImageResource(R.drawable.ic_screen_rotation_black_24dp);
+                    Toast.makeText(getApplicationContext(), "Rotation Unlocked", Toast.LENGTH_SHORT).show();
+
+
+                }else{
+                    rotationLockEnableIsChecked=true;
+                    RotateButton.setImageResource(R.drawable.ic_screen_lock_rotation_black_24dp);
+                    Toast.makeText(getApplicationContext(), "Rotation Locked", Toast.LENGTH_SHORT).show();
+                    //RotateButton.setImageResource();
+
+                }
+            }
+        });
+
+
         //mIsAuto2=false;
         //this is new
         mTextureView = (TextureView) findViewById(R.id.textureView);
@@ -2769,6 +2916,7 @@ public class Camera2VideoImageActivity extends Activity {
 
     @Override
     protected void onPause() {
+        //sensormanager.unregisterListener(this);
         closeCamera();
         stopBackgroundThread();
         super.onPause();
@@ -3445,7 +3593,7 @@ public class Camera2VideoImageActivity extends Activity {
     private void checkJPEGWriteStoragePermission() throws IOException{
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-               
+
             }else{
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
 

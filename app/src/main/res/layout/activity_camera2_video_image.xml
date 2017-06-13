@@ -356,5 +356,17 @@
         android:layout_alignLeft="@+id/CloseALLbutton"
         android:layout_alignStart="@+id/CloseALLbutton" />
 
+    <ImageButton
+        android:id="@+id/RotateButton"
+        android:src="@drawable/ic_screen_rotation_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/MovementButton"
+        android:text="Button"
+        android:layout_alignLeft="@+id/MovementButton"
+        android:layout_alignStart="@+id/MovementButton" />
+
 
 </RelativeLayout>
