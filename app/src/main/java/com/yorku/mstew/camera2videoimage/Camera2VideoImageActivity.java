@@ -2400,23 +2400,30 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         mStillImageButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+
+                try {
+                    checkJPEGWriteStoragePermission();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
                 mStillImageButton.setImageResource(R.mipmap.campic);
                 if (!mBurstOn) {
                     lockFocus();
                     //startStillCaptureRequest();
-                } else if (mBurstOn) {
+                } if(mBurstOn) {
                     //Toast.makeText(getApplicationContext(), "Burst Done", Toast.LENGTH_SHORT).show();
                     mBurstOn = false;
                 }
                 if (mChronometer.getVisibility() == View.VISIBLE) {
-                    if(mBurstOn) {
                         mTimeInterval.setVisibility(View.INVISIBLE);
-
                         mChronometer.stop();
                         mChronometer.setVisibility(View.INVISIBLE);
-                    }
+
                 }
             }
         });
@@ -2856,6 +2863,9 @@ public class Camera2VideoImageActivity extends Activity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+
+
                     mIsRecording = true;
                     mRecordImageButton.setImageResource(R.mipmap.vidpicbusy);
 
@@ -3431,6 +3441,16 @@ public class Camera2VideoImageActivity extends Activity {
         //txform.postRotate(10);          // just for fun
         txform.postTranslate(xoff, yoff);
         mTextureView.setTransform(txform);
+    }
+    private void checkJPEGWriteStoragePermission() throws IOException{
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+               
+            }else{
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+
+            }
+        }
     }
 
 
