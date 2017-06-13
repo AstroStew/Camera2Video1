@@ -357,6 +357,7 @@ public class Camera2VideoImageActivity extends Activity {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             setupCamera(width, height);
+            //Toast.makeText(Camera2VideoImageActivity.this, "Ah", Toast.LENGTH_SHORT).show();
 
             connectCamera();
 
@@ -422,8 +423,8 @@ public class Camera2VideoImageActivity extends Activity {
                     e.printStackTrace();
                 }
             } else {
-                startPreview();
-            }
+
+            }startPreview();
         }
 
         @Override
@@ -2954,15 +2955,14 @@ public class Camera2VideoImageActivity extends Activity {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
                     if(!mIsWritingImage) {
+                        Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
 
 
                         Image image = reader.acquireLatestImage();
-                        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
+                        //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
+                        mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
-                        if (image != null) {
-                            mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
-                        }
                     }
                 }
             };
@@ -3003,7 +3003,7 @@ public class Camera2VideoImageActivity extends Activity {
     }
     private void AutoExposureUnlock(){
         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_LOCK, false);
-        Toast.makeText(getApplicationContext(), "AE Unlcoked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "AE Unlocked", Toast.LENGTH_SHORT).show();
         ///needs work
 
     }
@@ -3219,7 +3219,7 @@ public class Camera2VideoImageActivity extends Activity {
                     FileOutputStream fileOutputStream = null;
                     try {
                         fileOutputStream = new FileOutputStream(mImageFileName);
-                        Toast.makeText(getApplicationContext(), "JPEG saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Camera2VideoImageActivity.this, "JPEG saved", Toast.LENGTH_SHORT).show();
                         try {
 
 
@@ -3280,12 +3280,11 @@ public class Camera2VideoImageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        mIsWritingRawImage = false;
+                        //mIsWritingRawImage = false;
                     }
                     //mIsWritingRawImage = true;
                     break;
             }
-
         }
     }
 
@@ -3302,14 +3301,14 @@ public class Camera2VideoImageActivity extends Activity {
                             break;
 
                         case STATE_WAIT_LOCK:
-                        {
+
 
                             mCaptureState = STATE_PREVIEW;
                             Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                             if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED || afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
                                 Toast.makeText(getApplicationContext(), "Autofocus locked", Toast.LENGTH_SHORT).show();
 
-                            }
+
 
 
                             //startStillCaptureRequest();
