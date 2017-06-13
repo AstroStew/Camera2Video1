@@ -269,6 +269,8 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean UnlockFocusSpecialBooleanCaptureon=true;
     private boolean AutoWhiteBalancelockBoolean=false;
     private boolean SpotLockedWhiteBalanceBoolean=false;
+    private boolean AverageSpotLockWhiteBalanceBoolean=false;
+
     private boolean CustomeWhiteBalanceBoolean=false;
     private  RggbChannelVector rggbChannelVector;
     private ColorSpaceTransform ColorCorrectionTransform;
@@ -1290,6 +1292,9 @@ public class Camera2VideoImageActivity extends Activity {
                 WhiteBalanceIncandenscentItem.setEnabled(ControlAWBmodeincandescentavailableboolean);
                 final MenuItem WhiteBalanceAutoItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
                 WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
+                final MenuItem AverageSpotLockWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.AverageSpotLockWhiteBalance);
+                AverageSpotLockWhiteBalanceItem.setChecked(AverageSpotLockWhiteBalanceBoolean);
+
 
 
 
@@ -1948,6 +1953,25 @@ public class Camera2VideoImageActivity extends Activity {
                                 startPreview();
                                 break;
                             case R.id.AverageSpotLockWhiteBalance:
+
+                                if(!AverageSpotLockWhiteBalanceBoolean){
+                                    AverageSpotLockWhiteBalanceBoolean=true;
+                                    SpotLockedWhiteBalanceBoolean=false;
+                                    WhiteBalanceAutoBoolean=false;
+                                    WhiteBalanceWarmFluorescentBoolean=false;
+                                    WhiteBalanceTwilightBoolean=false;
+                                    WhiteBalanceShadeBoolean=false;
+                                    WhiteBalanceFluorescentBoolean=false;
+                                    WhiteBalanceCloudyDaylightBoolean=false;
+                                    WhiteBalanceDaylightBoolean=false;
+
+                                }else{
+                                    AverageSpotLockWhiteBalanceBoolean=false;
+                                    WhiteBalanceAutoBoolean=true;
+                                }
+                                startPreview();
+
+
 
 
 
@@ -2950,11 +2974,11 @@ public class Camera2VideoImageActivity extends Activity {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
                     if(!mIsWritingImage) {
-                        Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
 
 
                         Image image = reader.acquireLatestImage();
-                        //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
+                        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
@@ -3111,14 +3135,14 @@ public class Camera2VideoImageActivity extends Activity {
                         CameraDevice.TEMPLATE_STILL_CAPTURE);
             }
 
-            mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
+            //mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             if(mRawImageCaptureon){
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
-                //mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
+                mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
 
 
             } else {
-                //mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
+                mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             }
 
 
@@ -3157,7 +3181,7 @@ public class Camera2VideoImageActivity extends Activity {
                         @Override
                         public void onCaptureCompleted (CameraCaptureSession session,CaptureRequest request, TotalCaptureResult result)
                         {
-                            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
 
 
                         }
@@ -3200,6 +3224,9 @@ public class Camera2VideoImageActivity extends Activity {
             int format = mImage.getFormat();
             switch(format) {
                 case ImageFormat.JPEG:
+
+
+
 
                     ByteBuffer byteBuffer = mImage.getPlanes()[0].getBuffer();
                     byte[] bytes = new byte[byteBuffer.remaining()];
@@ -3269,7 +3296,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        mIsWritingRawImage = false;
+                        //mIsWritingRawImage = false;
                     }
                     //mIsWritingRawImage = true;
                     break;
