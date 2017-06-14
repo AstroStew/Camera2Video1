@@ -342,6 +342,26 @@ public class Camera2VideoImageActivity extends Activity {
     private static int mDeviceOrientation;
 
 
+    public void UiChangeListener(){
+        final View decorView=getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
+
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN)==0){
+                    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+                }
+            }
+        });
+    }
+
+
 
 
 
@@ -654,7 +674,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
             int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-            mTotalRotation = sensorDeviceRotation(cameraCharacteristics, deviceOrientation);
+            mTotalRotation = sensorDeviceRotation(cameraCharacteristics, mDeviceOrientation);
             boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
             int rotatedWidth = width;
             int rotatedHeight = height;
@@ -762,7 +782,7 @@ public class Camera2VideoImageActivity extends Activity {
 
     private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
         int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-        deviceOrientation = ORIENTATIONS.get(deviceOrientation);
+        //deviceOrientation = ORIENTATIONS.get(deviceOrientation);
         return (sensorOrientation + deviceOrientation + 360) % 360;
 
     }
@@ -850,6 +870,8 @@ public class Camera2VideoImageActivity extends Activity {
                 return true;
             }
         });
+
+
         mMediaRecorder = new MediaRecorder();
         RotateButton=(ImageButton)findViewById(R.id.RotateButton);
         RotateButton.setOnClickListener(new View.OnClickListener() {
@@ -1195,6 +1217,10 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 String convertSS;
                                 String PixelValues;
+                                if(mCurrentSSvalue>0){
+                                    mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
+
+                                }
 
                                 if (MovementButtonnBoolen==false || CaptureAveragepixelCountBooleanOn){
                                     PixelValues="Red Value: "+ redPixelData
