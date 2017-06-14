@@ -122,6 +122,8 @@ import java.util.Scanner;
 import java.util.zip.Inflater;
 
 import static android.R.attr.bitmap;
+import static android.R.attr.x;
+import static android.R.attr.y;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AF_MODE_AUTO;
@@ -249,6 +251,8 @@ public class Camera2VideoImageActivity extends Activity {
     int TotalRedPixelData;
     int TotalBluePixelData;
     int TotalGreenPixelData;
+    private boolean wbThreadIsEnabled=false;
+
 
 
 
@@ -309,6 +313,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean ForwardMatrixInputBoolean=false;
     boolean SensorColorTransformInputBoolean=false;
     Bitmap WhiteBalanceBallInspector;
+    byte[] byteArray;
     boolean isItOka=true;
     float BallInspectorx, BallInspectory;
     float alphafloat=(float)0;
@@ -340,6 +345,26 @@ public class Camera2VideoImageActivity extends Activity {
     public static final int LANDSCAPE_LEFT=2;
     public  int mOrientationRounded;
     private static int mDeviceOrientation;
+    int bytecount;
+    Byte byteee;
+    String s = "";
+    String sTemp;
+    int totalR = 0;
+    int totalG = 0;
+    int totalB = 0;
+    int averageR;
+    int averageG;
+    int averageB;
+    private final int BAYERHEIGHT = 128;
+    private final int BAYERWIDTH = 128;
+    private int[][] pixelValues;
+    private boolean wbThreadisEnabled=false;
+    private static float mVectorR = 1.0f;
+    private static float mVectorG_EVEN = 1.0f;
+    private static float mVectorG_ODD = 1.0f;
+    private static float mVectorB = 1.0f;
+
+
 
 
     public void UiChangeListener(){
@@ -960,6 +985,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                     case R.id.CameraMenu:
 
+
                         mStillImageButton.setVisibility(View.VISIBLE);
                         mRecordImageButton.setVisibility(View.INVISIBLE);
                         mSettingsButton.setVisibility(View.INVISIBLE);
@@ -1138,6 +1164,8 @@ public class Camera2VideoImageActivity extends Activity {
 
                         break;
                     case R.id.PageMenu:
+                        Intent pageintent= new Intent(getApplicationContext(), Page.class);
+                        startActivity(pageintent);
                         break;
                 }
                 return false;
@@ -1162,14 +1190,26 @@ public class Camera2VideoImageActivity extends Activity {
                         runOnUiThread(new Runnable() {
                             @Override
 
+
                             public void run() {
                                 if(g.isValid()) {
                                     Bitmap bitmappy= mTextureView.getBitmap();
+                                     bytecount=bitmappy.getByteCount();
+                                    ByteBuffer bytebuffer1= ByteBuffer.allocate(1);
+
+
+
+
+
                                     int pixel;
                                     pixel=bitmappy.getPixel((int)BallInspectorx,(int)BallInspectory);
                                     redPixelData=Color.red(pixel);
                                     bluePixelData=Color.blue(pixel);
                                     greePixelData=Color.green(pixel);
+
+
+
+
 
                                     int counter=0;
                                     int totalheight= WhiteBalanceBallInspector.getHeight();
@@ -1199,20 +1239,35 @@ public class Camera2VideoImageActivity extends Activity {
                                         }
                                         CaptureAveragepixelCountBooleanOn=false;
                                     }
-                                    AverageredPixelData=(TotalRedPixelData/(totalheight*totalwidth));
-                                    AveragebluePixelData=(TotalBluePixelData/(totalheight*totalwidth));
-                                    AveragegreenPixelData=(TotalGreenPixelData/(totalheight*totalwidth));
+                                   if(wbThreadisEnabled){
+                                       Canvas c = holder.lockCanvas();
+                                       c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-                                    Canvas c = holder.lockCanvas();
-                                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                                       if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
+                                           if (WhiteBalanceBallInspector != null) {
+                                               c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                                           }
+                                       }
 
-                                    if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
-                                        if (WhiteBalanceBallInspector != null) {
-                                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
-                                        }
-                                    }
+                                       holder.unlockCanvasAndPost(c);
 
-                                    holder.unlockCanvasAndPost(c);
+                                   }else{
+                                       Canvas c = holder.lockCanvas();
+                                       c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+                                       if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
+                                           if (WhiteBalanceBallInspector != null) {
+                                               c.drawBitmap(WhiteBalanceBallInspector, 0, 0, null);
+                                           }
+                                       }
+
+                                       holder.unlockCanvasAndPost(c);
+
+                                   }
+
+
+
+
 
                                 }
                                 String convertSS;
@@ -1241,7 +1296,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                            mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
+                                            mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n"+"ByteCount"+ bytecount + "\n"+ "Byte Array"+ byteee + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
                                     );
 
                                 } else if(1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
@@ -2558,6 +2613,24 @@ public class Camera2VideoImageActivity extends Activity {
                                 mSceneMode = CONTROL_SCENE_MODE_THEATRE;
                                 startPreview();
                                 break;
+
+
+                            case R.id.devButton:
+                                wbThreadisEnabled =! wbThreadIsEnabled;
+                                startPreview();
+                                break;
+                            case R.id.devButton2:
+                                mWBMode=-1;
+                                ColorSpaceInputBoolean=true;
+                                mVectorR=(float)totalG/totalR;
+                                mVectorG_EVEN=1;
+                                mVectorG_ODD=1;
+                                mVectorB=(float)totalG/totalB;
+                                startPreview();
+                                break;
+
+
+
                             default:
                                 return false;
                         }
@@ -2798,11 +2871,21 @@ public class Camera2VideoImageActivity extends Activity {
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, ShutterSpeedValue);
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
             }
+
+
+
             if(CustomeWhiteBalanceBoolean){
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS,new RggbChannelVector((float)RggbChsnnelR,(float) RggbChannelG_even, (float)RggbChannelG_odd,(float)RggbChannelBlue ));
-            }  if(!CustomeWhiteBalanceBoolean) {
+            }  else if(!CustomeWhiteBalanceBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE,mWBMode);
+            }
+
+            if(mWBMode == -1){
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
+                RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
+
             }
             if (BooleanOpticalStabilizationOn) {
                 mCaptureRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_ON);
@@ -3176,7 +3259,134 @@ public class Camera2VideoImageActivity extends Activity {
                 public void onImageAvailable(ImageReader reader) {
                     if (!mIsWritingRawImage) {
                         Image image = reader.acquireLatestImage();
+                        Image.Plane[] planes=image.getPlanes();
+                        ByteBuffer Bytebufferplane1=null;
+                        if(planes.length>0){
+                            Bytebufferplane1=planes[0].getBuffer();
+                        }
                         if (image != null) {
+                            int temp=0;
+                            int temp2=0;
+                            int counterr=0;
+
+                            pixelValues= new int[BAYERHEIGHT][BAYERHEIGHT];
+                            int height = (int) (BallInspectory * (image.getHeight()/mTextureView.getWidth()));
+                            int width = (int) (BallInspectorx * (image.getWidth()/mTextureView.getHeight()));
+                            for (int j = height; j < height + BAYERHEIGHT; j++) {
+                                counterr = 0;
+                                for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
+                                    temp = Bytebufferplane1.get((i)+((image.getWidth())*j)) & 0xFF;
+                                    if (i%2 == 1) {
+                                        pixelValues[j-height][counterr] = (temp << 8) + temp2;
+                                        counterr++;
+                                    } else {
+                                        temp2 = temp;
+                                    }
+                                }
+                            }
+
+                            int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
+                            if (mFilterArrangement == 0) {
+                                s = "RG\nGB\n\n";
+                                totalR = totalG = totalB = 0;
+                                for (int i = 0; i < BAYERHEIGHT; i++) {
+                                    for (int j = 0; j < BAYERWIDTH; j++) {
+                                        if (i%2 == 0) {
+                                            if (j % 2 == 0) {
+                                                totalR = totalR + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                        }
+                                        if (i%2 == 1) {
+                                            if (j % 2 == 0) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalB = totalB + pixelValues[i][j];
+                                            }
+                                        }
+                                    }
+
+                                    s = s + "\n\n";
+                                }
+                            } else if (mFilterArrangement == 1) {
+                                s = "GR\nBG\n\n";
+                                for (int i = 0; i < BAYERHEIGHT; i++) {
+                                    for (int j = 0; j < BAYERWIDTH; j++) {
+                                        if (i%2 == 0) {
+                                            if (j % 2 == 0) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalR = totalR + pixelValues[i][j];
+                                            }
+                                        }
+                                        if (i%2 == 1) {
+                                            if (j % 2 == 0) {
+                                                totalB = totalB+ pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                        }
+                                    }
+                                    s = s + "\n\n";
+                                }
+                            } else if (mFilterArrangement == 2) {
+                                s = "GB\nRG\n\n";
+                                for (int i = 0; i < BAYERHEIGHT; i++) {
+                                    for (int j = 0; j < BAYERWIDTH; j++) {
+                                        if (i%2 == 0) {
+                                            if (j % 2 == 0) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalB = totalB + pixelValues[i][j];
+                                            }
+                                        }
+                                        if (i%2 == 1) {
+                                            if (j % 2 == 0) {
+                                                totalR = totalR + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                        }
+                                    }
+                                    s = s + "\n\n";
+                                }
+                            } else if (mFilterArrangement == 3) {
+                                s = "BG\nGR\n\n";
+                                for (int i = 0; i < BAYERHEIGHT; i++) {
+                                    for (int j = 0; j < BAYERWIDTH; j++) {
+                                        if (i%2 == 0) {
+                                            if (j % 2 == 0) {
+                                                totalB = totalB + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                        }
+                                        if (i%2 == 1) {
+                                            if (j % 2 == 0) {
+                                                totalG = totalG + pixelValues[i][j];
+                                            }
+                                            if (j % 2 == 1) {
+                                                totalR = totalR + pixelValues[i][j];
+                                            }
+                                        }
+                                        s = s + pixelValues[i][j] + " ";
+                                    }
+                                    s = s + "\n\n";
+
+                                }
+                            }
+                            totalR = (int) (totalR/Math.pow(BAYERHEIGHT/2,2));
+                            totalG = (int) (totalG/(Math.pow(BAYERHEIGHT/2,2)*2));
+                            totalB = (int) (totalB/Math.pow(BAYERHEIGHT/2,2));
+
                             mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
@@ -3461,6 +3671,8 @@ public class Camera2VideoImageActivity extends Activity {
                     FileOutputStream rawFileOutputStream = null;
                     try {
                         rawFileOutputStream = new FileOutputStream(mRawFileName);
+                        Toast.makeText(Camera2VideoImageActivity.this, "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
+
                         dngCreator.writeImage(rawFileOutputStream, mImage);
                         Toast.makeText(getApplicationContext(), "RAW saved", Toast.LENGTH_SHORT).show();
 

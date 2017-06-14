@@ -6,6 +6,13 @@
     android:title="Camera Info">
 
 </item>
+    <item
+        android:id="@+id/devButton"
+        android:title="Dev Feature Test"
+        />
+    <item
+        android:id="@+id/devButton2"
+        android:title="Dev Feature Text 2"/>
 
 
 
