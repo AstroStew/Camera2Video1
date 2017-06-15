@@ -8,7 +8,7 @@
 </item>
     <item
         android:id="@+id/devButton"
-        android:title="Dev Feature Test"
+        android:title="Start"
         />
     <item
         android:id="@+id/devButton2"

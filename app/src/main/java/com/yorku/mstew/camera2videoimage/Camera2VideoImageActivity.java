@@ -331,7 +331,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean WBrunOnce=true;
     boolean CaptureAveragepixelCountBooleanOn=false;
     private boolean rotationLockEnableIsChecked=false;
-    ImageButton RotateButton;
+
     private int ORIENTATIONS_UNKNOWN= -1;
     private static final int _DATA_X = 0;
     private static final int _DATA_Y=1;
@@ -345,8 +345,8 @@ public class Camera2VideoImageActivity extends Activity {
     public static final int LANDSCAPE_LEFT=2;
     public  int mOrientationRounded;
     private static int mDeviceOrientation;
-    int bytecount;
-    Byte byteee;
+
+
     String s = "";
     String sTemp;
     int totalR = 0;
@@ -363,6 +363,8 @@ public class Camera2VideoImageActivity extends Activity {
     private static float mVectorG_EVEN = 1.0f;
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
+    private boolean ChangeWhiteBalanceSpotRawOn=false;
+
 
 
 
@@ -898,25 +900,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         mMediaRecorder = new MediaRecorder();
-        RotateButton=(ImageButton)findViewById(R.id.RotateButton);
-        RotateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(rotationLockEnableIsChecked){
-                    rotationLockEnableIsChecked=false;
-                    RotateButton.setImageResource(R.drawable.ic_screen_rotation_black_24dp);
-                    Toast.makeText(getApplicationContext(), "Rotation Unlocked", Toast.LENGTH_SHORT).show();
 
-
-                }else{
-                    rotationLockEnableIsChecked=true;
-                    RotateButton.setImageResource(R.drawable.ic_screen_lock_rotation_black_24dp);
-                    Toast.makeText(getApplicationContext(), "Rotation Locked", Toast.LENGTH_SHORT).show();
-                    //RotateButton.setImageResource();
-
-                }
-            }
-        });
 
 
         //mIsAuto2=false;
@@ -1192,9 +1176,16 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             public void run() {
+                                if(ChangeWhiteBalanceSpotRawOn){
+
+
+                                    ChangeWhiteBalanceSpotRawOn=false;
+                                }
+
+
                                 if(g.isValid()) {
                                     Bitmap bitmappy= mTextureView.getBitmap();
-                                     bytecount=bitmappy.getByteCount();
+
                                     ByteBuffer bytebuffer1= ByteBuffer.allocate(1);
 
 
@@ -1296,7 +1287,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                            mNumberofFaces +  "\n"  +rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory + "\n"+"ByteCount"+ bytecount + "\n"+ "Byte Array"+ byteee + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
+                                            mNumberofFaces +  "\n"  + rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory  + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
                                     );
 
                                 } else if(1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
@@ -2616,6 +2607,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             case R.id.devButton:
+                                ChangeWhiteBalanceSpotRawOn=true;
                                 wbThreadisEnabled =! wbThreadIsEnabled;
                                 startPreview();
                                 break;

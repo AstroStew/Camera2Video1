@@ -71,11 +71,27 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+    <EditText
+        android:id="@+id/editText2"
+        android:background="#999999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/TimeIntervalDisplay"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/infotextView2"
+        android:layout_toRightOf="@+id/infotextView2"
+        android:ems="10"
+        android:enabled="false"
+         />
+
     <Button
         android:id="@+id/Auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Auto"
+
         android:layout_alignBottom="@+id/CameraButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -87,6 +103,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/campic"
+
+        android:background="@android:color/transparent"
 
         android:layout_alignTop="@+id/VideoButton"
         android:layout_marginLeft="39dp"
@@ -122,6 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/vidpiconline"
+        android:background="@android:color/transparent"
         android:id="@+id/VideoButton"
         android:contentDescription="Video_Button"
         android:visibility="invisible"
@@ -137,6 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/settingss"
+        android:background="@android:color/transparent"
         android:id="@+id/SettingImageButton"
         android:contentDescription="Video_Button"
         android:visibility="invisible"
@@ -189,7 +209,10 @@
         android:text="TextView"
         android:textColor="#ffffff"
         android:textSize="10dp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_toLeftOf="@+id/CloseALLbutton"
+        android:layout_toStartOf="@+id/CloseALLbutton"
+        android:layout_alignBottom="@+id/MovementButton" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -263,6 +286,7 @@
         android:text="Button"
         android:visibility="visible"
         android:src="@drawable/ic_exit_to_app_black_24dp"
+        android:background="@android:color/transparent"
         android:layout_below="@+id/FlashButton"
         android:layout_alignLeft="@+id/FlashButton"
         android:layout_alignStart="@+id/FlashButton" />
@@ -283,12 +307,16 @@
     <ImageButton
         android:id="@+id/FlipButton"
         android:src="@drawable/flipfront"
+        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
 
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/FlashButton"
+        android:layout_alignStart="@+id/FlashButton" />
 
     <SeekBar
         android:id="@+id/FocusChangeSeekBar"
@@ -304,6 +332,7 @@
         android:id="@+id/FlashButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_flash_off_black_24dp"
         android:layout_below="@+id/FlipButton"
         android:layout_alignParentRight="true"
@@ -348,6 +377,7 @@
 
     <ImageButton
         android:id="@+id/MovementButton"
+        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_highlight_off_black_24dp"
@@ -356,18 +386,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignLeft="@+id/CloseALLbutton"
         android:layout_alignStart="@+id/CloseALLbutton" />
-
-    <ImageButton
-        android:id="@+id/RotateButton"
-        android:src="@drawable/ic_screen_rotation_black_24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/MovementButton"
-        android:text="Button"
-        android:layout_alignLeft="@+id/MovementButton"
-        android:layout_alignStart="@+id/MovementButton" />
 
 
 </RelativeLayout>
