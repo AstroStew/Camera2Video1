@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Size;
 import android.view.MenuItem;
@@ -55,6 +56,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
+
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -151,7 +153,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     /**
      * {@inheritDoc}
      */
-    @Override
+
     public boolean onIsMultiPane() {
         return isXLargeTablet(this);
     }
@@ -159,11 +161,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     /**
      * {@inheritDoc}
      */
-    @Override
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
+    public void onBuildHeaders(List<PreferenceActivity.Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
     }
+
+
 
     /**
      * This method stops fragment injection in malicious applications.
@@ -290,6 +294,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     CaptureRawwithJPEGBoolean=true;
                     CaptureRawwithoutJPEGBoolean=false;
 
+
                     
                     break;
                 case R.id.CaptureRawwithoutJpeg:
@@ -328,9 +333,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
 
+
+
         }
 
 
     }
+
 
 }

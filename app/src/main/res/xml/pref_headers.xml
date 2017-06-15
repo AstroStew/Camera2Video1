@@ -30,6 +30,7 @@
     <header
     android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"
     android:title="Optical Stabilization"
+        android:key="OpticalSS"
     android:id="@+id/OpticalStabilizationInput2"
         android:icon="@drawable/ic_vibration_black_24dp"
     />
@@ -38,11 +39,13 @@
     <header
         android:title="Photo Burst Input"
         android:icon="@drawable/custom_input_iso"
+        android:key="PhotoBurstInput"
         />
 
     <header
         android:title="Video TimeLapse Input"
         android:icon="@drawable/custom_input_iso"
+        android:key="VideoTimelapseInput"
         />
     <header
         android:title="Show RealTime Information"

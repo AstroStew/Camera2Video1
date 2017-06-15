@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.app.Fragment;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
@@ -50,6 +52,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -747,6 +750,15 @@ public class Camera2VideoImageActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Button readButton=(Button)findViewById(R.id.read);
+        readButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                String mSetiing=prefs.getString("example_text", "xxx");
+                Toast.makeText(Camera2VideoImageActivity.this, ""+mSetiing, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
@@ -842,6 +854,7 @@ public class Camera2VideoImageActivity extends Activity {
                 }
             }
         });
+
 
 
         final BottomNavigationView mCom = (BottomNavigationView) findViewById(R.id.NavBot);

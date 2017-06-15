@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Pages extends AppCompatActivity {
 
@@ -155,6 +156,7 @@ public class Pages extends AppCompatActivity {
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
+
             }
             return null;
         }
