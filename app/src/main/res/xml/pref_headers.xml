@@ -1,0 +1,53 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$GeneralPreferenceFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/pref_header_general"
+        />
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$NotificationPreferenceFragment"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/pref_header_notifications" />
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$DataSyncPreferenceFragment"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:title="@string/pref_header_data_sync" />
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$RawCaptureClass"
+        android:title="Raw Capture"
+        android:icon="@drawable/ic_all_out_black_24dp"
+        />
+    <header
+
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$resolutionClass"
+        android:title="Resolution"
+        android:icon="@drawable/ic_photo_size_select_actual_black_24dp"/>
+    <header
+
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"
+        android:title="Optical Stabilization"
+        android:id="@+id/OpticalStabilizationInput2"
+        />
+    <header
+        android:title="Photo Burst Input"/>
+    <header
+        android:title="Video TimeLapse Input"
+        />
+    <header
+        android:title="Show RealTime Information"
+        />
+
+
+
+
+</preference-headers>
+
+
+
+
+

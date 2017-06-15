@@ -41,6 +41,7 @@ import android.media.FaceDetector;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaRecorder;
+import android.media.audiofx.BassBoost;
 import android.media.audiofx.Visualizer;
 import android.net.Uri;
 import android.os.Build;
@@ -1012,6 +1013,10 @@ public class Camera2VideoImageActivity extends Activity {
 
                         break;
                     case R.id.AdvancedSettingsMenu:
+
+
+
+
                         mStillImageButton.setVisibility(View.INVISIBLE);
                         mRecordImageButton.setVisibility(View.INVISIBLE);
                         mSettingsButton.setVisibility(View.VISIBLE);
@@ -1023,6 +1028,8 @@ public class Camera2VideoImageActivity extends Activity {
                         mSettingsButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                Intent AdvancedSettingIntent= new Intent(getApplicationContext(), SettingsActivity.class);
+                                startActivity(AdvancedSettingIntent);
                                 PopupMenu AdvanncedsettingsPopup= new PopupMenu(Camera2VideoImageActivity.this, mSettingsButton);
                                 AdvanncedsettingsPopup.inflate(R.menu.advancedsettings);
                                 final MenuItem rawEnabledMenuItem = AdvanncedsettingsPopup.getMenu().findItem(R.id.RawInput);
@@ -1198,7 +1205,7 @@ public class Camera2VideoImageActivity extends Activity {
             public void run() {
                 while (!Thread.interrupted()) {
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
 
@@ -3436,8 +3443,9 @@ public class Camera2VideoImageActivity extends Activity {
 
 
 
-                        isAdjustingWB2=false;
+
                     }
+                    isAdjustingWB2=false;
                 }
             };
     private void AutoWhiteBalanceLock(){
