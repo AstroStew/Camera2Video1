@@ -1160,7 +1160,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 String convertSS;
                                 String PixelValues;
-                                
+
 
                                 if (MovementButtonnBoolen==false || CaptureAveragepixelCountBooleanOn){
                                     PixelValues="Red Value: "+ redPixelData
