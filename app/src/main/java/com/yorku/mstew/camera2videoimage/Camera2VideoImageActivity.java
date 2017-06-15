@@ -1202,7 +1202,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
 
-                                    int counter=0;
+
                                     int totalheight= WhiteBalanceBallInspector.getHeight();
                                     int totalwidth= WhiteBalanceBallInspector.getWidth();
                                     int totalbitmapspace= totalheight*totalwidth;
@@ -1223,6 +1223,8 @@ public class Camera2VideoImageActivity extends Activity {
                                                     TotalRedPixelData=TotalRedPixelData+Color.red(pixel2);
                                                     TotalGreenPixelData=TotalGreenPixelData+Color.green(pixel2);
                                                     TotalBluePixelData=TotalBluePixelData+Color.blue(pixel2);
+                                                    AverageredPixelData=(TotalRedPixelData/totalbitmapspace);AveragegreenPixelData=TotalGreenPixelData/totalbitmapspace;AveragebluePixelData=TotalBluePixelData/totalbitmapspace;
+
 
                                                 }
                                             }
@@ -1230,7 +1232,7 @@ public class Camera2VideoImageActivity extends Activity {
                                         }
                                         CaptureAveragepixelCountBooleanOn=false;
                                     }
-                                   if(wbThreadisEnabled){
+
                                        Canvas c = holder.lockCanvas();
                                        c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
@@ -1242,19 +1244,8 @@ public class Camera2VideoImageActivity extends Activity {
 
                                        holder.unlockCanvasAndPost(c);
 
-                                   }else{
-                                       Canvas c = holder.lockCanvas();
-                                       c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-                                       if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
-                                           if (WhiteBalanceBallInspector != null) {
-                                               c.drawBitmap(WhiteBalanceBallInspector, 0, 0, null);
-                                           }
-                                       }
 
-                                       holder.unlockCanvasAndPost(c);
-
-                                   }
 
 
 
