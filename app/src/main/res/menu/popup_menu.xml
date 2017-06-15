@@ -13,6 +13,14 @@
     <item
         android:id="@+id/devButton2"
         android:title="Dev Feature Text 2"/>
+    <item
+        android:id="@+id/WB_RAWTouch"
+        android:title="White Balance Raw Touch Enabler"
+        android:checkable="true"
+        android:checked="true"
+
+        />
+
 
 
 

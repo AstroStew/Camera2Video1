@@ -252,6 +252,10 @@ public class Camera2VideoImageActivity extends Activity {
     int TotalBluePixelData;
     int TotalGreenPixelData;
     private boolean wbThreadIsEnabled=false;
+    private boolean isAdjustingWB2=false;
+    private boolean isAdjustingWB=false;
+
+
 
 
 
@@ -310,6 +314,7 @@ public class Camera2VideoImageActivity extends Activity {
     EditText mColorSpaceText8;
     EditText mColorSpaceText9;
     boolean ColorSpaceInputBoolean=false;
+    boolean WB_RAWTouchEnabled=false;
     boolean ForwardMatrixInputBoolean=false;
     boolean SensorColorTransformInputBoolean=false;
     Bitmap WhiteBalanceBallInspector;
@@ -762,6 +767,27 @@ public class Camera2VideoImageActivity extends Activity {
             e.printStackTrace();
         }
     }
+    private void adjustWhiteBalanceOnTouch() {
+        try {
+
+            mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+            mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
+            CameraCaptureSession.CaptureCallback stillCaptureCallback = new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
+                    super.onCaptureStarted(session, request, timestamp, frameNumber);
+                }
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    super.onCaptureCompleted(session, request, result);
+                }
+            };
+            mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), null, null);
+        }  catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     //close the camera
     private void closeCamera() {
@@ -894,6 +920,8 @@ public class Camera2VideoImageActivity extends Activity {
                         BallInspectory=event.getY();
                         break;
                 }
+                isAdjustingWB2=true;
+                isAdjustingWB=true;
                 return true;
             }
         });
@@ -1176,6 +1204,13 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             public void run() {
+                                if(isAdjustingWB&&isAdjustingWB2&&WB_RAWTouchEnabled){
+                                    adjustWhiteBalanceOnTouch();
+                                    isAdjustingWB=false;
+                                }
+
+
+
                                 if(ChangeWhiteBalanceSpotRawOn){
 
 
@@ -1504,6 +1539,9 @@ public class Camera2VideoImageActivity extends Activity {
                 WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
                 final MenuItem AverageSpotLockWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.AverageSpotLockWhiteBalance);
                 AverageSpotLockWhiteBalanceItem.setChecked(AverageSpotLockWhiteBalanceBoolean);
+                final MenuItem WB_RAWTouchItem = popupMenu.getMenu().findItem(R.id.WB_RAWTouch);
+                WB_RAWTouchItem.setChecked(WB_RAWTouchEnabled);
+
 
 
 
@@ -2611,6 +2649,12 @@ public class Camera2VideoImageActivity extends Activity {
                                 mVectorB=(float)totalG/totalB;
                                 startPreview();
                                 break;
+                            case R.id.WB_RAWTouch:
+                                if(WB_RAWTouchEnabled){
+                                    WB_RAWTouchEnabled=false;
+                                }else{
+                                    WB_RAWTouchEnabled=true;
+                                }
 
 
 
@@ -3223,16 +3267,21 @@ public class Camera2VideoImageActivity extends Activity {
             new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
-                    if(!mIsWritingImage) {
+
                         //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
 
 
                         Image image = reader.acquireLatestImage();
+                    if(!isAdjustingWB2){
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
+                    }else{
+                        image.close();
                     }
+
+
                 }
             };
     private ImageReader mRawImageReader;
@@ -3248,19 +3297,19 @@ public class Camera2VideoImageActivity extends Activity {
                             Bytebufferplane1=planes[0].getBuffer();
                         }
                         if (image != null) {
-                            int temp=0;
-                            int temp2=0;
-                            int counterr=0;
+                            int temp = 0;
+                            int temp2 = 0;
+                            int counterr = 0;
 
-                            pixelValues= new int[BAYERHEIGHT][BAYERHEIGHT];
-                            int height = (int) (BallInspectory * (image.getHeight()/mTextureView.getWidth()));
-                            int width = (int) (BallInspectorx * (image.getWidth()/mTextureView.getHeight()));
+                            pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
+                            int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
+                            int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
                             for (int j = height; j < height + BAYERHEIGHT; j++) {
                                 counterr = 0;
                                 for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
-                                    temp = Bytebufferplane1.get((i)+((image.getWidth())*j)) & 0xFF;
-                                    if (i%2 == 1) {
-                                        pixelValues[j-height][counterr] = (temp << 8) + temp2;
+                                    temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
+                                    if (i % 2 == 1) {
+                                        pixelValues[j - height][counterr] = (temp << 8) + temp2;
                                         counterr++;
                                     } else {
                                         temp2 = temp;
@@ -3274,7 +3323,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 totalR = totalG = totalB = 0;
                                 for (int i = 0; i < BAYERHEIGHT; i++) {
                                     for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i%2 == 0) {
+                                        if (i % 2 == 0) {
                                             if (j % 2 == 0) {
                                                 totalR = totalR + pixelValues[i][j];
                                             }
@@ -3282,7 +3331,7 @@ public class Camera2VideoImageActivity extends Activity {
                                                 totalG = totalG + pixelValues[i][j];
                                             }
                                         }
-                                        if (i%2 == 1) {
+                                        if (i % 2 == 1) {
                                             if (j % 2 == 0) {
                                                 totalG = totalG + pixelValues[i][j];
                                             }
@@ -3298,7 +3347,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 s = "GR\nBG\n\n";
                                 for (int i = 0; i < BAYERHEIGHT; i++) {
                                     for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i%2 == 0) {
+                                        if (i % 2 == 0) {
                                             if (j % 2 == 0) {
                                                 totalG = totalG + pixelValues[i][j];
                                             }
@@ -3306,9 +3355,9 @@ public class Camera2VideoImageActivity extends Activity {
                                                 totalR = totalR + pixelValues[i][j];
                                             }
                                         }
-                                        if (i%2 == 1) {
+                                        if (i % 2 == 1) {
                                             if (j % 2 == 0) {
-                                                totalB = totalB+ pixelValues[i][j];
+                                                totalB = totalB + pixelValues[i][j];
                                             }
                                             if (j % 2 == 1) {
                                                 totalG = totalG + pixelValues[i][j];
@@ -3321,7 +3370,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 s = "GB\nRG\n\n";
                                 for (int i = 0; i < BAYERHEIGHT; i++) {
                                     for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i%2 == 0) {
+                                        if (i % 2 == 0) {
                                             if (j % 2 == 0) {
                                                 totalG = totalG + pixelValues[i][j];
                                             }
@@ -3329,7 +3378,7 @@ public class Camera2VideoImageActivity extends Activity {
                                                 totalB = totalB + pixelValues[i][j];
                                             }
                                         }
-                                        if (i%2 == 1) {
+                                        if (i % 2 == 1) {
                                             if (j % 2 == 0) {
                                                 totalR = totalR + pixelValues[i][j];
                                             }
@@ -3344,7 +3393,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 s = "BG\nGR\n\n";
                                 for (int i = 0; i < BAYERHEIGHT; i++) {
                                     for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i%2 == 0) {
+                                        if (i % 2 == 0) {
                                             if (j % 2 == 0) {
                                                 totalB = totalB + pixelValues[i][j];
                                             }
@@ -3352,7 +3401,7 @@ public class Camera2VideoImageActivity extends Activity {
                                                 totalG = totalG + pixelValues[i][j];
                                             }
                                         }
-                                        if (i%2 == 1) {
+                                        if (i % 2 == 1) {
                                             if (j % 2 == 0) {
                                                 totalG = totalG + pixelValues[i][j];
                                             }
@@ -3366,14 +3415,28 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 }
                             }
-                            totalR = (int) (totalR/Math.pow(BAYERHEIGHT/2,2));
-                            totalG = (int) (totalG/(Math.pow(BAYERHEIGHT/2,2)*2));
-                            totalB = (int) (totalB/Math.pow(BAYERHEIGHT/2,2));
+                            totalR = (int) (totalR / Math.pow(BAYERHEIGHT / 2, 2));
+                            totalG = (int) (totalG / (Math.pow(BAYERHEIGHT / 2, 2)));
+                            totalB = (int) (totalB / Math.pow(BAYERHEIGHT / 2, 2));
+                            if(WB_RAWTouchEnabled){
+                                Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
 
-                            mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
-                        }
+                            }
+                           }
+                            if(!isAdjustingWB2){
+
+                                mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
+
+
+                            }else{
+                                image.close();
+                            }
+
+
+
+                        isAdjustingWB2=false;
                     }
                 }
             };
