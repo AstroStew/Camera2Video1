@@ -1286,13 +1286,13 @@ public class Camera2VideoImageActivity extends Activity {
                                     convertSS = "1/" + String.valueOf(1000000000 / mCurrentSSvalue);
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
-                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed:" + convertSS + "\n" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\n"+ "Faces Detected:" +
-                                            mNumberofFaces +  "\n"  + rggbChannelVector +"\n"+   ColorCorrectionTransform + "\n"+ "X-coord: "+BallInspectorx + "\n" + "Y-coord: " + BallInspectory  + "\n" + "Lens Aperature" + mCurrentAperatureValue + "\n" +PixelValues
+                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\t\t\t\t"+ "Faces Detected:" +
+                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector +"\t\t\t\t"+   ColorCorrectionTransform + "\t\t\t\t"+ "X-coord: "+BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory  + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" +PixelValues
                                     );
 
                                 } else if(1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
-                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\n" + "Shutter Speed: " + convertSS + "\n" + "Focus Distance: " + "INFINITE"
-                                            + "\n"+"Faces Detected:" + mNumberofFaces + "\n"+rggbChannelVector +"\n"+  ColorCorrectionTransform + "\n"+ "X-coord"+BallInspectorx + "\n" + "Y-coord" + BallInspectory+ "\n" + "Lens Aperature" + mCurrentAperatureValue+ "\n" + PixelValues
+                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
+                                            + "\t\t\t\t"+"Faces Detected:" + mNumberofFaces + "\t\t\t\t"+rggbChannelVector +"\t\t\t\t"+  ColorCorrectionTransform + "\t\t\t\t"+ "X-coord"+BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory+ "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue+ "\t\t\t\t" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
 
