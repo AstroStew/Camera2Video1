@@ -336,21 +336,9 @@ public class Camera2VideoImageActivity extends Activity {
     boolean ControlAWBmodetwilightavailableboolean=false;
     boolean WBrunOnce=true;
     boolean CaptureAveragepixelCountBooleanOn=false;
-    private boolean rotationLockEnableIsChecked=false;
 
-    private int ORIENTATIONS_UNKNOWN= -1;
-    private static final int _DATA_X = 0;
-    private static final int _DATA_Y=1;
-    private static final int _DATA_Z=2;
-    private int tempOrientRounded = -1;
-    private SensorManager sensormanager;
-    public int mOrientationDeg;
-    public static final int PORTRAIT=1;
-    public static final int UPSIDE_DOWN= 3;
-    public static final int LANDSCAPE_RIGHT=4;
-    public static final int LANDSCAPE_LEFT=2;
-    public  int mOrientationRounded;
-    private static int mDeviceOrientation;
+
+
 
 
     String s = "";
@@ -370,124 +358,6 @@ public class Camera2VideoImageActivity extends Activity {
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
     private boolean ChangeWhiteBalanceSpotRawOn=false;
-
-
-
-
-
-    public void UiChangeListener(){
-        final View decorView=getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener(){
-
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN)==0){
-                    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-
-                }
-            }
-        });
-    }
-
-
-
-
-
-    public void onSensorChanged(SensorEvent event){
-        Log.d(TAG, "Sensor Changed");
-        float[] values=  event.values;
-        int orientation = ORIENTATIONS_UNKNOWN;
-        float X= -values[_DATA_X];
-        float Y= -values[_DATA_Y];
-        float Z= -values[_DATA_Z];
-        float magnitude = X*X +Y*Y;
-        if(magnitude *4 >= Z*Z){
-            float OneEightOverPi = 57.29577957855f;
-            float angle=(float)Math.atan2(-Y,X)*OneEightOverPi;
-            orientation=90-(int)Math.round(angle);
-            while (orientation>= 360){
-                orientation -= 360;
-            }
-            while (orientation<0){
-                orientation += 360;
-            }
-        }
-        Log.d("Orientation",""+ orientation);
-        mOrientationDeg=orientation;
-        tempOrientRounded=PORTRAIT;
-        if(orientation != mOrientationDeg && !rotationLockEnableIsChecked){
-            mOrientationDeg=orientation;
-            if(orientation == -1){
-
-            }else if(orientation <= 35 || orientation > 325){
-                tempOrientRounded=PORTRAIT;
-            }else if(orientation > 55 && orientation <=125){
-                tempOrientRounded=LANDSCAPE_LEFT;
-            }else if(orientation >145 && orientation <= 215){
-                tempOrientRounded=UPSIDE_DOWN;
-            }else if(orientation > 235 && orientation <= 305){
-                tempOrientRounded=LANDSCAPE_RIGHT;
-            }
-
-        }
-        if(mOrientationRounded != tempOrientRounded && !rotationLockEnableIsChecked){
-            if(tempOrientRounded==LANDSCAPE_LEFT){
-                mDeviceOrientation=90;
-                mInfoTextView.setRotation((90+180)%360);
-                mInfoTextView.setTranslationX(-mInfoTextView.getWidth()/2 + mInfoTextView.getHeight()/2);
-                mInfoTextView.setTranslationY(mInfoTextView.getWidth()/2 - mInfoTextView.getHeight()/2);
-                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
-                mInfoTextView.startAnimation(fadeIn);
-                fadeIn.setDuration(1000);
-                fadeIn.setFillAfter(true);
-            }else if(tempOrientRounded==LANDSCAPE_RIGHT){
-                mDeviceOrientation=270;
-                mInfoTextView.setRotation((270+180)%360);
-                mInfoTextView.setTranslationX(mInfoTextView.getWidth()/2 - mInfoTextView.getHeight()/2);
-                mInfoTextView.setTranslationY(mInfoTextView.getWidth()/2 - mInfoTextView.getHeight()/2);
-                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
-                mInfoTextView.startAnimation(fadeIn);
-                fadeIn.setDuration(1000);
-                fadeIn.setFillAfter(true);
-            }else if(tempOrientRounded==UPSIDE_DOWN){
-                mDeviceOrientation = 180;
-                mInfoTextView.setRotation(180);
-                mInfoTextView.setTranslationX(0);
-                mInfoTextView.setTranslationY(0);
-                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
-                mInfoTextView.startAnimation(fadeIn);
-                fadeIn.setDuration(1000);
-                fadeIn.setFillAfter(true);
-
-            } else if (tempOrientRounded == PORTRAIT) {
-                mDeviceOrientation = 0;
-                mInfoTextView.setRotation(0);
-                mInfoTextView.setTranslationX(0);
-                mInfoTextView.setTranslationY(0);
-                AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f );
-                mInfoTextView.startAnimation(fadeIn);
-                fadeIn.setDuration(1000);
-                fadeIn.setFillAfter(true);
-            }
-            mOrientationRounded= tempOrientRounded;
-        }
-
-
-
-
-
-
-
-    }
-
-    public void onAccuracyChanged(Sensor sensor, int accuracy){
-
-    }
 
 
 
@@ -560,10 +430,7 @@ public class Camera2VideoImageActivity extends Activity {
     protected void onResume() {
         super.onResume();
         startBackgroundThread();
-        if(sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
-            Sensor sensor=sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-            //sensormanager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
-        }
+
         if (mTextureView.isAvailable()) {
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
             connectCamera();
@@ -709,8 +576,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
             int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-            mTotalRotation = sensorDeviceRotation(cameraCharacteristics, mDeviceOrientation);
-            boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
+             boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
             int rotatedWidth = width;
             int rotatedHeight = height;
             if (swapRotation) {
@@ -838,7 +704,7 @@ public class Camera2VideoImageActivity extends Activity {
 
     private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
         int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-        //deviceOrientation = ORIENTATIONS.get(deviceOrientation);
+        deviceOrientation = ORIENTATIONS.get(deviceOrientation);
         return (sensorOrientation + deviceOrientation + 360) % 360;
 
     }
@@ -883,11 +749,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         super.onCreate(savedInstanceState);
-        sensormanager=(SensorManager) getSystemService(SENSOR_SERVICE);
-        if(sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
-           Sensor sensor=sensormanager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-            //sensormanager.registerListener(this,sensor,SensorManager.SENSOR_DELAY_NORMAL);
-        }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -1298,10 +1160,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 String convertSS;
                                 String PixelValues;
-                                if(mCurrentSSvalue>0){
-                                    mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
-
-                                }
+                                
 
                                 if (MovementButtonnBoolen==false || CaptureAveragepixelCountBooleanOn){
                                     PixelValues="Red Value: "+ redPixelData
