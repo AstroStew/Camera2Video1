@@ -18,34 +18,47 @@
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync" />
     <header
+
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$RawCaptureClass"
         android:title="Raw Capture"
-        android:icon="@drawable/ic_all_out_black_24dp"
+        android:icon="@drawable/ic_camera_black_24dp"
         />
     <header
-
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$resolutionClass"
         android:title="Resolution"
         android:icon="@drawable/ic_photo_size_select_actual_black_24dp"/>
     <header
+    android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"
+    android:title="Optical Stabilization"
+    android:id="@+id/OpticalStabilizationInput2"
+        android:icon="@drawable/ic_vibration_black_24dp"
+    />
 
-        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"
-        android:title="Optical Stabilization"
-        android:id="@+id/OpticalStabilizationInput2"
-        />
+
     <header
-        android:title="Photo Burst Input"/>
+        android:title="Photo Burst Input"
+        android:icon="@drawable/custom_input_iso"
+        />
+
     <header
         android:title="Video TimeLapse Input"
+        android:icon="@drawable/custom_input_iso"
         />
     <header
         android:title="Show RealTime Information"
+        android:icon="@drawable/ic_slideshow_black_24dp"
         />
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.Pages$ExitPreferenceFragemnet"
+        android:title="Exit"
+        android:id="@+id/exit"
+        android:icon="@drawable/ic_exit_to_app_black_24dp2"/>
 
 
 
 
 </preference-headers>
+
 
 
 

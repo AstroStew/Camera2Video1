@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -22,8 +25,12 @@ import android.text.TextUtils;
 import android.util.Size;
 import android.view.MenuItem;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.List;
+
+import static java.lang.System.exit;
+import static java.lang.System.getProperties;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -37,6 +44,9 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    static boolean CaptureRawwithJPEGBoolean=false;
+    static boolean CaptureRawwithoutJPEGBoolean=false;
+    Camera2VideoImageActivity Camera2ImageCall;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -51,6 +61,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
+
+
 
                 // Set the summary to reflect the new value.
                 preference.setSummary(
@@ -165,6 +177,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || RawCaptureClass.class.getName().equals(fragmentName)
                 || resolutionClass.class.getName().equals(fragmentName)
                 || OpticalStabilization.class.getName().equals(fragmentName)
+                || ExitPreferenceFragemnet.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -263,8 +276,28 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.new_xml);
+            
             setHasOptionsMenu(true);
+            
+            
 
+        }
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item){
+            int id=item.getItemId();
+            switch (id){
+                case R.id.CaptureRawwithJpeg:
+                    CaptureRawwithJPEGBoolean=true;
+                    CaptureRawwithoutJPEGBoolean=false;
+
+                    
+                    break;
+                case R.id.CaptureRawwithoutJpeg:
+                    CaptureRawwithoutJPEGBoolean=true;
+                    CaptureRawwithJPEGBoolean=false;
+                    break;
+            }
+            return true;
         }
 
     }
@@ -280,9 +313,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
+            boolean isOpticalStabilizationSwitchon=true;
+            
 
 
 
         }
     }
+    public static class ExitPreferenceFragemnet extends PreferenceFragment{
+        
+        @Override
+        public void onCreate (Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+
+
+
+        }
+
+
+    }
+
 }

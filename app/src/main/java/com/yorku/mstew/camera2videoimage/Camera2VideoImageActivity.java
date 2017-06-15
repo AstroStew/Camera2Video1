@@ -198,16 +198,16 @@ public class Camera2VideoImageActivity extends Activity {
     private SeekBar mISOseekbar;
     private int ISOprogressValue;
     private int ISOseekProgress;
-    private boolean ISOinputboolean=false;
+    private boolean ISOinputboolean = false;
     private int mWBMode = CONTROL_AWB_MODE_AUTO;
-    boolean WhiteBalanceCloudyDaylightBoolean=false;
-    boolean WhiteBalanceDaylightBoolean=false;
-    boolean WhiteBalanceFluorescentBoolean=false;
-    boolean WhiteBalanceShadeBoolean=false;
-    boolean WhiteBalanceTwilightBoolean=false;
-    boolean WhiteBalanceWarmFluorescentBoolean=false;
-    boolean WhiteBalanceIncandenscentBoolean=false;
-    boolean WhiteBalanceAutoBoolean=true;
+    boolean WhiteBalanceCloudyDaylightBoolean = false;
+    boolean WhiteBalanceDaylightBoolean = false;
+    boolean WhiteBalanceFluorescentBoolean = false;
+    boolean WhiteBalanceShadeBoolean = false;
+    boolean WhiteBalanceTwilightBoolean = false;
+    boolean WhiteBalanceWarmFluorescentBoolean = false;
+    boolean WhiteBalanceIncandenscentBoolean = false;
+    boolean WhiteBalanceAutoBoolean = true;
 
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
@@ -220,7 +220,7 @@ public class Camera2VideoImageActivity extends Activity {
     private SeekBar mChangeFocusSeekBar;
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
-    private float mFocusDistanceMem=20;
+    private float mFocusDistanceMem = 20;
     private double getmFocusDistanceMem = 20;
     boolean manualFocusEnableIsChecked = false;
     boolean mBurstOn = false;
@@ -239,59 +239,55 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean lockFocusEnableIsChecked = false;
     private boolean BooleanOpticalStabilizationOn = true;
     private TextView mTimeInterval;
-    private int AutoLocks=0;
-    private int mCameraEffect=0;
-    private long mCurrentSSvalue=500000000;
+    private int AutoLocks = 0;
+    private int mCameraEffect = 0;
+    private long mCurrentSSvalue = 500000000;
     private float mCurrentAperatureValue;
     int redPixelData;
     int bluePixelData;
     int greePixelData;
-    int AverageredPixelData=0;
-    int AveragebluePixelData=0;
-    int AveragegreenPixelData=0;
+    int AverageredPixelData = 0;
+    int AveragebluePixelData = 0;
+    int AveragegreenPixelData = 0;
     int TotalRedPixelData;
     int TotalBluePixelData;
     int TotalGreenPixelData;
-    private boolean wbThreadIsEnabled=false;
-    private boolean isAdjustingWB2=false;
-    private boolean isAdjustingWB=false;
-
-
-
-
+    private boolean wbThreadIsEnabled = false;
+    private boolean isAdjustingWB2 = false;
+    private boolean isAdjustingWB = false;
 
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
     private int mCurrentAutoFocus;
     private Integer afStateRealTime;
     private int mNumberofFaces;
-    private int mCurrentISOValue=200;
-    private double mCurrentFocusDistance=1;
+    private int mCurrentISOValue = 200;
+    private double mCurrentFocusDistance = 1;
     private float mMinFocusDistance;
-    private float mMaxFocusDistance=2;
+    private float mMaxFocusDistance = 2;
     private TextView mFocusTextView;
     private boolean supports_face_detection_mode_simple;
     private boolean isSupports_face_detection_mode_full;
     private FaceDetector FaceDetector;
-    private String OFFtext="";
-    private String SIMPLEtext="";
-    private String FULLtext="";
+    private String OFFtext = "";
+    private String SIMPLEtext = "";
+    private String FULLtext = "";
     private TextView mInfoTextView;
-    private boolean mRawImageCaptureon=false;
-    private boolean afstateBoolean=false;
-    private CheckBox  mRawCheckBox;
-    private boolean UnlockFocusSpecialBooleanCaptureon=true;
-    private boolean AutoWhiteBalancelockBoolean=false;
-    private boolean SpotLockedWhiteBalanceBoolean=false;
-    private boolean AverageSpotLockWhiteBalanceBoolean=false;
+    private boolean mRawImageCaptureon = false;
+    private boolean afstateBoolean = false;
+    private CheckBox mRawCheckBox;
+    private boolean UnlockFocusSpecialBooleanCaptureon = true;
+    private boolean AutoWhiteBalancelockBoolean = false;
+    private boolean SpotLockedWhiteBalanceBoolean = false;
+    private boolean AverageSpotLockWhiteBalanceBoolean = false;
 
-    private boolean CustomeWhiteBalanceBoolean=false;
-    private  RggbChannelVector rggbChannelVector;
+    private boolean CustomeWhiteBalanceBoolean = false;
+    private RggbChannelVector rggbChannelVector;
     private ColorSpaceTransform ColorCorrectionTransform;
-    EditText  mWhitebalance1;
-    EditText  mWhitebalance2;
-    EditText  mWhitebalance3;
-    EditText  mWhitebalance4;
+    EditText mWhitebalance1;
+    EditText mWhitebalance2;
+    EditText mWhitebalance3;
+    EditText mWhitebalance4;
     double RggbChannelBlue;
     double RggbChannelG_even;
     double RggbChannelG_odd;
@@ -314,31 +310,28 @@ public class Camera2VideoImageActivity extends Activity {
     EditText mColorSpaceText7;
     EditText mColorSpaceText8;
     EditText mColorSpaceText9;
-    boolean ColorSpaceInputBoolean=false;
-    boolean WB_RAWTouchEnabled=false;
-    boolean ForwardMatrixInputBoolean=false;
-    boolean SensorColorTransformInputBoolean=false;
+    boolean ColorSpaceInputBoolean = false;
+    boolean WB_RAWTouchEnabled = false;
+    boolean ForwardMatrixInputBoolean = false;
+    boolean SensorColorTransformInputBoolean = false;
     Bitmap WhiteBalanceBallInspector;
     byte[] byteArray;
-    boolean isItOka=true;
+    boolean isItOka = true;
     float BallInspectorx, BallInspectory;
-    float alphafloat=(float)0;
+    float alphafloat = (float) 0;
     SurfaceHolder holder;
     ImageButton MovementButtonn;
     private CameraCharacteristics mCameraCharacteristics;
-    boolean MovementButtonnBoolen=true;
-    boolean ControlAWBmodecloudydaylightavailableboolean=false;
-    boolean ControlAWBmodedaylightavailableboolean=false;
-    boolean ControlAWBmodefluorescentavailableboolean=false;
-    boolean ControlAWBmodeincandescentavailableboolean=false;
-    boolean ControlAWBmodeshadeavailableboolean=false;
-    boolean ControlAWBmodewarmfluorescentavailableboolean=false;
-    boolean ControlAWBmodetwilightavailableboolean=false;
-    boolean WBrunOnce=true;
-    boolean CaptureAveragepixelCountBooleanOn=false;
-
-
-
+    boolean MovementButtonnBoolen = true;
+    boolean ControlAWBmodecloudydaylightavailableboolean = false;
+    boolean ControlAWBmodedaylightavailableboolean = false;
+    boolean ControlAWBmodefluorescentavailableboolean = false;
+    boolean ControlAWBmodeincandescentavailableboolean = false;
+    boolean ControlAWBmodeshadeavailableboolean = false;
+    boolean ControlAWBmodewarmfluorescentavailableboolean = false;
+    boolean ControlAWBmodetwilightavailableboolean = false;
+    boolean WBrunOnce = true;
+    boolean CaptureAveragepixelCountBooleanOn = false;
 
 
     String s = "";
@@ -352,18 +345,12 @@ public class Camera2VideoImageActivity extends Activity {
     private final int BAYERHEIGHT = 128;
     private final int BAYERWIDTH = 128;
     private int[][] pixelValues;
-    private boolean wbThreadisEnabled=false;
+    private boolean wbThreadisEnabled = false;
     private static float mVectorR = 1.0f;
     private static float mVectorG_EVEN = 1.0f;
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
-    private boolean ChangeWhiteBalanceSpotRawOn=false;
-
-
-
-
-
-
+    private boolean ChangeWhiteBalanceSpotRawOn = false;
 
 
     //firstly we want to make the window sticky. We acheive this by making system flags
@@ -468,7 +455,8 @@ public class Camera2VideoImageActivity extends Activity {
                 }
             } else {
 
-            }startPreview();
+            }
+            startPreview();
         }
 
         @Override
@@ -492,8 +480,8 @@ public class Camera2VideoImageActivity extends Activity {
     private CameraCaptureSession.CaptureCallback mPreviewCaptureCallback = new
             CameraCaptureSession.CaptureCallback() {
                 private void process(CaptureResult captureResult) {
-                    Integer mode =  captureResult.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
-                    Face [] faces = captureResult.get(CaptureResult.STATISTICS_FACES);
+                    Integer mode = captureResult.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
+                    Face[] faces = captureResult.get(CaptureResult.STATISTICS_FACES);
                     if (faces != null && mode != null) {
                         //Log.e("tag", "faces:"+ faces.length + ", mode" + mode);
                     }
@@ -558,6 +546,7 @@ public class Camera2VideoImageActivity extends Activity {
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
     };
+
     private void setupCamera(int width, int height) {
        /* if(!hasPermissionsGranted(VIDEO_PERMISSIONS)){
             //requestVideoPermissions();
@@ -576,7 +565,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
             int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-             boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
+            boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
             int rotatedWidth = width;
             int rotatedHeight = height;
             if (swapRotation) {
@@ -606,6 +595,7 @@ public class Camera2VideoImageActivity extends Activity {
             e.printStackTrace();
         }
     }
+
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
 
     private void connectCamera() {
@@ -636,6 +626,7 @@ public class Camera2VideoImageActivity extends Activity {
             e.printStackTrace();
         }
     }
+
     private void adjustWhiteBalanceOnTouch() {
         try {
 
@@ -646,13 +637,14 @@ public class Camera2VideoImageActivity extends Activity {
                 public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
                     super.onCaptureStarted(session, request, timestamp, frameNumber);
                 }
+
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
                 }
             };
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), null, null);
-        }  catch (CameraAccessException e) {
+        } catch (CameraAccessException e) {
             e.printStackTrace();
         }
 
@@ -708,6 +700,7 @@ public class Camera2VideoImageActivity extends Activity {
         return (sensorOrientation + deviceOrientation + 360) % 360;
 
     }
+
     //setting preview size dimensions
     private static class CompareSizeByArea implements Comparator<Size> {
         @Override
@@ -743,7 +736,6 @@ public class Camera2VideoImageActivity extends Activity {
     //NewClassExample v;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -759,41 +751,42 @@ public class Camera2VideoImageActivity extends Activity {
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
-        BallInspectorx=BallInspectory=600;
-        WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.mipmap.wbselection);
+        BallInspectorx = BallInspectory = 600;
+        WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
 
-        SurfaceView k=(SurfaceView)findViewById(R.id.surfaceView);
+        SurfaceView k = (SurfaceView) findViewById(R.id.surfaceView);
         k.setZOrderOnTop(true);
-        final SurfaceHolder holder=k.getHolder();
+        final SurfaceHolder holder = k.getHolder();
         holder.setFormat(PixelFormat.TRANSLUCENT);
-        final Surface g=holder.getSurface();
+        final Surface g = holder.getSurface();
         k.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        BallInspectorx=event.getX();
-                        BallInspectory=event.getY();
+                        BallInspectorx = event.getX();
+                        BallInspectory = event.getY();
                         break;
                     case MotionEvent.ACTION_UP:
-                        BallInspectorx=event.getX();
-                        BallInspectory=event.getY();
+                        BallInspectorx = event.getX();
+                        BallInspectory = event.getY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        BallInspectorx=event.getX();
-                        BallInspectory=event.getY();
+                        BallInspectorx = event.getX();
+                        BallInspectory = event.getY();
                         break;
                 }
-                isAdjustingWB2=true;
-                isAdjustingWB=true;
+                isAdjustingWB2 = true;
+                isAdjustingWB = true;
+
+
                 return true;
             }
         });
 
 
         mMediaRecorder = new MediaRecorder();
-
 
 
         //mIsAuto2=false;
@@ -805,20 +798,20 @@ public class Camera2VideoImageActivity extends Activity {
         mFlipCamera = (ImageButton) findViewById(R.id.FlipButton);
         mFlashButtonOnOff = (ImageButton) findViewById(R.id.FlashButton);
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
-        mSettingsButton=(ImageButton) findViewById(R.id.SettingImageButton);
-        MovementButtonn=(ImageButton)findViewById(R.id.MovementButton);
+        mSettingsButton = (ImageButton) findViewById(R.id.SettingImageButton);
+        MovementButtonn = (ImageButton) findViewById(R.id.MovementButton);
         //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
         MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if( CaptureAveragepixelCountBooleanOn==false){
-                    TotalRedPixelData=0;
-                    TotalBluePixelData=0;
-                    TotalGreenPixelData=0;
-                    MovementButtonnBoolen=true;
-                    CaptureAveragepixelCountBooleanOn=true;
+                if (CaptureAveragepixelCountBooleanOn == false) {
+                    TotalRedPixelData = 0;
+                    TotalBluePixelData = 0;
+                    TotalGreenPixelData = 0;
+                    MovementButtonnBoolen = true;
+                    CaptureAveragepixelCountBooleanOn = true;
                     Toast.makeText(getApplicationContext(), "Average Pixel Activation", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
 
                     //Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
                 }
@@ -830,12 +823,12 @@ public class Camera2VideoImageActivity extends Activity {
         MovementButtonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MovementButtonnBoolen){
-                    MovementButtonnBoolen=false;
+                if (MovementButtonnBoolen) {
+                    MovementButtonnBoolen = false;
                     MovementButtonn.setImageResource(R.drawable.ic_all_out_black_24dp);
                     Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned on", Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
                     {
                         if (!CaptureAveragepixelCountBooleanOn) {
 
@@ -851,13 +844,12 @@ public class Camera2VideoImageActivity extends Activity {
         });
 
 
-        final BottomNavigationView mCom= (BottomNavigationView) findViewById(R.id.NavBot);
+        final BottomNavigationView mCom = (BottomNavigationView) findViewById(R.id.NavBot);
         mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int pposition3=item.getItemId();
-                switch(pposition3){
-
+                int pposition3 = item.getItemId();
+                switch (pposition3) {
 
 
                     case R.id.CameraMenu:
@@ -879,26 +871,21 @@ public class Camera2VideoImageActivity extends Activity {
                     case R.id.AdvancedSettingsMenu:
 
 
-
-
                         mStillImageButton.setVisibility(View.INVISIBLE);
                         mRecordImageButton.setVisibility(View.INVISIBLE);
                         mSettingsButton.setVisibility(View.VISIBLE);
 
 
-
-
-
                         mSettingsButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent AdvancedSettingIntent= new Intent(getApplicationContext(), SettingsActivity.class);
+                                Intent AdvancedSettingIntent = new Intent(getApplicationContext(), SettingsActivity.class);
                                 startActivity(AdvancedSettingIntent);
-                                PopupMenu AdvanncedsettingsPopup= new PopupMenu(Camera2VideoImageActivity.this, mSettingsButton);
+                                PopupMenu AdvanncedsettingsPopup = new PopupMenu(Camera2VideoImageActivity.this, mSettingsButton);
                                 AdvanncedsettingsPopup.inflate(R.menu.advancedsettings);
                                 final MenuItem rawEnabledMenuItem = AdvanncedsettingsPopup.getMenu().findItem(R.id.RawInput);
                                 rawEnabledMenuItem.setChecked(mRawImageCaptureon);
-                                final MenuItem OpticalStabalizationItem= AdvanncedsettingsPopup.getMenu().findItem(R.id.OpticalStabilizationInput);
+                                final MenuItem OpticalStabalizationItem = AdvanncedsettingsPopup.getMenu().findItem(R.id.OpticalStabilizationInput);
                                 OpticalStabalizationItem.setChecked(BooleanOpticalStabilizationOn);
                                 SubMenu sM = AdvanncedsettingsPopup.getMenu().addSubMenu(0, 100, 0, "Change Resolution:");
                                 StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
@@ -910,11 +897,10 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
 
 
-
                                 AdvanncedsettingsPopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                     @Override
                                     public boolean onMenuItemClick(MenuItem item) {
-                                        int position4=item.getItemId();
+                                        int position4 = item.getItemId();
                                         for (int i = 0; i < previewSizes.length; i++) {
                                             if (position4 == 200 + i) {
                                                 Toast.makeText(getApplicationContext(), "" + previewSizes[i], Toast.LENGTH_SHORT).show();
@@ -926,7 +912,7 @@ public class Camera2VideoImageActivity extends Activity {
                                         }
 
 
-                                        switch(position4){
+                                        switch (position4) {
                                             case R.id.PhotoBurstInput:
 
                                                 final LayoutInflater inflate4 = LayoutInflater.from(Camera2VideoImageActivity.this);
@@ -995,23 +981,23 @@ public class Camera2VideoImageActivity extends Activity {
 
                                                 break;
                                             case R.id.RawInput:
-                                                if(!mRawImageCaptureon){
+                                                if (!mRawImageCaptureon) {
 
-                                                    mRawImageCaptureon=true;
+                                                    mRawImageCaptureon = true;
                                                     Toast.makeText(getApplicationContext(), "Raw Capture Turned on", Toast.LENGTH_SHORT).show();
 
 
                                                     //mRawCheckBox.setChecked(true);
-                                                }else{
-                                                    mRawImageCaptureon=false;
+                                                } else {
+                                                    mRawImageCaptureon = false;
                                                     Toast.makeText(getApplicationContext(), "Raw Capture Turned Off", Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 break;
                                             case R.id.ShowRealTimeInfo:
-                                                if(mInfoTextView.getVisibility()==View.INVISIBLE){
+                                                if (mInfoTextView.getVisibility() == View.INVISIBLE) {
                                                     mInfoTextView.setVisibility(View.VISIBLE);
-                                                }else{
+                                                } else {
                                                     mInfoTextView.setVisibility(View.INVISIBLE);
                                                 }
                                                 break;
@@ -1033,8 +1019,6 @@ public class Camera2VideoImageActivity extends Activity {
                                         }
 
 
-
-
                                         return false;
                                     }
                                 });
@@ -1047,7 +1031,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                         break;
                     case R.id.PageMenu:
-                        Intent pageintent= new Intent(getApplicationContext(), Page.class);
+                        Intent pageintent = new Intent(getApplicationContext(), Pages.class);
                         startActivity(pageintent);
                         break;
                 }
@@ -1057,11 +1041,11 @@ public class Camera2VideoImageActivity extends Activity {
 
         createVideoFolder();
         createImageFolder();
-        mInfoTextView = (TextView)findViewById(R.id.infotextView2);
+        mInfoTextView = (TextView) findViewById(R.id.infotextView2);
         mInfoTextView.setVisibility(View.VISIBLE);
 
 
-        mFocusTextView = (TextView)findViewById(R.id.infoTextView);
+        mFocusTextView = (TextView) findViewById(R.id.infoTextView);
         //we have to create a new thread in order to get real time info from ISO SS adn Aperature
 
         (new Thread(new Runnable() {
@@ -1075,86 +1059,74 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             public void run() {
-                                if(isAdjustingWB&&isAdjustingWB2&&WB_RAWTouchEnabled){
+                                if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
                                     adjustWhiteBalanceOnTouch();
-                                    isAdjustingWB=false;
+                                    isAdjustingWB = false;
                                 }
 
 
+                                if (ChangeWhiteBalanceSpotRawOn) {
 
-                                if(ChangeWhiteBalanceSpotRawOn){
 
-
-                                    ChangeWhiteBalanceSpotRawOn=false;
+                                    ChangeWhiteBalanceSpotRawOn = false;
                                 }
 
 
-                                if(g.isValid()) {
-                                    Bitmap bitmappy= mTextureView.getBitmap();
+                                if (g.isValid()) {
+                                    Bitmap bitmappy = mTextureView.getBitmap();
 
-                                    ByteBuffer bytebuffer1= ByteBuffer.allocate(1);
-
-
-
+                                    ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
 
 
                                     int pixel;
-                                    pixel=bitmappy.getPixel((int)BallInspectorx,(int)BallInspectory);
-                                    redPixelData=Color.red(pixel);
-                                    bluePixelData=Color.blue(pixel);
-                                    greePixelData=Color.green(pixel);
+                                    pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
+                                    redPixelData = Color.red(pixel);
+                                    bluePixelData = Color.blue(pixel);
+                                    greePixelData = Color.green(pixel);
 
 
-
-
-
-
-                                    int totalheight= WhiteBalanceBallInspector.getHeight();
-                                    int totalwidth= WhiteBalanceBallInspector.getWidth();
-                                    int totalbitmapspace= totalheight*totalwidth;
-                                    int topleftheightstatic=(int)BallInspectory-(int)(totalheight/2);
-                                    int topleftwidthstatic=(int)BallInspectorx-(int)(totalwidth/2);
+                                    int totalheight = WhiteBalanceBallInspector.getHeight();
+                                    int totalwidth = WhiteBalanceBallInspector.getWidth();
+                                    int totalbitmapspace = totalheight * totalwidth;
+                                    int topleftheightstatic = (int) BallInspectory - (int) (totalheight / 2);
+                                    int topleftwidthstatic = (int) BallInspectorx - (int) (totalwidth / 2);
                                     int topleftheight;
                                     int topeleftwidth;
 
 
                                     ////*
-                                    if(CaptureAveragepixelCountBooleanOn){
+                                    if (CaptureAveragepixelCountBooleanOn) {
 
-                                        for (topleftheight=(int)BallInspectory-(totalheight/2) ; topleftheight<(totalheight+topleftheightstatic); topleftheight++){
-                                            for (topeleftwidth=(int)BallInspectorx-(totalwidth/2);topeleftwidth<(totalwidth+topleftwidthstatic); topeleftwidth++){
+                                        for (topleftheight = (int) BallInspectory - (totalheight / 2); topleftheight < (totalheight + topleftheightstatic); topleftheight++) {
+                                            for (topeleftwidth = (int) BallInspectorx - (totalwidth / 2); topeleftwidth < (totalwidth + topleftwidthstatic); topeleftwidth++) {
                                                 int pixel2;
-                                                pixel2=bitmappy.getPixel((int)topeleftwidth,(int)topleftheight);
-                                                if(Color.red(pixel2)<255){
-                                                    TotalRedPixelData=TotalRedPixelData+Color.red(pixel2);
-                                                    TotalGreenPixelData=TotalGreenPixelData+Color.green(pixel2);
-                                                    TotalBluePixelData=TotalBluePixelData+Color.blue(pixel2);
-                                                    AverageredPixelData=(TotalRedPixelData/totalbitmapspace);AveragegreenPixelData=TotalGreenPixelData/totalbitmapspace;AveragebluePixelData=TotalBluePixelData/totalbitmapspace;
+                                                pixel2 = bitmappy.getPixel((int) topeleftwidth, (int) topleftheight);
+                                                if (Color.red(pixel2) < 255) {
+                                                    TotalRedPixelData = TotalRedPixelData + Color.red(pixel2);
+                                                    TotalGreenPixelData = TotalGreenPixelData + Color.green(pixel2);
+                                                    TotalBluePixelData = TotalBluePixelData + Color.blue(pixel2);
+                                                    AverageredPixelData = (TotalRedPixelData / totalbitmapspace);
+                                                    AveragegreenPixelData = TotalGreenPixelData / totalbitmapspace;
+                                                    AveragebluePixelData = TotalBluePixelData / totalbitmapspace;
 
 
                                                 }
                                             }
 
                                         }
-                                        CaptureAveragepixelCountBooleanOn=false;
+                                        CaptureAveragepixelCountBooleanOn = false;
                                     }
 
-                                       Canvas c = holder.lockCanvas();
-                                       c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                                    Canvas c = holder.lockCanvas();
+                                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-                                       if(!MovementButtonnBoolen ||CaptureAveragepixelCountBooleanOn ) {
-                                           if (WhiteBalanceBallInspector != null) {
-                                               c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
-                                           }
-                                       }
+                                    if (!MovementButtonnBoolen || CaptureAveragepixelCountBooleanOn) {
+                                        if (WhiteBalanceBallInspector != null) {
+                                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                                        }
+                                    }
 
-                                       holder.unlockCanvasAndPost(c);
-
-
-
-
-
-
+                                    holder.unlockCanvasAndPost(c);
 
 
                                 }
@@ -1162,16 +1134,15 @@ public class Camera2VideoImageActivity extends Activity {
                                 String PixelValues;
 
 
-                                if (MovementButtonnBoolen==false || CaptureAveragepixelCountBooleanOn){
-                                    PixelValues="Red Value: "+ redPixelData
-                                            +" Green Pixel Data : "+ greePixelData  + " Blue Pixel Data :" + bluePixelData
+                                if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn) {
+                                    PixelValues = "Red Value: " + redPixelData
+                                            + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
                                             + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
                                             + AveragebluePixelData
                                     ;
-                                }else{
-                                    PixelValues="";
+                                } else {
+                                    PixelValues = "";
                                 }
-
 
 
                                 if (1000000000 / mCurrentSSvalue <= 1) {
@@ -1180,13 +1151,13 @@ public class Camera2VideoImageActivity extends Activity {
                                     convertSS = "1/" + String.valueOf(1000000000 / mCurrentSSvalue);
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
-                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm"  + "\t\t\t\t"+ "Faces Detected:" +
-                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector +"\t\t\t\t"+   ColorCorrectionTransform + "\t\t\t\t"+ "X-coord: "+BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory  + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" +PixelValues
+                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
+                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" + PixelValues
                                     );
 
-                                } else if(1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
+                                } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
-                                            + "\t\t\t\t"+"Faces Detected:" + mNumberofFaces + "\t\t\t\t"+rggbChannelVector +"\t\t\t\t"+  ColorCorrectionTransform + "\t\t\t\t"+ "X-coord"+BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory+ "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue+ "\t\t\t\t" + PixelValues
+                                            + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
 
@@ -1312,7 +1283,7 @@ public class Camera2VideoImageActivity extends Activity {
                     AutoNumber = 0;
                     Toast.makeText(getApplicationContext(), "AUTO ON", Toast.LENGTH_SHORT).show();
                     mAutobutton.setText("AUTO ON");
-                    ColorSpaceInputBoolean=false;
+                    ColorSpaceInputBoolean = false;
                     startPreview();
 
 
@@ -1347,9 +1318,9 @@ public class Camera2VideoImageActivity extends Activity {
                 //Toast.makeText(Camera2VideoImageActivity.this, "clicked", Toast.LENGTH_SHORT).show();
                 final PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0,100, 0, "Available Effects");
-                if(WBrunOnce){
-                    for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+                SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0, 100, 0, "Available Effects");
+                if (WBrunOnce) {
+                    for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
                         if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
                             ControlAWBmodeincandescentavailableboolean = true;
                         }
@@ -1374,47 +1345,41 @@ public class Camera2VideoImageActivity extends Activity {
 
                         }
                     }
-                    WBrunOnce=false;
+                    WBrunOnce = false;
                 }
 
 
-                final MenuItem AutoWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
+                final MenuItem AutoWhiteBalanceItem = popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
                 AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
-                final MenuItem WhiteBalanceSpotLocked=popupMenu.getMenu().findItem(R.id.SpotLockWhiteBalance);
+                final MenuItem WhiteBalanceSpotLocked = popupMenu.getMenu().findItem(R.id.SpotLockWhiteBalance);
                 WhiteBalanceSpotLocked.setChecked(SpotLockedWhiteBalanceBoolean);
-                final MenuItem WhiteBalanceCloudyDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
+                final MenuItem WhiteBalanceCloudyDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
                 WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
                 WhiteBalanceCloudyDaylightItem.setEnabled(ControlAWBmodecloudydaylightavailableboolean);
-                final MenuItem WhiteBalanceDaylightItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceDaylight);
+                final MenuItem WhiteBalanceDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceDaylight);
                 WhiteBalanceDaylightItem.setChecked(WhiteBalanceDaylightBoolean);
                 WhiteBalanceDaylightItem.setEnabled(ControlAWBmodedaylightavailableboolean);
-                final MenuItem WhiteBalanceFluorescentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceFluorescent);
+                final MenuItem WhiteBalanceFluorescentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceFluorescent);
                 WhiteBalanceFluorescentItem.setChecked(WhiteBalanceFluorescentBoolean);
                 WhiteBalanceFluorescentItem.setEnabled(ControlAWBmodefluorescentavailableboolean);
-                final MenuItem WhiteBalanceShadeItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceShade);
+                final MenuItem WhiteBalanceShadeItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceShade);
                 WhiteBalanceShadeItem.setChecked(WhiteBalanceShadeBoolean);
                 WhiteBalanceShadeItem.setEnabled(ControlAWBmodeshadeavailableboolean);
-                final MenuItem WhiteBalanceTwilightitem=popupMenu.getMenu().findItem(R.id.WhiteBalanceTwilight);
+                final MenuItem WhiteBalanceTwilightitem = popupMenu.getMenu().findItem(R.id.WhiteBalanceTwilight);
                 WhiteBalanceTwilightitem.setChecked(WhiteBalanceTwilightBoolean);
                 WhiteBalanceTwilightitem.setEnabled(ControlAWBmodetwilightavailableboolean);
-                final MenuItem WhiteBalanceWarmFluorescentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceWarmFluorescent);
+                final MenuItem WhiteBalanceWarmFluorescentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceWarmFluorescent);
                 WhiteBalanceWarmFluorescentItem.setChecked(WhiteBalanceWarmFluorescentBoolean);
                 WhiteBalanceWarmFluorescentItem.setEnabled(ControlAWBmodewarmfluorescentavailableboolean);
-                final MenuItem WhiteBalanceIncandenscentItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceIncandenscent);
+                final MenuItem WhiteBalanceIncandenscentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceIncandenscent);
                 WhiteBalanceIncandenscentItem.setChecked(WhiteBalanceIncandenscentBoolean);
                 WhiteBalanceIncandenscentItem.setEnabled(ControlAWBmodeincandescentavailableboolean);
-                final MenuItem WhiteBalanceAutoItem=popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
+                final MenuItem WhiteBalanceAutoItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
                 WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
-                final MenuItem AverageSpotLockWhiteBalanceItem=popupMenu.getMenu().findItem(R.id.AverageSpotLockWhiteBalance);
+                final MenuItem AverageSpotLockWhiteBalanceItem = popupMenu.getMenu().findItem(R.id.AverageSpotLockWhiteBalance);
                 AverageSpotLockWhiteBalanceItem.setChecked(AverageSpotLockWhiteBalanceBoolean);
                 final MenuItem WB_RAWTouchItem = popupMenu.getMenu().findItem(R.id.WB_RAWTouch);
                 WB_RAWTouchItem.setChecked(WB_RAWTouchEnabled);
-
-
-
-
-
-
 
 
                 final int[] SupportedSceneModes = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
@@ -1424,38 +1389,38 @@ public class Camera2VideoImageActivity extends Activity {
                     SupportedSceneModes[i] = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i];
 
                 }
-                final int[] AvailableEffectsArray1=new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length];
-                for (int i=0; i<AvailableEffectsArray1.length; i++){
-                    AvailableEffectsArray1[i]=(mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i]);
+                final int[] AvailableEffectsArray1 = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length];
+                for (int i = 0; i < AvailableEffectsArray1.length; i++) {
+                    AvailableEffectsArray1[i] = (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i]);
                 }
-                final String[] AvailableEffectsArray2=new String[AvailableEffectsArray1.length];
-                for (int i=0; i<AvailableEffectsArray1.length; i++){
-                    if(AvailableEffectsArray1[i]==0){
-                        AvailableEffectsArray2[i]="OFF";
+                final String[] AvailableEffectsArray2 = new String[AvailableEffectsArray1.length];
+                for (int i = 0; i < AvailableEffectsArray1.length; i++) {
+                    if (AvailableEffectsArray1[i] == 0) {
+                        AvailableEffectsArray2[i] = "OFF";
                     }
-                    if(AvailableEffectsArray1[i]==1){
-                        AvailableEffectsArray2[i]="Mono";
+                    if (AvailableEffectsArray1[i] == 1) {
+                        AvailableEffectsArray2[i] = "Mono";
                     }
-                    if(AvailableEffectsArray1[i]==2){
-                        AvailableEffectsArray2[i]="Negative";
+                    if (AvailableEffectsArray1[i] == 2) {
+                        AvailableEffectsArray2[i] = "Negative";
                     }
-                    if(AvailableEffectsArray1[i]==3){
-                        AvailableEffectsArray2[i]="Solarize";
+                    if (AvailableEffectsArray1[i] == 3) {
+                        AvailableEffectsArray2[i] = "Solarize";
                     }
-                    if(AvailableEffectsArray1[i]==4){
-                        AvailableEffectsArray2[i]="Sepia";
+                    if (AvailableEffectsArray1[i] == 4) {
+                        AvailableEffectsArray2[i] = "Sepia";
                     }
-                    if(AvailableEffectsArray1[i]==5){
-                        AvailableEffectsArray2[i]="Posterize";
+                    if (AvailableEffectsArray1[i] == 5) {
+                        AvailableEffectsArray2[i] = "Posterize";
                     }
-                    if(AvailableEffectsArray1[i]==6){
-                        AvailableEffectsArray2[i]="Whiteboard";
+                    if (AvailableEffectsArray1[i] == 6) {
+                        AvailableEffectsArray2[i] = "Whiteboard";
                     }
-                    if(AvailableEffectsArray1[i]==7){
-                        AvailableEffectsArray2[i]="Blackboard";
+                    if (AvailableEffectsArray1[i] == 7) {
+                        AvailableEffectsArray2[i] = "Blackboard";
                     }
-                    if(AvailableEffectsArray1[i]==8){
-                        AvailableEffectsArray2[i]="Aqua";
+                    if (AvailableEffectsArray1[i] == 8) {
+                        AvailableEffectsArray2[i] = "Aqua";
                     }
                     submenu2.add(0, i + 100, 0, "" + AvailableEffectsArray2[i]);
 
@@ -1468,8 +1433,8 @@ public class Camera2VideoImageActivity extends Activity {
                         //add settings
                         int position = item.getItemId();
 
-                        for (int i=0; i<AvailableEffectsArray2.length; i++){
-                            if(position== 100+i) {
+                        for (int i = 0; i < AvailableEffectsArray2.length; i++) {
+                            if (position == 100 + i) {
                                 mCameraEffect = AvailableEffectsArray1[i];
                                 startPreview();
                             }
@@ -1508,7 +1473,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                         mChangeFocusSeekBar = (SeekBar) findViewById(R.id.FocusChangeSeekBar);
-                        mChangeFocusSeekBar.setMax((int) ((int) (1/mMaxFocusDistance - 1/mMinFocusDistance)/0.05));
+                        mChangeFocusSeekBar.setMax((int) ((int) (1 / mMaxFocusDistance - 1 / mMinFocusDistance) / 0.05));
 
                         mCloseALLbutton = (ImageButton) findViewById(R.id.CloseALLbutton);
                         mCloseALLbutton.setVisibility(View.VISIBLE);
@@ -1525,7 +1490,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 if (mISOtext.getVisibility() == View.VISIBLE) {
                                     mISOtext.setVisibility(View.INVISIBLE);
                                 }
-                                if(mFocusTextView.getVisibility()==View.VISIBLE){
+                                if (mFocusTextView.getVisibility() == View.VISIBLE) {
                                     mFocusTextView.setVisibility(View.INVISIBLE);
                                 }
 
@@ -1552,7 +1517,6 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
 
 
-
                             }
                         });
                         //mRawCheckBox = (CheckBox) findViewById(R.id.RawInput);
@@ -1566,7 +1530,6 @@ public class Camera2VideoImageActivity extends Activity {
                                     //UnlockFocusSpecialBooleanCaptureon=true;
 
 
-
                                     startPreview();
 
 
@@ -1577,7 +1540,7 @@ public class Camera2VideoImageActivity extends Activity {
                                     //mFocusTextView.setVisibility(View.INVISIBLE);
 
 
-                                    UnlockFocusSpecialBooleanCaptureon=false;
+                                    UnlockFocusSpecialBooleanCaptureon = false;
                                     startPreview();
 
                                 }
@@ -1607,7 +1570,7 @@ public class Camera2VideoImageActivity extends Activity {
                                         @Override
                                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                                             mFocusDistance = (progress * 0.05);
-                                            mFocusTextView.setText(String.format( "Focal Distance: "+"%.2f",mFocusDistance)+"m");
+                                            mFocusTextView.setText(String.format("Focal Distance: " + "%.2f", mFocusDistance) + "m");
                                         }
 
                                         @Override
@@ -1628,12 +1591,12 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 //Toast.makeText(getApplicationContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
                                 LayoutInflater inflate5 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                View ThemanualinputView= inflate5.inflate(R.layout.manual_focus_input, null);
-                                AlertDialog.Builder manualinputalert= new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                View ThemanualinputView = inflate5.inflate(R.layout.manual_focus_input, null);
+                                AlertDialog.Builder manualinputalert = new AlertDialog.Builder(Camera2VideoImageActivity.this);
                                 manualinputalert.setTitle("Manual Focus Input");
                                 manualinputalert.setView(ThemanualinputView);
                                 manualinputalert.setCancelable(true);
-                                mManualFocusInput= (EditText) ThemanualinputView.findViewById(R.id.FocusEditText);
+                                mManualFocusInput = (EditText) ThemanualinputView.findViewById(R.id.FocusEditText);
                                 manualinputalert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -1657,9 +1620,9 @@ public class Camera2VideoImageActivity extends Activity {
 
                                         }
 
-                                        double TempManualFocusInput= Double.parseDouble(mManualFocusInput.getText().toString());
-                                        mFocusTextView.setText(TempManualFocusInput+"");
-                                        mFocusDistance=TempManualFocusInput;
+                                        double TempManualFocusInput = Double.parseDouble(mManualFocusInput.getText().toString());
+                                        mFocusTextView.setText(TempManualFocusInput + "");
+                                        mFocusDistance = TempManualFocusInput;
 
                                     }
                                 });
@@ -1667,45 +1630,39 @@ public class Camera2VideoImageActivity extends Activity {
                                 startPreview();
 
 
-
-
-
                                 break;
                             case R.id.ForwardMatrixInput:
-                                if(ForwardMatrixInputBoolean){
-                                    ForwardMatrixInputBoolean=false;
+                                if (ForwardMatrixInputBoolean) {
+                                    ForwardMatrixInputBoolean = false;
                                     Toast.makeText(getApplicationContext(), "Forward Matrix Turned Off", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    ForwardMatrixInputBoolean=true;
+                                } else {
+                                    ForwardMatrixInputBoolean = true;
                                     Toast.makeText(getApplicationContext(), "Forward Matrix Turned On", Toast.LENGTH_SHORT).show();
                                 }
                                 startPreview();
                                 break;
                             case R.id.SensorColorTransform:
-                                if(SensorColorTransformInputBoolean){
-                                    SensorColorTransformInputBoolean=false;
+                                if (SensorColorTransformInputBoolean) {
+                                    SensorColorTransformInputBoolean = false;
                                     Toast.makeText(getApplicationContext(), "Sensor Color Transform off", Toast.LENGTH_SHORT).show();
 
-                                }else{
-                                    SensorColorTransformInputBoolean=true;
+                                } else {
+                                    SensorColorTransformInputBoolean = true;
                                     Toast.makeText(getApplicationContext(), "Sensor Color Transform ON", Toast.LENGTH_SHORT).show();
                                 }
                                 startPreview();
 
 
-
                                 break;
                             case R.id.ColorSpaceInput:
 
-                                if(ColorSpaceInputBoolean){
-                                    ColorSpaceInputBoolean=false;
+                                if (ColorSpaceInputBoolean) {
+                                    ColorSpaceInputBoolean = false;
                                     Toast.makeText(getApplicationContext(), "Colour SpaceTurned OFF", Toast.LENGTH_SHORT).show();
                                     startPreview();
-                                }
-                                else {
+                                } else {
                                     //ColorSpaceInputBoolean=true;
                                     Toast.makeText(getApplicationContext(), "Colour Space Turned ON", Toast.LENGTH_SHORT).show();
-
 
 
                                     final LayoutInflater ColorSpaceinflater = LayoutInflater.from(Camera2VideoImageActivity.this);
@@ -1731,7 +1688,7 @@ public class Camera2VideoImageActivity extends Activity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
-                                            ColorSpaceInputBoolean=false;
+                                            ColorSpaceInputBoolean = false;
                                             Toast.makeText(getApplicationContext(), "Colour SpaceTurned OFF", Toast.LENGTH_SHORT).show();
 
                                         }
@@ -1740,7 +1697,7 @@ public class Camera2VideoImageActivity extends Activity {
                                     ColourSpaceThing.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            ColorSpaceInputBoolean=true;
+                                            ColorSpaceInputBoolean = true;
                                             int TempWhiteBalanceInputEditText1 = Integer.parseInt(mColorSpaceText1.getText().toString());
                                             int TempWhiteBalanceInputEditText2 = Integer.parseInt(mColorSpaceText2.getText().toString());
                                             int TempWhiteBalanceInputEditText3 = Integer.parseInt(mColorSpaceText3.getText().toString());
@@ -1781,41 +1738,41 @@ public class Camera2VideoImageActivity extends Activity {
                                 break;
 
                             case R.id.LockWhiteBalance:
-                                if(AutoWhiteBalancelockBoolean){
-                                    AutoWhiteBalancelockBoolean=false;
+                                if (AutoWhiteBalancelockBoolean) {
+                                    AutoWhiteBalancelockBoolean = false;
                                     item.setChecked(false);
                                     //wip
                                     //AutoWhiteBalanceUnlock();
-                                }else{
+                                } else {
                                     //wip
                                     //AutoWhiteBalanceLock();
                                     item.setChecked(true);
-                                    AutoWhiteBalancelockBoolean=true;
+                                    AutoWhiteBalancelockBoolean = true;
                                 }
                                 //lock if unlocked
                                 //unlock if lock
                                 startPreview();
                                 break;
                             case R.id.CustomWhiteBalance:
-                                if(CustomeWhiteBalanceBoolean){
-                                    CustomeWhiteBalanceBoolean=false;
+                                if (CustomeWhiteBalanceBoolean) {
+                                    CustomeWhiteBalanceBoolean = false;
                                     mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO);
                                     Toast.makeText(getApplicationContext(), "Color Correction Auto", Toast.LENGTH_SHORT).show();
                                     startPreview();
-                                }else{
-                                    CustomeWhiteBalanceBoolean=true;
+                                } else {
+                                    CustomeWhiteBalanceBoolean = true;
                                     //implement seek bar here
 
-                                    LayoutInflater WhiteBalanceInflater1= LayoutInflater.from(Camera2VideoImageActivity.this);
+                                    LayoutInflater WhiteBalanceInflater1 = LayoutInflater.from(Camera2VideoImageActivity.this);
                                     View WhiteBalance1 = WhiteBalanceInflater1.inflate(R.layout.whitebalance1_info_alertdialog, null);
                                     AlertDialog.Builder WhiteBalanceThing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
                                     WhiteBalanceThing.setTitle("Colour inputs");
                                     WhiteBalanceThing.setView(WhiteBalance1);
                                     WhiteBalanceThing.setCancelable(true);
-                                    mWhitebalance1=(EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText1);
-                                    mWhitebalance2=(EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText2);
-                                    mWhitebalance3=(EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText3);
-                                    mWhitebalance4=(EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText4);
+                                    mWhitebalance1 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText1);
+                                    mWhitebalance2 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText2);
+                                    mWhitebalance3 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText3);
+                                    mWhitebalance4 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText4);
                                     WhiteBalanceThing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
 
 
@@ -1827,17 +1784,15 @@ public class Camera2VideoImageActivity extends Activity {
                                     WhiteBalanceThing.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            double mWhitebalance1temp=Double.parseDouble(mWhitebalance1.getText().toString());
-                                            double mWhitebalance2temp=Double.parseDouble(mWhitebalance2.getText().toString());
-                                            double mWhitebalance3temp=Double.parseDouble(mWhitebalance3.getText().toString());
-                                            double mWhitebalance4temp=Double.parseDouble(mWhitebalance4.getText().toString());
-                                            RggbChannelBlue=mWhitebalance4temp;
-                                            RggbChannelG_even=mWhitebalance2temp;
-                                            RggbChannelG_odd=mWhitebalance3temp;
-                                            RggbChsnnelR=mWhitebalance1temp;
+                                            double mWhitebalance1temp = Double.parseDouble(mWhitebalance1.getText().toString());
+                                            double mWhitebalance2temp = Double.parseDouble(mWhitebalance2.getText().toString());
+                                            double mWhitebalance3temp = Double.parseDouble(mWhitebalance3.getText().toString());
+                                            double mWhitebalance4temp = Double.parseDouble(mWhitebalance4.getText().toString());
+                                            RggbChannelBlue = mWhitebalance4temp;
+                                            RggbChannelG_even = mWhitebalance2temp;
+                                            RggbChannelG_odd = mWhitebalance3temp;
+                                            RggbChsnnelR = mWhitebalance1temp;
                                             startPreview();
-
-
 
 
                                         }
@@ -1855,166 +1810,164 @@ public class Camera2VideoImageActivity extends Activity {
                                 break;
 
 
-
                             case R.id.WhiteBalanceCloudyDaylight:
-                                if(!WhiteBalanceCloudyDaylightBoolean) {
+                                if (!WhiteBalanceCloudyDaylightBoolean) {
                                     mWBMode = CONTROL_AWB_MODE_CLOUDY_DAYLIGHT;
                                     WhiteBalanceCloudyDaylightBoolean = true;
-                                }else{
-                                    WhiteBalanceAutoBoolean=true;
-                                    mWBMode=CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceCloudyDaylightBoolean=false;
+                                } else {
+                                    WhiteBalanceAutoBoolean = true;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
 
 
                                 }
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceIncandenscentBoolean=false;
-                                WhiteBalanceWarmFluorescentBoolean=false;
-                                WhiteBalanceTwilightBoolean=false;
-                                WhiteBalanceShadeBoolean=false;
-                                WhiteBalanceFluorescentBoolean=false;
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceIncandenscentBoolean = false;
+                                WhiteBalanceWarmFluorescentBoolean = false;
+                                WhiteBalanceTwilightBoolean = false;
+                                WhiteBalanceShadeBoolean = false;
+                                WhiteBalanceFluorescentBoolean = false;
 
-                                WhiteBalanceDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
+                                WhiteBalanceDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
 
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceDaylight:
 
-                                if(!WhiteBalanceDaylightBoolean){
+                                if (!WhiteBalanceDaylightBoolean) {
                                     mWBMode = CONTROL_AWB_MODE_DAYLIGHT;
-                                    WhiteBalanceDaylightBoolean=true;}
-                                else{
-                                    WhiteBalanceAutoBoolean=true;
-                                    mWBMode=CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceDaylightBoolean = true;
+                                } else {
+                                    WhiteBalanceAutoBoolean = true;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
 
 
-                                    WhiteBalanceDaylightBoolean=false;
+                                    WhiteBalanceDaylightBoolean = false;
                                 }
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceIncandenscentBoolean=false;
-                                WhiteBalanceWarmFluorescentBoolean=false;
-                                WhiteBalanceTwilightBoolean=false;
-                                WhiteBalanceShadeBoolean=false;
-                                WhiteBalanceFluorescentBoolean=false;
-                                WhiteBalanceCloudyDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
-
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceIncandenscentBoolean = false;
+                                WhiteBalanceWarmFluorescentBoolean = false;
+                                WhiteBalanceTwilightBoolean = false;
+                                WhiteBalanceShadeBoolean = false;
+                                WhiteBalanceFluorescentBoolean = false;
+                                WhiteBalanceCloudyDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
 
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceFluorescent:
 
-                                if(!WhiteBalanceFluorescentBoolean) {
+                                if (!WhiteBalanceFluorescentBoolean) {
 
                                     WhiteBalanceFluorescentBoolean = true;
                                     mWBMode = CONTROL_AWB_MODE_FLUORESCENT;
-                                    WhiteBalanceAutoBoolean=false;
+                                    WhiteBalanceAutoBoolean = false;
                                     //put the rest
-                                }else{
-                                    WhiteBalanceFluorescentBoolean=false;
-                                    mWBMode= CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean=true;
+                                } else {
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean = true;
 
                                 }
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceIncandenscentBoolean=false;
-                                WhiteBalanceWarmFluorescentBoolean=false;
-                                WhiteBalanceTwilightBoolean=false;
-                                WhiteBalanceShadeBoolean=false;
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceIncandenscentBoolean = false;
+                                WhiteBalanceWarmFluorescentBoolean = false;
+                                WhiteBalanceTwilightBoolean = false;
+                                WhiteBalanceShadeBoolean = false;
 
-                                WhiteBalanceCloudyDaylightBoolean=false;
-                                WhiteBalanceDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
+                                WhiteBalanceCloudyDaylightBoolean = false;
+                                WhiteBalanceDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceShade:
 
-                                if(!WhiteBalanceShadeBoolean){
-                                    WhiteBalanceShadeBoolean=true;
+                                if (!WhiteBalanceShadeBoolean) {
+                                    WhiteBalanceShadeBoolean = true;
                                     mWBMode = CONTROL_AWB_MODE_SHADE;
-                                }else{
-                                    WhiteBalanceShadeBoolean=false;
+                                } else {
+                                    WhiteBalanceShadeBoolean = false;
 
-                                    mWBMode= CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean=true;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean = true;
                                 }
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceIncandenscentBoolean=false;
-                                WhiteBalanceWarmFluorescentBoolean=false;
-                                WhiteBalanceTwilightBoolean=false;
-                                WhiteBalanceFluorescentBoolean=false;
-                                WhiteBalanceCloudyDaylightBoolean=false;
-                                WhiteBalanceDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceIncandenscentBoolean = false;
+                                WhiteBalanceWarmFluorescentBoolean = false;
+                                WhiteBalanceTwilightBoolean = false;
+                                WhiteBalanceFluorescentBoolean = false;
+                                WhiteBalanceCloudyDaylightBoolean = false;
+                                WhiteBalanceDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceTwilight:
-                                if(!WhiteBalanceTwilightBoolean){
+                                if (!WhiteBalanceTwilightBoolean) {
                                     mWBMode = CONTROL_AWB_MODE_TWILIGHT;
-                                    WhiteBalanceTwilightBoolean=true;
+                                    WhiteBalanceTwilightBoolean = true;
 
-                                }else{
-                                    WhiteBalanceTwilightBoolean=false;
-                                    mWBMode= CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean=true;
+                                } else {
+                                    WhiteBalanceTwilightBoolean = false;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean = true;
                                 }
-                                WhiteBalanceIncandenscentBoolean=false;
-                                WhiteBalanceWarmFluorescentBoolean=false;
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceShadeBoolean=false;
-                                WhiteBalanceFluorescentBoolean=false;
-                                WhiteBalanceCloudyDaylightBoolean=false;
-                                WhiteBalanceDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
+                                WhiteBalanceIncandenscentBoolean = false;
+                                WhiteBalanceWarmFluorescentBoolean = false;
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceShadeBoolean = false;
+                                WhiteBalanceFluorescentBoolean = false;
+                                WhiteBalanceCloudyDaylightBoolean = false;
+                                WhiteBalanceDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
 
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceWarmFluorescent:
-                                if(!WhiteBalanceWarmFluorescentBoolean){
+                                if (!WhiteBalanceWarmFluorescentBoolean) {
                                     mWBMode = CONTROL_AWB_MODE_WARM_FLUORESCENT;
-                                    WhiteBalanceWarmFluorescentBoolean=true;
+                                    WhiteBalanceWarmFluorescentBoolean = true;
 
-                                }else{
-                                    WhiteBalanceWarmFluorescentBoolean=false;
-                                    mWBMode= CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean=true;
+                                } else {
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean = true;
                                 }
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceIncandenscentBoolean=false;
-                                WhiteBalanceTwilightBoolean=false;
-                                WhiteBalanceShadeBoolean=false;
-                                WhiteBalanceFluorescentBoolean=false;
-                                WhiteBalanceCloudyDaylightBoolean=false;
-                                WhiteBalanceDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceIncandenscentBoolean = false;
+                                WhiteBalanceTwilightBoolean = false;
+                                WhiteBalanceShadeBoolean = false;
+                                WhiteBalanceFluorescentBoolean = false;
+                                WhiteBalanceCloudyDaylightBoolean = false;
+                                WhiteBalanceDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
 
                                 startPreview();
                                 break;
                             case R.id.WhiteBalanceIncandenscent:
-                                if(!WhiteBalanceIncandenscentBoolean){
+                                if (!WhiteBalanceIncandenscentBoolean) {
                                     mWBMode = CONTROL_AWB_MODE_INCANDESCENT;
-                                    WhiteBalanceIncandenscentBoolean=true;
+                                    WhiteBalanceIncandenscentBoolean = true;
 
-                                }else{
-                                    WhiteBalanceIncandenscentBoolean=false;
-                                    mWBMode= CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean=true;
+                                } else {
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    mWBMode = CONTROL_AWB_MODE_AUTO;
+                                    WhiteBalanceAutoBoolean = true;
                                 }
-                                WhiteBalanceAutoBoolean=false;
-                                WhiteBalanceWarmFluorescentBoolean=false;
-                                WhiteBalanceTwilightBoolean=false;
-                                WhiteBalanceShadeBoolean=false;
-                                WhiteBalanceFluorescentBoolean=false;
-                                WhiteBalanceCloudyDaylightBoolean=false;
-                                WhiteBalanceDaylightBoolean=false;
-                                SpotLockedWhiteBalanceBoolean=false;
+                                WhiteBalanceAutoBoolean = false;
+                                WhiteBalanceWarmFluorescentBoolean = false;
+                                WhiteBalanceTwilightBoolean = false;
+                                WhiteBalanceShadeBoolean = false;
+                                WhiteBalanceFluorescentBoolean = false;
+                                WhiteBalanceCloudyDaylightBoolean = false;
+                                WhiteBalanceDaylightBoolean = false;
+                                SpotLockedWhiteBalanceBoolean = false;
 
 
                                 startPreview();
@@ -2022,15 +1975,15 @@ public class Camera2VideoImageActivity extends Activity {
                             case R.id.WhiteBalanceAuto:
                                 if (mWBMode != CONTROL_AWB_MODE_AUTO) {
                                     mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean=true;
-                                    WhiteBalanceIncandenscentBoolean=false;
-                                    WhiteBalanceWarmFluorescentBoolean=false;
-                                    WhiteBalanceTwilightBoolean=false;
-                                    WhiteBalanceShadeBoolean=false;
-                                    WhiteBalanceFluorescentBoolean=false;
-                                    WhiteBalanceCloudyDaylightBoolean=false;
-                                    WhiteBalanceDaylightBoolean=false;
-                                    SpotLockedWhiteBalanceBoolean=false;
+                                    WhiteBalanceAutoBoolean = true;
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "AUTO is already on", Toast.LENGTH_SHORT).show();
@@ -2038,65 +1991,57 @@ public class Camera2VideoImageActivity extends Activity {
                                 }
                                 startPreview();
                                 break;
-                            case  R.id.SpotLockWhiteBalance:
-                                if(!SpotLockedWhiteBalanceBoolean){
+                            case R.id.SpotLockWhiteBalance:
+                                if (!SpotLockedWhiteBalanceBoolean) {
                                     //in progress
-                                    SpotLockedWhiteBalanceBoolean=true;
-                                    WhiteBalanceAutoBoolean=false;
-                                    WhiteBalanceWarmFluorescentBoolean=false;
-                                    WhiteBalanceTwilightBoolean=false;
-                                    WhiteBalanceShadeBoolean=false;
-                                    WhiteBalanceFluorescentBoolean=false;
-                                    WhiteBalanceCloudyDaylightBoolean=false;
-                                    WhiteBalanceDaylightBoolean=false;
+                                    SpotLockedWhiteBalanceBoolean = true;
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
 
 
-                                    double mosiacRGGBred=((double)redPixelData/255)+1;
-                                    double mosiacRGGBgreen=1;
-                                    double mosiacRGGBblue=((double)bluePixelData/255)+1;
+                                    double mosiacRGGBred = ((double) redPixelData / 255) + 1;
+                                    double mosiacRGGBgreen = 1;
+                                    double mosiacRGGBblue = ((double) bluePixelData / 255) + 1;
 
 
-
-
-
-
-
-                                }else{
-                                    SpotLockedWhiteBalanceBoolean=false;
-                                    WhiteBalanceAutoBoolean=true;
+                                } else {
+                                    SpotLockedWhiteBalanceBoolean = false;
+                                    WhiteBalanceAutoBoolean = true;
 
                                 }
                                 startPreview();
                                 break;
                             case R.id.AverageSpotLockWhiteBalance:
 
-                                if(!AverageSpotLockWhiteBalanceBoolean){
-                                    AverageSpotLockWhiteBalanceBoolean=true;
-                                    SpotLockedWhiteBalanceBoolean=false;
-                                    WhiteBalanceAutoBoolean=false;
-                                    WhiteBalanceWarmFluorescentBoolean=false;
-                                    WhiteBalanceTwilightBoolean=false;
-                                    WhiteBalanceShadeBoolean=false;
-                                    WhiteBalanceFluorescentBoolean=false;
-                                    WhiteBalanceCloudyDaylightBoolean=false;
-                                    WhiteBalanceDaylightBoolean=false;
+                                if (!AverageSpotLockWhiteBalanceBoolean) {
+                                    AverageSpotLockWhiteBalanceBoolean = true;
+                                    SpotLockedWhiteBalanceBoolean = false;
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
 
-                                }else{
-                                    AverageSpotLockWhiteBalanceBoolean=false;
-                                    WhiteBalanceAutoBoolean=true;
+                                } else {
+                                    AverageSpotLockWhiteBalanceBoolean = false;
+                                    WhiteBalanceAutoBoolean = true;
                                 }
                                 startPreview();
 
 
-
-
-
                                 break;
                             case R.id.ChangeISO:
-                                if(!ISOinputboolean){
-                                    ISOinputboolean=true;}
-                                else{
-                                    ISOinputboolean=false;
+                                if (!ISOinputboolean) {
+                                    ISOinputboolean = true;
+                                } else {
+                                    ISOinputboolean = false;
                                 }
 
 
@@ -2168,7 +2113,6 @@ public class Camera2VideoImageActivity extends Activity {
                                 startPreview();
                                 break;
                             case R.id.custominputISO:
-
 
 
                                 LayoutInflater inflater = LayoutInflater.from(Camera2VideoImageActivity.this);
@@ -2361,7 +2305,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 mCameraInfoTextView4 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView4);
                                 mCameraInfoTextView4.setText("Supported Face Detections");
                                 mCameraInfoTextView4.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView5 =(TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
+                                mCameraInfoTextView5 = (TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
 
                                 mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
                                         + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
@@ -2370,7 +2314,7 @@ public class Camera2VideoImageActivity extends Activity {
                                         + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
                                         + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
                                         + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
-                                        + "\n" + "SENSOR_COLOR_TRANSFORM_1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
+                                        + "\n" + "SENSOR_COLOR_TRANSFORM_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
                                         + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
                                         + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
                                         + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
@@ -2391,16 +2335,15 @@ public class Camera2VideoImageActivity extends Activity {
                                     String newText2 = oldTextView2 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i] + " , ";
                                     mCameraInfoTextView2.setText(newText2);
                                 }
-                                for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length; i++)
-                                {
+                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length; i++) {
                                     String oldTextView3 = mCameraInfoTextView3.getText().toString();
                                     String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
                                     mCameraInfoTextView3.setText(newText3);
                                 }
 
-                                for (int i=0; i< mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++){
-                                    String oldTextView4= mCameraInfoTextView5.getText().toString();
-                                    String newText4=oldTextView4+ " "+ mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] +" ";
+                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+                                    String oldTextView4 = mCameraInfoTextView5.getText().toString();
+                                    String newText4 = oldTextView4 + " " + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] + " ";
                                     //AWBArr[i]=mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i];
                                     mCameraInfoTextView5.setText(newText4);
                                 }
@@ -2416,8 +2359,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 });
                                 String oldTextView4 = mCameraInfoTextView4.getText().toString();
 
-                                mCameraInfoTextView4.setText(oldTextView4+ " "+ OFFtext+", "+SIMPLEtext+""+FULLtext+"" );
-
+                                mCameraInfoTextView4.setText(oldTextView4 + " " + OFFtext + ", " + SIMPLEtext + "" + FULLtext + "");
 
 
                                 AlertDialog alertDialog2 = builder.create();
@@ -2504,27 +2446,26 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             case R.id.devButton:
-                                ChangeWhiteBalanceSpotRawOn=true;
-                                wbThreadisEnabled =! wbThreadIsEnabled;
+                                ChangeWhiteBalanceSpotRawOn = true;
+                                wbThreadisEnabled = !wbThreadIsEnabled;
                                 startPreview();
                                 break;
                             case R.id.devButton2:
-                                mWBMode=-1;
-                                ColorSpaceInputBoolean=true;
-                                mVectorR=(float)totalG/totalR;
-                                mVectorG_EVEN=1;
-                                mVectorG_ODD=1;
-                                mVectorB=(float)totalG/totalB;
+                                mWBMode = -1;
+                                ColorSpaceInputBoolean = true;
+                                mVectorR = (float) totalG / totalR;
+                                mVectorG_EVEN = 1;
+                                mVectorG_ODD = 1;
+                                mVectorB = (float) totalG / totalB;
                                 startPreview();
                                 break;
                             case R.id.WB_RAWTouch:
-                                if(WB_RAWTouchEnabled){
-                                    WB_RAWTouchEnabled=false;
-                                }else{
-                                    WB_RAWTouchEnabled=true;
+                                if (WB_RAWTouchEnabled) {
+                                    WB_RAWTouchEnabled = false;
+                                } else {
+                                    WB_RAWTouchEnabled = true;
                                 }
                                 startPreview();
-
 
 
                             default:
@@ -2557,14 +2498,15 @@ public class Camera2VideoImageActivity extends Activity {
                 if (!mBurstOn) {
                     lockFocus();
                     //startStillCaptureRequest();
-                } if(mBurstOn) {
+                }
+                if (mBurstOn) {
                     //Toast.makeText(getApplicationContext(), "Burst Done", Toast.LENGTH_SHORT).show();
                     mBurstOn = false;
                 }
                 if (mChronometer.getVisibility() == View.VISIBLE) {
-                        mTimeInterval.setVisibility(View.INVISIBLE);
-                        mChronometer.stop();
-                        mChronometer.setVisibility(View.INVISIBLE);
+                    mTimeInterval.setVisibility(View.INVISIBLE);
+                    mChronometer.stop();
+                    mChronometer.setVisibility(View.INVISIBLE);
 
                 }
             }
@@ -2721,24 +2663,20 @@ public class Camera2VideoImageActivity extends Activity {
         Surface previewSurface = new Surface(surfaceTexture);
 
 
+        for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES).length; i++) {
 
 
-
-        for (int i =0; i < mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES).length; i++){
-
-
-            if(mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i]==0){
-                OFFtext =  "OFF";
+            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 0) {
+                OFFtext = "OFF";
 
             }
-            if(mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i]==1) {
+            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 1) {
                 SIMPLEtext = "SIMPLE";
-                supports_face_detection_mode_simple=true;
+                supports_face_detection_mode_simple = true;
             }
-            if(mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i]==2)
-            {
+            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 2) {
                 FULLtext = "FULL";
-                isSupports_face_detection_mode_full=true;
+                isSupports_face_detection_mode_full = true;
             }
             //String newText4 = oldTextView4 + "" + mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i]+ " , ";
 
@@ -2750,10 +2688,10 @@ public class Camera2VideoImageActivity extends Activity {
             mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
             mCaptureRequestBuilder.addTarget(previewSurface);
 
-            if(supports_face_detection_mode_simple && isSupports_face_detection_mode_full==false){
+            if (supports_face_detection_mode_simple && isSupports_face_detection_mode_full == false) {
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_SIMPLE);
             }
-            if(isSupports_face_detection_mode_full){
+            if (isSupports_face_detection_mode_full) {
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_FULL);
             }
 
@@ -2769,15 +2707,14 @@ public class Camera2VideoImageActivity extends Activity {
             }
 
 
-
-            if(CustomeWhiteBalanceBoolean){
+            if (CustomeWhiteBalanceBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
-                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS,new RggbChannelVector((float)RggbChsnnelR,(float) RggbChannelG_even, (float)RggbChannelG_odd,(float)RggbChannelBlue ));
-            }  else if(!CustomeWhiteBalanceBoolean) {
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE,mWBMode);
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, new RggbChannelVector((float) RggbChsnnelR, (float) RggbChannelG_even, (float) RggbChannelG_odd, (float) RggbChannelBlue));
+            } else if (!CustomeWhiteBalanceBoolean) {
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
             }
 
-            if(mWBMode == -1){
+            if (mWBMode == -1) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
                 RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
@@ -2788,30 +2725,30 @@ public class Camera2VideoImageActivity extends Activity {
             } else if (!BooleanOpticalStabilizationOn) {
                 mCaptureRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
             }
-            if (manualFocusEnableIsChecked ) {
+            if (manualFocusEnableIsChecked) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF);
-                mCaptureRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, (float) ((float) 1 / (float )mFocusDistance));
+                mCaptureRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, (float) ((float) 1 / (float) mFocusDistance));
                 //Toast.makeText(getApplicationContext(), "CONTROL AF OFF", Toast.LENGTH_SHORT).show();
-                mFocusDistanceMem= (float) mFocusDistance;
+                mFocusDistanceMem = (float) mFocusDistance;
             }
             if (!manualFocusEnableIsChecked && lockFocusEnableIsChecked) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.LENS_FOCUS_DISTANCE, (float) mCurrentFocusDistance);
-                mFocusDistanceMem= (float) mFocusDistance;
+                mFocusDistanceMem = (float) mFocusDistance;
             }
-            if(!manualFocusEnableIsChecked && !lockFocusEnableIsChecked){
+            if (!manualFocusEnableIsChecked && !lockFocusEnableIsChecked) {
                 {
                     mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER_CANCEL);
-                    mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AF_MODE_AUTO);
+                    mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
                 }
             }
-            if(!AutoWhiteBalancelockBoolean) {
+            if (!AutoWhiteBalancelockBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, false);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
             }
-            if(AutoWhiteBalancelockBoolean){
+            if (AutoWhiteBalancelockBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CONTROL_AWB_MODE_AUTO);
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK,true);
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, true);
                 //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
             }
 
@@ -2836,25 +2773,24 @@ public class Camera2VideoImageActivity extends Activity {
             if (mFlashMode == 3) {
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_TORCH);
             }
-            if(ColorSpaceInputBoolean){
+            if (ColorSpaceInputBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, new ColorSpaceTransform(new int[]{
-                        ColorSpaceRed1,256, ColorSpaceRed2,256, ColorSpaceRed3,256,
-                        ColorSpaceGreen1,256, ColorSpaceGreen2,256, ColorSpaceGreen3,256,
-                        ColorSpaceBlue1,256, ColorSpaceBlue2,256, ColorSpaceBlue3,256
+                        ColorSpaceRed1, 256, ColorSpaceRed2, 256, ColorSpaceRed3, 256,
+                        ColorSpaceGreen1, 256, ColorSpaceGreen2, 256, ColorSpaceGreen3, 256,
+                        ColorSpaceBlue1, 256, ColorSpaceBlue2, 256, ColorSpaceBlue3, 256
                 }));
-            }
-            else if(!ColorSpaceInputBoolean){
+            } else if (!ColorSpaceInputBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_FAST);
             }
-            if(ISOinputboolean){
+            if (ISOinputboolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, ShutterSpeedValue);
-                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY,ISOvalue);
+                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
 
             }
-            if(SensorColorTransformInputBoolean){
+            if (SensorColorTransformInputBoolean) {
 
 
             }
@@ -2863,22 +2799,21 @@ public class Camera2VideoImageActivity extends Activity {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    mCurrentFocusDistance=result.get(CaptureResult.LENS_FOCUS_DISTANCE);
-                    mCurrentISOValue=result.get(CaptureResult.SENSOR_SENSITIVITY);
-                    mCurrentSSvalue=result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
-                    mCurrentAperatureValue=result.get(CaptureResult.LENS_APERTURE);
+                    mCurrentFocusDistance = result.get(CaptureResult.LENS_FOCUS_DISTANCE);
+                    mCurrentISOValue = result.get(CaptureResult.SENSOR_SENSITIVITY);
+                    mCurrentSSvalue = result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
+                    mCurrentAperatureValue = result.get(CaptureResult.LENS_APERTURE);
                     Integer mode = result.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
-                    Face [] faces = result.get(CaptureResult.STATISTICS_FACES);
-                    rggbChannelVector=result.get(CaptureResult.COLOR_CORRECTION_GAINS);
-                    ColorCorrectionTransform=result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
-                    mNumberofFaces=faces.length;
+                    Face[] faces = result.get(CaptureResult.STATISTICS_FACES);
+                    rggbChannelVector = result.get(CaptureResult.COLOR_CORRECTION_GAINS);
+                    ColorCorrectionTransform = result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
+                    mNumberofFaces = faces.length;
 
                     //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();
 
 
                 }
             };
-
 
 
             mCameraDevice.createCaptureSession(Arrays.asList(previewSurface, mImageReader.getSurface(), mRawImageReader.getSurface()),
@@ -2890,10 +2825,10 @@ public class Camera2VideoImageActivity extends Activity {
                             mPreviewCaptureSession = session;
 
                             try {
-                                if(supports_face_detection_mode_simple){
+                                if (supports_face_detection_mode_simple) {
                                     if (isSupports_face_detection_mode_full) {
                                         mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CameraMetadata.STATISTICS_FACE_DETECT_MODE_FULL);
-                                    } else{
+                                    } else {
                                         mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CameraMetadata.STATISTICS_FACE_DETECT_MODE_SIMPLE);
                                     }
                                 }
@@ -2948,10 +2883,6 @@ public class Camera2VideoImageActivity extends Activity {
         }
 
     }
-
-
-
-
 
 
 //now we have to call the videoFolder onCreate
@@ -3016,7 +2947,6 @@ public class Camera2VideoImageActivity extends Activity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-
 
 
                     mIsRecording = true;
@@ -3137,16 +3067,16 @@ public class Camera2VideoImageActivity extends Activity {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
 
-                        //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
 
 
-                        Image image = reader.acquireLatestImage();
-                    if(!isAdjustingWB2){
+                    Image image = reader.acquireLatestImage();
+                    if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
-                    }else{
+                    } else {
                         image.close();
                     }
 
@@ -3160,156 +3090,156 @@ public class Camera2VideoImageActivity extends Activity {
                 public void onImageAvailable(ImageReader reader) {
                     if (!mIsWritingRawImage) {
                         Image image = reader.acquireLatestImage();
-                        Image.Plane[] planes=image.getPlanes();
-                        ByteBuffer Bytebufferplane1=null;
-                        if(planes.length>0){
-                            Bytebufferplane1=planes[0].getBuffer();
+                        Image.Plane[] planes = image.getPlanes();
+                        ByteBuffer Bytebufferplane1 = null;
+                        if (planes.length > 0) {
+                            Bytebufferplane1 = planes[0].getBuffer();
                         }
                         if (image != null) {
-                            int temp = 0;
-                            int temp2 = 0;
-                            int counterr = 0;
+                            if (WB_RAWTouchEnabled) {
+                                int temp = 0;
+                                int temp2 = 0;
+                                int counterr = 0;
 
-                            pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
-                            int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
-                            int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
-                            for (int j = height; j < height + BAYERHEIGHT; j++) {
-                                counterr = 0;
-                                for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
-                                    temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
-                                    if (i % 2 == 1) {
-                                        pixelValues[j - height][counterr] = (temp << 8) + temp2;
-                                        counterr++;
-                                    } else {
-                                        temp2 = temp;
+                                pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
+                                int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
+                                int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
+                                for (int j = height; j < height + BAYERHEIGHT; j++) {
+                                    counterr = 0;
+                                    for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
+                                        temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
+                                        if (i % 2 == 1) {
+                                            pixelValues[j - height][counterr] = (temp << 8) + temp2;
+                                            counterr++;
+                                        } else {
+                                            temp2 = temp;
+                                        }
                                     }
                                 }
-                            }
 
-                            int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
-                            if (mFilterArrangement == 0) {
-                                s = "RG\nGB\n\n";
-                                totalR = totalG = totalB = 0;
-                                for (int i = 0; i < BAYERHEIGHT; i++) {
-                                    for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i % 2 == 0) {
-                                            if (j % 2 == 0) {
-                                                totalR = totalR + pixelValues[i][j];
+                                int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
+                                if (mFilterArrangement == 0) {
+                                    s = "RG\nGB\n\n";
+                                    totalR = totalG = totalB = 0;
+                                    for (int i = 0; i < BAYERHEIGHT; i++) {
+                                        for (int j = 0; j < BAYERWIDTH; j++) {
+                                            if (i % 2 == 0) {
+                                                if (j % 2 == 0) {
+                                                    totalR = totalR + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
                                             }
-                                            if (j % 2 == 1) {
-                                                totalG = totalG + pixelValues[i][j];
+                                            if (i % 2 == 1) {
+                                                if (j % 2 == 0) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalB = totalB + pixelValues[i][j];
+                                                }
                                             }
                                         }
-                                        if (i % 2 == 1) {
-                                            if (j % 2 == 0) {
-                                                totalG = totalG + pixelValues[i][j];
-                                            }
-                                            if (j % 2 == 1) {
-                                                totalB = totalB + pixelValues[i][j];
-                                            }
-                                        }
-                                    }
 
-                                    s = s + "\n\n";
-                                }
-                            } else if (mFilterArrangement == 1) {
-                                s = "GR\nBG\n\n";
-                                for (int i = 0; i < BAYERHEIGHT; i++) {
-                                    for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i % 2 == 0) {
-                                            if (j % 2 == 0) {
-                                                totalG = totalG + pixelValues[i][j];
-                                            }
-                                            if (j % 2 == 1) {
-                                                totalR = totalR + pixelValues[i][j];
-                                            }
-                                        }
-                                        if (i % 2 == 1) {
-                                            if (j % 2 == 0) {
-                                                totalB = totalB + pixelValues[i][j];
-                                            }
-                                            if (j % 2 == 1) {
-                                                totalG = totalG + pixelValues[i][j];
-                                            }
-                                        }
+                                        s = s + "\n\n";
                                     }
-                                    s = s + "\n\n";
-                                }
-                            } else if (mFilterArrangement == 2) {
-                                s = "GB\nRG\n\n";
-                                for (int i = 0; i < BAYERHEIGHT; i++) {
-                                    for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i % 2 == 0) {
-                                            if (j % 2 == 0) {
-                                                totalG = totalG + pixelValues[i][j];
+                                } else if (mFilterArrangement == 1) {
+                                    s = "GR\nBG\n\n";
+                                    for (int i = 0; i < BAYERHEIGHT; i++) {
+                                        for (int j = 0; j < BAYERWIDTH; j++) {
+                                            if (i % 2 == 0) {
+                                                if (j % 2 == 0) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalR = totalR + pixelValues[i][j];
+                                                }
                                             }
-                                            if (j % 2 == 1) {
-                                                totalB = totalB + pixelValues[i][j];
+                                            if (i % 2 == 1) {
+                                                if (j % 2 == 0) {
+                                                    totalB = totalB + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
                                             }
                                         }
-                                        if (i % 2 == 1) {
-                                            if (j % 2 == 0) {
-                                                totalR = totalR + pixelValues[i][j];
-                                            }
-                                            if (j % 2 == 1) {
-                                                totalG = totalG + pixelValues[i][j];
-                                            }
-                                        }
+                                        s = s + "\n\n";
                                     }
-                                    s = s + "\n\n";
-                                }
-                            } else if (mFilterArrangement == 3) {
-                                s = "BG\nGR\n\n";
-                                for (int i = 0; i < BAYERHEIGHT; i++) {
-                                    for (int j = 0; j < BAYERWIDTH; j++) {
-                                        if (i % 2 == 0) {
-                                            if (j % 2 == 0) {
-                                                totalB = totalB + pixelValues[i][j];
+                                } else if (mFilterArrangement == 2) {
+                                    s = "GB\nRG\n\n";
+                                    for (int i = 0; i < BAYERHEIGHT; i++) {
+                                        for (int j = 0; j < BAYERWIDTH; j++) {
+                                            if (i % 2 == 0) {
+                                                if (j % 2 == 0) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalB = totalB + pixelValues[i][j];
+                                                }
                                             }
-                                            if (j % 2 == 1) {
-                                                totalG = totalG + pixelValues[i][j];
+                                            if (i % 2 == 1) {
+                                                if (j % 2 == 0) {
+                                                    totalR = totalR + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
                                             }
                                         }
-                                        if (i % 2 == 1) {
-                                            if (j % 2 == 0) {
-                                                totalG = totalG + pixelValues[i][j];
-                                            }
-                                            if (j % 2 == 1) {
-                                                totalR = totalR + pixelValues[i][j];
-                                            }
-                                        }
-                                        s = s + pixelValues[i][j] + " ";
+                                        s = s + "\n\n";
                                     }
-                                    s = s + "\n\n";
+                                } else if (mFilterArrangement == 3) {
+                                    s = "BG\nGR\n\n";
+                                    for (int i = 0; i < BAYERHEIGHT; i++) {
+                                        for (int j = 0; j < BAYERWIDTH; j++) {
+                                            if (i % 2 == 0) {
+                                                if (j % 2 == 0) {
+                                                    totalB = totalB + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
+                                            }
+                                            if (i % 2 == 1) {
+                                                if (j % 2 == 0) {
+                                                    totalG = totalG + pixelValues[i][j];
+                                                }
+                                                if (j % 2 == 1) {
+                                                    totalR = totalR + pixelValues[i][j];
+                                                }
+                                            }
+                                            s = s + pixelValues[i][j] + " ";
+                                        }
+                                        s = s + "\n\n";
 
+                                    }
                                 }
-                            }
-                            totalR = (int) (totalR / Math.pow(BAYERHEIGHT / 2, 2));
-                            totalG = (int) (totalG / (Math.pow(BAYERHEIGHT / 2, 2)));
-                            totalB = (int) (totalB / Math.pow(BAYERHEIGHT / 2, 2));
-                            if(WB_RAWTouchEnabled){
+                                totalR = (int) (totalR / Math.pow(BAYERHEIGHT / 2, 2));
+                                totalG = (int) (totalG / (Math.pow(BAYERHEIGHT / 2, 2)));
+                                totalB = (int) (totalB / Math.pow(BAYERHEIGHT / 2, 2));
+
                                 Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
-
-
-
-                            }
-                           }
-                            if(!isAdjustingWB2){
-
-                                mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
-
-
-                            }else{
-                                image.close();
                             }
 
 
+
+                        }
+                        if (!isAdjustingWB2) {
+
+                            mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
+
+
+                        } else {
+                            image.close();
+                        }
 
 
                     }
-                    isAdjustingWB2=false;
+                    isAdjustingWB2 = false;
                 }
             };
+
     private void AutoWhiteBalanceLock(){
         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK,true);
         Toast.makeText(getApplicationContext(), "AWB Locked", Toast.LENGTH_SHORT).show();
