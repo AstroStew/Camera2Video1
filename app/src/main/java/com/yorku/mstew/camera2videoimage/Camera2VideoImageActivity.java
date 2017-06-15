@@ -418,6 +418,8 @@ public class Camera2VideoImageActivity extends Activity {
             }
         }
         Log.d("Orientation",""+ orientation);
+        mOrientationDeg=orientation;
+        tempOrientRounded=PORTRAIT;
         if(orientation != mOrientationDeg && !rotationLockEnableIsChecked){
             mOrientationDeg=orientation;
             if(orientation == -1){
@@ -2662,6 +2664,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 }else{
                                     WB_RAWTouchEnabled=true;
                                 }
+                                startPreview();
 
 
 

@@ -164,6 +164,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
                 || RawCaptureClass.class.getName().equals(fragmentName)
                 || resolutionClass.class.getName().equals(fragmentName)
+                || OpticalStabilization.class.getName().equals(fragmentName)
                 ;
     }
 
