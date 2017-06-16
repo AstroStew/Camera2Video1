@@ -30,14 +30,14 @@
     <header
     android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"
     android:title="Optical Stabilization"
-        android:key="OpticalSS"
-    android:id="@+id/OpticalStabilizationInput2"
+    android:key="OpticalStabilzation"
         android:icon="@drawable/ic_vibration_black_24dp"
     />
 
 
     <header
-        android:title="Photo Burst Input"
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$Timelapseinput"
+        android:title="Timelapse Input"
         android:icon="@drawable/custom_input_iso"
         android:key="PhotoBurstInput"
         />
@@ -52,7 +52,6 @@
         android:icon="@drawable/ic_slideshow_black_24dp"
         />
     <header
-        android:fragment="com.yorku.mstew.camera2videoimage.Pages$ExitPreferenceFragemnet"
         android:title="Exit"
         android:id="@+id/exit"
         android:icon="@drawable/ic_exit_to_app_black_24dp2"/>

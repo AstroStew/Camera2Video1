@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Camera;
@@ -107,12 +108,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
@@ -124,6 +131,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.zip.Inflater;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import static android.R.attr.bitmap;
 import static android.R.attr.x;
@@ -166,6 +177,7 @@ import static android.hardware.camera2.CameraMetadata.FLASH_STATE_UNAVAILABLE;
 import static com.yorku.mstew.camera2videoimage.R.menu.advancedsettings;
 import static com.yorku.mstew.camera2videoimage.R.menu.bottom_menu;
 import static com.yorku.mstew.camera2videoimage.R.menu.popup_menu;
+import static com.yorku.mstew.camera2videoimage.R.xml.resolution_xml;
 import static java.lang.StrictMath.max;
 import static java.lang.StrictMath.toIntExact;
 
@@ -335,6 +347,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean ControlAWBmodetwilightavailableboolean = false;
     boolean WBrunOnce = true;
     boolean CaptureAveragepixelCountBooleanOn = false;
+    Button readButton;
 
 
     String s = "";
@@ -750,19 +763,23 @@ public class Camera2VideoImageActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Button readButton=(Button)findViewById(R.id.read);
-        readButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                String mSetiing=prefs.getString("example_text", "xxx");
-                Toast.makeText(Camera2VideoImageActivity.this, ""+mSetiing, Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
+        readButton = (Button) findViewById(R.id.readbutton);
+        readButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+                String mSetting = sharedprefs1.getString("example_text", "xxx");
+                boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+                boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
+
+                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization, Toast.LENGTH_SHORT).show();
+            }
+        });
         BallInspectorx = BallInspectory = 600;
         WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
 
@@ -799,6 +816,21 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         mMediaRecorder = new MediaRecorder();
+
+
+    //new stuff
+        new ModifyXMLFile();
+
+
+
+
+
+
+
+
+
+
+
 
 
         //mIsAuto2=false;
@@ -903,10 +935,12 @@ public class Camera2VideoImageActivity extends Activity {
                                 SubMenu sM = AdvanncedsettingsPopup.getMenu().addSubMenu(0, 100, 0, "Change Resolution:");
                                 StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 
+
                                 final Size previewSizes[] = scmap.getOutputSizes(ImageFormat.JPEG);
 
                                 for (int i = 0; i < previewSizes.length; i++) {
                                     sM.add(0, i + 200, 0, "" + previewSizes[i]);
+
                                 }
 
 
@@ -1056,6 +1090,7 @@ public class Camera2VideoImageActivity extends Activity {
         createImageFolder();
         mInfoTextView = (TextView) findViewById(R.id.infotextView2);
         mInfoTextView.setVisibility(View.VISIBLE);
+
 
 
         mFocusTextView = (TextView) findViewById(R.id.infoTextView);
@@ -3697,7 +3732,24 @@ public class Camera2VideoImageActivity extends Activity {
             }
         }
     }
+    public class ModifyXMLFile{
+        public  void main(String argv[]){
+            try{
+                String filepath="c:\\resolutins_xml.xml";
+                DocumentBuilderFactory docFactory=DocumentBuilderFactory.newInstance();
+                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+                Document doc=docBuilder.parse(filepath);
+                doc.createAttribute("ahahah");
 
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 
 
 

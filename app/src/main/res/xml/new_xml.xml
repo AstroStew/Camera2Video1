@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
+        android:defaultValue="false"
         android:id="@+id/CaptureRawwithJpeg"
+        android:key="Capture_Raw_With_JPEG"
         android:title="Capture Raw With JPEG"/>
 
 
@@ -9,7 +11,10 @@
     <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
          design guidelines. -->
     <SwitchPreference
-        android:title="Capture Raw With JPEG"
+        android:defaultValue="false"
+        android:title="Capture Raw Without JPEG"
+        android:key="Captre_Raw_Without_JPEG"
+
         android:id="@+id/CaptureRawwithoutJpeg"/>
 
 

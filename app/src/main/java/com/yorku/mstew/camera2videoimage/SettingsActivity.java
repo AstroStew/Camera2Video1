@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Camera;
 import android.graphics.ImageFormat;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -25,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Size;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -45,6 +47,24 @@ import static java.lang.System.getProperties;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+
+
+    public void onWindowFocusChanged(boolean hasFocas){
+        super.onWindowFocusChanged(hasFocas);
+        View decorView=getWindow().getDecorView();
+        if(hasFocas){
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+
+            );
+        }
+    }
+
     static boolean CaptureRawwithJPEGBoolean=false;
     static boolean CaptureRawwithoutJPEGBoolean=false;
     Camera2VideoImageActivity Camera2ImageCall;
@@ -182,6 +202,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || resolutionClass.class.getName().equals(fragmentName)
                 || OpticalStabilization.class.getName().equals(fragmentName)
                 || ExitPreferenceFragemnet.class.getName().equals(fragmentName)
+                || Timelapseinput.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -311,6 +332,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.resolution_xml);
+
+
             setHasOptionsMenu(true);
         }
     }
@@ -318,10 +341,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-            boolean isOpticalStabilizationSwitchon=true;
-            
-
-
+            addPreferencesFromResource(R.xml.optical_stabilization);
 
         }
     }
@@ -335,9 +355,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
 
+
         }
 
 
+    }
+    public static class Timelapseinput extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.timelpase_change);
+            bindPreferenceSummaryToValue(findPreference("PictureSecondStep"));
+            bindPreferenceSummaryToValue(findPreference("VideoSecondStep"));
+
+        }
     }
 
 
