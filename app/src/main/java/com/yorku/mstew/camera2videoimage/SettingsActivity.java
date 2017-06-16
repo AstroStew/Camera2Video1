@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.System.exit;
@@ -157,6 +158,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        Camera2VideoImageActivity newinstance=new Camera2VideoImageActivity();
+        ArrayList<Size>newarraylist=newinstance.arraylist;
+        Toast.makeText(this, ""+newarraylist, Toast.LENGTH_SHORT).show();
+
     }
 
     /**
@@ -332,6 +337,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.resolution_xml);
+
 
 
             setHasOptionsMenu(true);

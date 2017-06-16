@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Entity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -270,6 +272,7 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean wbThreadIsEnabled = false;
     private boolean isAdjustingWB2 = false;
     private boolean isAdjustingWB = false;
+    ArrayList<Size> arraylist;
 
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
@@ -348,6 +351,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean WBrunOnce = true;
     boolean CaptureAveragepixelCountBooleanOn = false;
     Button readButton;
+    String scannedfilestring;
 
 
     String s = "";
@@ -772,13 +776,17 @@ public class Camera2VideoImageActivity extends Activity {
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ModifyXMLFile2();
+
                 SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
                 String mSetting = sharedprefs1.getString("example_text", "xxx");
                 boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
                 boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
 
-                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring, Toast.LENGTH_LONG).show();
             }
+
+
         });
         BallInspectorx = BallInspectory = 600;
         WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
@@ -819,7 +827,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
     //new stuff
-        new ModifyXMLFile();
+        //new ModifyXMLFile();
 
 
 
@@ -919,9 +927,16 @@ public class Camera2VideoImageActivity extends Activity {
                         mStillImageButton.setVisibility(View.INVISIBLE);
                         mRecordImageButton.setVisibility(View.INVISIBLE);
                         mSettingsButton.setVisibility(View.VISIBLE);
-
-
                         mSettingsButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent SettingsIntent=new Intent(getApplicationContext(),SettingsActivity.class);
+                                startActivity(SettingsIntent);
+                            }
+                        });
+
+
+                        /*mSettingsButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent AdvancedSettingIntent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -940,6 +955,7 @@ public class Camera2VideoImageActivity extends Activity {
 
                                 for (int i = 0; i < previewSizes.length; i++) {
                                     sM.add(0, i + 200, 0, "" + previewSizes[i]);
+                                    arraylist.add(previewSizes[i]);
 
                                 }
 
@@ -1074,7 +1090,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 AdvanncedsettingsPopup.show();
 
                             }
-                        });
+                        });*/
 
                         break;
                     case R.id.PageMenu:
@@ -2668,6 +2684,41 @@ public class Camera2VideoImageActivity extends Activity {
 
     }
 
+    public void ModifyXMLFile2(){
+
+
+        try {
+            String filepath="C:/Users/mstew/AndroidStudioProjects/Camera2VideoImage/app/src/main/res/values/strings.xml";
+            DocumentBuilderFactory docFacotry=DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder=docFacotry.newDocumentBuilder();
+            File newfile=new File(filepath);
+
+            scannedfilestring= "file found";
+            Scanner filescanner=new Scanner(newfile);
+            scannedfilestring= String.valueOf(filescanner.hasNext());
+            filescanner.close();
+
+            //Document doc =docBuilder.parse(newfile);
+
+
+
+
+
+            //Document doc= docBuilder.parse(filepath);
+
+
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //scannedfilestring="catched";
+        }
+
+
+    }
+
 
     //pt9
     @Override
@@ -3732,7 +3783,10 @@ public class Camera2VideoImageActivity extends Activity {
             }
         }
     }
-    public class ModifyXMLFile{
+
+
+
+    /*public class ModifyXMLFile{
         public  void main(String argv[]){
             try{
                 String filepath="c:\\resolutins_xml.xml";
@@ -3749,7 +3803,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         }
-    }
+    }*/
 
 
 
