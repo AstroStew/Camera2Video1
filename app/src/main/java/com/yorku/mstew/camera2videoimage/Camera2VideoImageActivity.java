@@ -272,7 +272,7 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean wbThreadIsEnabled = false;
     private boolean isAdjustingWB2 = false;
     private boolean isAdjustingWB = false;
-    ArrayList<Size> arraylist;
+    public static ArrayList<Size> arraylist=new ArrayList<Size>();
 
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
@@ -897,6 +897,10 @@ public class Camera2VideoImageActivity extends Activity {
 
 
 
+
+
+
+
         final BottomNavigationView mCom = (BottomNavigationView) findViewById(R.id.NavBot);
         mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -930,6 +934,13 @@ public class Camera2VideoImageActivity extends Activity {
                         mSettingsButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                                final Size previewSizes[] = scmap.getOutputSizes(ImageFormat.JPEG);
+
+                                for (int i = 0; i < previewSizes.length; i++) {
+                                    arraylist.add(i,previewSizes[i]);
+                                }
+
                                 Intent SettingsIntent=new Intent(getApplicationContext(),SettingsActivity.class);
                                 startActivity(SettingsIntent);
                             }
