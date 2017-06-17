@@ -346,11 +346,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             for (int i=0;i<SizeArray.length;i++){
                 entries[i]=SizeArray[i].toString();
                 entryValues[i]=""+i;
-
             }
-
-
             setHasOptionsMenu(true);
+            listPreference.setEntries(entries);
+            listPreference.setEntryValues(entryValues);
+
         }
     }
     public static class OpticalStabilization extends  PreferenceFragment{
