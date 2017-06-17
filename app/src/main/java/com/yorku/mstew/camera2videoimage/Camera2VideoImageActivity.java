@@ -273,6 +273,7 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean isAdjustingWB2 = false;
     private boolean isAdjustingWB = false;
     public static ArrayList<Size> arraylist=new ArrayList<Size>();
+    public static boolean arraylistcall=true;
 
 
     private ColorSpaceTransform mCurrentSensorColorTranform;

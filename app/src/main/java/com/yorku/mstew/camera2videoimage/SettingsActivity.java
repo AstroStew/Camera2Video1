@@ -158,8 +158,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+        if(Camera2VideoImageActivity.arraylistcall){
+            newarraylist=new ArrayList<Size>(Camera2VideoImageActivity.arraylist);
+            Camera2VideoImageActivity.arraylistcall=false;
 
-        newarraylist=new ArrayList<Size>(Camera2VideoImageActivity.arraylist);
+        }
+
         //newarraylist.addAll(Camera2VideoImageActivity.arraylist);
         Toast.makeText(this, ""+newarraylist, Toast.LENGTH_SHORT).show();
 
