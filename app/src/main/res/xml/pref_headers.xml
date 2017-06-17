@@ -42,11 +42,7 @@
         android:key="PhotoBurstInput"
         />
 
-    <header
-        android:title="Video TimeLapse Input"
-        android:icon="@drawable/custom_input_iso"
-        android:key="VideoTimelapseInput"
-        />
+
     <header
         android:title="Show RealTime Information"
         android:icon="@drawable/ic_slideshow_black_24dp"

@@ -783,8 +783,9 @@ public class Camera2VideoImageActivity extends Activity {
                 String mSetting = sharedprefs1.getString("example_text", "xxx");
                 boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
                 boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
+                String f=sharedprefs1.getString("resolution_list", "xxx");
 
-                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring, Toast.LENGTH_LONG).show();
+                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:"+ f, Toast.LENGTH_LONG).show();
             }
 
 

@@ -163,10 +163,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             Camera2VideoImageActivity.arraylistcall=false;
 
         }
-
-        //newarraylist.addAll(Camera2VideoImageActivity.arraylist);
-        Toast.makeText(this, ""+newarraylist, Toast.LENGTH_SHORT).show();
-
     }
 
     /**
