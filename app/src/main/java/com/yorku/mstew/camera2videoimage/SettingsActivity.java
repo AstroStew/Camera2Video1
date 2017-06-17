@@ -48,7 +48,7 @@ import static java.lang.System.getProperties;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
-
+    static ArrayList<Size>newarraylist;
 
     public void onWindowFocusChanged(boolean hasFocas){
         super.onWindowFocusChanged(hasFocas);
@@ -68,7 +68,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     static boolean CaptureRawwithJPEGBoolean=false;
     static boolean CaptureRawwithoutJPEGBoolean=false;
-    Camera2VideoImageActivity Camera2ImageCall;
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -155,10 +155,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
-        ArrayList<Size>newarraylist=new ArrayList<Size>(Camera2VideoImageActivity.arraylist);
+
+        newarraylist=new ArrayList<Size>(Camera2VideoImageActivity.arraylist);
         //newarraylist.addAll(Camera2VideoImageActivity.arraylist);
         Toast.makeText(this, ""+newarraylist, Toast.LENGTH_SHORT).show();
 
@@ -337,7 +338,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.resolution_xml);
+            final ListPreference listPreference=(ListPreference)findPreference("resolution_list");
+            Object[] SizeArray=newarraylist.toArray();
+            CharSequence[] entries=new CharSequence[SizeArray.length];
+            CharSequence[] entryValues=new CharSequence[SizeArray.length];
 
+            for (int i=0;i<SizeArray.length;i++){
+                entries[i]=SizeArray[i].toString();
+                entryValues[i]=""+i;
+
+            }
 
 
             setHasOptionsMenu(true);

@@ -30,6 +30,8 @@
         <item>0</item>
         <item>-1</item>
     </string-array>
+    <array name="resolutions_array">hello
+    </array>
 
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
