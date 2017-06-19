@@ -7,9 +7,14 @@
         android:singleLine="true"
         android:inputType="number"
         android:key="PictureSecondStep"
-
-
-
+        />
+    <EditTextPreference
+        android:title="Picture Capture Time Limit"
+        android:defaultValue="0"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:key="PictureTimeLimit"
+        android:inputType="number"
         />
     <EditTextPreference
         android:title="Video Timelapse Second Step"
@@ -18,7 +23,6 @@
         android:singleLine="true"
         android:inputType="number"
         android:key="VideoSecondStep"
-
         />
 
 </PreferenceScreen>

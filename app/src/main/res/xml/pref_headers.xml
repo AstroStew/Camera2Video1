@@ -51,10 +51,6 @@
         android:title="Exit"
         android:id="@+id/exit"
         android:icon="@drawable/ic_exit_to_app_black_24dp2"/>
-
-
-
-
 </preference-headers>
 
 

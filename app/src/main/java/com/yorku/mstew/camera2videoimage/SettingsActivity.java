@@ -381,6 +381,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.timelpase_change);
+            bindPreferenceSummaryToValue(findPreference("PictureTimeLimit"));
             bindPreferenceSummaryToValue(findPreference("PictureSecondStep"));
             bindPreferenceSummaryToValue(findPreference("VideoSecondStep"));
 

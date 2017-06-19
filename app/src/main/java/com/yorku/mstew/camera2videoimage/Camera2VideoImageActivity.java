@@ -778,14 +778,30 @@ public class Camera2VideoImageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ModifyXMLFile2();
-
                 SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
                 String mSetting = sharedprefs1.getString("example_text", "xxx");
                 boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
                 boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
-                String f=sharedprefs1.getString("resolution_list", "xxx");
+                String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
+                String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
+                int TempSecondInterval=Integer.parseInt(TempSecondIntervalString);
+                SecondStep = TempSecondInterval;
+                String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","xxx");
+                int TempTimeLimit=Integer.parseInt(TempTimeLimitString);
+                String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","xxx");
+                int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
+                VideoTimelapsSecondStep = TempVideoSecondInterval;
+                if (TempTimeLimit==0) {
+                    mPhotoTimeLimitNumber = 1;
 
-                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:"+ f, Toast.LENGTH_LONG).show();
+                } else {
+                    mPhotoTimeLimitNumber = 0;
+                    PhotoBurstTimeStop = TempTimeLimit;
+                }
+
+                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
+                        + "Second Step: "+ TempSecondIntervalString + TempSecondInterval
+                        + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:"+ resolutionlist, Toast.LENGTH_LONG).show();
             }
 
 
