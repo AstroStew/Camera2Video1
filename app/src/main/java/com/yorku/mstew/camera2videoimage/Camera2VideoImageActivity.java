@@ -225,6 +225,8 @@ public class Camera2VideoImageActivity extends Activity {
     boolean WhiteBalanceWarmFluorescentBoolean = false;
     boolean WhiteBalanceIncandenscentBoolean = false;
     boolean WhiteBalanceAutoBoolean = true;
+    Size[] previewSizes;
+    private boolean previewinit=true;
 
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
@@ -274,6 +276,7 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean isAdjustingWB = false;
     public static ArrayList<Size> arraylist=new ArrayList<Size>();
     public static boolean arraylistcall=true;
+
 
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
@@ -372,6 +375,9 @@ public class Camera2VideoImageActivity extends Activity {
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
     private boolean ChangeWhiteBalanceSpotRawOn = false;
+
+    public Camera2VideoImageActivity() {
+    }
 
 
     //firstly we want to make the window sticky. We acheive this by making system flags
@@ -774,6 +780,9 @@ public class Camera2VideoImageActivity extends Activity {
 
         setContentView(R.layout.activity_camera2_video_image);
         readButton = (Button) findViewById(R.id.readbutton);
+
+
+
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -784,6 +793,20 @@ public class Camera2VideoImageActivity extends Activity {
                 boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
                 String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
                 String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
+                Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
+
+                mRawImageCaptureon=RawwithJPEg;
+                BooleanOpticalStabilizationOn=OpticalStabilization;
+
+
+
+
+
+
+                adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
+                setupCamera(Size1.getHeight(), Size1.getWidth());
+                startPreview();
+
                 int TempSecondInterval=Integer.parseInt(TempSecondIntervalString);
                 SecondStep = TempSecondInterval;
                 String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","xxx");
@@ -801,11 +824,12 @@ public class Camera2VideoImageActivity extends Activity {
 
                 Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
                         + "Second Step: "+ TempSecondIntervalString + TempSecondInterval
-                        + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:"+ resolutionlist, Toast.LENGTH_LONG).show();
+                        + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:" +resolutionlist , Toast.LENGTH_LONG).show();
             }
 
 
         });
+
         BallInspectorx = BallInspectory = 600;
         WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
 
@@ -870,6 +894,7 @@ public class Camera2VideoImageActivity extends Activity {
         mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
         mSettingsButton = (ImageButton) findViewById(R.id.SettingImageButton);
         MovementButtonn = (ImageButton) findViewById(R.id.MovementButton);
+
         //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
         MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -952,12 +977,7 @@ public class Camera2VideoImageActivity extends Activity {
                         mSettingsButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                                final Size previewSizes[] = scmap.getOutputSizes(ImageFormat.JPEG);
 
-                                for (int i = 0; i < previewSizes.length; i++) {
-                                    arraylist.add(i,previewSizes[i]);
-                                }
 
                                 Intent SettingsIntent=new Intent(getApplicationContext(),SettingsActivity.class);
                                 startActivity(SettingsIntent);
@@ -2787,6 +2807,17 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
+        StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+        previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
+        if(previewinit){
+            for (int i = 0; i < previewSizes.length; i++) {
+                arraylist.add(i,previewSizes[i]);
+            }
+            previewinit=false;
+
+        }
+
+
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
 

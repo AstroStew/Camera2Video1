@@ -49,6 +49,10 @@ import static java.lang.System.getProperties;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
     static ArrayList<Size>newarraylist;
+    public static Object[] SizeArray;
+    boolean ResolutionChanged=false;
+    boolean TimelapseChanged=false;
+
 
     public void onWindowFocusChanged(boolean hasFocas){
         super.onWindowFocusChanged(hasFocas);
@@ -66,8 +70,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    static boolean CaptureRawwithJPEGBoolean=false;
-    static boolean CaptureRawwithoutJPEGBoolean=false;
+    public static boolean CaptureRawwithJPEGBoolean=false;
+    public static boolean CaptureRawwithoutJPEGBoolean=false;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -339,14 +343,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.resolution_xml);
             final ListPreference listPreference=(ListPreference)findPreference("resolution_list");
-            Object[] SizeArray=newarraylist.toArray();
+            SizeArray=newarraylist.toArray();
             CharSequence[] entries=new CharSequence[SizeArray.length];
             CharSequence[] entryValues=new CharSequence[SizeArray.length];
-
             for (int i=0;i<SizeArray.length;i++){
                 entries[i]=SizeArray[i].toString();
                 entryValues[i]=""+i;
             }
+
             setHasOptionsMenu(true);
             listPreference.setEntries(entries);
             listPreference.setEntryValues(entryValues);
