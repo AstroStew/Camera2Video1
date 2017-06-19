@@ -783,30 +783,33 @@ public class Camera2VideoImageActivity extends Activity {
 
 
 
+
+
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModifyXMLFile2();
-                SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
-                String mSetting = sharedprefs1.getString("example_text", "xxx");
-                boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
-                boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
-                String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
-                String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
+                final SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+                final String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
+
+                final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
                 Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
-
-                mRawImageCaptureon=RawwithJPEg;
-                BooleanOpticalStabilizationOn=OpticalStabilization;
-
-
-
-
+                boolean ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+                if(ShowRealTimeInfoboolean){
+                    mInfoTextView.setVisibility(View.VISIBLE);
+                }else{
+                    mInfoTextView.setVisibility(View.INVISIBLE);
+                }
 
 
                 adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
                 setupCamera(Size1.getHeight(), Size1.getWidth());
                 startPreview();
+                String mSetting = sharedprefs1.getString("example_text", "xxx");
+                boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+                boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
 
+                mRawImageCaptureon=RawwithJPEg;
+                BooleanOpticalStabilizationOn=OpticalStabilization;
                 int TempSecondInterval=Integer.parseInt(TempSecondIntervalString);
                 SecondStep = TempSecondInterval;
                 String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","xxx");
@@ -825,6 +828,8 @@ public class Camera2VideoImageActivity extends Activity {
                 Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
                         + "Second Step: "+ TempSecondIntervalString + TempSecondInterval
                         + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:" +resolutionlist , Toast.LENGTH_LONG).show();
+                //ModifyXMLFile2();
+
             }
 
 
@@ -2436,7 +2441,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 );
                                 mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
                                 StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                                final Size previewSizes[] = scmap.getOutputSizes(ImageFormat.JPEG);
+                                 previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
 
                                 for (int i = 0; i < previewSizes.length; i++) {
                                     String oldTextView = mCameraInfoTextView.getText().toString();
@@ -2731,9 +2736,15 @@ public class Camera2VideoImageActivity extends Activity {
         });
 
 
+        //end of onCreate
+
+
+
+
+
     }
 
-    public void ModifyXMLFile2(){
+    /*public void ModifyXMLFile2(){
 
 
         try {
@@ -2766,7 +2777,7 @@ public class Camera2VideoImageActivity extends Activity {
         }
 
 
-    }
+    }*/
 
 
     //pt9

@@ -44,11 +44,13 @@
 
 
     <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ShowRealTimeInfo"
         android:title="Show RealTime Information"
         android:icon="@drawable/ic_slideshow_black_24dp"
+
         />
     <header
-        android:title="Exit"
+        android:title="Save and Exit"
         android:id="@+id/exit"
         android:icon="@drawable/ic_exit_to_app_black_24dp2"/>
 </preference-headers>

@@ -213,6 +213,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || OpticalStabilization.class.getName().equals(fragmentName)
                 || ExitPreferenceFragemnet.class.getName().equals(fragmentName)
                 || Timelapseinput.class.getName().equals(fragmentName)
+                || ShowRealTimeInfo.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -365,6 +366,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         }
     }
+    public static class ShowRealTimeInfo extends PreferenceFragment{
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.show_real_time_info);
+
+        }
+    }
     public static class ExitPreferenceFragemnet extends PreferenceFragment{
         
         @Override
@@ -391,6 +400,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         }
     }
+
 
 
 }
