@@ -303,6 +303,8 @@ public class Camera2VideoImageActivity extends Activity {
     private boolean AutoWhiteBalancelockBoolean = false;
     private boolean SpotLockedWhiteBalanceBoolean = false;
     private boolean AverageSpotLockWhiteBalanceBoolean = false;
+    public static boolean Intentinit=true;
+    //private boolean Refreshinit=true;
 
     private boolean CustomeWhiteBalanceBoolean = false;
     private RggbChannelVector rggbChannelVector;
@@ -360,6 +362,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean CaptureAveragepixelCountBooleanOn = false;
     Button readButton;
     String scannedfilestring;
+     boolean ShowRealTimeInfoboolean;
 
 
     String s = "";
@@ -448,15 +451,25 @@ public class Camera2VideoImageActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        startBackgroundThread();
+        Toast.makeText(this, "Resumed", Toast.LENGTH_SHORT).show();
 
+       // RefreshScreen();
+        startBackgroundThread();
         if (mTextureView.isAvailable()) {
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
             connectCamera();
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
+        if(previewinit)
+        {
+
+        }else{
+            RefreshScreen();
+        }
     }
+
+
 
     //Creating the camera device
     private CameraDevice mCameraDevice;
@@ -631,6 +644,7 @@ public class Camera2VideoImageActivity extends Activity {
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
 
     private void connectCamera() {
+
         CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -785,70 +799,17 @@ public class Camera2VideoImageActivity extends Activity {
 
         setContentView(R.layout.activity_camera2_video_image);
         readButton = (Button) findViewById(R.id.readbutton);
-
-
-
-
-
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
-                final String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
-
-                final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
-                Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
-                boolean ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
-                if(ShowRealTimeInfoboolean){
-                    mInfoTextView.setVisibility(View.VISIBLE);
-                }else{
-                    mInfoTextView.setVisibility(View.INVISIBLE);
-                }
-                String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","xxx");
-                 RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
-
-
-                adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
-                setupCamera(Size1.getHeight(), Size1.getWidth());
-                startPreview();
-                String mSetting = sharedprefs1.getString("example_text", "xxx");
-                boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
-                boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
-
-                mRawImageCaptureon=RawwithJPEg;
-                BooleanOpticalStabilizationOn=OpticalStabilization;
-                int TempSecondInterval=Integer.parseInt(TempSecondIntervalString);
-                SecondStep = TempSecondInterval;
-                String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","xxx");
-                int TempTimeLimit=Integer.parseInt(TempTimeLimitString);
-                String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","xxx");
-                int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
-                VideoTimelapsSecondStep = TempVideoSecondInterval;
-                String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","xxx");
-                 TempVideoTimeLimit=Integer.parseInt(TempVideoTimeLimitString);
-                if (TempVideoTimeLimit==0){
-                    mVideoTimeLimitNumber=1;
-                }else{
-                    mVideoTimeLimitNumber=0;
-                }
-
-                if (TempTimeLimit==0) {
-                    mPhotoTimeLimitNumber = 1;
-
-                } else {
-                    mPhotoTimeLimitNumber = 0;
-                    PhotoBurstTimeStop = TempTimeLimit;
-                }
-
-                Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
-                        + "Second Step: "+ TempSecondIntervalString + TempSecondInterval
-                        + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:" +resolutionlist , Toast.LENGTH_LONG).show();
-                //ModifyXMLFile2();
-
+                Toast.makeText(Camera2VideoImageActivity.this, "Toasty", Toast.LENGTH_SHORT).show();
             }
-
-
         });
+
+
+
+
+
 
         BallInspectorx = BallInspectory = 600;
         WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
@@ -1174,7 +1135,12 @@ public class Camera2VideoImageActivity extends Activity {
         createVideoFolder();
         createImageFolder();
         mInfoTextView = (TextView) findViewById(R.id.infotextView2);
-        mInfoTextView.setVisibility(View.VISIBLE);
+
+        /*if(ShowRealTimeInfoboolean){
+            mInfoTextView.setVisibility(View.VISIBLE);
+        }else{
+            mInfoTextView.setVisibility(View.INVISIBLE);
+        }*/
 
 
 
@@ -2456,7 +2422,7 @@ public class Camera2VideoImageActivity extends Activity {
                                 );
                                 mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
                                 StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                                 previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
+                                previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
 
                                 for (int i = 0; i < previewSizes.length; i++) {
                                     String oldTextView = mCameraInfoTextView.getText().toString();
@@ -2752,7 +2718,7 @@ public class Camera2VideoImageActivity extends Activity {
             }
         });
 
-
+        //RefreshScreen();
         //end of onCreate
 
 
@@ -2834,7 +2800,10 @@ public class Camera2VideoImageActivity extends Activity {
     private void startPreview() {
 
 
+
+
         SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
+
         StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
         previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
         if(previewinit){
@@ -2844,6 +2813,18 @@ public class Camera2VideoImageActivity extends Activity {
             previewinit=false;
 
         }
+
+
+        //uh start things here?
+
+
+
+
+
+
+
+
+
 
 
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
@@ -3043,6 +3024,7 @@ public class Camera2VideoImageActivity extends Activity {
 
     @Override
     protected void onPause() {
+
         //sensormanager.unregisterListener(this);
         closeCamera();
         stopBackgroundThread();
@@ -3938,6 +3920,55 @@ public class Camera2VideoImageActivity extends Activity {
 
         }
     }*/
+    public void RefreshScreen() {
+        // SharedPreferences sharedprefs1 = null;
+        SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+        final String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
+        final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
+        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+        Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
+        String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","xxx");
+        RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
+        adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
+        setupCamera(Size1.getHeight(), Size1.getWidth());
+        connectCamera();
+        String mSetting = sharedprefs1.getString("example_text", "xxx");
+        boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+        boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
+        mRawImageCaptureon=RawwithJPEg;
+        BooleanOpticalStabilizationOn=OpticalStabilization;
+        int TempSecondInterval=Integer.parseInt(TempSecondIntervalString);
+        SecondStep = TempSecondInterval;
+        String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","xxx");
+        int TempTimeLimit=Integer.parseInt(TempTimeLimitString);
+        String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","xxx");
+        int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
+        VideoTimelapsSecondStep = TempVideoSecondInterval;
+        String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","xxx");
+        TempVideoTimeLimit=Integer.parseInt(TempVideoTimeLimitString);
+        if (TempVideoTimeLimit==0){
+            mVideoTimeLimitNumber=1;
+        }else{
+            mVideoTimeLimitNumber=0;
+        }
+        if (TempTimeLimit==0) {
+            mPhotoTimeLimitNumber = 1;
+        } else {
+            mPhotoTimeLimitNumber = 0;
+            PhotoBurstTimeStop = TempTimeLimit;
+        }
+        Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
+                + "Second Step: "+ TempSecondIntervalString + TempSecondInterval
+                + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:" +resolutionlist , Toast.LENGTH_LONG).show();
+        //ModifyXMLFile2();
+        if(ShowRealTimeInfoboolean){
+            mInfoTextView.setVisibility(View.VISIBLE);
+        }else{
+            mInfoTextView.setVisibility(View.INVISIBLE);
+        }
+
+
+    }
 
 
 

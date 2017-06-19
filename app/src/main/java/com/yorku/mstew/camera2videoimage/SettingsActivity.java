@@ -52,6 +52,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static Object[] SizeArray;
     boolean ResolutionChanged=false;
     boolean TimelapseChanged=false;
+    static boolean ExitBooleanValue=false;
+
 
 
     public void onWindowFocusChanged(boolean hasFocas){
@@ -165,8 +167,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         if(Camera2VideoImageActivity.arraylistcall){
             newarraylist=new ArrayList<Size>(Camera2VideoImageActivity.arraylist);
             Camera2VideoImageActivity.arraylistcall=false;
-
         }
+
+
+
+
     }
 
     /**
@@ -379,6 +384,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
+            ExitBooleanValue=true;
+
+
+
+
 
 
 
@@ -388,7 +398,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
 
+
+
     }
+
+
+
+
+
     public static class Timelapseinput extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {

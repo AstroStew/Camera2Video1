@@ -37,7 +37,7 @@
 
     <header
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$Timelapseinput"
-        android:title="Timelapse Input"
+        android:title="Time Input"
         android:icon="@drawable/custom_input_iso"
         android:key="PhotoBurstInput"
         />
