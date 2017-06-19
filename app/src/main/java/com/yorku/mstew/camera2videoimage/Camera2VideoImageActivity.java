@@ -249,6 +249,7 @@ public class Camera2VideoImageActivity extends Activity {
     private EditText mManualFocusInput;
     private EditText mPhotoBurstLimitText;
     private int mPhotoTimeLimitNumber = 1;
+    private int mVideoTimeLimitNumber=1;
     private int SecondStep = 5;
     private int PhotoBurstTimeStop;
     private EditText mVideoTimelapse;
@@ -375,6 +376,7 @@ public class Camera2VideoImageActivity extends Activity {
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
     private boolean ChangeWhiteBalanceSpotRawOn = false;
+    int TempVideoTimeLimit;
 
     public Camera2VideoImageActivity() {
     }
@@ -817,6 +819,14 @@ public class Camera2VideoImageActivity extends Activity {
                 String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","xxx");
                 int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
                 VideoTimelapsSecondStep = TempVideoSecondInterval;
+                String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","xxx");
+                 TempVideoTimeLimit=Integer.parseInt(TempVideoTimeLimitString);
+                if (TempVideoTimeLimit==0){
+                    mVideoTimeLimitNumber=1;
+                }else{
+                    mVideoTimeLimitNumber=0;
+                }
+
                 if (TempTimeLimit==0) {
                     mPhotoTimeLimitNumber = 1;
 
@@ -2646,6 +2656,13 @@ public class Camera2VideoImageActivity extends Activity {
                     @Override
                     public void onChronometerTick(Chronometer chronometer) {
                         ChronoCount = ChronoCount + 1;
+                        if(mVideoTimeLimitNumber==0) {
+                            if(ChronoCount== TempVideoTimeLimit){
+                                //close after this
+                            }
+
+                        }
+
                         //chronometer.refreshDrawableState();
                         if (mPhotoTimeLimitNumber == 1) {
 
