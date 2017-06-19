@@ -398,6 +398,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("PictureSecondStep"));
             bindPreferenceSummaryToValue(findPreference("VideoSecondStep"));
             bindPreferenceSummaryToValue(findPreference("VideoTimelapseTimeLimit"));
+            bindPreferenceSummaryToValue(findPreference("RecordTimeStop"));
+
 
         }
     }

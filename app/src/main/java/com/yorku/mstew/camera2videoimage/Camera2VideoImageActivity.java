@@ -324,6 +324,9 @@ public class Camera2VideoImageActivity extends Activity {
     int ColorSpaceGreen1;
     int ColorSpaceGreen2;
     int ColorSpaceGreen3;
+    private int mChronoTick=0;
+    private int mRecordChronoTick=0;
+    private int RecordTimeLimit;
     EditText mColorSpaceText1;
     EditText mColorSpaceText2;
     EditText mColorSpaceText3;
@@ -801,6 +804,8 @@ public class Camera2VideoImageActivity extends Activity {
                 }else{
                     mInfoTextView.setVisibility(View.INVISIBLE);
                 }
+                String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","xxx");
+                 RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
 
 
                 adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
@@ -2656,12 +2661,7 @@ public class Camera2VideoImageActivity extends Activity {
                     @Override
                     public void onChronometerTick(Chronometer chronometer) {
                         ChronoCount = ChronoCount + 1;
-                        if(mVideoTimeLimitNumber==0) {
-                            if(ChronoCount== TempVideoTimeLimit){
-                                //close after this
-                            }
 
-                        }
 
                         //chronometer.refreshDrawableState();
                         if (mPhotoTimeLimitNumber == 1) {
@@ -3106,6 +3106,26 @@ public class Camera2VideoImageActivity extends Activity {
                     mChronometer.setBase(SystemClock.elapsedRealtime());
                     mChronometer.setVisibility(View.VISIBLE);
                     mChronometer.start();
+                    mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                        @Override
+                        public void onChronometerTick(Chronometer chronometer) {
+                            mChronoTick++;
+                            if(mVideoTimeLimitNumber==0){
+
+                                if(mChronoTick==TempVideoTimeLimit){
+                                    mChronometer.stop();
+                                    mMediaRecorder.stop();
+                                    mChronometer.setVisibility(View.INVISIBLE);
+                                    mMediaRecorder.reset();
+                                    mRecordImageButton.setImageResource(R.mipmap.vidpiconline);
+                                    mIsTimelapse=false;
+                                    startPreview();
+                                }
+
+                            }
+
+                        }
+                    });
 
 
                 } else {
@@ -3128,6 +3148,12 @@ public class Camera2VideoImageActivity extends Activity {
                 mChronometer.setBase(SystemClock.elapsedRealtime());
                 mChronometer.setVisibility(View.VISIBLE);
                 mChronometer.start();
+
+
+
+
+
+
             }
 
         } else {
@@ -3152,6 +3178,26 @@ public class Camera2VideoImageActivity extends Activity {
                     mChronometer.setBase(SystemClock.elapsedRealtime());
                     mChronometer.setVisibility(View.VISIBLE);
                     mChronometer.start();
+                    mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                        @Override
+                        public void onChronometerTick(Chronometer chronometer) {
+                            mRecordChronoTick++;
+                            if(RecordTimeLimit != 0){
+                                if(mRecordChronoTick==RecordTimeLimit){
+                                    mChronometer.stop();
+                                    mMediaRecorder.stop();
+                                    mMediaRecorder.reset();
+                                    mChronometer.setVisibility(View.INVISIBLE);
+                                    mIsRecording=false;
+                                    mRecordImageButton.setImageResource(R.mipmap.vidpiconline);
+                                    startPreview();
+                                }
+                            }
+                        }
+                    });
+
+
+
                 } else {
                     //Toast.makeText(this, "Permission to write is not granted", Toast.LENGTH_SHORT).show();
                     if (shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
