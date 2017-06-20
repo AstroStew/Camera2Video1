@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Entity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
 import android.content.res.AssetManager;
@@ -177,6 +178,7 @@ import static android.hardware.camera2.CameraMetadata.FLASH_MODE_OFF;
 import static android.hardware.camera2.CameraMetadata.FLASH_MODE_SINGLE;
 import static android.hardware.camera2.CameraMetadata.FLASH_MODE_TORCH;
 import static android.hardware.camera2.CameraMetadata.FLASH_STATE_UNAVAILABLE;
+import static android.view.OrientationEventListener.ORIENTATION_UNKNOWN;
 import static com.yorku.mstew.camera2videoimage.R.menu.advancedsettings;
 import static com.yorku.mstew.camera2videoimage.R.menu.bottom_menu;
 import static com.yorku.mstew.camera2videoimage.R.menu.popup_menu;
@@ -186,7 +188,7 @@ import static java.lang.StrictMath.toIntExact;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Camera2VideoImageActivity extends Activity {
+public class Camera2VideoImageActivity extends Activity implements SensorEventListener {
     private Button mModebutton;
     private int ISOvalue = 0;
     private int progressValue;
@@ -366,6 +368,19 @@ public class Camera2VideoImageActivity extends Activity {
      boolean ShowRealTimeInfoboolean=true;
     int FrameRate=30;
     int BitEncodingRate=8000000;
+    private static int mDeviceOrientation;
+    public static final int UPSIDE_DOWN = 3;
+    public static final int LANDSCAPE_RIGHT = 4;
+    public static final int PORTRAIT = 1;
+    public static final int LANDSCAPE_LEFT = 2;
+    public int mOrientationDeg; //last rotation in degrees
+    public int mOrientationRounded; //last orientation int from above
+    private static final int _DATA_X = 0;
+    private static final int _DATA_Y = 1;
+    private static final int _DATA_Z = 2;
+    private int ORIENTATION_UNKNOWN = -1;
+    private int tempOrientRounded = -1;
+    private SensorManager sm;
 
 
     String s = "";
@@ -457,6 +472,12 @@ public class Camera2VideoImageActivity extends Activity {
 
        // RefreshScreen();
         startBackgroundThread();
+
+        if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
+            Sensor s=sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+            sm.registerListener(this,s,SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
         if (mTextureView.isAvailable()) {
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
             connectCamera();
@@ -608,12 +629,15 @@ public class Camera2VideoImageActivity extends Activity {
 
             map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
             int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-            boolean swapRotation = deviceOrientation== 90 || deviceOrientation == 270;
+            mTotalRotation= sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
+
+            boolean swapRotation = (mTotalRotation== 90 || mTotalRotation == 270);
             int rotatedWidth = width;
             int rotatedHeight = height;
             if (swapRotation) {
                 rotatedWidth = height;
                 rotatedHeight = width;
+                //Camera2VideoImageActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
             }
 
@@ -735,12 +759,83 @@ public class Camera2VideoImageActivity extends Activity {
 
     }
 
-    /* private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
+     private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
         int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-        deviceOrientation = ORIENTATIONS.get(deviceOrientation);
+        //deviceOrientation = ORIENTATIONS.get(deviceOrientation);
         return (sensorOrientation + deviceOrientation + 360) % 360;
 
-    }*/
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.d(TAG, "Sensor Change");
+        float[] values=event.values;
+        int orientation=ORIENTATION_UNKNOWN;
+        float X=-values[_DATA_X];
+        float Y=-values[_DATA_Y];
+        float Z=-values[_DATA_Z];
+        float magnitude=X*X+Y*Y;
+        if (magnitude*4 >= Z*Z){
+            float OneEightyOVerPi=57.29577957855f;
+            float angle=(float)Math.atan2(-Y,X)*OneEightyOVerPi;
+            orientation=90-(int)Math.round(angle);
+            while(orientation >= 360){
+                orientation-=360;
+            }
+            while(orientation<0){
+                orientation += 360;
+            }
+        }
+        Log.d("Oreination", ""+orientation);
+        if (orientation != mOrientationDeg)
+        {
+            mOrientationDeg = orientation;
+            //figure out actual orientation
+            if(orientation == -1){//basically flat
+
+            }
+            else if(orientation <= 60 || orientation > 300){//round to 0
+                tempOrientRounded = PORTRAIT;//portrait
+            }
+            else if(orientation > 45 && orientation <= 135){//round to 90
+                tempOrientRounded = LANDSCAPE_LEFT; //lsleft
+            }
+            else if(orientation > 135 && orientation <= 225){//round to 180
+                tempOrientRounded = UPSIDE_DOWN; //upside down
+            }
+            else if(orientation > 225 && orientation <= 315){//round to 270
+                tempOrientRounded = LANDSCAPE_RIGHT;//lsright
+            }
+
+        }
+
+        if(mOrientationRounded != tempOrientRounded){
+            if (tempOrientRounded == LANDSCAPE_LEFT) {
+                //Toast.makeText(this, tempOrientRounded + " Landscape Left", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 90;
+            } else if (tempOrientRounded == LANDSCAPE_RIGHT) {
+                //Toast.makeText(this, tempOrientRounded + " Landscape Right", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 270;
+            } else if (tempOrientRounded == UPSIDE_DOWN) {
+                //Toast.makeText(this, tempOrientRounded + " Upside Down", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 180;
+            } else if (tempOrientRounded == PORTRAIT) {
+                //Toast.makeText(this, tempOrientRounded + " Portrait", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 0;
+            }
+
+            mOrientationRounded = tempOrientRounded;
+
+        }
+
+
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 
     //setting preview size dimensions
     private static class CompareSizeByArea implements Comparator<Size> {
@@ -782,6 +877,12 @@ public class Camera2VideoImageActivity extends Activity {
 
 
         super.onCreate(savedInstanceState);
+
+        sm=(SensorManager)getSystemService(SENSOR_SERVICE);
+        if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
+            Sensor s=sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+            sm.registerListener(this,s,SensorManager.SENSOR_DELAY_NORMAL);
+        }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -1158,6 +1259,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
                             public void run() {
+                                mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
                                 if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
                                     adjustWhiteBalanceOnTouch();
                                     isAdjustingWB = false;
@@ -3025,7 +3127,7 @@ public class Camera2VideoImageActivity extends Activity {
     @Override
     protected void onPause() {
 
-        //sensormanager.unregisterListener(this);
+        sm.unregisterListener(this);
         closeCamera();
         stopBackgroundThread();
         super.onPause();
@@ -3221,7 +3323,25 @@ public class Camera2VideoImageActivity extends Activity {
          mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         //mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mMediaRecorder.setOrientationHint(mTotalRotation);
+        if(mTotalRotation==90){
+            mMediaRecorder.setOrientationHint(90);
+
+
+        }
+        if(mTotalRotation==0){
+            mMediaRecorder.setOrientationHint(0);
+
+
+
+        }if(mTotalRotation==180){
+            mMediaRecorder.setOrientationHint(180);
+
+        }
+        if(mTotalRotation==270){
+            mMediaRecorder.setOrientationHint(270);
+
+        }
+
         mMediaRecorder.prepare();
     }
     //
@@ -3581,6 +3701,9 @@ public class Camera2VideoImageActivity extends Activity {
 
     private void startStillCaptureRequest() {
         try {
+            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,(mTotalRotation+180)%360);
+
+
             if (mIsRecording || mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_VIDEO_SNAPSHOT);
@@ -3589,6 +3712,7 @@ public class Camera2VideoImageActivity extends Activity {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_STILL_CAPTURE);
             }
+
 
             //mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             if(mRawImageCaptureon){
@@ -3602,7 +3726,7 @@ public class Camera2VideoImageActivity extends Activity {
 
 
 
-            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mTotalRotation);
+           // mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mTotalRotation);
             if(mFlashMode==2){
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_SINGLE);
 
@@ -3648,6 +3772,7 @@ public class Camera2VideoImageActivity extends Activity {
                 mRecordCaptureSession.capture(mCaptureRequestBuilder.build(), stillCaptureCallback, null);
 
             } else {
+
                 mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), stillCaptureCallback, null);
 
 
@@ -3665,9 +3790,12 @@ public class Camera2VideoImageActivity extends Activity {
         private final CaptureResult mCaptureResult;
         private final CameraCharacteristics mCameraCharacteristics;
 
+
         private ImageSaver(Image mImage, CaptureResult mCaptureResult, CameraCharacteristics mCameraCharacteristics) {
             this.mImage = mImage;
+
             this.mCaptureResult = mCaptureResult;
+
             this.mCameraCharacteristics = mCameraCharacteristics;
 
         }
