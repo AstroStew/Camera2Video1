@@ -82,6 +82,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.transition.Scene;
 import android.util.Log;
 import android.util.Range;
+import android.util.Rational;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.ContextMenu;
@@ -370,19 +371,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
      boolean ShowRealTimeInfoboolean=true;
     int FrameRate=30;
     int BitEncodingRate=8000000;
-    private static int mDeviceOrientation;
-    public static final int UPSIDE_DOWN = 3;
-    public static final int LANDSCAPE_RIGHT = 4;
-    public static final int PORTRAIT = 1;
-    public static final int LANDSCAPE_LEFT = 2;
-    public int mOrientationDeg; //last rotation in degrees
-    public int mOrientationRounded; //last orientation int from above
-    private static final int _DATA_X = 0;
-    private static final int _DATA_Y = 1;
-    private static final int _DATA_Z = 2;
-    private int ORIENTATION_UNKNOWN = -1;
-    private int tempOrientRounded = -1;
-    private SensorManager sm;
+    private static final Rational ONE_R=new Rational(1,1);
+    private static final Rational ZERO_R=Rational.ZERO;
 
 
     String s = "";
@@ -403,9 +393,27 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static float mVectorB = 1.0f;
     private boolean ChangeWhiteBalanceSpotRawOn = false;
     int TempVideoTimeLimit;
+    private static int mDeviceOrientation;
+    public static final int UPSIDE_DOWN = 3;
+    public static final int LANDSCAPE_RIGHT = 4;
+    public static final int PORTRAIT = 1;
+    public static final int LANDSCAPE_LEFT = 2;
+    public int mOrientationDeg; //last rotation in degrees
+    public int mOrientationRounded; //last orientation int from above
+    private static final int _DATA_X = 0;
+    private static final int _DATA_Y = 1;
+    private static final int _DATA_Z = 2;
+    private int ORIENTATION_UNKNOWN = -1;
+    private int tempOrientRounded = -1;
+    private SensorManager sm;
+
+
+
     @Override
     public void onSensorChanged(SensorEvent event)
     {
+
+
         Log.d(TAG, "Sensor Changed");
         float[] values = event.values;
         int orientation = ORIENTATION_UNKNOWN;
@@ -428,7 +436,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
         //^^ thanks to google for that code
         //now we must figure out which orientation based on the degrees
-        Log.d("Oreination", ""+orientation);
+
         if (orientation != mOrientationDeg)
         {
             mOrientationDeg = orientation;
@@ -510,8 +518,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            setupCamera(width, height);
-            //Toast.makeText(Camera2VideoImageActivity.this, "Ah", Toast.LENGTH_SHORT).show();
+
+            if(mCurrentHeight>0){
+                setupCamera(mCurrentHeight,mCurrentWudth);
+            }else{
+                if(width>height){
+                    setupCamera(height,width);
+                }else{
+                    setupCamera(width,height);
+                }
+            }
 
             connectCamera();
 
