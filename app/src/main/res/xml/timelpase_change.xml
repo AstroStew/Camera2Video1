@@ -32,12 +32,6 @@
         android:inputType="number"
         android:key="VideoTimelapseTimeLimit"
         />
-    <EditTextPreference
-        android:title="Record Time Stop"
-        android:key="RecordTimeStop"
-        android:defaultValue="0"
-        android:singleLine="true"
-        android:inputType="number"
-        />
+
 
 </PreferenceScreen>

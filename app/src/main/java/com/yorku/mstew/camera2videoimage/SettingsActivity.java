@@ -219,6 +219,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || ExitPreferenceFragemnet.class.getName().equals(fragmentName)
                 || Timelapseinput.class.getName().equals(fragmentName)
                 || ShowRealTimeInfo.class.getName().equals(fragmentName)
+                || VideoEditinput.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -415,11 +416,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("PictureSecondStep"));
             bindPreferenceSummaryToValue(findPreference("VideoSecondStep"));
             bindPreferenceSummaryToValue(findPreference("VideoTimelapseTimeLimit"));
-            bindPreferenceSummaryToValue(findPreference("RecordTimeStop"));
+
 
 
         }
     }
+    public static class VideoEditinput extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.videosettings);
+            bindPreferenceSummaryToValue(findPreference("RecordTimeStop"));
+            bindPreferenceSummaryToValue(findPreference("ChangeVideoFPS"));
+            bindPreferenceSummaryToValue(findPreference("EncodingBitRate"));
+
+        }
+
+    }
+
 
 
 

@@ -20,9 +20,15 @@
     <header
 
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$RawCaptureClass"
-        android:title="Raw Capture"
+        android:title="Still Capture Settings"
         android:icon="@drawable/ic_camera_black_24dp"
         />
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$VideoEditinput"
+        android:icon="@drawable/ic_videocam_black_24dp"
+        android:title="Video Settings"
+        />
+
     <header
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$resolutionClass"
         android:title="Resolution"

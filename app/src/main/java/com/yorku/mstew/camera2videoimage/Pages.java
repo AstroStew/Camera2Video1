@@ -184,6 +184,7 @@ public class Pages extends AppCompatActivity {
                     FRameView1.setAnimation(animation);
                     FRameView1.setBackground(getDrawable(R.drawable.camera2page2test2));
 
+
                 }
 
 

@@ -65,6 +65,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -363,6 +364,8 @@ public class Camera2VideoImageActivity extends Activity {
     Button readButton;
     String scannedfilestring;
      boolean ShowRealTimeInfoboolean;
+    int FrameRate=30;
+    int BitEncodingRate=8000000;
 
 
     String s = "";
@@ -601,15 +604,11 @@ public class Camera2VideoImageActivity extends Activity {
         try {
 
             mCameraId = cameraManager.getCameraIdList()[FlipNumber];
-
-
             CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(mCameraId);
 
             map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-
-
             int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-            boolean swapRotation = mTotalRotation == 90 || mTotalRotation == 270;
+            boolean swapRotation = deviceOrientation== 90 || deviceOrientation == 270;
             int rotatedWidth = width;
             int rotatedHeight = height;
             if (swapRotation) {
@@ -619,10 +618,7 @@ public class Camera2VideoImageActivity extends Activity {
             }
 
             mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class), rotatedWidth, rotatedHeight);
-
             mVideoSize = chooseOptimalSize(map.getOutputSizes(MediaRecorder.class), rotatedWidth, rotatedHeight);
-
-
             mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG), rotatedWidth, rotatedHeight);
             mImageReader = ImageReader.newInstance(mImageSize.getWidth(), mImageSize.getHeight(), ImageFormat.JPEG, 1);
             mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
@@ -632,7 +628,7 @@ public class Camera2VideoImageActivity extends Activity {
             mRawImageReader = ImageReader.newInstance(mRawImageSize.getWidth(), mRawImageSize.getHeight(), ImageFormat.RAW_SENSOR, 1);
             mRawImageReader.setOnImageAvailableListener(mOnRawImageAvailableListener, mBackgroundHandler);
 
-            //mCameraId = cameraManager.getCameraIdList()[FlipNumber];
+
             mCameraCharacteristics = cameraCharacteristics;
             //continue;
         } catch (CameraAccessException e) {
@@ -797,13 +793,7 @@ public class Camera2VideoImageActivity extends Activity {
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
-        readButton = (Button) findViewById(R.id.readbutton);
-        readButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Camera2VideoImageActivity.this, "Toasty", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
 
 
@@ -1135,11 +1125,11 @@ public class Camera2VideoImageActivity extends Activity {
         createImageFolder();
         mInfoTextView = (TextView) findViewById(R.id.infotextView2);
 
-        /*if(ShowRealTimeInfoboolean){
+        if(ShowRealTimeInfoboolean){
             mInfoTextView.setVisibility(View.VISIBLE);
         }else{
             mInfoTextView.setVisibility(View.INVISIBLE);
-        }*/
+        }
 
 
 
@@ -3215,9 +3205,9 @@ public class Camera2VideoImageActivity extends Activity {
         //mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
-        mMediaRecorder.setVideoEncodingBitRate(8000000);
-        mMediaRecorder.setVideoFrameRate(30);
-        // mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
+        mMediaRecorder.setVideoEncodingBitRate(BitEncodingRate);
+        mMediaRecorder.setVideoFrameRate(FrameRate);
+         mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         //mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setOrientationHint(mTotalRotation);
@@ -3923,6 +3913,14 @@ public class Camera2VideoImageActivity extends Activity {
         // SharedPreferences sharedprefs1 = null;
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         final String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
+        String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","xxx");
+        BitEncodingRate=Integer.parseInt(BitEncodingRateString);
+        String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","xxx");
+        FrameRate=Integer.parseInt(FrameRateString);
+
+
+
+
         final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
         Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
@@ -3956,9 +3954,9 @@ public class Camera2VideoImageActivity extends Activity {
             mPhotoTimeLimitNumber = 0;
             PhotoBurstTimeStop = TempTimeLimit;
         }
-        Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
+        /*Toast.makeText(Camera2VideoImageActivity.this, "Name: " + mSetting
                 + "Second Step: "+ TempSecondIntervalString + TempSecondInterval
-                + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:" +resolutionlist , Toast.LENGTH_LONG).show();
+                + "Capture Raw With JPEG: " + RawwithJPEg + "Optical Stabilization: " + OpticalStabilization+"scanned file string:  " + scannedfilestring+ "resolution number:" +resolutionlist , Toast.LENGTH_LONG).show();*/
         //ModifyXMLFile2();
         if(ShowRealTimeInfoboolean){
             mInfoTextView.setVisibility(View.VISIBLE);

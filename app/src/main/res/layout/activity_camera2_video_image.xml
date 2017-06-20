@@ -387,15 +387,5 @@
         android:layout_alignLeft="@+id/CloseALLbutton"
         android:layout_alignStart="@+id/CloseALLbutton" />
 
-    <Button
-        android:id="@+id/readbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ISOtext"
-        android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/TimeIntervalDisplay"
-        android:layout_toRightOf="@+id/TimeIntervalDisplay"
-        android:text="read" />
-
 
 </RelativeLayout>

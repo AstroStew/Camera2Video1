@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="ChangeVideoFPS"
+        android:title="Change Video Frames Per Second"
+        android:defaultValue="30"
+        android:inputType="number"
+        />
+    <EditTextPreference
+        android:title="Record Time Stop"
+        android:key="RecordTimeStop"
+        android:defaultValue="0"
+        android:singleLine="true"
+        android:inputType="number"
+        />
+    <EditTextPreference
+        android:title="Set Encoding Bit Rate"
+        android:key="EncodingBitRate"
+        android:defaultValue="8000000"
+        android:inputType="number"
+
+        />
+
+
+</PreferenceScreen>
