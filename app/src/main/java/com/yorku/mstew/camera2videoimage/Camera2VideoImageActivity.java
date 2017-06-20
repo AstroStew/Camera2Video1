@@ -363,7 +363,7 @@ public class Camera2VideoImageActivity extends Activity {
     boolean CaptureAveragepixelCountBooleanOn = false;
     Button readButton;
     String scannedfilestring;
-     boolean ShowRealTimeInfoboolean;
+     boolean ShowRealTimeInfoboolean=true;
     int FrameRate=30;
     int BitEncodingRate=8000000;
 
@@ -735,12 +735,12 @@ public class Camera2VideoImageActivity extends Activity {
 
     }
 
-    private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
+    /* private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
         int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
         deviceOrientation = ORIENTATIONS.get(deviceOrientation);
         return (sensorOrientation + deviceOrientation + 360) % 360;
 
-    }
+    }*/
 
     //setting preview size dimensions
     private static class CompareSizeByArea implements Comparator<Size> {
@@ -793,6 +793,17 @@ public class Camera2VideoImageActivity extends Activity {
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
+        SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+        boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+        boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
+        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+
+
+        BooleanOpticalStabilizationOn=OpticalStabilization;
+        mRawImageCaptureon=RawwithJPEg;
+
+
+
 
 
 
