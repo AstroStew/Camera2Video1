@@ -261,6 +261,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mFlashMode = 0;
     private boolean lockFocusEnableIsChecked = false;
     private boolean BooleanOpticalStabilizationOn = true;
+    private int mTotalRotation;
+
     private TextView mTimeInterval;
     private int AutoLocks = 0;
     private int mCameraEffect = 0;
@@ -401,8 +403,77 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static float mVectorB = 1.0f;
     private boolean ChangeWhiteBalanceSpotRawOn = false;
     int TempVideoTimeLimit;
+    @Override
+    public void onSensorChanged(SensorEvent event)
+    {
+        Log.d(TAG, "Sensor Changed");
+        float[] values = event.values;
+        int orientation = ORIENTATION_UNKNOWN;
+        float X = -values[_DATA_X];
+        float Y = -values[_DATA_Y];
+        float Z = -values[_DATA_Z];
+        float magnitude = X*X + Y*Y;
+        // Don't trust the angle if the magnitude is small compared to the y value
+        if (magnitude * 4 >= Z*Z) {
+            float OneEightyOverPi = 57.29577957855f;
+            float angle = (float)Math.atan2(-Y, X) * OneEightyOverPi;
+            orientation = 90 - (int)Math.round(angle);
+            // normalize to 0 - 359 range
+            while (orientation >= 360) {
+                orientation -= 360;
+            }
+            while (orientation < 0) {
+                orientation += 360;
+            }
+        }
+        //^^ thanks to google for that code
+        //now we must figure out which orientation based on the degrees
+        Log.d("Oreination", ""+orientation);
+        if (orientation != mOrientationDeg)
+        {
+            mOrientationDeg = orientation;
+            //figure out actual orientation
+            if(orientation == -1){//basically flat
 
-    public Camera2VideoImageActivity() {
+            }
+            else if(orientation <= 60 || orientation > 300){//round to 0
+                tempOrientRounded = PORTRAIT;//portrait
+            }
+            else if(orientation > 45 && orientation <= 135){//round to 90
+                tempOrientRounded = LANDSCAPE_LEFT; //lsleft
+            }
+            else if(orientation > 135 && orientation <= 225){//round to 180
+                tempOrientRounded = UPSIDE_DOWN; //upside down
+            }
+            else if(orientation > 225 && orientation <= 315){//round to 270
+                tempOrientRounded = LANDSCAPE_RIGHT;//lsright
+            }
+
+        }
+
+        if(mOrientationRounded != tempOrientRounded){
+            if (tempOrientRounded == LANDSCAPE_LEFT) {
+                //Toast.makeText(this, tempOrientRounded + " Landscape Left", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 90;
+            } else if (tempOrientRounded == LANDSCAPE_RIGHT) {
+                //Toast.makeText(this, tempOrientRounded + " Landscape Right", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 270;
+            } else if (tempOrientRounded == UPSIDE_DOWN) {
+                //Toast.makeText(this, tempOrientRounded + " Upside Down", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 180;
+            } else if (tempOrientRounded == PORTRAIT) {
+                //Toast.makeText(this, tempOrientRounded + " Portrait", Toast.LENGTH_SHORT).show();
+                mDeviceOrientation = 0;
+            }
+
+            mOrientationRounded = tempOrientRounded;
+
+        }
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // TODO Auto-generated method stub
+
     }
 
 
@@ -542,7 +613,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     };
     //Getting Camera Id
     private String mCameraId;
-    private int mTotalRotation;
+
     StreamConfigurationMap map;
     private CameraCaptureSession mPreviewCaptureSession;
     private CameraCaptureSession.CaptureCallback mPreviewCaptureCallback = new
@@ -628,7 +699,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(mCameraId);
 
             map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
+            //int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
             mTotalRotation= sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
 
             boolean swapRotation = (mTotalRotation== 90 || mTotalRotation == 270);
@@ -762,80 +833,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
      private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
         int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
         //deviceOrientation = ORIENTATIONS.get(deviceOrientation);
-        return (sensorOrientation + deviceOrientation + 360) % 360;
+        return (sensorOrientation + mDeviceOrientation + 180) % 360;
 
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Log.d(TAG, "Sensor Change");
-        float[] values=event.values;
-        int orientation=ORIENTATION_UNKNOWN;
-        float X=-values[_DATA_X];
-        float Y=-values[_DATA_Y];
-        float Z=-values[_DATA_Z];
-        float magnitude=X*X+Y*Y;
-        if (magnitude*4 >= Z*Z){
-            float OneEightyOVerPi=57.29577957855f;
-            float angle=(float)Math.atan2(-Y,X)*OneEightyOVerPi;
-            orientation=90-(int)Math.round(angle);
-            while(orientation >= 360){
-                orientation-=360;
-            }
-            while(orientation<0){
-                orientation += 360;
-            }
-        }
-        Log.d("Oreination", ""+orientation);
-        if (orientation != mOrientationDeg)
-        {
-            mOrientationDeg = orientation;
-            //figure out actual orientation
-            if(orientation == -1){//basically flat
-
-            }
-            else if(orientation <= 60 || orientation > 300){//round to 0
-                tempOrientRounded = PORTRAIT;//portrait
-            }
-            else if(orientation > 45 && orientation <= 135){//round to 90
-                tempOrientRounded = LANDSCAPE_LEFT; //lsleft
-            }
-            else if(orientation > 135 && orientation <= 225){//round to 180
-                tempOrientRounded = UPSIDE_DOWN; //upside down
-            }
-            else if(orientation > 225 && orientation <= 315){//round to 270
-                tempOrientRounded = LANDSCAPE_RIGHT;//lsright
-            }
-
-        }
-
-        if(mOrientationRounded != tempOrientRounded){
-            if (tempOrientRounded == LANDSCAPE_LEFT) {
-                //Toast.makeText(this, tempOrientRounded + " Landscape Left", Toast.LENGTH_SHORT).show();
-                mDeviceOrientation = 90;
-            } else if (tempOrientRounded == LANDSCAPE_RIGHT) {
-                //Toast.makeText(this, tempOrientRounded + " Landscape Right", Toast.LENGTH_SHORT).show();
-                mDeviceOrientation = 270;
-            } else if (tempOrientRounded == UPSIDE_DOWN) {
-                //Toast.makeText(this, tempOrientRounded + " Upside Down", Toast.LENGTH_SHORT).show();
-                mDeviceOrientation = 180;
-            } else if (tempOrientRounded == PORTRAIT) {
-                //Toast.makeText(this, tempOrientRounded + " Portrait", Toast.LENGTH_SHORT).show();
-                mDeviceOrientation = 0;
-            }
-
-            mOrientationRounded = tempOrientRounded;
-
-        }
-
-
-
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 
     //setting preview size dimensions
     private static class CompareSizeByArea implements Comparator<Size> {
@@ -1259,7 +1260,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                             public void run() {
-                                mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
+
                                 if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
                                     adjustWhiteBalanceOnTouch();
                                     isAdjustingWB = false;
@@ -1344,7 +1345,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 } else {
                                     PixelValues = "";
                                 }
-
+                                mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
 
                                 if (1000000000 / mCurrentSSvalue <= 1) {
                                     convertSS = String.valueOf(mCurrentSSvalue / 1000000000);
@@ -3323,24 +3324,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
          mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         //mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        if(mTotalRotation==90){
-            mMediaRecorder.setOrientationHint(90);
-
-
-        }
-        if(mTotalRotation==0){
-            mMediaRecorder.setOrientationHint(0);
-
-
-
-        }if(mTotalRotation==180){
-            mMediaRecorder.setOrientationHint(180);
-
-        }
-        if(mTotalRotation==270){
-            mMediaRecorder.setOrientationHint(270);
-
-        }
+        mMediaRecorder.setOrientationHint(mTotalRotation);
 
         mMediaRecorder.prepare();
     }
@@ -3701,8 +3685,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private void startStillCaptureRequest() {
         try {
-            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,(mTotalRotation+180)%360);
-
 
             if (mIsRecording || mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
@@ -3723,10 +3705,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             } else {
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             }
+            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,(mTotalRotation+180)%360);
 
 
 
-           // mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mTotalRotation);
+
+
+            // mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mTotalRotation);
             if(mFlashMode==2){
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_SINGLE);
 
