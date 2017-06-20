@@ -451,7 +451,6 @@ public class Camera2VideoImageActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "Resumed", Toast.LENGTH_SHORT).show();
 
        // RefreshScreen();
         startBackgroundThread();
