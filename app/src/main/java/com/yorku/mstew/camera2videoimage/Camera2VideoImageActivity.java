@@ -23,6 +23,7 @@ import android.graphics.Paint;
 import android.app.Fragment;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -190,6 +191,7 @@ import static java.lang.StrictMath.toIntExact;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class Camera2VideoImageActivity extends Activity implements SensorEventListener {
+    private SensorManager sm;
     private Button mModebutton;
     private int ISOvalue = 0;
     private int progressValue;
@@ -311,6 +313,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean AverageSpotLockWhiteBalanceBoolean = false;
     public static boolean Intentinit=true;
     //private boolean Refreshinit=true;
+    private static int mCurrentWidth=0;
+    private static int mCurrentHeight=0;
 
     private boolean CustomeWhiteBalanceBoolean = false;
     private RggbChannelVector rggbChannelVector;
@@ -405,7 +409,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static final int _DATA_Z = 2;
     private int ORIENTATION_UNKNOWN = -1;
     private int tempOrientRounded = -1;
-    private SensorManager sm;
+
 
 
 
@@ -504,7 +508,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     //This is our attribute section.Note:this list will increase as we progress through the tutorial. We will create all members in this section:
     //private CameraDevice mCameraDevice;
-    private TextureView mTextureView;
+
     // private HandlerThread mBackgroundHandlerThread;
     //private Handler mBackgroundHandler;
     private Size mPreviewSize;
@@ -514,13 +518,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     // under here is my previous code. lets see if it works?
 //nope so lets restart
     //create surface texture listener
+    private TextureView mTextureView;
     private TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
 
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-
+            Toast.makeText(Camera2VideoImageActivity.this, width+""+height, Toast.LENGTH_SHORT).show();
             if(mCurrentHeight>0){
-                setupCamera(mCurrentHeight,mCurrentWudth);
+                setupCamera(mCurrentHeight,mCurrentWidth);
             }else{
                 if(width>height){
                     setupCamera(height,width);
@@ -557,7 +562,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     protected void onResume() {
         super.onResume();
 
-       // RefreshScreen();
+
         startBackgroundThread();
 
         if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
@@ -716,7 +721,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
             //int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-            mTotalRotation= sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
+            mTotalRotation= sensorDeviceRotation(cameraCharacteristics,mDeviceOrientation);
 
             boolean swapRotation = (mTotalRotation== 90 || mTotalRotation == 270);
             int rotatedWidth = width;
@@ -969,17 +974,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     //new stuff
         //new ModifyXMLFile();
-
-
-
-
-
-
-
-
-
-
-
 
 
         //mIsAuto2=false;
@@ -3794,9 +3788,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         private ImageSaver(Image mImage, CaptureResult mCaptureResult, CameraCharacteristics mCameraCharacteristics) {
             this.mImage = mImage;
-
             this.mCaptureResult = mCaptureResult;
-
             this.mCameraCharacteristics = mCameraCharacteristics;
 
         }
@@ -4013,10 +4005,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         Matrix txform = new Matrix();
         mTextureView.getTransform(txform);
+        RectF textureRectF=new RectF(0,0,viewWidth,viewHeight);
+        RectF previewRectF=new RectF(0,0, newWidth,newHeight);
         txform.setScale((float) newWidth / viewWidth, (float) newHeight / viewHeight);
-        //txform.postRotate(10);          // just for fun
-        txform.postTranslate(xoff, yoff);
-        mTextureView.setTransform(txform);
+        int rotation=getWindowManager().getDefaultDisplay().getRotation();
+        if(rotation==Surface.ROTATION_0||rotation==Surface.ROTATION_180){
+            txform.postTranslate(xoff, yoff);
+            mTextureView.setTransform(txform);
+        }else if(rotation==Surface.ROTATION_90||rotation==Surface.ROTATION_270){
+            txform.postRotate(270);
+        }
+
+
     }
     private void checkJPEGWriteStoragePermission() throws IOException{
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
@@ -4064,12 +4064,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
         Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
+        mCurrentWidth=Size1.getWidth();
+        mCurrentHeight=Size1.getHeight();
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","xxx");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
         setupCamera(Size1.getHeight(), Size1.getWidth());
         connectCamera();
-        String mSetting = sharedprefs1.getString("example_text", "xxx");
+        //String mSetting = sharedprefs1.getString("example_text", "xxx");
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         mRawImageCaptureon=RawwithJPEg;
@@ -4106,6 +4108,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
     }
+
 
 
 
