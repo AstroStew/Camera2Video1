@@ -4059,11 +4059,66 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         FrameRate=Integer.parseInt(FrameRateString);
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         if(ExportTxtFileboolean==true){
+            //execute File Export
+
+            File file=getFileStreamPath("Testfile.txt");
+            if(!file.exists()){
+                try {
+                    file.mkdirs();
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                FileOutputStream writer=openFileOutput(file.getName(),Context.MODE_PRIVATE);
+                String string="Hello World!";
+                writer.write(string.getBytes());
+                //writer.flush();
+                writer.close();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getApplicationContext(), "Text File Written(Code not complete)", Toast.LENGTH_SHORT).show();
+            //write data
+
+
+
             SharedPreferences.Editor editor=sharedprefs1.edit();
             editor.putBoolean("exporttxtfile",false);
             editor.commit();
 
-            //execute code
+
+        }
+        boolean ExportC2CCFileboolean=sharedprefs1.getBoolean("exportc2ccFile",false);
+        if(ExportC2CCFileboolean==true){
+            File file=getFileStreamPath("Testfile.C2CC");
+            if(!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                FileOutputStream writer=openFileOutput(file.getName(),Context.MODE_PRIVATE);
+                String string="Hello World!";
+                writer.write(string.getBytes());
+                //writer.flush();
+                writer.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getApplicationContext(), "C2CC File Writter(Code not complete)", Toast.LENGTH_SHORT).show();
+
+
+            //execute File Export
+            SharedPreferences.Editor editor2=sharedprefs1.edit();
+            editor2.putBoolean("exportc2ccFile",false);
+            editor2.commit();
         }
 
 
