@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="exporttxtfile"
+        android:title="Export White Balance Txt File"
+        android:defaultValue="false"
+
+        />
+    <SwitchPreference
+        android:title="Export Dev C2CC File"
+        android:key="exportc2ccFile"
+        android:selectable="true"
+        android:defaultValue="false"
+        />
+
+
+</PreferenceScreen>

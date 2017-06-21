@@ -4057,6 +4057,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         BitEncodingRate=Integer.parseInt(BitEncodingRateString);
         String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","xxx");
         FrameRate=Integer.parseInt(FrameRateString);
+        boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
+        if(ExportTxtFileboolean==true){
+            SharedPreferences.Editor editor=sharedprefs1.edit();
+            editor.putBoolean("exporttxtfile",false);
+            editor.commit();
+
+            //execute code
+        }
 
 
 

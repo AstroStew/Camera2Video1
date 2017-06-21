@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     boolean ResolutionChanged=false;
     boolean TimelapseChanged=false;
     static boolean ExitBooleanValue=false;
+
 
 
 
@@ -220,6 +222,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || Timelapseinput.class.getName().equals(fragmentName)
                 || ShowRealTimeInfo.class.getName().equals(fragmentName)
                 || VideoEditinput.class.getName().equals(fragmentName)
+                || ExportTxtFile.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -432,6 +435,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         }
 
+    }
+    public static class ExportTxtFile extends PreferenceFragment{
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.export_files);
+
+        }
     }
 
 

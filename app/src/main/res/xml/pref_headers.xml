@@ -56,8 +56,10 @@
 
         />
     <header
-        android:title="Save and Exit"
-        android:id="@+id/exit"
+
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ExportTxtFile"
+        android:title="ExportFile"
+        android:id="@+id/exportfile"
         android:icon="@drawable/ic_exit_to_app_black_24dp2"/>
 </preference-headers>
 
