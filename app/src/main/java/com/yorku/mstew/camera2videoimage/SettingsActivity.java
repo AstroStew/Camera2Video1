@@ -223,6 +223,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || ShowRealTimeInfo.class.getName().equals(fragmentName)
                 || VideoEditinput.class.getName().equals(fragmentName)
                 || ExportTxtFile.class.getName().equals(fragmentName)
+                || AdvancedSettings.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -442,6 +443,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.export_files);
 
+        }
+    }
+    public static class AdvancedSettings extends  PreferenceFragment{
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.advancedsettings);
         }
     }
 

@@ -73,8 +73,9 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:background="#999999"
+        android:background="@android:color/darker_gray"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_above="@+id/TimeIntervalDisplay"
         android:layout_alignParentEnd="true"
@@ -129,11 +130,11 @@
         android:visibility="invisible"
 
         android:gravity="center_horizontal"
-        android:layout_below="@+id/TimeIntervalDisplay"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp" />
+        android:layout_alignBottom="@+id/TimeIntervalDisplay"
+        android:layout_below="@+id/infotextView2"
+        android:layout_toLeftOf="@+id/TimeIntervalDisplay"
+        android:layout_toRightOf="@+id/infoTextView"
+        android:layout_toEndOf="@+id/infoTextView" />
 
     <ImageButton
         android:text="Video_Button"
@@ -343,9 +344,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:textColor="#ff0000"
-        android:background="#0000ff"
-        android:textSize="20dp"
+        android:textColor="#ffffff"
+
+        android:textSize="15dp"
         android:text="TextView"
         android:layout_below="@+id/infotextView2"
         android:layout_alignRight="@+id/infotextView2"
@@ -357,10 +358,10 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:text="TextView"
-        android:layout_below="@+id/infotextView2"
+        android:layout_alignBottom="@+id/ISOtext"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/ISOtext" />
+        android:layout_below="@+id/infotextView2" />
 
     <SeekBar
         android:id="@+id/ISOseekbar"
@@ -368,12 +369,11 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         android:layout_gravity="center"
-        android:layout_above="@+id/seekBar2"
-        android:layout_marginBottom="27dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/FocusChangeSeekBar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageButton
         android:id="@+id/MovementButton"

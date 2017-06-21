@@ -4147,6 +4147,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
         VideoTimelapsSecondStep = TempVideoSecondInterval;
         String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","xxx");
+        boolean ManualWBChannelVectorBoolean=sharedprefs1.getBoolean("ManualWBChannelVector",false);
+        if (ManualWBChannelVectorBoolean){
+            CustomeWhiteBalanceBoolean=true;
+
+
+            //execute wbchannel vector
+        }
+        boolean ManualColorSpaceMatrixBoolean=sharedprefs1.getBoolean("ManualColorSpaceMatrix", false);
+        if(ManualColorSpaceMatrixBoolean){
+            ColorSpaceInputBoolean=true;
+            //execute ColorSpace Matrix
+        }
         TempVideoTimeLimit=Integer.parseInt(TempVideoTimeLimitString);
         if (TempVideoTimeLimit==0){
             mVideoTimeLimitNumber=1;
