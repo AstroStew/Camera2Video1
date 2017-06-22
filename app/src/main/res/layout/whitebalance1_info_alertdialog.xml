@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
+        android:key="WB1"
         android:hint="Red (number between 1 and 2)"
         android:layout_marginLeft="20dp" />
     <EditText
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
+        android:key="WB2"
         android:hint="Green_even (number between 1 and 2)"
         android:layout_marginLeft="20dp" />
     <EditText
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
+        android:key="WB3"
         android:hint="Green_odd (number between 1 and 2)"
         android:layout_marginLeft="20dp" />
     <EditText
@@ -40,6 +43,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
+        android:key="WB4"
         android:hint="Blue (number between 1 and 2)"
         android:layout_marginLeft="20dp" />
 

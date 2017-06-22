@@ -59,6 +59,18 @@
         <item>Entry 2</item>
         <item>Entry 3</item>
     </string-array>
+    <string-array name="sensor_reference_entries">
+        <item>SENSOR_REFERENCE_ILLUMINANT1_D50</item>
+        <item>SENSOR_REFERENCE_ILLUMINANT1_D55</item>
+        <item>SENSOR_REFERENCE_ILLUMINANT1_D65</item>
+        <item>SENSOR_REFERENCE_ILLUMINANT1_D70</item>
+    </string-array>
+    <string-array name="sensor_reference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
     <string-array name="list_preference_entry_values">
         <item>1</item>

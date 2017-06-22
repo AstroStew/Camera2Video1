@@ -223,7 +223,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || ShowRealTimeInfo.class.getName().equals(fragmentName)
                 || VideoEditinput.class.getName().equals(fragmentName)
                 || ExportTxtFile.class.getName().equals(fragmentName)
-                || AdvancedSettings.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -322,6 +321,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.new_xml);
+            ListPreference WhitePoingListPreference=(ListPreference)findPreference("ChoosePresentWhiteBalancePoint");
+            WhitePoingListPreference.setEntries(R.array.sensor_reference_entries);
+            WhitePoingListPreference.setSummary("summary");
+            WhitePoingListPreference.setEntryValues(R.array.sensor_reference_entry_values);
+
+
+            //WhitePoingListPreference.setEntryValues();
             
             setHasOptionsMenu(true);
             
@@ -445,13 +451,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         }
     }
-    public static class AdvancedSettings extends  PreferenceFragment{
-        @Override
-        public void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.advancedsettings);
-        }
-    }
+
 
 
 

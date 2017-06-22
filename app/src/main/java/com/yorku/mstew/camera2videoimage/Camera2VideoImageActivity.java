@@ -1531,6 +1531,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 final PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
                 SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0, 100, 0, "Available Effects");
+                SubMenu submenu3= popupMenu.getMenu().addSubMenu(0, 200,0,"Available Scenes");
+
+
                 if (WBrunOnce) {
                     for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
                         if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
@@ -1563,8 +1566,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                 final MenuItem AutoWhiteBalanceItem = popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
                 AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
-                final MenuItem WhiteBalanceSpotLocked = popupMenu.getMenu().findItem(R.id.SpotLockWhiteBalance);
-                WhiteBalanceSpotLocked.setChecked(SpotLockedWhiteBalanceBoolean);
+
                 final MenuItem WhiteBalanceCloudyDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
                 WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
                 WhiteBalanceCloudyDaylightItem.setEnabled(ControlAWBmodecloudydaylightavailableboolean);
@@ -1588,10 +1590,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 WhiteBalanceIncandenscentItem.setEnabled(ControlAWBmodeincandescentavailableboolean);
                 final MenuItem WhiteBalanceAutoItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
                 WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
-                final MenuItem AverageSpotLockWhiteBalanceItem = popupMenu.getMenu().findItem(R.id.AverageSpotLockWhiteBalance);
-                AverageSpotLockWhiteBalanceItem.setChecked(AverageSpotLockWhiteBalanceBoolean);
+                final MenuItem ColorSpaceCheckedItem=popupMenu.getMenu().findItem(R.id.ColorSpaceInput);
+                ColorSpaceCheckedItem.setChecked(ColorSpaceInputBoolean);
+                final MenuItem WhiteBalanceCheckedItem=popupMenu.getMenu().findItem(R.id.CustomWhiteBalance);
+                WhiteBalanceCheckedItem.setChecked(CustomeWhiteBalanceBoolean);
                 final MenuItem WB_RAWTouchItem = popupMenu.getMenu().findItem(R.id.WB_RAWTouch);
                 WB_RAWTouchItem.setChecked(WB_RAWTouchEnabled);
+
+
+
 
 
                 final int[] SupportedSceneModes = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
@@ -1635,6 +1642,77 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         AvailableEffectsArray2[i] = "Aqua";
                     }
                     submenu2.add(0, i + 100, 0, "" + AvailableEffectsArray2[i]);
+
+                }
+                final int[] Scenearray=new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
+
+                for(int i=0;i<mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length;i++){
+                    Scenearray[i]=(mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i]);
+
+                }
+
+                final String[] Scenearray2=new String[Scenearray.length];
+                for(int i=0;i<Scenearray.length;i++){
+                    switch(Scenearray[i]){
+                        case 0:
+                            Scenearray2[i]="Disable";
+
+                            break;
+                        case 1:
+                            Scenearray2[i]="Face Priority";
+
+                            break;
+                        case 2:Scenearray2[i]="Action Scene";
+
+                            break;
+                        case 3:Scenearray2[i]="Portrait ";
+
+                            break;
+                        case 4:Scenearray2[i]="Landscape";
+
+                            break;
+                        case 5:Scenearray2[i]="Night ";
+
+                            break;
+                        case 6:Scenearray2[i]="Night Portrait";
+
+                            break;
+                        case 7:Scenearray2[i]="Theatre";
+
+                            break;
+                        case 8:Scenearray2[i]="Beach";
+
+                            break;
+                        case 9:Scenearray2[i]="Snow";
+
+                            break;
+                        case 10:Scenearray2[i]="Sunset";
+
+                            break;
+                        case 11:Scenearray2[i]="Steadyphoto";
+
+                            break;
+                        case 12:Scenearray2[i]="Fireworks";
+
+                            break;
+                        case 13:Scenearray2[i]="Sports";
+
+                            break;
+                        case 14:Scenearray2[i]="Party";
+
+                            break;
+                        case 15:Scenearray2[i]="Candlelight";
+
+                            break;
+                        case 16:Scenearray2[i]="Barcode";
+
+                            break;
+                        case 18:Scenearray2[i]="HDR";
+
+                            break;
+
+                    }
+                    submenu3.add(0,i+200,0,""+Scenearray2[i]);
 
                 }
 
@@ -1731,6 +1809,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             }
                         });
+
                         //mRawCheckBox = (CheckBox) findViewById(R.id.RawInput);
 
                         switch (position) {
@@ -1843,29 +1922,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                 break;
-                            case R.id.ForwardMatrixInput:
-                                if (ForwardMatrixInputBoolean) {
-                                    ForwardMatrixInputBoolean = false;
-                                    Toast.makeText(getApplicationContext(), "Forward Matrix Turned Off", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    ForwardMatrixInputBoolean = true;
-                                    Toast.makeText(getApplicationContext(), "Forward Matrix Turned On", Toast.LENGTH_SHORT).show();
-                                }
-                                startPreview();
-                                break;
-                            case R.id.SensorColorTransform:
-                                if (SensorColorTransformInputBoolean) {
-                                    SensorColorTransformInputBoolean = false;
-                                    Toast.makeText(getApplicationContext(), "Sensor Color Transform off", Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    SensorColorTransformInputBoolean = true;
-                                    Toast.makeText(getApplicationContext(), "Sensor Color Transform ON", Toast.LENGTH_SHORT).show();
-                                }
-                                startPreview();
 
 
-                                break;
+
                             case R.id.ColorSpaceInput:
 
                                 if (ColorSpaceInputBoolean) {
@@ -2203,52 +2262,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 startPreview();
                                 break;
-                            case R.id.SpotLockWhiteBalance:
-                                if (!SpotLockedWhiteBalanceBoolean) {
-                                    //in progress
-                                    SpotLockedWhiteBalanceBoolean = true;
-                                    WhiteBalanceAutoBoolean = false;
-                                    WhiteBalanceWarmFluorescentBoolean = false;
-                                    WhiteBalanceTwilightBoolean = false;
-                                    WhiteBalanceShadeBoolean = false;
-                                    WhiteBalanceFluorescentBoolean = false;
-                                    WhiteBalanceCloudyDaylightBoolean = false;
-                                    WhiteBalanceDaylightBoolean = false;
 
 
-                                    double mosiacRGGBred = ((double) redPixelData / 255) + 1;
-                                    double mosiacRGGBgreen = 1;
-                                    double mosiacRGGBblue = ((double) bluePixelData / 255) + 1;
-
-
-                                } else {
-                                    SpotLockedWhiteBalanceBoolean = false;
-                                    WhiteBalanceAutoBoolean = true;
-
-                                }
-                                startPreview();
-                                break;
-                            case R.id.AverageSpotLockWhiteBalance:
-
-                                if (!AverageSpotLockWhiteBalanceBoolean) {
-                                    AverageSpotLockWhiteBalanceBoolean = true;
-                                    SpotLockedWhiteBalanceBoolean = false;
-                                    WhiteBalanceAutoBoolean = false;
-                                    WhiteBalanceWarmFluorescentBoolean = false;
-                                    WhiteBalanceTwilightBoolean = false;
-                                    WhiteBalanceShadeBoolean = false;
-                                    WhiteBalanceFluorescentBoolean = false;
-                                    WhiteBalanceCloudyDaylightBoolean = false;
-                                    WhiteBalanceDaylightBoolean = false;
-
-                                } else {
-                                    AverageSpotLockWhiteBalanceBoolean = false;
-                                    WhiteBalanceAutoBoolean = true;
-                                }
-                                startPreview();
-
-
-                                break;
                             case R.id.ChangeISO:
                                 if (!ISOinputboolean) {
                                     ISOinputboolean = true;
@@ -2530,6 +2545,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
                                         + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
                                         + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
+
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
@@ -2577,84 +2593,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 AlertDialog alertDialog2 = builder.create();
                                 alertDialog2.show();
                                 break;
+
                             case R.id.ChangeScene:
-                                if (SupportedSceneModes[0] == 0) {
-                                    Toast.makeText(getApplicationContext(), "No Supported Scene Modes", Toast.LENGTH_SHORT).show();
-                                }
+
 
                                 break;
-                            case R.id.ChangeSceneDisabled:
-                                mSceneMode = CONTROL_SCENE_MODE_DISABLED;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneFacePriority:
-                                mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneAction:
-                                mSceneMode = CONTROL_SCENE_MODE_ACTION;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneBarcode:
-                                mSceneMode = 16;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneBeach:
-                                mSceneMode = CONTROL_SCENE_MODE_BEACH;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneCandlelight:
-                                mSceneMode = CONTROL_SCENE_MODE_CANDLELIGHT;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneFireworks:
-                                mSceneMode = CONTROL_SCENE_MODE_FIREWORKS;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneHDR:
-                                mSceneMode = CONTROL_SCENE_MODE_HDR;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneLandscape:
-                                mSceneMode = CONTROL_SCENE_MODE_LANDSCAPE;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneNight:
-                                mSceneMode = CONTROL_SCENE_MODE_NIGHT;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneNightPortrait:
-                                mSceneMode = CONTROL_SCENE_MODE_NIGHT_PORTRAIT;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneParty:
-                                mSceneMode = CONTROL_SCENE_MODE_PARTY;
-                                startPreview();
-                                break;
-                            case R.id.ChangeScenePortrait:
-                                mSceneMode = CONTROL_SCENE_MODE_PORTRAIT;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneSnow:
-                                mSceneMode = CONTROL_SCENE_MODE_SNOW;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneSports:
-                                mSceneMode = CONTROL_SCENE_MODE_SPORTS;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneSteadyphoto:
-                                mSceneMode = CONTROL_SCENE_MODE_STEADYPHOTO;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneSunset:
-                                mSceneMode = CONTROL_SCENE_MODE_SUNSET;
-                                startPreview();
-                                break;
-                            case R.id.ChangeSceneTheatre:
-                                mSceneMode = CONTROL_SCENE_MODE_THEATRE;
-                                startPreview();
-                                break;
+
 
 
                             case R.id.devButton:
@@ -2964,6 +2908,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
 
         try {
+
+
 
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
@@ -4146,19 +4092,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","xxx");
         int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
         VideoTimelapsSecondStep = TempVideoSecondInterval;
+
+        String ReferenceIlluminantString=sharedprefs1.getString("ChoosePresentWhiteBalancePoint","xxx");
+        Toast.makeText(this, ""+ReferenceIlluminantString, Toast.LENGTH_SHORT).show();
+
         String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","xxx");
-        boolean ManualWBChannelVectorBoolean=sharedprefs1.getBoolean("ManualWBChannelVector",false);
-        if (ManualWBChannelVectorBoolean){
-            CustomeWhiteBalanceBoolean=true;
 
 
-            //execute wbchannel vector
-        }
-        boolean ManualColorSpaceMatrixBoolean=sharedprefs1.getBoolean("ManualColorSpaceMatrix", false);
-        if(ManualColorSpaceMatrixBoolean){
-            ColorSpaceInputBoolean=true;
-            //execute ColorSpace Matrix
-        }
+
         TempVideoTimeLimit=Integer.parseInt(TempVideoTimeLimitString);
         if (TempVideoTimeLimit==0){
             mVideoTimeLimitNumber=1;

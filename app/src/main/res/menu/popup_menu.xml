@@ -94,29 +94,21 @@
     <menu>
         <item
             android:id="@+id/ColorSpaceInput"
-            android:title="Color Space">
+            android:title="Color Space"
+            android:checkable="true"
+            android:icon="@drawable/custom_input_iso"
+            >
+
         </item>
-        <item
-            android:id="@+id/SpotLockWhiteBalance"
-            android:title="Color Correction By Pixel"
-            android:icon="@drawable/ic_all_out_black_24dp"
-            android:checkable="true"/>
-        <item
-            android:id="@+id/AverageSpotLockWhiteBalance"
-            android:icon="@drawable/ic_all_out_black_24dp"
-            android:title="Color Correction By Average "
-            android:checkable="true"/>
-        <item
-            android:id="@+id/ForwardMatrixInput"
-            android:title="Forward Matrix"/>
-        <item
-            android:id="@+id/SensorColorTransform"
-            android:title="Sensor Color Transform"/>
+
+
 
         <item
             android:id="@+id/CustomWhiteBalance"
             android:title="Custom RggbVector White Balance"
             android:icon="@drawable/custom_input_iso"
+            android:checkable="true"
+
             />
 
     </menu>
@@ -177,65 +169,7 @@
         android:id="@+id/ChangeScene"
         android:title="Change Scene"
         >
-        <menu>
-            <item
-                android:id="@+id/ChangeSceneDisabled"
-                android:title="Disable (0)"
-                />
-            <item
-                android:id="@+id/ChangeSceneFacePriority"
-                android:title="Face Priority (1)" />
-            <item
-                android:id="@+id/ChangeSceneAction"
-                android:title="Action Scene (2)" />
 
-            <item
-                android:id="@+id/ChangeSceneBarcode"
-                android:title="Barcode Scene (16)" />
-            <item
-                android:id="@+id/ChangeSceneBeach"
-                android:title="Beach Scene (8)"/>
-            <item
-                android:id="@+id/ChangeSceneCandlelight"
-                android:title="Candlelight Scene (15)"/>
-            <item
-                android:id="@+id/ChangeSceneFireworks"
-                android:title="Fireworks Scene (12)"/>
-            <item
-                android:id="@+id/ChangeSceneHDR"
-                android:title="HDR Scene (18)"/>
-            <item
-                android:id="@+id/ChangeSceneLandscape"
-                android:title="Landscape Scene (4)"/>
-            <item
-                android:id="@+id/ChangeSceneNight"
-                android:title="Night Scene (5)"/>
-            <item
-                android:id="@+id/ChangeSceneNightPortrait"
-                android:title="Night Potrait Scene (6)"/>
-            <item
-                android:id="@+id/ChangeSceneParty"
-                android:title="Party Scene (14)"/>
-            <item
-                android:id="@+id/ChangeScenePortrait"
-                android:title="Portrait Scene (3)"/>
-            <item
-                android:id="@+id/ChangeSceneSnow"
-                android:title="Snow Scene (9)"/>
-            <item
-                android:id="@+id/ChangeSceneSports"
-                android:title="Sports Scene (13)"/>
-            <item
-                android:id="@+id/ChangeSceneSteadyphoto"
-                android:title="Steadyphoto Scene (11)"/>
-            <item
-                android:id="@+id/ChangeSceneSunset"
-                android:title="Sunset Scene (10)"/>
-            <item
-                android:id="@+id/ChangeSceneTheatre"
-                android:title="Theatre Scene (7)"/>
-
-        </menu>
 
 
 

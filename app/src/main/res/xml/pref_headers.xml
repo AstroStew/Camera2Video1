@@ -62,10 +62,7 @@
         android:id="@+id/exportfile"
         android:icon="@drawable/ic_exit_to_app_black_24dp2"/>
 
-    <header
-        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$AdvancedSettings"
-        android:title="Advanced Settings"
-        android:icon="@drawable/custom_input_iso"/>
+
 
 
 </preference-headers>

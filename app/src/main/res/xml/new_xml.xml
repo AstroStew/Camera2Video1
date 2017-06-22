@@ -17,5 +17,11 @@
 
         android:id="@+id/CaptureRawwithoutJpeg"/>
 
+    <ListPreference
+        android:title="Choose Present White Balance Point"
+        android:key="ChoosePresentWhiteBalancePoint"
+            />
+
+
 
 </PreferenceScreen>
