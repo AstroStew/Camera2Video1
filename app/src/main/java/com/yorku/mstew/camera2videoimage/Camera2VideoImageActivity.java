@@ -1730,6 +1730,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             }
 
                         }
+                        for(int i=0;i<Scenearray2.length;i++){
+                            if(position==200+i){
+                                mSceneMode=Scenearray[i];
+                                startPreview();
+                            }
+                        }
 
 
                         final Range<Long> ShutterSpeed = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE);
@@ -2595,6 +2601,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 break;
 
                             case R.id.ChangeScene:
+                                //listener
 
 
                                 break;
