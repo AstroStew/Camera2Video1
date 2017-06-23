@@ -3975,26 +3975,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
     }
 
-
-
-    /*public class ModifyXMLFile{
-        public  void main(String argv[]){
-            try{
-                String filepath="c:\\resolutins_xml.xml";
-                DocumentBuilderFactory docFactory=DocumentBuilderFactory.newInstance();
-                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                Document doc=docBuilder.parse(filepath);
-                doc.createAttribute("ahahah");
-
-
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-
-        }
-    }*/
     public void RefreshScreen() {
         // SharedPreferences sharedprefs1 = null;
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
@@ -4006,27 +3986,30 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         if(ExportTxtFileboolean==true){
             //execute File Export
-
-            File file=getFileStreamPath("Testfile.txt");
-            if(!file.exists()){
-                try {
-                    file.mkdirs();
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            File txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
+            if(!txtfolder.exists()){
+                txtfolder.mkdirs();
             }
+            String txttimestamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String prepend="TXT_"+txttimestamp+"_";
+            File txtfile= null;
             try {
-                FileOutputStream writer=openFileOutput(file.getName(),Context.MODE_PRIVATE);
-                String string="Hello World!";
-                writer.write(string.getBytes());
-                //writer.flush();
-                writer.close();
-
+                txtfile = File.createTempFile(prepend,".txt",txtfolder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String mtxtFileName=txtfile.getAbsolutePath();
+            try {
+                FileOutputStream fileoutputstream=new FileOutputStream(mtxtFileName);
+                String examplestring="Example";
+                byte[] txtbytes= examplestring.getBytes();
+                fileoutputstream.write(txtbytes);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
             Toast.makeText(getApplicationContext(), "Text File Written(Code not complete)", Toast.LENGTH_SHORT).show();
             //write data
 
@@ -4123,11 +4106,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     }
 
-    //tes
+    //testingrgb to lab
 
 
     public void rgb2lab(int R, int G, int B, int[] lab) {
-        //http://www.brucelindbloom.com
+
 
         float r, g, b, X, Y, Z, fx, fy, fz, xr, yr, zr;
         float Ls, as, bs;
