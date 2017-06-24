@@ -60,18 +60,7 @@ public class PinchZoomImageView extends android.support.v7.widget.AppCompatImage
             return super.onScale(detector);
         }
 
-        @Override
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
-            return super.onScaleBegin(detector);
-
-        }
-
-        @Override
-        public void onScaleEnd(ScaleGestureDetector detector) {
-            super.onScaleEnd(detector);
-            CloseImageButton=(ImageButton)findViewById(R.id.CloseButton);
-            CloseImageButton.setVisibility(VISIBLE);
-        }
+        
     }
 
 
