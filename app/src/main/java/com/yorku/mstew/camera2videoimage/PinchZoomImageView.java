@@ -60,7 +60,7 @@ public class PinchZoomImageView extends android.support.v7.widget.AppCompatImage
             return super.onScale(detector);
         }
 
-        
+
     }
 
 

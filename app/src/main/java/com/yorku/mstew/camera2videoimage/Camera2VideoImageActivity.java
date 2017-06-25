@@ -1236,7 +1236,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                         break;
                     case R.id.PageMenu:
-                        Intent pageintent = new Intent(getApplicationContext(), Page.class);
+                        Intent pageintent = new Intent(getApplicationContext(), TabedMenuActivity.class);
                         startActivity(pageintent);
                         break;
                 }

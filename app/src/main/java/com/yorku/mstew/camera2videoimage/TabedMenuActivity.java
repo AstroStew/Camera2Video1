@@ -1,9 +1,6 @@
 package com.yorku.mstew.camera2videoimage;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,18 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class Pages extends AppCompatActivity {
-    public static View FRameView1;
-    public static int PageNumber;
-    AnimationSet animation;
+public class TabedMenuActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -48,23 +36,11 @@ public class Pages extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pages);
-        FRameView1=(View)findViewById(R.id.framelayoutbackground);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            /*Animation fadeIn=new AlphaAnimation(0,1);
-            fadeIn.setInterpolator(new DecelerateInterpolator());
-            fadeIn.setDuration(1000);
+        setContentView(R.layout.activity_tabed_menu);
 
-             animation=new AnimationSet(true);
-            animation.addAnimation(fadeIn);
-            FRameView1.setAnimation(animation);
-            FRameView1.setBackground(getDrawable(R.drawable.camera2page1test2));*/
-        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -76,7 +52,14 @@ public class Pages extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
     }
 
@@ -84,7 +67,7 @@ public class Pages extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_pages, menu);
+        getMenuInflater().inflate(R.menu.menu_tabed_menu, menu);
         return true;
     }
 
@@ -97,9 +80,11 @@ public class Pages extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent CameraIntent= new Intent(getApplicationContext(), Camera2VideoImageActivity.class);
-            startActivity(CameraIntent);
             return true;
+        }
+        if(id==R.id.ImageViewLaunch){
+            Intent ImageViewIntent=new Intent(getApplicationContext(), Page.class);
+            startActivity(ImageViewIntent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -122,10 +107,7 @@ public class Pages extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-
         public static PlaceholderFragment newInstance(int sectionNumber) {
-
-            PageNumber=sectionNumber;
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -133,12 +115,10 @@ public class Pages extends AppCompatActivity {
             return fragment;
         }
 
-
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pages, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_tabed_menu, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -157,66 +137,14 @@ public class Pages extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position==1){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    /*Animation fadeIn=new AlphaAnimation(0,1);
-                    fadeIn.setInterpolator(new DecelerateInterpolator());
-                    fadeIn.setDuration(1000);
-
-                    animation=new AnimationSet(true);
-                    animation.addAnimation(fadeIn);
-                    FRameView1.setAnimation(animation);
-                    FRameView1.setBackground(getDrawable(R.drawable.camera2page1test2));*/
-                    new FragmentOne();
-
-
-
-                }
-
-            }if(position==2){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Animation fadeIn=new AlphaAnimation(0,1);
-                    fadeIn.setInterpolator(new DecelerateInterpolator());
-                    fadeIn.setDuration(1000);
-
-                    animation=new AnimationSet(true);
-                    animation.addAnimation(fadeIn);
-                    FRameView1.setAnimation(animation);
-                    FRameView1.setBackground(getDrawable(R.drawable.camera2page2test2));
-
-
-                }
-
-
-            }if(position==3){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Animation fadeIn=new AlphaAnimation(0,1);
-                    fadeIn.setInterpolator(new DecelerateInterpolator());
-                    fadeIn.setDuration(1000);
-
-                    animation=new AnimationSet(true);
-                    animation.addAnimation(fadeIn);
-                    FRameView1.setAnimation(animation);
-                    FRameView1.setBackground(getDrawable(R.drawable.camera2page3test2));
-                }
-
-            }if(position==4){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    FRameView1.setAnimation(animation);
-                    FRameView1.setBackground(getDrawable(R.drawable.camera2page1test2));
-                }
-
-            }
-
-
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position);
+            return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 5 total pages.
+            // Show 3 total pages.
             return 3;
         }
 
@@ -224,13 +152,11 @@ public class Pages extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-
                     return "SECTION 1";
                 case 1:
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
-
             }
             return null;
         }

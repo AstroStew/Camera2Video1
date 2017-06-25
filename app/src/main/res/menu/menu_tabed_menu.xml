@@ -1,10 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.yorku.mstew.camera2videoimage.Pages">
+    tools:context="com.yorku.mstew.camera2videoimage.TabedMenuActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="Exit Pages"
+        android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/ImageViewLaunch"
+        android:orderInCategory="101"
+        android:title="ImageView Launcher"
+        app:showAsAction="never"
+        />
 </menu>

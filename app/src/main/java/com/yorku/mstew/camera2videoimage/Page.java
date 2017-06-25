@@ -33,15 +33,34 @@ public class Page extends AppCompatActivity {
     private Animator mCurrentAnimator;
     private int mLongAnimationDuration;
     ImageButton newImageButton;
+    Boolean IsPictureViewingBoolean=false;
 
 
 
     ImageButton closepage;
 
     @Override
+    public void onBackPressed() {
+        if(IsPictureViewingBoolean){
+            Intent newintent=new Intent(getApplicationContext(),Page.class);
+            startActivity(newintent);
+            IsPictureViewingBoolean=false;
+            super.onBackPressed();
+        }else{
+            Intent newintent2=new Intent(getApplicationContext(), Camera2VideoImageActivity.class);
+            startActivity(newintent2);
+
+        }
+
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view_main);
+
          //newImageButton=(ImageButton)findViewById(R.id.CloseButton);
         //ewImageButton.setVisibility(View.INVISIBLE);
         /*closepage=(ImageButton)findViewById(R.id.pageclose);
@@ -96,7 +115,11 @@ public class Page extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode,int resultCode, Intent resultData){
+
+
         if(requestCode==REQUEST_OPEN_RESULT_CODE && resultCode == RESULT_OK){
+
+            IsPictureViewingBoolean=true;
 
             if(resultData != null){
                 mImageUri=resultData.getData();
@@ -192,6 +215,7 @@ public class Page extends AppCompatActivity {
 
     }
     private void pinchZoompan(){
+        IsPictureViewingBoolean=true;
         mPinchZoomImageView.setImageUri(mImageUri);
         mImageView.setAlpha(0.f);
         mPinchZoomImageView.setVisibility(View.VISIBLE);
