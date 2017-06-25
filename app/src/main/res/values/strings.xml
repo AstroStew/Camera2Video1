@@ -95,6 +95,7 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Sections: %1$d</string>
     <string name="title_activity_tabed_menu">TabedMenuActivity</string>
+    <string name="title_activity_view_pager_main2">ViewPagerMainActivity2</string>
 
 
 </resources>
