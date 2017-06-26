@@ -321,10 +321,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.new_xml);
-            ListPreference WhitePoingListPreference=(ListPreference)findPreference("ChoosePresentWhiteBalancePoint");
-            WhitePoingListPreference.setEntries(R.array.sensor_reference_entries);
-            WhitePoingListPreference.setSummary("summary");
-            WhitePoingListPreference.setEntryValues(R.array.sensor_reference_entry_values);
+
+
 
 
             //WhitePoingListPreference.setEntryValues();
@@ -338,17 +336,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item){
             int id=item.getItemId();
             switch (id){
-                case R.id.CaptureRawwithJpeg:
+                case R.id.CaptureRawwithoutJpeg:
                     CaptureRawwithJPEGBoolean=true;
                     CaptureRawwithoutJPEGBoolean=false;
 
 
                     
                     break;
-                case R.id.CaptureRawwithoutJpeg:
-                    CaptureRawwithoutJPEGBoolean=true;
-                    CaptureRawwithJPEGBoolean=false;
-                    break;
+
             }
             return true;
         }

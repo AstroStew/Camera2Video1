@@ -20,7 +20,10 @@
     <SwitchPreference
         android:defaultValue="false"
         android:title="Capture PNG"
-        android:key="Capture_PNG"/>
+        android:key="Capture_PNG"
+        android:id="@+id/CapturePNG"
+
+        />
 
 
 

@@ -267,6 +267,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean lockFocusEnableIsChecked = false;
     private boolean BooleanOpticalStabilizationOn = true;
     private int mTotalRotation;
+    double[][] cArray=null;
 
     private TextView mTimeInterval;
     private int AutoLocks = 0;
@@ -379,6 +380,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int BitEncodingRate=8000000;
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
+    String PngString;
 
 
     String s = "";
@@ -1352,13 +1354,51 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 String convertSS;
                                 String PixelValues;
+                                StringBuffer sbuffer=new StringBuffer();
+                                PngString="";
+
+                                if(CapturePngBoolean){
+                                    double[] RGB=new double[]{ redPixelData,greePixelData,bluePixelData};
+                                    double[][] RGB2XYZ={{0.4124564,0.3575761, 0.1804375},{0.2126729 ,0.7151522, 0.0721750},{ 0.0193339, 0.1191920, 0.9503041}};
+                                    int rowRGB=RGB.length;
+                                    int columnsInRGB=1;
+
+                                    int rowRGB2XYZ=RGB2XYZ.length;
+                                    int columnRGB2XYZ=RGB2XYZ[0].length;
+                                    cArray=new double [rowRGB][columnRGB2XYZ];
+
+
+                                    for (int i=0;i<rowRGB;i++){
+                                        for (int j=0;j<columnRGB2XYZ;j++){
+                                            for(int k=0;k<columnsInRGB;k++){
+                                                cArray[i][j]=cArray[i][j]+RGB[i]*RGB2XYZ[k][j];
+
+                                            }
+                                        }
+                                    }
+                                    for(int i=0;i<cArray.length;i++){
+                                        for(int j=0; j<cArray[0].length;j++){
+                                            //PngString=(cArray[i][j]+"");
+                                            sbuffer.append(" "+cArray[i][j]+" ");
+                                        }
+
+                                    }
+
+                                    PngString="   CIE XYZ VALUES: "+sbuffer.toString();
+
+
+                                    //launch special Method
+
+                                }
+
+
 
 
                                 if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn) {
                                     PixelValues = "Red Value: " + redPixelData
                                             + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
                                             + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
-                                            + AveragebluePixelData
+                                            + AveragebluePixelData+ PngString
                                     ;
                                 } else {
                                     PixelValues = "";
@@ -3672,7 +3712,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
                 Toast.makeText(getApplicationContext(), "More Code is needed", Toast.LENGTH_SHORT).show();
 
-                //launch special Method
+
+
 
 
             } else {
@@ -4002,6 +4043,31 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         FrameRate=Integer.parseInt(FrameRateString);
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
+        if(CapturePngBoolean){
+            double[] RGB=new double[]{ redPixelData,greePixelData,bluePixelData};
+            double[][] RGB2XYZ={{0.4124564,0.3575761, 0.1804375},{0.2126729 ,0.7151522, 0.0721750},{ 0.0193339, 0.1191920, 0.9503041}};
+            int rowRGB=RGB.length;
+            int columnsInRGB=1;
+
+            int rowRGB2XYZ=RGB2XYZ.length;
+            int columnRGB2XYZ=RGB2XYZ[0].length;
+            cArray=new double [rowRGB][columnRGB2XYZ];
+
+
+            for (int i=0;i<rowRGB;i++){
+                for (int j=0;j<columnRGB2XYZ;j++){
+                    for(int k=0;k<columnsInRGB;k++){
+                        cArray[i][j]=cArray[i][j]+RGB[i]*RGB2XYZ[k][j];
+                        PngString=PngString+cArray[i][j];
+                    }
+                }
+            }
+            Toast.makeText(this, ""+cArray , Toast.LENGTH_SHORT).show();
+
+
+            //launch special Method
+
+        }
         if(ExportTxtFileboolean==true){
             //execute File Export
             File txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
@@ -4194,18 +4260,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         lab[2] = (int) (bs + .5);
     }
 
-public class CIEXYZ {
-    private final  float[] RGB=new float[]{255,255,255};
-    float[] RGB2XYZ=new float[]{0.4124564f,0.3575761f, 0.1804375f,
-        0.2126729f ,0.7151522f, 0.0721750f,
-        0.0193339f, 0.1191920f, 0.9503041f};
-
-
-
-
-
-
-}
 
 
 
