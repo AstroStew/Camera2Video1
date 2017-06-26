@@ -3337,6 +3337,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private Size mRawImageSize;
 
     private ImageReader mImageReader;
+
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener =
             new ImageReader.OnImageAvailableListener() {
                 @Override
@@ -4001,7 +4002,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             String mtxtFileName=txtfile.getAbsolutePath();
             try {
                 FileOutputStream fileoutputstream=new FileOutputStream(mtxtFileName);
-                String examplestring="Example";
+                String examplestring=rggbChannelVector.toString();
                 byte[] txtbytes= examplestring.getBytes();
                 fileoutputstream.write(txtbytes);
 
