@@ -13,4 +13,10 @@
         android:title="ImageView Launcher"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/ViewPagerExample"
+        android:title="View Pager Test"
+        android:orderInCategory="102"
+        app:showAsAction="never"
+        />
 </menu>

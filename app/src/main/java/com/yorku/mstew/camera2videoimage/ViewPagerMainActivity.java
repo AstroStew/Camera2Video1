@@ -140,7 +140,7 @@ public class ViewPagerMainActivity extends AppCompatActivity {
         public void onPageScrollStateChanged(int state) {
 
         }
-    }
+    };
     private void changeStatusBarBolor(){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
             Window window=getWindow();
