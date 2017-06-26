@@ -24,7 +24,7 @@ import android.widget.TextView;
  */
 
 public class ViewPagerMainActivity extends AppCompatActivity {
-        private ViewPager viewPager;
+    private ViewPager viewPager;
     Button next,skip;
     private ViewPagerManager viewPagerManager;
     private int[] layouts;

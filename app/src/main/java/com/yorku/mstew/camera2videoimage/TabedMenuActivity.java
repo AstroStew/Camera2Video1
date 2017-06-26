@@ -87,7 +87,7 @@ public class TabedMenuActivity extends AppCompatActivity {
             startActivity(ImageViewIntent);
         }
         if(id==R.id.ViewPagerExample){
-            Intent ViewPagerIntent=new Intent(getApplicationContext(),ViewPagerMainActivity.class);
+            Intent ViewPagerIntent=new Intent(this,ViewPagerMainActivity.class);
             startActivity(ViewPagerIntent);
         }
 
