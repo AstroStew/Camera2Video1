@@ -380,7 +380,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int BitEncodingRate=8000000;
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
-    String PngString;
+    String CIEXYZvaluesString;
+    boolean ShowCIEXYZValuesBoolean=false;
 
 
     String s = "";
@@ -930,6 +931,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
+        ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
+
 
 
         BooleanOpticalStabilizationOn=OpticalStabilization;
@@ -1088,161 +1091,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         });
 
 
-                        /*mSettingsButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent AdvancedSettingIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                                startActivity(AdvancedSettingIntent);
-                                PopupMenu AdvanncedsettingsPopup = new PopupMenu(Camera2VideoImageActivity.this, mSettingsButton);
-                                AdvanncedsettingsPopup.inflate(R.menu.advancedsettings);
-                                final MenuItem rawEnabledMenuItem = AdvanncedsettingsPopup.getMenu().findItem(R.id.RawInput);
-                                rawEnabledMenuItem.setChecked(mRawImageCaptureon);
-                                final MenuItem OpticalStabalizationItem = AdvanncedsettingsPopup.getMenu().findItem(R.id.OpticalStabilizationInput);
-                                OpticalStabalizationItem.setChecked(BooleanOpticalStabilizationOn);
-                                SubMenu sM = AdvanncedsettingsPopup.getMenu().addSubMenu(0, 100, 0, "Change Resolution:");
-                                StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-
-
-                                final Size previewSizes[] = scmap.getOutputSizes(ImageFormat.JPEG);
-
-                                for (int i = 0; i < previewSizes.length; i++) {
-                                    sM.add(0, i + 200, 0, "" + previewSizes[i]);
-                                    arraylist.add(previewSizes[i]);
-
-                                }
-
-
-                                AdvanncedsettingsPopup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                    @Override
-                                    public boolean onMenuItemClick(MenuItem item) {
-                                        int position4 = item.getItemId();
-                                        for (int i = 0; i < previewSizes.length; i++) {
-                                            if (position4 == 200 + i) {
-                                                Toast.makeText(getApplicationContext(), "" + previewSizes[i], Toast.LENGTH_SHORT).show();
-                                                adjustAspectRatio(previewSizes[i].getHeight(), previewSizes[i].getWidth());
-                                                setupCamera(previewSizes[i].getHeight(), previewSizes[i].getWidth());
-                                                startPreview();
-
-                                            }
-                                        }
-
-
-                                        switch (position4) {
-                                            case R.id.PhotoBurstInput:
-
-                                                final LayoutInflater inflate4 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                                final View ThePhotoBurstView = inflate4.inflate(R.layout.photo_burst_input, null);
-                                                final AlertDialog.Builder PhotoBurstInputthing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                                PhotoBurstInputthing.setTitle("Photo Burst Input:");
-                                                PhotoBurstInputthing.setView(ThePhotoBurstView);
-                                                PhotoBurstInputthing.setCancelable(true);
-                                                mPhotoBurstText = (EditText) ThePhotoBurstView.findViewById(R.id.PhotoBurstEditText);
-
-                                                mPhotoBurstLimitText = (EditText) ThePhotoBurstView.findViewById(R.id.PhotoBurstTimeLimitInputEditText);
-                                                PhotoBurstInputthing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-
-
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                                PhotoBurstInputthing.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        int TempSecondInterval = Integer.parseInt(mPhotoBurstText.getText().toString());
-                                                        SecondStep = TempSecondInterval;
-                                                        if (mPhotoBurstLimitText.getText().toString().isEmpty()) {
-                                                            mPhotoTimeLimitNumber = 1;
-
-                                                        } else {
-                                                            mPhotoTimeLimitNumber = 0;
-                                                            int TempTimeLimit = Integer.parseInt(mPhotoBurstLimitText.getText().toString());
-                                                            PhotoBurstTimeStop = TempTimeLimit;
-                                                        }
-                                                    }
-                                                });
-
-                                                PhotoBurstInputthing.show();
-                                                break;
-                                            case R.id.VideoTimeLapseInput:
-                                                LayoutInflater inflate3 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                                View TheVideoTimelapseview = inflate3.inflate(R.layout.video_timelapse_input, null);
-                                                AlertDialog.Builder VideoLapseInputthing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                                VideoLapseInputthing.setTitle("Video timelapse Input:");
-                                                VideoLapseInputthing.setView(TheVideoTimelapseview);
-                                                VideoLapseInputthing.setCancelable(true);
-                                                mVideoTimelapse = (EditText) TheVideoTimelapseview.findViewById(R.id.VideoTimeLapseEditText);
-                                                VideoLapseInputthing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-
-
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                                VideoLapseInputthing.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        int TempSecondInterval = Integer.parseInt(mVideoTimelapse.getText().toString());
-                                                        VideoTimelapsSecondStep = TempSecondInterval;
-
-
-                                                    }
-                                                });
-
-                                                VideoLapseInputthing.show();
-
-
-                                                break;
-                                            case R.id.RawInput:
-                                                if (!mRawImageCaptureon) {
-
-                                                    mRawImageCaptureon = true;
-                                                    Toast.makeText(getApplicationContext(), "Raw Capture Turned on", Toast.LENGTH_SHORT).show();
-
-
-                                                    //mRawCheckBox.setChecked(true);
-                                                } else {
-                                                    mRawImageCaptureon = false;
-                                                    Toast.makeText(getApplicationContext(), "Raw Capture Turned Off", Toast.LENGTH_SHORT).show();
-                                                }
-
-                                                break;
-                                            case R.id.ShowRealTimeInfo:
-                                                if (mInfoTextView.getVisibility() == View.INVISIBLE) {
-                                                    mInfoTextView.setVisibility(View.VISIBLE);
-                                                } else {
-                                                    mInfoTextView.setVisibility(View.INVISIBLE);
-                                                }
-                                                break;
-                                            case R.id.OpticalStabilizationInput:
-                                                if (BooleanOpticalStabilizationOn) {
-                                                    item.setChecked(false);
-                                                    BooleanOpticalStabilizationOn = false;
-
-                                                    Toast.makeText(getApplicationContext(), "Optical Stabilization Disabled", Toast.LENGTH_SHORT).show();
-                                                } else if (!BooleanOpticalStabilizationOn) {
-                                                    item.setChecked(true);
-                                                    BooleanOpticalStabilizationOn = true;
-                                                    Toast.makeText(getApplicationContext(), "Optical Stabilization Enabled", Toast.LENGTH_SHORT).show();
-
-                                                }
-                                                startPreview();
-                                                break;
-
-                                        }
-
-
-                                        return false;
-                                    }
-                                });
-
-
-                                AdvanncedsettingsPopup.show();
-
-                            }
-                        });*/
+                        
 
                         break;
                     case R.id.PageMenu:
@@ -1355,9 +1204,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 String convertSS;
                                 String PixelValues;
                                 StringBuffer sbuffer=new StringBuffer();
-                                PngString="";
+                                CIEXYZvaluesString="";
 
-                                if(CapturePngBoolean){
+                                if(ShowCIEXYZValuesBoolean){
                                     double[] RGB=new double[]{ redPixelData,greePixelData,bluePixelData};
                                     double[][] RGB2XYZ={{0.4124564,0.3575761, 0.1804375},{0.2126729 ,0.7151522, 0.0721750},{ 0.0193339, 0.1191920, 0.9503041}};
                                     int rowRGB=RGB.length;
@@ -1378,13 +1227,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     }
                                     for(int i=0;i<cArray.length;i++){
                                         for(int j=0; j<cArray[0].length;j++){
-                                            //PngString=(cArray[i][j]+"");
+                                            //CIEXYZvaluesString=(cArray[i][j]+"");
                                             sbuffer.append(" "+cArray[i][j]+" ");
                                         }
 
                                     }
 
-                                    PngString="   CIE XYZ VALUES: "+sbuffer.toString();
+                                    CIEXYZvaluesString="   CIE XYZ VALUES: "+sbuffer.toString();
 
 
                                     //launch special Method
@@ -1398,7 +1247,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     PixelValues = "Red Value: " + redPixelData
                                             + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
                                             + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
-                                            + AveragebluePixelData+ PngString
+                                            + AveragebluePixelData+ CIEXYZvaluesString
                                     ;
                                 } else {
                                     PixelValues = "";
@@ -3710,7 +3559,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             }if(CapturePngBoolean){
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
-                Toast.makeText(getApplicationContext(), "More Code is needed", Toast.LENGTH_SHORT).show();
+                
 
 
 
@@ -4043,31 +3892,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         FrameRate=Integer.parseInt(FrameRateString);
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
-        if(CapturePngBoolean){
-            double[] RGB=new double[]{ redPixelData,greePixelData,bluePixelData};
-            double[][] RGB2XYZ={{0.4124564,0.3575761, 0.1804375},{0.2126729 ,0.7151522, 0.0721750},{ 0.0193339, 0.1191920, 0.9503041}};
-            int rowRGB=RGB.length;
-            int columnsInRGB=1;
-
-            int rowRGB2XYZ=RGB2XYZ.length;
-            int columnRGB2XYZ=RGB2XYZ[0].length;
-            cArray=new double [rowRGB][columnRGB2XYZ];
-
-
-            for (int i=0;i<rowRGB;i++){
-                for (int j=0;j<columnRGB2XYZ;j++){
-                    for(int k=0;k<columnsInRGB;k++){
-                        cArray[i][j]=cArray[i][j]+RGB[i]*RGB2XYZ[k][j];
-                        PngString=PngString+cArray[i][j];
-                    }
-                }
-            }
-            Toast.makeText(this, ""+cArray , Toast.LENGTH_SHORT).show();
-
-
-            //launch special Method
-
-        }
+        ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
+        
         if(ExportTxtFileboolean==true){
             //execute File Export
             File txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");

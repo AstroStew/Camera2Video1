@@ -6,5 +6,11 @@
         android:title="Show Real Time info"
 
         />
+    <SwitchPreference
+        android:dependency="show_real_time_info"
+        android:defaultValue="true"
+        android:key="ShowCIEXYZValues"
+        android:title="Show CIE XYZ Spot Values"
+        />
 
 </PreferenceScreen>
