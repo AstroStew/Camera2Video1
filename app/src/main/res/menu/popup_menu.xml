@@ -150,21 +150,6 @@
         </menu>
     </item>
 
-
-
-    <item
-        android:id="@+id/ShutterSpeedPriority"
-        android:title="Shutter Speed Priority">
-
-    </item>
-
-    <item
-        android:id="@+id/AperaturePriority"
-        android:title="Aperature Priority">
-
-    </item>
-
-
     <item
         android:id="@+id/ChangeScene"
         android:title="Change Scene"
