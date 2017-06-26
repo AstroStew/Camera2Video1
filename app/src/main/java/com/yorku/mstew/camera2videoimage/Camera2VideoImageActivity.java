@@ -145,6 +145,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import static android.R.attr.bitmap;
+import static android.R.attr.height;
+import static android.R.attr.width;
 import static android.R.attr.x;
 import static android.R.attr.y;
 import static android.hardware.camera2.CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
@@ -3559,6 +3561,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             }if(CapturePngBoolean){
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
+                //Bitmap bm=Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+                //bm.copyPixelsFromBuffer(ByteBuffer);
+
+                //capturePng Urgh
                 
 
 
@@ -3660,6 +3666,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     ByteBuffer byteBuffer = mImage.getPlanes()[0].getBuffer();
                     byte[] bytes = new byte[byteBuffer.remaining()];
                     byteBuffer.get(bytes);
+
 
                     FileOutputStream fileOutputStream = null;
                     try {
