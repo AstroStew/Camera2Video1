@@ -4,7 +4,7 @@
         android:defaultValue="false"
         android:id="@+id/CaptureRawwithJpeg"
         android:key="Capture_Raw_With_JPEG"
-        android:title="Capture Raw With JPEG"/>
+        android:title="Capture Raw "/>
 
 
 
@@ -17,10 +17,10 @@
 
         android:id="@+id/CaptureRawwithoutJpeg"/>
 
-    <ListPreference
-        android:title="Choose Present White Balance Point"
-        android:key="ChoosePresentWhiteBalancePoint"
-            />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:title="Capture PNG"
+        android:key="Capture_PNG"/>
 
 
 

@@ -127,6 +127,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -137,6 +138,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.zip.Inflater;
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -409,6 +411,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static final int _DATA_Z = 2;
     private int ORIENTATION_UNKNOWN = -1;
     private int tempOrientRounded = -1;
+    boolean CapturePngBoolean=false;
 
 
 
@@ -740,6 +743,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
 
+            //mPNGImageSize=chooseOptimalSize(map.getOutputSizes(ImageFormat.PNG),rotatedWidth,rotatedHeight);
+            //mPNGImagheReader=ImageReader.newInstance(mPNGImageSize.getWidth(),mPNGImageSize.getHeight(),ImageFormat.P,1)
+
+
             mRawImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.RAW_SENSOR), rotatedWidth, rotatedHeight);
             mRawImageReader = ImageReader.newInstance(mRawImageSize.getWidth(), mRawImageSize.getHeight(), ImageFormat.RAW_SENSOR, 1);
             mRawImageReader.setOnImageAvailableListener(mOnRawImageAvailableListener, mBackgroundHandler);
@@ -920,6 +927,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+        CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
 
 
         BooleanOpticalStabilizationOn=OpticalStabilization;
@@ -3338,6 +3346,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private ImageReader mImageReader;
 
+
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener =
             new ImageReader.OnImageAvailableListener() {
                 @Override
@@ -3657,6 +3666,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if(mRawImageCaptureon){
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
                 mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
+
+
+            }if(CapturePngBoolean){
+                mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
+                Toast.makeText(getApplicationContext(), "More Code is needed", Toast.LENGTH_SHORT).show();
+
+                //launch special Method
 
 
             } else {
@@ -3985,6 +4001,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","xxx");
         FrameRate=Integer.parseInt(FrameRateString);
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
+        CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         if(ExportTxtFileboolean==true){
             //execute File Export
             File txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
@@ -4176,6 +4193,22 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         lab[1] = (int) (as + .5);
         lab[2] = (int) (bs + .5);
     }
+
+public class CIEXYZ {
+    private final  float[] RGB=new float[]{255,255,255};
+    float[] RGB2XYZ=new float[]{0.4124564f,0.3575761f, 0.1804375f,
+        0.2126729f ,0.7151522f, 0.0721750f,
+        0.0193339f, 0.1191920f, 0.9503041f};
+
+
+
+
+
+
+}
+
+
+
 
 
 
