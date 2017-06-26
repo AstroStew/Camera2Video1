@@ -384,6 +384,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static final Rational ZERO_R=Rational.ZERO;
     String CIEXYZvaluesString;
     boolean ShowCIEXYZValuesBoolean=false;
+    byte[] bytes;
 
 
     String s = "";
@@ -3564,6 +3565,29 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 //Bitmap bm=Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
                 //bm.copyPixelsFromBuffer(ByteBuffer);
 
+
+                String timestamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String prepend= "PNG"+timestamp;
+                File PngFile=null;
+                try {
+
+                     PngFile=File.createTempFile(prepend,".png",mImageFolder);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String mPngImageFileName=PngFile.getAbsolutePath();
+                Toast.makeText(this, "PNG Captured", Toast.LENGTH_SHORT).show();
+                Bitmap bitmap=mTextureView.getBitmap();
+                Canvas canvas=new Canvas(bitmap);
+                try {
+                    FileOutputStream output=new FileOutputStream(mPngImageFileName);
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100,output);
+
+                    output.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //capturePng Urgh
                 
 
@@ -3653,6 +3677,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
 
 
+
         @Override
         public void run() {
 
@@ -3664,8 +3689,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                     ByteBuffer byteBuffer = mImage.getPlanes()[0].getBuffer();
-                    byte[] bytes = new byte[byteBuffer.remaining()];
-                    byteBuffer.get(bytes);
+                     bytes = new byte[byteBuffer.remaining()];
+                        byteBuffer.get(bytes);
+
 
 
                     FileOutputStream fileOutputStream = null;
@@ -3739,6 +3765,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     //mIsWritingRawImage = true;
                     break;
             }
+
         }
     }
 
@@ -4092,6 +4119,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         lab[1] = (int) (as + .5);
         lab[2] = (int) (bs + .5);
     }
+
+
+
+
 
 
 
