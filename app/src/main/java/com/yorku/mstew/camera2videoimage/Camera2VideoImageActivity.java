@@ -2453,6 +2453,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
                                         + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
                                         + "\n" + "Camera Aperature "+mCurrentAperatureValue
+
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
@@ -3946,7 +3947,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             String mtxtFileName=txtfile.getAbsolutePath();
             try {
                 FileOutputStream fileoutputstream=new FileOutputStream(mtxtFileName);
-                String examplestring=rggbChannelVector.toString();
+                String examplestring="RGGB_CHANNEL_VECTOR: "+rggbChannelVector.toString()+"\n"+ "SENSOR_COLOR_TRANSFORM1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)+ "\n"+"SENSOR_COLOR_TRANSFORM2: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)+ "\n"+
+                         "SENSOR_FORWARD_MATRIX1: "+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)+"\n"+ "SENSOR_FORWARD_MATRIX2: "+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2) + "\n"
+                        +"SENSOR_CALIBRATION_TRANSFORM1: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM1)+"\n"
+                        +"SENSOR_CALIBRATION_TRANSFORM2: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM2)+"\n"
+                        
+
+                        ;
                 byte[] txtbytes= examplestring.getBytes();
                 fileoutputstream.write(txtbytes);
 
