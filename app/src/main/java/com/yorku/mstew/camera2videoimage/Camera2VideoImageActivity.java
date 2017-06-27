@@ -3854,14 +3854,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             if (afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED || afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
                                 Toast.makeText(getApplicationContext(), "Autofocus locked", Toast.LENGTH_SHORT).show();
 
-
-
-
                                 //startStillCaptureRequest();
-
-
-
-
 
                             }
 
@@ -3984,7 +3977,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     public void RefreshScreen() {
         // SharedPreferences sharedprefs1 = null;
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
-        final String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
+        final String resolutionlist=sharedprefs1.getString("resolution_list", "1");
         String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","8000000");
         BitEncodingRate=Integer.parseInt(BitEncodingRateString);
         String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","30");
@@ -4077,10 +4070,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
         setupCamera(Size1.getHeight(), Size1.getWidth());
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             connectCamera();
         }
-        connectCamera();
+        //connectCamera();
         //String mSetting = sharedprefs1.getString("example_text", "xxx");
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
