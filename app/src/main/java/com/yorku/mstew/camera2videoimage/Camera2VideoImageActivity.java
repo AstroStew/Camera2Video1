@@ -383,7 +383,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
     String CIEXYZvaluesString;
-    boolean ShowCIEXYZValuesBoolean=false;
+    boolean ShowCIEXYZValuesBoolean=true;
     byte[] bytes;
 
 
@@ -418,6 +418,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int ORIENTATION_UNKNOWN = -1;
     private int tempOrientRounded = -1;
     boolean CapturePngBoolean=false;
+    FileOutputStream output;
 
 
 
@@ -3577,13 +3578,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 }
                 String mPngImageFileName=PngFile.getAbsolutePath();
                 Toast.makeText(this, "PNG Captured", Toast.LENGTH_SHORT).show();
-                Bitmap bitmap=mTextureView.getBitmap();
-                Canvas canvas=new Canvas(bitmap);
+                // bitmap=mTextureView.getBitmap();
+                //Canvas canvas=new Canvas(bitmap);
                 try {
-                    FileOutputStream output=new FileOutputStream(mPngImageFileName);
-                    bitmap.compress(Bitmap.CompressFormat.PNG,100,output);
-
-                    output.close();
+                    output=new FileOutputStream(mPngImageFileName);
+                    //bitmap.compress(Bitmap.CompressFormat.PNG,100,output);
+                    //output.close();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -3692,14 +3692,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                      bytes = new byte[byteBuffer.remaining()];
                         byteBuffer.get(bytes);
 
-
-
                     FileOutputStream fileOutputStream = null;
                     try {
                         fileOutputStream = new FileOutputStream(mImageFileName);
                         Toast.makeText(Camera2VideoImageActivity.this, "JPEG saved", Toast.LENGTH_SHORT).show();
                         try {
-
+                            if(CapturePngBoolean){
+                                output.write(bytes);
+                            }
 
                             fileOutputStream.write(bytes);
 
@@ -3742,6 +3742,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         Toast.makeText(Camera2VideoImageActivity.this, "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
 
                         dngCreator.writeImage(rawFileOutputStream, mImage);
+
                         Toast.makeText(getApplicationContext(), "RAW saved", Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
