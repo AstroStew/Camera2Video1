@@ -377,12 +377,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean CaptureAveragepixelCountBooleanOn = false;
     Button readButton;
     String scannedfilestring;
-     boolean ShowRealTimeInfoboolean=true;
+     boolean ShowRealTimeInfoboolean=false;
     int FrameRate=30;
     int BitEncodingRate=8000000;
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
-    String CIEXYZvaluesString;
+    String CIEXYZvaluesString=null;
     boolean ShowCIEXYZValuesBoolean=true;
     byte[] bytes;
 
@@ -933,7 +933,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
-        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
 
@@ -1134,6 +1134,69 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             public void run() {
 
+                                int SensorReferenceIlluminant=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
+                                String SensorReferenceILluminantString=null;
+                                switch (SensorReferenceIlluminant){
+                                    case 10:
+                                        SensorReferenceILluminantString="Cloudy Weather";
+                                        break;
+                                    case 14:
+                                        SensorReferenceILluminantString="Cool White Fluoresecent";
+                                        break;
+                                    case 23:
+                                        SensorReferenceILluminantString="D50";
+                                        break;
+                                    case 20:
+                                        SensorReferenceILluminantString="D55";
+                                        break;
+                                    case 21:
+                                        SensorReferenceILluminantString="D65";
+                                        break;
+                                    case 22:
+                                        SensorReferenceILluminantString="D75";
+                                        break;
+                                    case 1:
+                                        SensorReferenceILluminantString="Daylioght";
+                                        break;
+                                    case 12:
+                                        SensorReferenceILluminantString="Daylight Fluorescent";
+                                        break;
+                                    case 13:
+                                        SensorReferenceILluminantString="Day White Fluorescent";
+                                        break;
+                                    case 9:
+                                        SensorReferenceILluminantString="Fine Weather";
+                                        break;
+                                    case 4:
+                                        SensorReferenceILluminantString="Flash";
+                                        break;
+                                    case 2:
+                                        SensorReferenceILluminantString="Fluorescent";
+                                        break;
+                                    case 24:
+                                        SensorReferenceILluminantString="ISO Studio Tungsten";
+                                        break;
+                                    case 11:
+                                        SensorReferenceILluminantString="Shade";
+                                        break;
+                                    case 17:
+                                        SensorReferenceILluminantString="Standardb A";
+                                        break;
+                                    case 18:
+                                        SensorReferenceILluminantString="Standard B";
+                                        break;
+                                    case 19:
+                                        SensorReferenceILluminantString="Standard C";
+                                        break;
+                                    case 3:
+                                        SensorReferenceILluminantString="Tungsten";
+                                        break;
+                                    case 15:
+                                        SensorReferenceILluminantString="White Fluorescent";
+                                        break;
+
+                                }
+
                                 if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
                                     adjustWhiteBalanceOnTouch();
                                     isAdjustingWB = false;
@@ -1265,12 +1328,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
-                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t"  + "\t\t\t\t" + PixelValues
+                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t"+"Sensor Reference Illuminant 1: "+SensorReferenceILluminantString  + "\t\t\t\t" + PixelValues
                                     );
 
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
-                                            + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t"  + "\t\t\t\t" + PixelValues
+                                            + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" +"Sensor Reference Illuminant 1: "+ SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
 
@@ -3922,13 +3985,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         // SharedPreferences sharedprefs1 = null;
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         final String resolutionlist=sharedprefs1.getString("resolution_list", "xxx");
-        String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","xxx");
+        String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","8000000");
         BitEncodingRate=Integer.parseInt(BitEncodingRateString);
-        String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","xxx");
+        String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","30");
         FrameRate=Integer.parseInt(FrameRateString);
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
-        ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
+        ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",false);
         
         if(ExportTxtFileboolean==true){
             //execute File Export
@@ -3947,11 +4010,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             String mtxtFileName=txtfile.getAbsolutePath();
             try {
                 FileOutputStream fileoutputstream=new FileOutputStream(mtxtFileName);
-                String examplestring="RGGB_CHANNEL_VECTOR: "+rggbChannelVector.toString()+"\n"+ "SENSOR_COLOR_TRANSFORM1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)+ "\n"+"SENSOR_COLOR_TRANSFORM2: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)+ "\n"+
+                String examplestring="RGGB_CHANNEL_VECTOR: "+rggbChannelVector.toString()+"\n"+"SENSOR_REFERENCE_ILLUMINANT1: " +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)+ "SENSOR_REFERNCE_ILLUMINANT_2: "+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT2)  + "\n"+ "SENSOR_COLOR_TRANSFORM1: "  +mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)+ "\n"+"SENSOR_COLOR_TRANSFORM2: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)+ "\n"+
                          "SENSOR_FORWARD_MATRIX1: "+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)+"\n"+ "SENSOR_FORWARD_MATRIX2: "+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2) + "\n"
                         +"SENSOR_CALIBRATION_TRANSFORM1: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM1)+"\n"
                         +"SENSOR_CALIBRATION_TRANSFORM2: "+ mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM2)+"\n"
-                        
+
 
                         ;
                 byte[] txtbytes= examplestring.getBytes();
@@ -4005,15 +4068,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-        final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","xxx");
-        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+        final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","5");
+        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
         mCurrentWidth=Size1.getWidth();
         mCurrentHeight=Size1.getHeight();
-        String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","xxx");
+        String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
         setupCamera(Size1.getHeight(), Size1.getWidth());
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            connectCamera();
+        }
         connectCamera();
         //String mSetting = sharedprefs1.getString("example_text", "xxx");
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
@@ -4022,14 +4088,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         BooleanOpticalStabilizationOn=OpticalStabilization;
         int TempSecondInterval=Integer.parseInt(TempSecondIntervalString);
         SecondStep = TempSecondInterval;
-        String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","xxx");
+        String TempTimeLimitString=sharedprefs1.getString("PictureTimeLimit","0");
         int TempTimeLimit=Integer.parseInt(TempTimeLimitString);
-        String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","xxx");
+        String TempVideoSecondIntervalString =sharedprefs1.getString("VideoSecondStep","5");
         int TempVideoSecondInterval=Integer.parseInt(TempVideoSecondIntervalString);
         VideoTimelapsSecondStep = TempVideoSecondInterval;
 
 
-        String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","xxx");
+        String TempVideoTimeLimitString=sharedprefs1.getString("VideoTimelapseTimeLimit","0");
 
 
 
