@@ -191,6 +191,7 @@ import static com.yorku.mstew.camera2videoimage.R.menu.popup_menu;
 import static com.yorku.mstew.camera2videoimage.R.xml.resolution_xml;
 import static java.lang.StrictMath.max;
 import static java.lang.StrictMath.toIntExact;
+import Jama.Matrix;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -430,11 +431,21 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Rational SensorColorTransform8;
     Rational SensorColorTransform9;
     Rational[] SensorColorTransform1Values;
+    double[] SensorColorTransform1DoubleValues=new double[9];
     Rational[] SensorColorTransform2Values;
+    double[] SensorColorTransform2DoubleValues=new double[9];
     Rational[] ForwardMatrix1Values;
+    double[] ForwardMatrix1DoubleValues=new double[9];
     Rational[] ForwardMatrix2Values;
+    double[] ForwardMatrix2DoubleValues=new double[9];
     Rational[] SensorCalibrationTransform1Values;
+    double[] SensorCalibrationTransf
     Rational[] SensorCalibrationTransform2Values;
+
+    Rational[][] SensorColorTransorm1Array;
+    Jama.Matrix SensorColorTransorm1Matrix;
+    Rational[][] SensorColorTransorm2Array;
+    Jama.Matrix SensorColorTransorm2Matrix;
     
 
 
@@ -787,13 +798,27 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             SensorColorTransform1Values=new Rational[9];
             ColorSpaceTransformSensorColorTransform1.copyElements(SensorColorTransform1Values,0);
 
+
+            /* SensorColorTransorm1Array= new Rational[][]{{SensorColorTransform1Values[0], SensorColorTransform1Values[1], SensorColorTransform1Values[2]}, {SensorColorTransform1Values[3], SensorColorTransform1Values[4]
+                    , SensorColorTransform1Values[5]}, {SensorColorTransform1Values[6], SensorColorTransform1Values[7], SensorColorTransform1Values[8]}};*/
+
+            
+            
+
             ColorSpaceTransform ColorSpaceTransformSensorColorTransform2=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2);
             SensorColorTransform2Values=new Rational[9];
             ColorSpaceTransformSensorColorTransform2.copyElements(SensorColorTransform2Values,0);
+            /*
+            SensorColorTransorm2Array= new Rational[][]{{SensorColorTransform2Values[0], SensorColorTransform2Values[1], SensorColorTransform2Values[2]}, {SensorColorTransform2Values[3], SensorColorTransform2Values[4]
+                    , SensorColorTransform2Values[5]}, {SensorColorTransform2Values[6], SensorColorTransform2Values[7], SensorColorTransform2Values[8]}};*/
+
+
 
             ColorSpaceTransform ColorSpaceTransformForwardMatrix1=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1);
             ForwardMatrix1Values=new Rational[9];
             ColorSpaceTransformForwardMatrix1.copyElements(ForwardMatrix1Values,0);
+
+
 
             ColorSpaceTransform ColorSpaceTransformForwardMatrix2=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2);
             ForwardMatrix2Values=new Rational[9];
@@ -806,32 +831,21 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ColorSpaceTransform ColorSpaceTransformSensorCalibrationTransform2Values=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM2);
             SensorCalibrationTransform2Values=new Rational[9];
             ColorSpaceTransformSensorCalibrationTransform2Values.copyElements(SensorCalibrationTransform2Values,0);
-
             
-
-
+            RationaltoDouble();
             
-            
-
-
-            
-            
-
-
-            /*
-            SensorColorTransform1=ColorSpaceTransformSensorColorTransform1.getElement(0,0);
-            SensorColorTransform2=ColorSpaceTransformSensorColorTransform1.getElement(0,1);
-            SensorColorTransform3=ColorSpaceTransformSensorColorTransform1.getElement(0,2);
-            SensorColorTransform4=ColorSpaceTransformSensorColorTransform1.getElement(1,0);
-            SensorColorTransform5=ColorSpaceTransformSensorColorTransform1.getElement(1,1);
-            SensorColorTransform6=ColorSpaceTransformSensorColorTransform1.getElement(1,2);
-            SensorColorTransform7=ColorSpaceTransformSensorColorTransform1.getElement(2,0);
-            SensorColorTransform8=ColorSpaceTransformSensorColorTransform1.getElement(2,1);
-            SensorColorTransform9=ColorSpaceTransformSensorColorTransform1.getElement(2,2);*/
 
             //continue;
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void RationaltoDouble() {
+        for(int i=0;i<SensorColorTransform1Values.length;i++){
+            SensorColorTransform1DoubleValues[i]=
+                    (Double.parseDouble(SensorColorTransform1Values[i].toString().split("/")[0])/Double.parseDouble(SensorColorTransform1Values[i].toString().split("/")[1]));
+            
         }
     }
 
