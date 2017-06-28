@@ -420,32 +420,44 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int tempOrientRounded = -1;
     boolean CapturePngBoolean=false;
     FileOutputStream output;
-    ArrayList<Rational>RationalArrayList;
-    Rational SensorColorTransform1;
-    Rational SensorColorTransform2;
-    Rational SensorColorTransform3;
-    Rational SensorColorTransform4;
-    Rational SensorColorTransform5;
-    Rational SensorColorTransform6;
-    Rational SensorColorTransform7;
-    Rational SensorColorTransform8;
-    Rational SensorColorTransform9;
+
+
     Rational[] SensorColorTransform1Values;
     double[] SensorColorTransform1DoubleValues=new double[9];
+    double[][] SensorColorTranform1Array;
+
     Rational[] SensorColorTransform2Values;
     double[] SensorColorTransform2DoubleValues=new double[9];
+    double[][] SensorColorTranform2Array;
+
     Rational[] ForwardMatrix1Values;
     double[] ForwardMatrix1DoubleValues=new double[9];
+    double[][] ForwardMatrix1Array;
+
     Rational[] ForwardMatrix2Values;
     double[] ForwardMatrix2DoubleValues=new double[9];
+    double[][] ForwardMatrix2Array;
+
     Rational[] SensorCalibrationTransform1Values;
     double[] SensorCalibrationTransform1DoubleValues=new double[9];
+    double[][]SensorCalibrationTransform1Array;
+
     Rational[] SensorCalibrationTransform2Values;
     double[] SensorCalibrationTransform2DoubleValues=new double[9];
-    Rational[][] SensorColorTransorm1Array;
-    Jama.Matrix SensorColorTransorm1Matrix;
-    Rational[][] SensorColorTransorm2Array;
-    Jama.Matrix SensorColorTransorm2Matrix;
+    double[][]SensorCalibrationTransform2Array;
+
+    Jama.Matrix SensorColorTransform1Matrix;
+    Jama.Matrix SensorColorTransform1MatrixInverse;
+    Jama.Matrix SensorColorTransform2Matrix;
+    Jama.Matrix SensorColorTransform2MatrixInverse;
+    Jama.Matrix ForwardMatrix1;
+    Jama.Matrix ForwardMatrix1Inverse;
+    Jama.Matrix ForwardMatrix2;
+    Jama.Matrix ForwardMatrix2Inverse;
+    Jama.Matrix SensorCalibrationTransform1Matrix;
+    Jama.Matrix SensorCalibrationTransform1MatrixInverse;
+    Jama.Matrix SensorCalibrationTransform2Matrix;
+    Jama.Matrix SensorCalibrationTransform2MatrixInverse;
     
 
 
@@ -856,11 +868,29 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2DoubleValues[i]=
                     (Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[1]));
 
-
-
-
-            
         }
+              SensorColorTranform1Array= new double[][]{{SensorColorTransform1DoubleValues[0],SensorColorTransform1DoubleValues[1],SensorColorTransform1DoubleValues[2]},{SensorColorTransform1DoubleValues[3],SensorColorTransform1DoubleValues[4],SensorColorTransform1DoubleValues[5]},{SensorColorTransform1DoubleValues[6],SensorColorTransform1DoubleValues[7],SensorColorTransform1DoubleValues[8]}};
+              SensorColorTranform2Array= new double[][]{{SensorColorTransform2DoubleValues[0],SensorColorTransform2DoubleValues[1],SensorColorTransform2DoubleValues[2]},{SensorColorTransform2DoubleValues[3],SensorColorTransform2DoubleValues[4],SensorColorTransform2DoubleValues[5]},{SensorColorTransform2DoubleValues[6],SensorColorTransform2DoubleValues[7],SensorColorTransform2DoubleValues[8]}};
+              SensorCalibrationTransform1Array=new double[][]{{SensorCalibrationTransform1DoubleValues[0],SensorCalibrationTransform1DoubleValues[1],SensorCalibrationTransform1DoubleValues[2]},{SensorCalibrationTransform1DoubleValues[3],SensorCalibrationTransform1DoubleValues[4],SensorCalibrationTransform1DoubleValues[5]},{SensorCalibrationTransform1DoubleValues[6],SensorCalibrationTransform1DoubleValues[7],SensorCalibrationTransform1DoubleValues[8]}};
+              SensorCalibrationTransform2Array=new double[][]{{SensorCalibrationTransform2DoubleValues[0],SensorCalibrationTransform2DoubleValues[1],SensorCalibrationTransform2DoubleValues[2]},{SensorCalibrationTransform2DoubleValues[3],SensorCalibrationTransform2DoubleValues[4],SensorCalibrationTransform2DoubleValues[5]},{SensorCalibrationTransform2DoubleValues[6],SensorCalibrationTransform2DoubleValues[7],SensorCalibrationTransform2DoubleValues[8]}};
+              ForwardMatrix1Array=new double[][]{{ForwardMatrix1DoubleValues[0],ForwardMatrix1DoubleValues[1],ForwardMatrix1DoubleValues[2]},{ForwardMatrix1DoubleValues[3],ForwardMatrix1DoubleValues[4],ForwardMatrix1DoubleValues[5]},{ForwardMatrix1DoubleValues[6],ForwardMatrix1DoubleValues[7],ForwardMatrix1DoubleValues[8]}};
+              ForwardMatrix2Array=new double[][]{{ForwardMatrix2DoubleValues[0],ForwardMatrix2DoubleValues[1],ForwardMatrix2DoubleValues[2]},{ForwardMatrix2DoubleValues[3],ForwardMatrix2DoubleValues[4],ForwardMatrix2DoubleValues[5]},{ForwardMatrix2DoubleValues[6],ForwardMatrix2DoubleValues[7],ForwardMatrix2DoubleValues[8]}};
+            SensorColorTransform1Matrix=new Matrix(SensorColorTranform1Array);
+            SensorColorTransform2Matrix=new Matrix(SensorColorTranform2Array);
+            SensorCalibrationTransform1Matrix=new Matrix(SensorCalibrationTransform1Array);
+            SensorCalibrationTransform2Matrix=new Matrix(SensorCalibrationTransform2Array);
+            ForwardMatrix1=new Matrix(ForwardMatrix1Array);
+            ForwardMatrix2=new Matrix(ForwardMatrix2Array);
+            SensorColorTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
+            SensorColorTransform2MatrixInverse=SensorColorTransform2Matrix.inverse();
+            ForwardMatrix1Inverse=ForwardMatrix1.inverse();
+            ForwardMatrix2Inverse=ForwardMatrix2.inverse();
+            SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
+            SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
+
+
+
+
     }
 
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
