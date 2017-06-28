@@ -238,6 +238,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean WhiteBalanceAutoBoolean = true;
     Size[] previewSizes;
     private boolean previewinit=true;
+    int hheight=0;
+    int wwidth=0;
 
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
@@ -445,8 +447,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Rational[] SensorCalibrationTransform2Values;
     double[] SensorCalibrationTransform2DoubleValues=new double[9];
     double[][]SensorCalibrationTransform2Array;
-    private int height;
-    private int width;
+
 
 
     Jama.Matrix SensorColorTransform1Matrix;
@@ -3444,201 +3445,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                     //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
                     Image image = reader.acquireLatestImage();
-                    Image.Plane[] planes=image.getPlanes();
-                    ByteBuffer plane1=null;
-                    if(planes.length>0){
-                        plane1=planes[0].getBuffer();
-                    }
-                    float mSampleLocationX,mSampleLocationY;
-                    if(plane1!=null){
-                        int temp=0;
-                        int temp2=0;
-                        int counter=0;
-                        if(BallInspectorx<0){
-                            mSampleLocationX=0;
-                        }else{
-                            mSampleLocationX=BallInspectorx-(WhiteBalanceBallInspector.getWidth()/8);
-                        }
-                        if(BallInspectory<0){
-                            mSampleLocationY=0;
-                        }else{
-                            mSampleLocationY=(float)(BallInspectory-WhiteBalanceBallInspector.getHeight()*1.3);
-
-                        }
-                        if(((double)BallInspectory/(double)BallInspectorx)>(14.0/9.0)){
-                            height=(int)((mTextureView.getWidth()-mSampleLocationX)*(image.getHeight()*0.75/mTextureView.getWidth()))+300;
-                            width=(int)((mSampleLocationY)*(image.getWidth()/mTextureView.getHeight()));
-                        }else if(((double) mCurrentHeight / (double) mCurrentWidth) < (double) (14.0 / 9.0) &&
-                                ((double) mCurrentHeight / (double) mCurrentWidth) > (double) (1.2)){
-                            height = (int) ((mTextureView.getWidth() - mSampleLocationX) * (image.getWidth() / mTextureView.getWidth()));
-                            width = (int) (mSampleLocationY * (image.getWidth() * 1.33 / mTextureView.getHeight())) - 506;
-                            if (width < 0) {
-                                width = 0;
-                            } else if (width > 4044-128) {
-                                width = 4044-128;
-                            }
-                            if (height > 3040) {
-                                height = 3042;
-                            }
-                        }else if (((double) mCurrentHeight / (double) mCurrentWidth) < (1.2)){
-                            height = (int) (mSampleLocationY * (image.getHeight() / mTextureView.getWidth())) - 380;
-                            width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()));
-                        }else{
-                            height = (int) (mSampleLocationY * (image.getHeight() / mTextureView.getWidth()));
-                            width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()));
-                        }
-
-                        pixelValues=new int[BAYERHEIGHT][BAYERWIDTH];
-                        if(height%4==1){
-                            height=height-1;
-                        }else if (height % 4 == 2) {
-                            height = height - 2;
-                        } else if (height% 4 == 3) {
-                            height = height - 3;
-                        }
-                        if (width % 2 == 1) {
-                            width = width - 1;
-                        }
-                        int offsetWidth = width % 2;
-                        int lastIndex = 0;
-                        for (int j = height; j < height + BAYERHEIGHT; j++) {
-                            counter = 0;
-                            for (int i = width * 2; i < (width * 2) + (BAYERWIDTH * 2); i++) {
-                                temp = plane1.get((i)+((image.getWidth())*j*2)) & 0xFF;
-                                if (i%2 == 1) {
-                                    pixelValues[j-(height)][counter] = (temp << 8) + temp2;
-                                    counter++;
-                                } else {
-                                    temp2 = temp;
-                                }
-                                lastIndex = (i)+((image.getWidth())*j*2);
-                            }
-                        }
-                        Toast.makeText(Camera2VideoImageActivity.this, "H:" + height + " W:" + width, Toast.LENGTH_SHORT).show();
-                        Toast.makeText(Camera2VideoImageActivity.this, "" + (double)lastIndex/24644224, Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(Camera2VideoImageActivity.this, "" + image.getHeight() + " " + image.getWidth(), Toast.LENGTH_SHORT).show();
-                        int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
-                        if (mFilterArrangement == 0) {
-                            s = "RG\nGB\n\n";
-                            totalR = 0;
-                            totalG = 0;
-                            totalB = 0;
-                            for (int i = 0; i < BAYERHEIGHT; i++) {
-                                for (int j = 0; j < BAYERWIDTH; j++) {
-                                    if (i%2 == 0) {
-                                        if (j % 2 == 0) {
-                                            totalR = totalR + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                    }
-                                    if (i%2 == 1) {
-                                        if (j % 2 == 0) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalB = totalB + pixelValues[i][j];
-                                        }
-                                    }
-                                }
-
-                                s = s + "\n\n";
-                            }
-                        } else if (mFilterArrangement == 1) {
-                            s = "GR\nBG\n\n";
-                            for (int i = 0; i < BAYERHEIGHT; i++) {
-                                for (int j = 0; j < BAYERWIDTH; j++) {
-                                    if (i%2 == 0) {
-                                        if (j % 2 == 0) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalR = totalR + pixelValues[i][j];
-                                        }
-                                    }
-                                    if (i%2 == 1) {
-                                        if (j % 2 == 0) {
-                                            totalB = totalB+ pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                    }
-                                }
-                                s = s + "\n\n";
-                            }
-                        } else if (mFilterArrangement == 2) {
-                            s = "GB\nRG\n\n";
-                            for (int i = 0; i < BAYERHEIGHT; i++) {
-                                for (int j = 0; j < BAYERWIDTH; j++) {
-                                    if (i%2 == 0) {
-                                        if (j % 2 == 0) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalB = totalB + pixelValues[i][j];
-                                        }
-                                    }
-                                    if (i%2 == 1) {
-                                        if (j % 2 == 0) {
-                                            totalR = totalR + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                    }
-                                }
-                                s = s + "\n\n";
-                            }
-                        } else if (mFilterArrangement == 3) {
-                            s = "BG\nGR\n\n";
-                            for (int i = 0; i < BAYERHEIGHT; i++) {
-                                for (int j = 0; j < BAYERWIDTH; j++) {
-                                    if (i%2 == 0) {
-                                        if (j % 2 == 0) {
-                                            totalB = totalB + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                    }
-                                    if (i%2 == 1) {
-                                        if (j % 2 == 0) {
-                                            totalG = totalG + pixelValues[i][j];
-                                        }
-                                        if (j % 2 == 1) {
-                                            totalR = totalR + pixelValues[i][j];
-                                        }
-                                    }
-                                    s = s + pixelValues[i][j] + " ";
-                                }
-                                s = s + "\n\n";
-
-                            }
-                        }
-                        float normal = (float) Math.sqrt(Math.pow(totalR,2) + Math.pow(totalG,2) + (Math.pow(totalB,2)));
-                        totalR = (float) ((totalR/32) / normal);
-                        totalG = (float) (totalG/64)/ normal;
-                        totalB = (float) (totalB/32) / normal;
-                        //Toast.makeText(Camera2VideoImageActivity.this, "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
-                        //Toast.makeText(Camera2VideoImageActivity.this, "W: " + width + "   H: " + height, Toast.LENGTH_LONG).show();
-                        //Toast.makeText(Camera2VideoImageActivity.this, "CH: " + mSampleLocationX + "  CW: " + mSampleLocationY, Toast.LENGTH_SHORT).show();
-                        for (int i = lastIndex - 128; i < lastIndex; i++)
-                        {plane1.put(i, (byte) 0);}
-                        for (int i = lastIndex - 128; i < lastIndex; i++)
-                        {plane1.put(i + image.getWidth() * 2, (byte) 0);}
-                        for (int i = lastIndex - 128; i < lastIndex; i++)
-                        {plane1.put(i + image.getWidth() * 4, (byte) 0);}
-                        for (int i = lastIndex - 128; i < lastIndex; i++)
-                        {plane1.put(i + image.getWidth() * 6, (byte) 0);}
-                        for (int i = lastIndex - 128; i < lastIndex; i++)
-                        {plane1.put(i + image.getWidth() * 8, (byte) 0);}
-                        for (int i = lastIndex - 128; i < lastIndex; i++)
-                        {plane1.put(i + image.getWidth() * 10, (byte) 0);}
-
-                    }
-
 
                     if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
@@ -3646,6 +3452,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                     } else {
+
+
                         image.close();
                     }
 
@@ -3664,6 +3472,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         if (planes.length > 0) {
                             Bytebufferplane1 = planes[0].getBuffer();
                         }
+                        float mSampleLocationX,mSampleLocationY;
                         if (image != null) {
                             if (WB_RAWTouchEnabled) {
                                 int temp = 0;
