@@ -419,6 +419,28 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int tempOrientRounded = -1;
     boolean CapturePngBoolean=false;
     FileOutputStream output;
+    ArrayList<Rational>RationalArrayList;
+    Rational SensorColorTransform1;
+    Rational SensorColorTransform2;
+    Rational SensorColorTransform3;
+    Rational SensorColorTransform4;
+    Rational SensorColorTransform5;
+    Rational SensorColorTransform6;
+    Rational SensorColorTransform7;
+    Rational SensorColorTransform8;
+    Rational SensorColorTransform9;
+    Rational[] SensorColorTransform1Values;
+    Rational[] SensorColorTransform2Values;
+    Rational[] ForwardMatrix1Values;
+    Rational[] ForwardMatrix2Values;
+    Rational[] SensorCalibrationTransform1Values;
+    Rational[] SensorCalibrationTransform2Values;
+    
+
+
+
+
+
 
 
 
@@ -760,6 +782,53 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
             mCameraCharacteristics = cameraCharacteristics;
+
+            ColorSpaceTransform ColorSpaceTransformSensorColorTransform1=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1);
+            SensorColorTransform1Values=new Rational[9];
+            ColorSpaceTransformSensorColorTransform1.copyElements(SensorColorTransform1Values,0);
+
+            ColorSpaceTransform ColorSpaceTransformSensorColorTransform2=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2);
+            SensorColorTransform2Values=new Rational[9];
+            ColorSpaceTransformSensorColorTransform2.copyElements(SensorColorTransform2Values,0);
+
+            ColorSpaceTransform ColorSpaceTransformForwardMatrix1=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1);
+            ForwardMatrix1Values=new Rational[9];
+            ColorSpaceTransformForwardMatrix1.copyElements(ForwardMatrix1Values,0);
+
+            ColorSpaceTransform ColorSpaceTransformForwardMatrix2=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2);
+            ForwardMatrix2Values=new Rational[9];
+            ColorSpaceTransformForwardMatrix2.copyElements(ForwardMatrix2Values,0);
+
+            ColorSpaceTransform ColorSpaceTransformSensorCalibrationTransform1Values=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM1);
+            SensorCalibrationTransform1Values=new Rational[9];
+            ColorSpaceTransformSensorCalibrationTransform1Values.copyElements(SensorCalibrationTransform1Values,0);
+
+            ColorSpaceTransform ColorSpaceTransformSensorCalibrationTransform2Values=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM2);
+            SensorCalibrationTransform2Values=new Rational[9];
+            ColorSpaceTransformSensorCalibrationTransform2Values.copyElements(SensorCalibrationTransform2Values,0);
+
+            
+
+
+            
+            
+
+
+            
+            
+
+
+            /*
+            SensorColorTransform1=ColorSpaceTransformSensorColorTransform1.getElement(0,0);
+            SensorColorTransform2=ColorSpaceTransformSensorColorTransform1.getElement(0,1);
+            SensorColorTransform3=ColorSpaceTransformSensorColorTransform1.getElement(0,2);
+            SensorColorTransform4=ColorSpaceTransformSensorColorTransform1.getElement(1,0);
+            SensorColorTransform5=ColorSpaceTransformSensorColorTransform1.getElement(1,1);
+            SensorColorTransform6=ColorSpaceTransformSensorColorTransform1.getElement(1,2);
+            SensorColorTransform7=ColorSpaceTransformSensorColorTransform1.getElement(2,0);
+            SensorColorTransform8=ColorSpaceTransformSensorColorTransform1.getElement(2,1);
+            SensorColorTransform9=ColorSpaceTransformSensorColorTransform1.getElement(2,2);*/
+
             //continue;
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -1134,6 +1203,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             public void run() {
 
+
+
+
                                 int SensorReferenceIlluminant=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
                                 String SensorReferenceILluminantString=null;
                                 switch (SensorReferenceIlluminant){
@@ -1328,7 +1400,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
-                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t"+"Sensor Reference Illuminant 1: "+SensorReferenceILluminantString  + "\t\t\t\t" + PixelValues
+                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t"+"Sensor Reference Illuminant 1: "+SensorReferenceILluminantString   + "\t\t\t\t" + PixelValues
                                     );
 
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
@@ -4073,8 +4145,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             connectCamera();
         }
-        //connectCamera();
-        //String mSetting = sharedprefs1.getString("example_text", "xxx");
+
+
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         mRawImageCaptureon=RawwithJPEg;
