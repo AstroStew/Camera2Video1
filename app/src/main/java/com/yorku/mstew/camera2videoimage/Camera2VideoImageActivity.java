@@ -3440,9 +3440,25 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 public void onImageAvailable(ImageReader reader) {
 
                     //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
-
-
                     Image image = reader.acquireLatestImage();
+                    Image.Plane[] planes=image.getPlanes();
+                    ByteBuffer plane1=null;
+                    if(planes.length>0){
+                        plane1=planes[0].getBuffer();
+                    }
+                    float mSampleLocationX,mSampleLocationY;
+                    if(plane1!=null){
+                        int temp=0;
+                        int temp2=0;
+                        int counter=0;
+                        if(BallInspectorx<0){
+                            BallInspectorx=0;
+                        }else{
+                            
+                        }
+                    }
+
+
                     if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
