@@ -18,7 +18,7 @@ import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
+
 import android.graphics.Paint;
 import android.app.Fragment;
 import android.graphics.PixelFormat;
@@ -439,9 +439,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Rational[] ForwardMatrix2Values;
     double[] ForwardMatrix2DoubleValues=new double[9];
     Rational[] SensorCalibrationTransform1Values;
-    double[] SensorCalibrationTransf
+    double[] SensorCalibrationTransform1DoubleValues=new double[9];
     Rational[] SensorCalibrationTransform2Values;
-
+    double[] SensorCalibrationTransform2DoubleValues=new double[9];
     Rational[][] SensorColorTransorm1Array;
     Jama.Matrix SensorColorTransorm1Matrix;
     Rational[][] SensorColorTransorm2Array;
@@ -845,6 +845,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         for(int i=0;i<SensorColorTransform1Values.length;i++){
             SensorColorTransform1DoubleValues[i]=
                     (Double.parseDouble(SensorColorTransform1Values[i].toString().split("/")[0])/Double.parseDouble(SensorColorTransform1Values[i].toString().split("/")[1]));
+            SensorColorTransform2DoubleValues[i]=
+                    (Double.parseDouble(SensorColorTransform2Values[i].toString().split("/")[0])/Double.parseDouble(SensorColorTransform2Values[i].toString().split("/")[1]));
+            SensorCalibrationTransform1DoubleValues[i]=
+                    (Double.parseDouble(SensorCalibrationTransform1Values[i].toString().split("/")[0])/Double.parseDouble(SensorCalibrationTransform1Values[i].toString().split("/")[1]));
+            SensorCalibrationTransform2DoubleValues[i]=
+                    (Double.parseDouble(SensorCalibrationTransform2Values[i].toString().split("/")[0])/Double.parseDouble(SensorCalibrationTransform2Values[i].toString().split("/")[1]));
+            ForwardMatrix1DoubleValues[i]=
+                    (Double.parseDouble(ForwardMatrix1Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix1Values[i].toString().split("/")[1]));
+            ForwardMatrix2DoubleValues[i]=
+                    (Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[1]));
+
+
+
+
             
         }
     }
@@ -4034,7 +4048,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 " newView=" + newWidth + "x" + newHeight +
                 " off=" + xoff + "," + yoff);
 
-        Matrix txform = new Matrix();
+        /*Matrix txform = new Matrix();
         mTextureView.getTransform(txform);
         RectF textureRectF=new RectF(0,0,viewWidth,viewHeight);
         RectF previewRectF=new RectF(0,0, newWidth,newHeight);
@@ -4045,7 +4059,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mTextureView.setTransform(txform);
         }else if(rotation==Surface.ROTATION_90||rotation==Surface.ROTATION_270){
             txform.postRotate(270);
-        }
+        }*/
 
 
     }
