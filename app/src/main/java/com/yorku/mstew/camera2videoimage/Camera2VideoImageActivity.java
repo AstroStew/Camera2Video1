@@ -390,9 +390,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     String s = "";
     String sTemp;
-    int totalR = 0;
-    int totalG = 0;
-    int totalB = 0;
+    float totalR = 0f;
+    float totalG = 0f;
+    float totalB = 0f;
     int averageR;
     int averageG;
     int averageB;
@@ -445,6 +445,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Rational[] SensorCalibrationTransform2Values;
     double[] SensorCalibrationTransform2DoubleValues=new double[9];
     double[][]SensorCalibrationTransform2Array;
+    private int height;
+    private int width;
+
 
     Jama.Matrix SensorColorTransform1Matrix;
     Jama.Matrix SensorColorTransform1MatrixInverse;
@@ -3479,7 +3482,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             }
                         }else if (((double) mCurrentHeight / (double) mCurrentWidth) < (1.2)){
                             height = (int) (mSampleLocationY * (image.getHeight() / mTextureView.getWidth())) - 380;
-                            width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()))
+                            width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()));
                         }else{
                             height = (int) (mSampleLocationY * (image.getHeight() / mTextureView.getWidth()));
                             width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()));
@@ -3633,7 +3636,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         {plane1.put(i + image.getWidth() * 8, (byte) 0);}
                         for (int i = lastIndex - 128; i < lastIndex; i++)
                         {plane1.put(i + image.getWidth() * 10, (byte) 0);}
-                        
+
                     }
 
 
