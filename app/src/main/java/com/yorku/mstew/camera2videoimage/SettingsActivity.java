@@ -446,6 +446,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         }
     }
+    public static class ExposureCompensation extends  PreferenceFragment{
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            
+        }
+    }
 
 
 
