@@ -251,6 +251,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private TextView mShutterSpeedEditTextView2;
     private SeekBar mChangeFocusSeekBar;
     private SeekBar ExposureCompensationSeekBar;
+    private boolean ExposureCompensationSeekBarboolean;
+
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
     private float mFocusDistanceMem = 20;
@@ -1070,23 +1072,33 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
 
 
-        ExposureCompensationSeekBar=(Seekbar)findViewById(R.id.ExposureCompensationSeekBar);
-        ExposureCompensationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
+        ExposureCompensationSeekBar.setMax(6);
+        ExposureCompensationSeekBar.setProgress(3);
+        ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
+        if(ExposureCompensationSeekBarboolean) {
+            ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
 
-            }
+        }else{
+            ExposureCompensationSeekBar.setVisibility(View.INVISIBLE);
+        }
+            ExposureCompensationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                }
 
-            }
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+                }
 
-            }
-        });
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
 
 
 
@@ -3034,6 +3046,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
             mCaptureRequestBuilder.addTarget(previewSurface);
+            if(ExposureCompensationSeekBarboolean){
+                //fill in here
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION,1);
+            }
 
             if (supports_face_detection_mode_simple && isSupports_face_detection_mode_full == false) {
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_SIMPLE);
@@ -4143,6 +4159,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",false);
+        ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
+        if(ExposureCompensationSeekBarboolean) {
+            ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
+        }else{
+            ExposureCompensationSeekBar.setVisibility(View.INVISIBLE);
+        }
         
         if(ExportTxtFileboolean==true){
             //execute File Export
