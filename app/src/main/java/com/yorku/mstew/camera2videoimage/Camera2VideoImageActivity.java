@@ -250,6 +250,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private EditText mShutterSpeedEditText2;
     private TextView mShutterSpeedEditTextView2;
     private SeekBar mChangeFocusSeekBar;
+    private SeekBar ExposureCompensationSeekBar;
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
     private float mFocusDistanceMem = 20;
@@ -1067,6 +1068,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
+
+
+        ExposureCompensationSeekBar=(Seekbar)findViewById(R.id.ExposureCompensationSeekBar);
+
 
 
 
@@ -3494,6 +3499,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                     }
                                 }
+                                Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
 
                                 int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
