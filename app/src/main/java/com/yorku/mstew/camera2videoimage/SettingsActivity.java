@@ -450,7 +450,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-            
+            addPreferencesFromResource(R.xml.exposure_compensation_seekbar);
+
         }
     }
 
