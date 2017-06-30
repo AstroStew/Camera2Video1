@@ -251,6 +251,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private TextView mShutterSpeedEditTextView2;
     private SeekBar mChangeFocusSeekBar;
     private SeekBar ExposureCompensationSeekBar;
+    private int ExposureCompensationIntegerProgress=0;
     private boolean ExposureCompensationSeekBarboolean;
 
     private LinearLayout mManualFocusLayout;
@@ -310,6 +311,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private TextView mFocusTextView;
     private boolean supports_face_detection_mode_simple;
     private boolean isSupports_face_detection_mode_full;
+    TextView ExposureCompensationEditText;
     private FaceDetector FaceDetector;
     private String OFFtext = "";
     private String SIMPLEtext = "";
@@ -817,7 +819,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
             ExposureCompensationSeekBar.setMax(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower())));
-            ExposureCompensationSeekBar.setProgress((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower())/2);
+            ExposureCompensationSeekBar.setProgress(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower()))/2);
 
 
 
@@ -1073,6 +1075,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
+
+
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
@@ -1080,6 +1084,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
+        ExposureCompensationEditText=(TextView)findViewById(R.id.exposure_compenstion);
+        ExposureCompensationEditText.setText(""+ExposureCompensationIntegerProgress);
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
@@ -1093,7 +1099,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ExposureCompensationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                    ExposureCompensationIntegerProgress=progress;
+                    ExposureCompensationEditText.setText(""+ExposureCompensationIntegerProgress);
                 }
 
                 @Override
@@ -1103,6 +1110,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
+
 
                 }
             });

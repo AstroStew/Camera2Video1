@@ -398,5 +398,18 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:id="@+id/exposure_compenstion"
+        android:textColor="@android:color/white"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/chronometer"
+        android:layout_alignRight="@+id/chronometer"
+        android:layout_below="@+id/ISOtext"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+         />
+
 
 </RelativeLayout>
