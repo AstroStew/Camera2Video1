@@ -1138,12 +1138,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         BallInspectorx = BallInspectory = 600;
         WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
 
-        SurfaceView k = (SurfaceView) findViewById(R.id.surfaceView);
-        k.setZOrderOnTop(true);
-        final SurfaceHolder holder = k.getHolder();
+        SurfaceView Surfaceview = (SurfaceView) findViewById(R.id.surfaceView);
+        Surfaceview.setZOrderOnTop(true);
+        final SurfaceHolder holder = Surfaceview.getHolder();
         holder.setFormat(PixelFormat.TRANSLUCENT);
-        final Surface g = holder.getSurface();
-        k.setOnTouchListener(new View.OnTouchListener() {
+        final Surface mWBSurface = holder.getSurface();
+        Surfaceview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -1391,20 +1391,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                 if (ChangeWhiteBalanceSpotRawOn) {
-
-
                                     ChangeWhiteBalanceSpotRawOn = false;
                                 }
 
 
-                                if (g.isValid()) {
+                                if (mWBSurface.isValid()) {
                                     Bitmap bitmappy = mTextureView.getBitmap();
-
                                     ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
-
-
-                                    int pixel;
-                                    pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
+                                    int pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
                                     redPixelData = Color.red(pixel);
                                     bluePixelData = Color.blue(pixel);
                                     greePixelData = Color.green(pixel);
