@@ -65,9 +65,7 @@
         android:title="Exposure Compensation"
         android:icon="@drawable/customiso"
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ExposureCompensation"
-
-
-        />
+    />
 
 
 

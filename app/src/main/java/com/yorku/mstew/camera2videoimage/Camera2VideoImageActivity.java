@@ -326,6 +326,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     //private boolean Refreshinit=true;
     private static int mCurrentWidth=0;
     private static int mCurrentHeight=0;
+    private boolean JPEGCaptureOn=true;
 
     private boolean CustomeWhiteBalanceBoolean = false;
     private RggbChannelVector rggbChannelVector;
@@ -1078,6 +1079,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
+        JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
@@ -3509,12 +3511,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 @Override
                 public void onImageAvailable(ImageReader reader) {
 
-                    //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
                     Image image = reader.acquireLatestImage();
+
+
 
                     if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
+                        //mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
                     } else {
@@ -3522,6 +3527,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                         image.close();
                     }
+                    isAdjustingWB2=false;
 
 
                 }
@@ -3862,7 +3868,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-            } else {
+            } if(JPEGCaptureOn) {
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             }
             mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,(mTotalRotation+180)%360);
@@ -4189,6 +4195,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",false);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",true);
+        JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
         }else{

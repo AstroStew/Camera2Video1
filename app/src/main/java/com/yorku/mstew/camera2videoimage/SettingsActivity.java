@@ -74,8 +74,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    public static boolean CaptureRawwithJPEGBoolean=false;
-    public static boolean CaptureRawwithoutJPEGBoolean=false;
+
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -336,16 +335,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public boolean onOptionsItemSelected(MenuItem item){
             int id=item.getItemId();
-            switch (id){
-                case R.id.CaptureRawwithoutJpeg:
-                    CaptureRawwithJPEGBoolean=true;
-                    CaptureRawwithoutJPEGBoolean=false;
 
-
-                    
-                    break;
-
-            }
             return true;
         }
 
