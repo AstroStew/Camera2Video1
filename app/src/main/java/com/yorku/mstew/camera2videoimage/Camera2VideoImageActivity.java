@@ -2111,6 +2111,22 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     ColourSpaceThing.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+
+                                            if (mColorSpaceText1.getText().toString().isEmpty() ||
+                                                    mColorSpaceText1.getText().toString().isEmpty() ||
+                                                    mColorSpaceText2.getText().toString().isEmpty() ||
+                                                    mColorSpaceText3.getText().toString().isEmpty() ||
+                                                    mColorSpaceText4.getText().toString().isEmpty() ||
+                                                    mColorSpaceText5.getText().toString().isEmpty() ||
+                                                    mColorSpaceText6.getText().toString().isEmpty() ||
+                                                    mColorSpaceText7.getText().toString().isEmpty() ||
+                                                    mColorSpaceText8.getText().toString().isEmpty() ||
+                                                    mColorSpaceText9.getText().toString().isEmpty()) {
+                                                Toast.makeText(Camera2VideoImageActivity.this, "All Fields must be filled", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+
+
                                             ColorSpaceInputBoolean = true;
                                             int TempWhiteBalanceInputEditText1 = Integer.parseInt(mColorSpaceText1.getText().toString());
                                             int TempWhiteBalanceInputEditText2 = Integer.parseInt(mColorSpaceText2.getText().toString());
@@ -2132,7 +2148,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                             ColorSpaceBlue3 = TempWhiteBalanceInputEditText9;
                                             startPreview();
 
-
+                                        }
                                         }
                                     });
                                     ColourSpaceThing.show();
