@@ -813,6 +813,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             mCameraCharacteristics = cameraCharacteristics;
 
+
+
+            ExposureCompensationSeekBar.setMax(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower())));
+            ExposureCompensationSeekBar.setProgress((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower())/2);
+
+
+
+
             ColorSpaceTransform ColorSpaceTransformSensorColorTransform1=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1);
             SensorColorTransform1Values=new Rational[9];
             ColorSpaceTransformSensorColorTransform1.copyElements(SensorColorTransform1Values,0);
@@ -1073,8 +1081,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
-        ExposureCompensationSeekBar.setMax(6);
-        ExposureCompensationSeekBar.setProgress(3);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
@@ -2682,8 +2688,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
                                         + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
                                         + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
-                                        + "\n" + "Camera Aperature "+mCurrentAperatureValue
-
+                                        + "\n" + "Camera Aperature: "+mCurrentAperatureValue
+                                        + "\n" + "Control_AE_Compensation_Range: "+mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
+                                        +"\n"+ "Control_AE_Compensation_Step: "+ mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
@@ -3020,6 +3027,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         Surface previewSurface = new Surface(surfaceTexture);
 
 
+
         for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES).length; i++) {
 
 
@@ -3048,7 +3056,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.addTarget(previewSurface);
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION,1);
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
+                //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_LOCK,true);
+                //Added more Exposure Compensation Features
+
+
+
             }
 
             if (supports_face_detection_mode_simple && isSupports_face_detection_mode_full == false) {
@@ -4159,7 +4172,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",false);
-        ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
+        ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",true);
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
         }else{

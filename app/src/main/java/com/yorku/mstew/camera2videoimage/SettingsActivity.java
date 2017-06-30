@@ -223,6 +223,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || ShowRealTimeInfo.class.getName().equals(fragmentName)
                 || VideoEditinput.class.getName().equals(fragmentName)
                 || ExportTxtFile.class.getName().equals(fragmentName)
+                || ExposureCompensation.class.getName().equals(fragmentName)
                 ;
     }
 
