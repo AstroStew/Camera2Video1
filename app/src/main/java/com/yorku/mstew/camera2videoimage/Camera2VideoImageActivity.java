@@ -311,7 +311,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private TextView mFocusTextView;
     private boolean supports_face_detection_mode_simple;
     private boolean isSupports_face_detection_mode_full;
-    TextView ExposureCompensationEditText;
+    TextView ExposureCompensationtextview;
     private FaceDetector FaceDetector;
     private String OFFtext = "";
     private String SIMPLEtext = "";
@@ -1084,23 +1084,27 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
-        ExposureCompensationEditText=(TextView)findViewById(R.id.exposure_compenstion);
-        ExposureCompensationEditText.setText(""+ExposureCompensationIntegerProgress);
+
+        ExposureCompensationtextview=(TextView)findViewById(R.id.exposure_compenstion);
+
+        ExposureCompensationtextview.setText(""+ExposureCompensationIntegerProgress);
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
+            ExposureCompensationtextview.setVisibility(View.VISIBLE);
 
         }else{
             ExposureCompensationSeekBar.setVisibility(View.INVISIBLE);
+            ExposureCompensationtextview.setVisibility(View.INVISIBLE);
         }
             ExposureCompensationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     ExposureCompensationIntegerProgress=progress;
-                    ExposureCompensationEditText.setText(""+ExposureCompensationIntegerProgress);
+                    ExposureCompensationtextview.setText("Exposure Compensation : "+(ExposureCompensationIntegerProgress-(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower()))/2)));
                 }
 
                 @Override
