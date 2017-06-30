@@ -13,13 +13,6 @@
     <item
         android:id="@+id/devButton2"
         android:title="Reacquire WB"/>
-    <item
-        android:id="@+id/WB_RAWTouch"
-        android:title="White Balance Raw Touch Enabler"
-        android:checkable="true"
-        android:checked="true"
-
-        />
 
 
 
@@ -103,13 +96,7 @@
 
 
 
-        <item
-            android:id="@+id/CustomWhiteBalance"
-            android:title="Custom RggbVector White Balance"
-            android:icon="@drawable/custom_input_iso"
-            android:checkable="true"
 
-            />
 
     </menu>
 
@@ -151,19 +138,24 @@
     </item>
 
     <item
-        android:id="@+id/ChangeScene"
-        android:title="Change Scene"
-        >
-
-
-
-
-    </item>
-
-    <item
         android:id="@+id/ChangeWhiteBalance"
         android:title="White Balance">
         <menu>
+            <item
+                android:id="@+id/CustomWhiteBalance"
+                android:title="Custom RggbVector White Balance"
+                android:icon="@drawable/custom_input_iso"
+                android:checkable="true"
+
+                />
+            <item
+                android:id="@+id/WB_RAWTouch"
+                android:title="White Balance Raw Touch Enabler"
+                android:checkable="true"
+                android:checked="true"
+
+                />
+
             <item
                 android:id="@+id/LockWhiteBalance"
                 android:title="Lock White Balance"
@@ -175,7 +167,7 @@
                 android:checkable="true"
                 android:id="@+id/RawSpotWhiteBalance"
                 android:title="Raw Spot White Balance"
-                android:icon="@drawable/ic_all_out_black_24dp"/>
+                android:icon="@drawable/ic_all_out_black_black_24dp"/>
 
 
             <item
@@ -199,7 +191,7 @@
                     <item
                         android:id="@+id/WhiteBalanceFluorescent"
                         android:title="Fluorescent"
-                        android:icon="@drawable/ic_highlight_black_24dp"
+                        android:icon="@drawable/ic_highlight_black_black_24dp"
                         android:checkable="true"
 
                         />
@@ -221,7 +213,7 @@
                     <item
                         android:id="@+id/WhiteBalanceWarmFluorescent"
                         android:title="Warm Fluorescent"
-                        android:icon="@drawable/ic_highlight_black_24dp"
+                        android:icon="@drawable/ic_highlight_black_black_24dp"
                         android:checkable="true"
 
                         />
