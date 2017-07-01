@@ -251,7 +251,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private TextView mShutterSpeedEditTextView2;
     private SeekBar mChangeFocusSeekBar;
     private SeekBar ExposureCompensationSeekBar;
-    private int ExposureCompensationIntegerProgress=0;
+    private float ExposureCompensationIntegerProgress=0;
     private boolean ExposureCompensationSeekBarboolean;
 
     private LinearLayout mManualFocusLayout;
@@ -329,6 +329,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static int mCurrentWidth=0;
     private static int mCurrentHeight=0;
     private boolean JPEGCaptureOn=true;
+    int DenominatorStep=1;
 
     private boolean CustomeWhiteBalanceBoolean = false;
     private RggbChannelVector rggbChannelVector;
@@ -817,9 +818,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCameraCharacteristics = cameraCharacteristics;
 
 
+            DenominatorStep=mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_STEP).getDenominator();
 
-            ExposureCompensationSeekBar.setMax(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower())));
-            ExposureCompensationSeekBar.setProgress(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower()))/2);
+            ExposureCompensationSeekBar.setMax(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower()))*DenominatorStep);
+            ExposureCompensationSeekBar.setProgress(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower()))*DenominatorStep/2);
 
 
 
@@ -1092,6 +1094,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
+
+
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
             ExposureCompensationtextview.setVisibility(View.VISIBLE);
@@ -1103,7 +1107,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ExposureCompensationSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    ExposureCompensationIntegerProgress=progress;
+
+
+                    ExposureCompensationIntegerProgress= (float)progress/DenominatorStep;
                     ExposureCompensationtextview.setText("Exposure Compensation : "+(ExposureCompensationIntegerProgress-(((mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper())-(mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getLower()))/2)));
                 }
 
