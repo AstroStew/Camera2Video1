@@ -1120,6 +1120,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
+                    startPreview();
 
 
                 }
@@ -3086,7 +3087,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.addTarget(previewSurface);
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
+                //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, (int) (ExposureCompensationIntegerProgress-mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE).getUpper()));
                 //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_LOCK,true);
                 //Added more Exposure Compensation Features
 
