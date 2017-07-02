@@ -399,9 +399,9 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:id="@+id/exposure_compenstion"
+        android:id="@+id/exposure_compensation"
         android:textColor="@android:color/white"
-
+        android:text="Exposure Compensation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/chronometer"

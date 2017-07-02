@@ -1086,16 +1086,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
-
-        ExposureCompensationtextview=(TextView)findViewById(R.id.exposure_compenstion);
-
-        ExposureCompensationtextview.setText(""+ExposureCompensationIntegerProgress);
-
-
-        ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
 
+        ExposureCompensationtextview=(TextView)findViewById(R.id.exposure_compensation);
 
+        ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
+
+
+        ExposureCompensationtextview.setText(""+ExposureCompensationIntegerProgress);
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
             ExposureCompensationtextview.setVisibility(View.VISIBLE);
@@ -4208,12 +4206,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         boolean ExportTxtFileboolean=sharedprefs1.getBoolean("exporttxtfile",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",false);
-        ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",true);
+        ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
+            ExposureCompensationtextview.setVisibility(View.VISIBLE);
         }else{
             ExposureCompensationSeekBar.setVisibility(View.INVISIBLE);
+            ExposureCompensationtextview.setVisibility(View.INVISIBLE);
         }
         
         if(ExportTxtFileboolean==true){
