@@ -253,6 +253,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private SeekBar ExposureCompensationSeekBar;
     private float ExposureCompensationIntegerProgress=0;
     private boolean ExposureCompensationSeekBarboolean;
+    private int count2=0;
 
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
@@ -330,6 +331,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static int mCurrentHeight=0;
     private boolean JPEGCaptureOn=true;
     int DenominatorStep=1;
+    private int counterr;
+
 
     private boolean CustomeWhiteBalanceBoolean = false;
     private RggbChannelVector rggbChannelVector;
@@ -3561,7 +3564,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             if (WB_RAWTouchEnabled) {
                                 int temp = 0;
                                 int temp2 = 0;
-                                int counterr = 0;
+                                 counterr = 0;
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
                                 int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
@@ -3745,6 +3748,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if(!manualFocusEnableIsChecked){
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CaptureRequest.CONTROL_AF_TRIGGER_START);
             }
+            count2=0;
             try {
                 if (mIsRecording) {
                     mRecordCaptureSession.capture(mCaptureRequestBuilder.build(), mRecordCaptureCallback, mBackgroundHandler);
@@ -3829,6 +3833,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private void startStillCaptureRequest() {
         try {
+
 
             if (mIsRecording || mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
@@ -3923,7 +3928,31 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         @Override
                         public void onCaptureCompleted (CameraCaptureSession session,CaptureRequest request, TotalCaptureResult result)
                         {
-                            //Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
+                            /*super.onCaptureCompleted(session,request,result);
+                            mCaptureResult=result;
+
+                            if(count2< -1){
+                                new CountDownTimer((long)(intervalTime*1000), 100){
+
+                                    @Override
+                                    public void onTick(long millisUntilFinished) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        startStillCaptureRequest();
+                                        if(mFlashMode==2){
+                                            mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE,CameraMetadata.FLASH_MODE_TORCH);
+                                        }
+                                        mIsWritingImage=false;
+
+                                    }
+                                }.start();
+                            }
+                            count2++;*/
+
+                            Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
 
 
                         }
