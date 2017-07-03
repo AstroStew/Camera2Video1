@@ -2786,6 +2786,47 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 mVectorB = (float) totalG / totalB;
                                 startPreview();
                                 break;
+                            case R.id.devButton3:
+                                String stringVal,stringTemp;
+                                stringVal="BG\nGR\n\n";
+                                for (int i=0;i<8;i++){
+                                    for (int j=0;j<8; j++){
+                                        if(i%2==0){
+                                            if(j%2==0){
+                                                stringTemp=String.valueOf((int)(pixelValues[i][j]*RggbChannelBlue));
+                                                stringVal=stringVal+""+stringTemp;
+                                            }else{
+                                                stringTemp=String.valueOf((int)pixelValues[i][j]);
+                                                stringVal=stringVal+""+stringTemp;
+                                            }
+
+                                        }else{
+                                            if(j%2==0){
+                                                stringTemp=String.valueOf((int)pixelValues[i][j]);
+                                                stringVal=stringVal+""+stringTemp;
+                                            }else{
+                                                stringTemp=String.valueOf((int)pixelValues[i][j]);
+                                                stringVal=stringVal+""+stringTemp;
+                                            }
+
+                                        }
+                                    }
+                                    stringVal=stringVal+"\n";
+                                }
+                                AlertDialog alertdialog3=new AlertDialog.Builder(Camera2VideoImageActivity.this).create();
+                                alertdialog3.setTitle("Alert");
+                                alertdialog3.setMessage(stringVal);
+                                alertdialog3.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        }
+                                );
+                                alertdialog3.show();
+                                
+                                break;
                             case R.id.WB_RAWTouch:
                                 if (WB_RAWTouchEnabled) {
                                     WB_RAWTouchEnabled = false;
@@ -3526,7 +3567,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 @Override
                 public void onImageAvailable(ImageReader reader) {
 
-                    Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "AHH", Toast.LENGTH_SHORT).show();
                     Image image = reader.acquireLatestImage();
 
 

@@ -13,10 +13,9 @@
     <item
         android:id="@+id/devButton2"
         android:title="Reacquire WB"/>
-
-
-
-
+    <item
+        android:id="@+id/devButton3"
+        android:title="Dev Button (IDK)"/>
 
 <item
     android:id="@+id/BasicManualMode"
