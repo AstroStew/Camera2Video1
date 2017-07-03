@@ -1393,6 +1393,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
 
                                 if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
+                                    isAdjustingWB=false;
                                     adjustWhiteBalanceOnTouch();
                                     isAdjustingWB = false;
                                 }
@@ -2825,7 +2826,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                 );
                                 alertdialog3.show();
-                                
+
                                 break;
                             case R.id.WB_RAWTouch:
                                 if (WB_RAWTouchEnabled) {
