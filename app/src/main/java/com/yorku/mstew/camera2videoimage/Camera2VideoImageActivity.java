@@ -332,6 +332,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean JPEGCaptureOn=true;
     int DenominatorStep=1;
     private int counterr;
+    private int PipelineEditorNumber=0;
 
 
     private boolean CustomeWhiteBalanceBoolean = false;
@@ -341,10 +342,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     EditText mWhitebalance2;
     EditText mWhitebalance3;
     EditText mWhitebalance4;
-    double RggbChannelBlue;
-    double RggbChannelG_even;
-    double RggbChannelG_odd;
-    double RggbChsnnelR;
+    double RggbChannelBlue=0;
+    double RggbChannelG_even=0;
+    double RggbChannelG_odd=0;
+    double RggbChsnnelR=0;
     int ColorSpaceRed1;
     int ColorSpaceRed2;
     int ColorSpaceRed3;
@@ -473,6 +474,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Jama.Matrix SensorCalibrationTransform2Matrix;
     Jama.Matrix SensorCalibrationTransform2MatrixInverse;
     Jama.Matrix RGGBChannelMatrix;
+
     
 
 
@@ -867,8 +869,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ColorSpaceTransform ColorSpaceTransformSensorCalibrationTransform2Values=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_CALIBRATION_TRANSFORM2);
             SensorCalibrationTransform2Values=new Rational[9];
             ColorSpaceTransformSensorCalibrationTransform2Values.copyElements(SensorCalibrationTransform2Values,0);
-            
-            RationaltoDouble();
+
+            PipeDreams();
             
 
             //continue;
@@ -877,7 +879,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
     }
 
-    private void RationaltoDouble() {
+    private void PipeDreams() {
         for(int i=0;i<SensorColorTransform1Values.length;i++){
             SensorColorTransform1DoubleValues[i]=
                     (Double.parseDouble(SensorColorTransform1Values[i].toString().split("/")[0])/Double.parseDouble(SensorColorTransform1Values[i].toString().split("/")[1]));
@@ -893,7 +895,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     (Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[1]));
 
         }
-              SensorColorTranform1Array= new double[][]{{SensorColorTransform1DoubleValues[0],SensorColorTransform1DoubleValues[1],SensorColorTransform1DoubleValues[2]},{SensorColorTransform1DoubleValues[3],SensorColorTransform1DoubleValues[4],SensorColorTransform1DoubleValues[5]},{SensorColorTransform1DoubleValues[6],SensorColorTransform1DoubleValues[7],SensorColorTransform1DoubleValues[8]}};
+        RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
+        SensorColorTranform1Array= new double[][]{{SensorColorTransform1DoubleValues[0],SensorColorTransform1DoubleValues[1],SensorColorTransform1DoubleValues[2]},{SensorColorTransform1DoubleValues[3],SensorColorTransform1DoubleValues[4],SensorColorTransform1DoubleValues[5]},{SensorColorTransform1DoubleValues[6],SensorColorTransform1DoubleValues[7],SensorColorTransform1DoubleValues[8]}};
               SensorColorTranform2Array= new double[][]{{SensorColorTransform2DoubleValues[0],SensorColorTransform2DoubleValues[1],SensorColorTransform2DoubleValues[2]},{SensorColorTransform2DoubleValues[3],SensorColorTransform2DoubleValues[4],SensorColorTransform2DoubleValues[5]},{SensorColorTransform2DoubleValues[6],SensorColorTransform2DoubleValues[7],SensorColorTransform2DoubleValues[8]}};
               SensorCalibrationTransform1Array=new double[][]{{SensorCalibrationTransform1DoubleValues[0],SensorCalibrationTransform1DoubleValues[1],SensorCalibrationTransform1DoubleValues[2]},{SensorCalibrationTransform1DoubleValues[3],SensorCalibrationTransform1DoubleValues[4],SensorCalibrationTransform1DoubleValues[5]},{SensorCalibrationTransform1DoubleValues[6],SensorCalibrationTransform1DoubleValues[7],SensorCalibrationTransform1DoubleValues[8]}};
               SensorCalibrationTransform2Array=new double[][]{{SensorCalibrationTransform2DoubleValues[0],SensorCalibrationTransform2DoubleValues[1],SensorCalibrationTransform2DoubleValues[2]},{SensorCalibrationTransform2DoubleValues[3],SensorCalibrationTransform2DoubleValues[4],SensorCalibrationTransform2DoubleValues[5]},{SensorCalibrationTransform2DoubleValues[6],SensorCalibrationTransform2DoubleValues[7],SensorCalibrationTransform2DoubleValues[8]}};
@@ -911,6 +914,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
+
 
 
 
@@ -1081,6 +1085,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
+        //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
 
 
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
@@ -1091,6 +1096,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",true);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
+        PipelineEditorNumber= Integer.parseInt(sharedprefs1.getString("pipelineEditor","0"));
+
 
         ExposureCompensationtextview=(TextView)findViewById(R.id.exposure_compensation);
 
@@ -1541,15 +1548,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         RggbChannelG_even=(double) rggbChannelVector.getGreenEven();
 
 
+
+
                                     }
 
                                 }
 
-                                /*float[] RggbChannelArray=new float[4];
-                                RggbChannelArray[0]= (float) RggbChsnnelR;
-                                RggbChannelArray[1]=(float) RggbChannelG_even;
-                                RggbChannelArray[2]=(float) RggbChannelG_odd;
-                                RggbChannelArray[3]=(float) RggbChannelBlue;*/
+
 
 
 
@@ -4306,6 +4311,19 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ShowCIEXYZValuesBoolean=sharedprefs1.getBoolean("ShowCIEXYZValues",false);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
+        PipelineEditorNumber= Integer.parseInt(sharedprefs1.getString("pipelineEditor","0"));
+        if(PipelineEditorNumber==0){
+            Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();
+        }
+        if(PipelineEditorNumber==1){
+            Toast.makeText(this, "Execute inverse Sensor Color Transform", Toast.LENGTH_SHORT).show();
+        }
+        if(PipelineEditorNumber==2){
+            Toast.makeText(this, "Execute inverse Forward Matrix", Toast.LENGTH_SHORT).show();
+        }
+        if(PipelineEditorNumber==3){
+            Toast.makeText(this, "Execute Inverse Calibration Transform", Toast.LENGTH_SHORT).show();
+        }
         if(ExposureCompensationSeekBarboolean) {
             ExposureCompensationSeekBar.setVisibility(View.VISIBLE);
             ExposureCompensationtextview.setVisibility(View.VISIBLE);
@@ -4514,6 +4532,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         lab[1] = (int) (as + .5);
         lab[2] = (int) (bs + .5);
     }
+
+
 
 
 

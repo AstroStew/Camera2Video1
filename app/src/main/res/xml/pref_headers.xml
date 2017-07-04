@@ -66,6 +66,10 @@
         android:icon="@drawable/customiso"
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ExposureCompensation"
     />
+    <header
+        android:title="Pipeline Editor"
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$PipelineEditor"
+        />
 
 
 
