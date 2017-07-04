@@ -87,6 +87,7 @@ import android.util.Rational;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -106,6 +107,7 @@ import android.widget.CheckBox;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -644,6 +646,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         if (mTextureView.isAvailable()) {
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
+            adjustAspectRatio(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -3327,6 +3330,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         @Override
                         public void onConfigureFailed(CameraCaptureSession session) {
                             Toast.makeText(getApplicationContext(), "Unable to set up camera preview", Toast.LENGTH_SHORT).show();
+
                         }
                     }, null);
         } catch (CameraAccessException e) {
@@ -4250,6 +4254,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     //ISO CHANGE
 //ASpect Ratio stuff
     private static final String TAG = Camera2VideoImageActivity.TAG;
+
     private void adjustAspectRatio(int videoWidth, int videoHeight) {
         int viewWidth = mTextureView.getWidth();
         int viewHeight = mTextureView.getHeight();
@@ -4416,10 +4421,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
         setupCamera(Size1.getHeight(), Size1.getWidth());
+
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             connectCamera();
         }
-
 
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
