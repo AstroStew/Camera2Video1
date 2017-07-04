@@ -242,6 +242,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean previewinit=true;
     int hheight=0;
     int wwidth=0;
+    Size Size1;
 
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
@@ -3114,10 +3115,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(previewinit){
             for (int i = 0; i < previewSizes.length; i++) {
                 arraylist.add(i,previewSizes[i]);
+
             }
             previewinit=false;
 
         }
+
 
 
         //uh start things here?
@@ -4317,6 +4320,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
         PipelineEditorNumber= Integer.parseInt(sharedprefs1.getString("pipelineEditor","0"));
+        final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","5");
+        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
+        Size1=previewSizes[Integer.parseInt(resolutionlist)];
+        mCurrentWidth=Size1.getWidth();
+        mCurrentHeight=Size1.getHeight();
+        String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
+        RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
+        adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
+        setupCamera(Size1.getHeight(), Size1.getWidth());
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+            connectCamera();
+        }
+        //startPreview();
         if(PipelineEditorNumber==0){
             Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();
         }
@@ -4412,19 +4429,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-        final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","5");
-        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
-        Size Size1=previewSizes[Integer.parseInt(resolutionlist)];
-        mCurrentWidth=Size1.getWidth();
-        mCurrentHeight=Size1.getHeight();
-        String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
-        RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
-        adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
-        setupCamera(Size1.getHeight(), Size1.getWidth());
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-            connectCamera();
-        }
 
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
