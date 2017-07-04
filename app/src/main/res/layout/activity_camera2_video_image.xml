@@ -9,37 +9,6 @@
     >
 
 
-    <android.support.design.widget.CoordinatorLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="bottom"
-        android:visibility="visible"><![CDATA[
-
-
-        tools:context="com.yorku.mstew.camera2videoimage.Camera2VideoImageActivity">
-
-
-
-        ]]>
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/NavBot"
-            android:layout_width="match_parent"
-            android:layout_height="73dp"
-            android:layout_gravity="bottom"
-            design:menu="@menu/bottom_menu"
-
-            >
-
-        </android.support.design.widget.BottomNavigationView>
-
-
-    </android.support.design.widget.CoordinatorLayout>
-
     <SurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="wrap_content"
@@ -70,6 +39,37 @@
         android:background="@drawable/gradient"
         android:visibility="visible" />
 
+
+    <android.support.design.widget.CoordinatorLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="bottom"
+        android:visibility="visible"><![CDATA[
+
+
+        tools:context="com.yorku.mstew.camera2videoimage.Camera2VideoImageActivity">
+
+
+
+        ]]>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/NavBot"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:layout_gravity="bottom"
+            design:menu="@menu/bottom_menu"
+
+            >
+
+        </android.support.design.widget.BottomNavigationView>
+
+
+    </android.support.design.widget.CoordinatorLayout>
 
     <EditText
         android:id="@+id/editText2"

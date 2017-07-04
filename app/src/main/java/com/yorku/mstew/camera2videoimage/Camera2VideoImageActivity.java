@@ -472,6 +472,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Jama.Matrix SensorCalibrationTransform1MatrixInverse;
     Jama.Matrix SensorCalibrationTransform2Matrix;
     Jama.Matrix SensorCalibrationTransform2MatrixInverse;
+    Jama.Matrix RGGBChannelMatrix;
     
 
 
@@ -1329,6 +1330,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
+
+
+
+
+
+
                                 int SensorReferenceIlluminant=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
                                 String SensorReferenceILluminantString=null;
                                 switch (SensorReferenceIlluminant){
@@ -1526,6 +1533,26 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                             + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" +"Sensor Reference Illuminant 1: "+ SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
+                                if(rggbChannelVector!=null){
+                                    if(!CustomeWhiteBalanceBoolean){
+                                        RggbChsnnelR=(double)rggbChannelVector.getRed();
+                                        RggbChannelBlue=(double)rggbChannelVector.getBlue();
+                                        RggbChannelG_odd=(double)rggbChannelVector.getGreenOdd();
+                                        RggbChannelG_even=(double) rggbChannelVector.getGreenEven();
+
+
+                                    }
+
+                                }
+
+                                /*float[] RggbChannelArray=new float[4];
+                                RggbChannelArray[0]= (float) RggbChsnnelR;
+                                RggbChannelArray[1]=(float) RggbChannelG_even;
+                                RggbChannelArray[2]=(float) RggbChannelG_odd;
+                                RggbChannelArray[3]=(float) RggbChannelBlue;*/
+
+
+
 
                             }
                         });
