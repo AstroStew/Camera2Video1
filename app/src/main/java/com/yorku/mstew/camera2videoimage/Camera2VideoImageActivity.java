@@ -3122,9 +3122,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         }
         if(RefreshBoolean){
-           // adjustAspectRatio(Size1.getHeight(),Size1.getWidth());
+            
         }
-
 
 
         //uh start things here?
