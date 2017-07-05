@@ -281,6 +281,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean BooleanOpticalStabilizationOn = true;
     private int mTotalRotation;
     double[][] cArray=null;
+    boolean RefreshBoolean=false;
 
     private TextView mTimeInterval;
     private int AutoLocks = 0;
@@ -647,7 +648,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         if (mTextureView.isAvailable()) {
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
-            adjustAspectRatio(mTextureView.getWidth(),mTextureView.getHeight());
+            //adjustAspectRatio(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -3120,6 +3121,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             previewinit=false;
 
         }
+        if(RefreshBoolean){
+           // adjustAspectRatio(Size1.getHeight(),Size1.getWidth());
+        }
 
 
 
@@ -4280,7 +4284,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 " newView=" + newWidth + "x" + newHeight +
                 " off=" + xoff + "," + yoff);
 
-        /*Matrix txform = new Matrix();
+        android.graphics.Matrix txform = new android.graphics.Matrix();
         mTextureView.getTransform(txform);
         RectF textureRectF=new RectF(0,0,viewWidth,viewHeight);
         RectF previewRectF=new RectF(0,0, newWidth,newHeight);
@@ -4291,7 +4295,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mTextureView.setTransform(txform);
         }else if(rotation==Surface.ROTATION_90||rotation==Surface.ROTATION_270){
             txform.postRotate(270);
-        }*/
+        }
 
 
     }
@@ -4307,6 +4311,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     }
 
     public void RefreshScreen() {
+        RefreshBoolean=true;
         // SharedPreferences sharedprefs1 = null;
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         final String resolutionlist=sharedprefs1.getString("resolution_list", "1");
