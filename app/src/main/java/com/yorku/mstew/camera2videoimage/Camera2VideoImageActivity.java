@@ -244,6 +244,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int wwidth=0;
     Size Size1;
 
+    int[][] RedPixelValues2;
+    int[][] GreenPixelValues2;
+    int[][] BluePixelValues2;
+
+
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
     private EditText mISOEditText;
@@ -256,6 +261,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private SeekBar ExposureCompensationSeekBar;
     private float ExposureCompensationIntegerProgress=0;
     private boolean ExposureCompensationSeekBarboolean;
+    private boolean ExportasRGBasTextboolean=false;
+    private boolean ExportAsRGGBasTextboolean=false;
     private int count2=0;
 
     private LinearLayout mManualFocusLayout;
@@ -437,6 +444,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int tempOrientRounded = -1;
     boolean CapturePngBoolean=false;
     FileOutputStream output;
+    File txtfolder;
 
 
     Rational[] SensorColorTransform1Values;
@@ -599,6 +607,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+            if(previewinit){
+                Size1=new Size(height,width);
+            }
+
             Toast.makeText(Camera2VideoImageActivity.this, width+""+height, Toast.LENGTH_SHORT).show();
             if(mCurrentHeight>0){
                 setupCamera(mCurrentHeight,mCurrentWidth);
@@ -1091,6 +1103,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         setContentView(R.layout.activity_camera2_video_image);
         //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
+        txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
 
 
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
@@ -1102,8 +1115,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         JPEGCaptureOn=sharedprefs1.getBoolean("Capture_JPEG",true);
         ExposureCompensationSeekBarboolean=sharedprefs1.getBoolean("ExposureCompensationSwitch",false);
         PipelineEditorNumber= Integer.parseInt(sharedprefs1.getString("pipelineEditor","0"));
-
-
+        ExportasRGBasTextboolean=sharedprefs1.getBoolean("exportRGBasText",false);
+        ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
         ExposureCompensationtextview=(TextView)findViewById(R.id.exposure_compensation);
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
@@ -1424,8 +1437,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                 if (mWBSurface.isValid()) {
+
                                     Bitmap bitmappy = mTextureView.getBitmap();
                                     ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
+
                                     int pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
                                     redPixelData = Color.red(pixel);
                                     bluePixelData = Color.blue(pixel);
@@ -2898,7 +2913,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                if (ExportasRGBasTextboolean){
+                    Toast.makeText(Camera2VideoImageActivity.this, "Read RGB and export", Toast.LENGTH_SHORT).show();
+                    writeRGBPictureasText();
+                if(ExportAsRGGBasTextboolean){
+                    Toast.makeText(Camera2VideoImageActivity.this, "Read RGGB and export", Toast.LENGTH_SHORT).show();
+                }
 
+                }
 
                 mStillImageButton.setImageResource(R.mipmap.campic);
                 if (!mBurstOn) {
@@ -3034,6 +3056,53 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     }
 
+    private void writeRGBPictureasText() {
+        if(!txtfolder.exists()){
+            txtfolder.mkdirs();
+            String txttimestamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String prepend="TXT_"+txttimestamp+"_";
+            File txtfile2= null;
+            try {
+                txtfile2 = File.createTempFile(prepend,".txt",txtfolder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String mtxtFileName2=txtfile2.getAbsolutePath();
+            try {
+                FileOutputStream newfileoutstream2=new FileOutputStream(mtxtFileName2);
+                String Redstring=null;
+                String Bluestring=null;
+                String Greenstring=null;
+                Bitmap newBitmap=mTextureView.getBitmap();
+
+                for(int i=0;i<Size1.getWidth();i++){
+                    for(int j=0;j<Size1.getHeight();i++){
+                         int NewPixel= newBitmap.getPixel(i,j);
+
+                        RedPixelValues2[i][j]=Color.red(NewPixel);
+                        Redstring=(Redstring+Color.red(NewPixel));
+                        GreenPixelValues2[i][j]=Color.green(NewPixel);
+                        Greenstring=(Greenstring+Color.green(NewPixel));
+
+                        BluePixelValues2[i][j]=Color.blue(NewPixel);
+                        Bluestring=(Bluestring+Color.blue(NewPixel));
+
+
+                    }
+                }
+
+
+                byte[] txt2bytes=(("Red: "+Redstring)+("Green: "+Greenstring)+("Blue: "+Bluestring)).getBytes();
+                newfileoutstream2.write(txt2bytes);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
     /*public void ModifyXMLFile2(){
 
 
@@ -3122,20 +3191,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         }
         if(RefreshBoolean){
-            
+
         }
 
 
         //uh start things here?
-
-
-
-
-
-
-
-
-
 
 
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
@@ -3676,14 +3736,17 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                             if (i % 2 == 0) {
                                                 if (j % 2 == 0) {
                                                     totalR = totalR + pixelValues[i][j];
+                                                    //adds up the total Red Values
                                                 }
                                                 if (j % 2 == 1) {
                                                     totalG = totalG + pixelValues[i][j];
+                                                    //addes up the Total Green Values Pt 1
                                                 }
                                             }
                                             if (i % 2 == 1) {
                                                 if (j % 2 == 0) {
                                                     totalG = totalG + pixelValues[i][j];
+                                                    //Adds up the Total GreeanValues Pt 2
                                                 }
                                                 if (j % 2 == 1) {
                                                     totalB = totalB + pixelValues[i][j];
@@ -4360,7 +4423,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         
         if(ExportTxtFileboolean==true){
             //execute File Export
-            File txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
+
             if(!txtfolder.exists()){
                 txtfolder.mkdirs();
             }

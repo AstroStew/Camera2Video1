@@ -9,9 +9,19 @@
     <SwitchPreference
         android:title="Export Dev C2CC File"
         android:key="exportc2ccFile"
-        android:selectable="true"
+
         android:defaultValue="false"
         />
-
+    <SwitchPreference
+        android:title="Export RGB as Text"
+        android:key="exportRGBasText"
+        android:defaultValue="false"
+        />
+    <SwitchPreference
+        android:title="Convert RGB to RGGB as Text"
+        android:key="exportRGGBasText"
+        android:defaultValue="false"
+        android:dependency="exportRGBasText"
+        />
 
 </PreferenceScreen>
