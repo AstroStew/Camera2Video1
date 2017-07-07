@@ -1444,7 +1444,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                     if (isAdjustingWB && isAdjustingWB2) {
                                         isAdjustingWB = false;
+
                                         adjustWhiteBalanceOnTouch();
+                                        isAdjustingWB2=false;
 
                                     }
 
