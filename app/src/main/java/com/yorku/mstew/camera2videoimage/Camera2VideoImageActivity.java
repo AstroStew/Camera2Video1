@@ -3893,6 +3893,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                         } else {
+                            startPreview();
                             image.close();
                         }
 
