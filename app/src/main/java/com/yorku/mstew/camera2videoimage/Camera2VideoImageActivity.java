@@ -128,6 +128,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
@@ -203,6 +204,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int ISOvalue = 0;
     private int progressValue;
     private EditText mTextSeekBar;
+    boolean TestBoolean=false;
     private EditText mMinimumShutterSpeed;
     private EditText mMaximumShutterSpeed;
     private Button mAutobutton;
@@ -264,6 +266,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean ExportasRGBasTextboolean=false;
     private boolean ExportAsRGGBasTextboolean=false;
     private int count2=0;
+    public static boolean SettingresolutionChanged=false;
 
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
@@ -410,6 +413,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     String CIEXYZvaluesString=null;
     boolean ShowCIEXYZValuesBoolean=true;
     byte[] bytes;
+    boolean cameraReady=false;
 
 
     String s = "";
@@ -417,6 +421,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     float totalR = 0f;
     float totalG = 0f;
     float totalB = 0f;
+    int[][] RedMatrix2;
+    int[][] GreenMatrix2;
+    int [][] BlueMatrix2;
     int averageR;
     int averageG;
     int averageB;
@@ -803,6 +810,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         } */
 
         CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        mCurrentWidth=height;
+        mCurrentHeight=width;
+        cameraReady=true;
         try {
 
             mCameraId = cameraManager.getCameraIdList()[FlipNumber];
@@ -1097,13 +1107,27 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        SettingresolutionChanged=false;
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
         //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
         txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
+        Button testbutton1=(Button) findViewById(R.id.testbutton);
+        testbutton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TestBoolean){
+                    TestBoolean=false;
+                    Toast.makeText(Camera2VideoImageActivity.this, "TestButton set to false", Toast.LENGTH_SHORT).show();
+                }else if (!TestBoolean){
+                    TestBoolean=true;
+                    Toast.makeText(Camera2VideoImageActivity.this, "TestButton set to true", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
 
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
@@ -1353,82 +1377,76 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             public void run() {
 
 
-
-
-
-
-
-
-
-
-                                int SensorReferenceIlluminant=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
-                                String SensorReferenceILluminantString=null;
-                                switch (SensorReferenceIlluminant){
+                                int SensorReferenceIlluminant = mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
+                                String SensorReferenceILluminantString = null;
+                                switch (SensorReferenceIlluminant) {
                                     case 10:
-                                        SensorReferenceILluminantString="Cloudy Weather";
+                                        SensorReferenceILluminantString = "Cloudy Weather";
                                         break;
                                     case 14:
-                                        SensorReferenceILluminantString="Cool White Fluoresecent";
+                                        SensorReferenceILluminantString = "Cool White Fluoresecent";
                                         break;
                                     case 23:
-                                        SensorReferenceILluminantString="D50";
+                                        SensorReferenceILluminantString = "D50";
                                         break;
                                     case 20:
-                                        SensorReferenceILluminantString="D55";
+                                        SensorReferenceILluminantString = "D55";
                                         break;
                                     case 21:
-                                        SensorReferenceILluminantString="D65";
+                                        SensorReferenceILluminantString = "D65";
                                         break;
                                     case 22:
-                                        SensorReferenceILluminantString="D75";
+                                        SensorReferenceILluminantString = "D75";
                                         break;
                                     case 1:
-                                        SensorReferenceILluminantString="Daylioght";
+                                        SensorReferenceILluminantString = "Daylioght";
                                         break;
                                     case 12:
-                                        SensorReferenceILluminantString="Daylight Fluorescent";
+                                        SensorReferenceILluminantString = "Daylight Fluorescent";
                                         break;
                                     case 13:
-                                        SensorReferenceILluminantString="Day White Fluorescent";
+                                        SensorReferenceILluminantString = "Day White Fluorescent";
                                         break;
                                     case 9:
-                                        SensorReferenceILluminantString="Fine Weather";
+                                        SensorReferenceILluminantString = "Fine Weather";
                                         break;
                                     case 4:
-                                        SensorReferenceILluminantString="Flash";
+                                        SensorReferenceILluminantString = "Flash";
                                         break;
                                     case 2:
-                                        SensorReferenceILluminantString="Fluorescent";
+                                        SensorReferenceILluminantString = "Fluorescent";
                                         break;
                                     case 24:
-                                        SensorReferenceILluminantString="ISO Studio Tungsten";
+                                        SensorReferenceILluminantString = "ISO Studio Tungsten";
                                         break;
                                     case 11:
-                                        SensorReferenceILluminantString="Shade";
+                                        SensorReferenceILluminantString = "Shade";
                                         break;
                                     case 17:
-                                        SensorReferenceILluminantString="Standardb A";
+                                        SensorReferenceILluminantString = "Standardb A";
                                         break;
                                     case 18:
-                                        SensorReferenceILluminantString="Standard B";
+                                        SensorReferenceILluminantString = "Standard B";
                                         break;
                                     case 19:
-                                        SensorReferenceILluminantString="Standard C";
+                                        SensorReferenceILluminantString = "Standard C";
                                         break;
                                     case 3:
-                                        SensorReferenceILluminantString="Tungsten";
+                                        SensorReferenceILluminantString = "Tungsten";
                                         break;
                                     case 15:
-                                        SensorReferenceILluminantString="White Fluorescent";
+                                        SensorReferenceILluminantString = "White Fluorescent";
                                         break;
 
                                 }
+                                if (cameraReady){
 
-                                if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
-                                    isAdjustingWB=false;
-                                    adjustWhiteBalanceOnTouch();
-                                    isAdjustingWB = false;
-                                }
+
+                                    if (isAdjustingWB && isAdjustingWB2) {
+                                        isAdjustingWB = false;
+                                        adjustWhiteBalanceOnTouch();
+
+                                    }
 
 
                                 if (ChangeWhiteBalanceSpotRawOn) {
@@ -1494,37 +1512,37 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 String convertSS;
                                 String PixelValues;
-                                StringBuffer sbuffer=new StringBuffer();
-                                CIEXYZvaluesString="";
+                                StringBuffer sbuffer = new StringBuffer();
+                                CIEXYZvaluesString = "";
 
-                                if(ShowCIEXYZValuesBoolean){
-                                    double[] RGB=new double[]{ redPixelData,greePixelData,bluePixelData};
-                                    double[][] RGB2XYZ={{0.4124564,0.3575761, 0.1804375},{0.2126729 ,0.7151522, 0.0721750},{ 0.0193339, 0.1191920, 0.9503041}};
-                                    int rowRGB=RGB.length;
-                                    int columnsInRGB=1;
+                                if (ShowCIEXYZValuesBoolean) {
+                                    double[] RGB = new double[]{redPixelData, greePixelData, bluePixelData};
+                                    double[][] RGB2XYZ = {{0.4124564, 0.3575761, 0.1804375}, {0.2126729, 0.7151522, 0.0721750}, {0.0193339, 0.1191920, 0.9503041}};
+                                    int rowRGB = RGB.length;
+                                    int columnsInRGB = 1;
 
-                                    int rowRGB2XYZ=RGB2XYZ.length;
-                                    int columnRGB2XYZ=RGB2XYZ[0].length;
-                                    cArray=new double [rowRGB][columnRGB2XYZ];
+                                    int rowRGB2XYZ = RGB2XYZ.length;
+                                    int columnRGB2XYZ = RGB2XYZ[0].length;
+                                    cArray = new double[rowRGB][columnRGB2XYZ];
 
 
-                                    for (int i=0;i<rowRGB;i++){
-                                        for (int j=0;j<columnRGB2XYZ;j++){
-                                            for(int k=0;k<columnsInRGB;k++){
-                                                cArray[i][j]=cArray[i][j]+RGB[i]*RGB2XYZ[k][j];
+                                    for (int i = 0; i < rowRGB; i++) {
+                                        for (int j = 0; j < columnRGB2XYZ; j++) {
+                                            for (int k = 0; k < columnsInRGB; k++) {
+                                                cArray[i][j] = cArray[i][j] + RGB[i] * RGB2XYZ[k][j];
 
                                             }
                                         }
                                     }
-                                    for(int i=0;i<cArray.length;i++){
-                                        for(int j=0; j<cArray[0].length;j++){
+                                    for (int i = 0; i < cArray.length; i++) {
+                                        for (int j = 0; j < cArray[0].length; j++) {
                                             //CIEXYZvaluesString=(cArray[i][j]+"");
-                                            sbuffer.append(" "+cArray[i][j]+" ");
+                                            sbuffer.append(" " + cArray[i][j] + " ");
                                         }
 
                                     }
 
-                                    CIEXYZvaluesString="   CIE XYZ VALUES: "+sbuffer.toString();
+                                    CIEXYZvaluesString = "   CIE XYZ VALUES: " + sbuffer.toString();
 
 
                                     //launch special Method
@@ -1532,18 +1550,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
 
 
-
-
                                 if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn) {
                                     PixelValues = "Red Value: " + redPixelData
                                             + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
                                             + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
-                                            + AveragebluePixelData+ CIEXYZvaluesString
+                                            + AveragebluePixelData + CIEXYZvaluesString
                                     ;
                                 } else {
                                     PixelValues = "";
                                 }
-                                mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
+                                mTotalRotation = sensorDeviceRotation(mCameraCharacteristics, mDeviceOrientation);
 
                                 if (1000000000 / mCurrentSSvalue <= 1) {
                                     convertSS = String.valueOf(mCurrentSSvalue / 1000000000);
@@ -1552,27 +1568,26 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
-                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t"+"Sensor Reference Illuminant 1: "+SensorReferenceILluminantString   + "\t\t\t\t" + PixelValues
+                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
                                     );
 
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
-                                            + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" +"Sensor Reference Illuminant 1: "+ SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
+                                            + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
                                     ); // this action have to be in UI thread
                                 }
-                                if(rggbChannelVector!=null){
-                                    if(!CustomeWhiteBalanceBoolean){
-                                        RggbChsnnelR=(double)rggbChannelVector.getRed();
-                                        RggbChannelBlue=(double)rggbChannelVector.getBlue();
-                                        RggbChannelG_odd=(double)rggbChannelVector.getGreenOdd();
-                                        RggbChannelG_even=(double) rggbChannelVector.getGreenEven();
-
-
+                                if (rggbChannelVector != null) {
+                                    if (!CustomeWhiteBalanceBoolean) {
+                                        RggbChsnnelR = (double) rggbChannelVector.getRed();
+                                        RggbChannelBlue = (double) rggbChannelVector.getBlue();
+                                        RggbChannelG_odd = (double) rggbChannelVector.getGreenOdd();
+                                        RggbChannelG_even = (double) rggbChannelVector.getGreenEven();
 
 
                                     }
 
                                 }
+                            }
 
 
 
@@ -1581,6 +1596,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             }
                         });
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -3059,6 +3075,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private void writeRGBPictureasText() {
         if(!txtfolder.exists()){
             txtfolder.mkdirs();
+        }
+
             String txttimestamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String prepend="TXT_"+txttimestamp+"_";
             File txtfile2= null;
@@ -3070,22 +3088,22 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             String mtxtFileName2=txtfile2.getAbsolutePath();
             try {
                 FileOutputStream newfileoutstream2=new FileOutputStream(mtxtFileName2);
-                String Redstring=null;
-                String Bluestring=null;
-                String Greenstring=null;
+                String Redstring="";
+                String Bluestring="";
+                String Greenstring="";
                 Bitmap newBitmap=mTextureView.getBitmap();
 
-                for(int i=0;i<Size1.getWidth();i++){
-                    for(int j=0;j<Size1.getHeight();i++){
+                for(int i=0;i<mTextureView.getWidth();i++){
+                    for(int j=0;j<mTextureView.getHeight();j++){
                          int NewPixel= newBitmap.getPixel(i,j);
 
-                        RedPixelValues2[i][j]=Color.red(NewPixel);
-                        Redstring=(Redstring+Color.red(NewPixel));
-                        GreenPixelValues2[i][j]=Color.green(NewPixel);
-                        Greenstring=(Greenstring+Color.green(NewPixel));
+                        //RedPixelValues2[i][j]=Color.red(NewPixel);
+                        Redstring=(Redstring+Color.red(NewPixel)+", ");
+                        //GreenPixelValues2[i][j]=Color.green(NewPixel);
+                        Greenstring=(Greenstring+Color.green(NewPixel)+", ");
 
-                        BluePixelValues2[i][j]=Color.blue(NewPixel);
-                        Bluestring=(Bluestring+Color.blue(NewPixel));
+                        //BluePixelValues2[i][j]=Color.blue(NewPixel);
+                        Bluestring=(Bluestring+Color.blue(NewPixel)+", ");
 
 
                     }
@@ -3099,7 +3117,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 e.printStackTrace();
             }
 
-        }
+
 
     }
 
@@ -3703,26 +3721,32 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         if (planes.length > 0) {
                             Bytebufferplane1 = planes[0].getBuffer();
                         }
+
                         float mSampleLocationX,mSampleLocationY;
-                        if (image != null) {
+                        if (planes != null) {
                             if (WB_RAWTouchEnabled) {
                                 int temp = 0;
                                 int temp2 = 0;
                                  counterr = 0;
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
+                                int lastindex=0;
                                 int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
                                 int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
                                 for (int j = height; j < height + BAYERHEIGHT; j++) {
                                     counterr = 0;
                                     for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
                                         temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
+
+
+
                                         if (i % 2 == 1) {
                                             pixelValues[j - height][counterr] = (temp << 8) + temp2;
                                             counterr++;
                                         } else {
                                             temp2 = temp;
                                         }
+                                        lastindex=(i)+((image.getWidth())*j*2);
                                     }
                                 }
                                 Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
@@ -3736,6 +3760,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                             if (i % 2 == 0) {
                                                 if (j % 2 == 0) {
                                                     totalR = totalR + pixelValues[i][j];
+                                                    //RedPixelValues2[i][j]=pixelValues[i][j];
+
                                                     //adds up the total Red Values
                                                 }
                                                 if (j % 2 == 1) {
@@ -3750,6 +3776,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                                 }
                                                 if (j % 2 == 1) {
                                                     totalB = totalB + pixelValues[i][j];
+                                                    //adds up all blue
                                                 }
                                             }
                                         }
@@ -3828,9 +3855,29 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                     }
                                 }
+
+                                float normal =(float) Math.sqrt(Math.pow(totalR,2)+Math.pow(totalG,2)+(Math.pow(totalB,2)));
                                 totalR = (int) (totalR / Math.pow(BAYERHEIGHT / 2, 2));
                                 totalG = (int) (totalG / (Math.pow(BAYERHEIGHT / 2, 2)));
                                 totalB = (int) (totalB / Math.pow(BAYERHEIGHT / 2, 2));
+                                for(int i=lastindex-128;i<lastindex;i++){
+                                    Bytebufferplane1.put(i,(byte)0);
+                                }
+                                for(int i=lastindex-128;i<lastindex;i++){
+                                    Bytebufferplane1.put(i + image.getWidth() * 2, (byte) 0);
+                                }
+                                for(int i = lastindex - 128; i < lastindex; i++){
+                                    Bytebufferplane1.put(i + image.getWidth() * 4, (byte) 0);
+                                }for(int i = lastindex - 128; i < lastindex; i++)
+                                    { Bytebufferplane1.put(i + image.getWidth() * 6, (byte) 0);}
+
+                                for(int i= lastindex - 128; i < lastindex; i++){
+                                    Bytebufferplane1.put(i + image.getWidth() * 8, (byte) 0);
+                                }
+                                for(int i= lastindex - 128; i < lastindex; i++){
+                                    Bytebufferplane1.put(i+image.getWidth()*10,(byte)0);
+                                }
+
 
                                 Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
                             }
@@ -3852,6 +3899,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     isAdjustingWB2 = false;
                 }
             };
+
+
 
     private void AutoWhiteBalanceLock(){
         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK,true);
@@ -4226,6 +4275,28 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     }
                     //mIsWritingRawImage = true;
                     break;
+                case ImageFormat.FLEX_RGB_888:
+                    FileOutputStream pngFileOutStream=null;
+                    Bitmap pngBitmap=null;
+                    if(mImage !=null){
+                        Image.Plane[] plane123=mImage.getPlanes();
+                        ByteBuffer buffer=plane123[0].getBuffer();
+                        int pixelStride=plane123[0].getPixelStride();
+                        int rowStride=plane123[0].getRowStride();
+                        int rowPadding=rowStride-pixelStride*mImage.getWidth();
+                        pngBitmap=Bitmap.createBitmap(100,100, Bitmap.Config.ARGB_8888);
+                        pngBitmap.copyPixelsFromBuffer(buffer);
+                        try {
+                            OutputStream imageStream=new FileOutputStream("PNGIMAGETEST.png");
+                            pngBitmap.compress(Bitmap.CompressFormat.PNG,100,imageStream);
+                            imageStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+
             }
 
         }
@@ -4376,7 +4447,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         RefreshBoolean=true;
         // SharedPreferences sharedprefs1 = null;
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
-        final String resolutionlist=sharedprefs1.getString("resolution_list", "1");
+        if(SettingresolutionChanged){
+            final String resolutionlist=sharedprefs1.getString("resolution_list", "1");
+            Size1=previewSizes[Integer.parseInt(resolutionlist)];
+            mCurrentWidth=Size1.getWidth();
+            mCurrentHeight=Size1.getHeight();
+            adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
+            setupCamera(Size1.getHeight(), Size1.getWidth());
+
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                connectCamera();
+            }
+
+        }
+
         String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","8000000");
         BitEncodingRate=Integer.parseInt(BitEncodingRateString);
         String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","30");
@@ -4389,20 +4473,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         PipelineEditorNumber= Integer.parseInt(sharedprefs1.getString("pipelineEditor","0"));
         final String TempSecondIntervalString=sharedprefs1.getString("PictureSecondStep","5");
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
-        Size1=previewSizes[Integer.parseInt(resolutionlist)];
-        mCurrentWidth=Size1.getWidth();
-        mCurrentHeight=Size1.getHeight();
+        ExportasRGBasTextboolean=sharedprefs1.getBoolean("exportRGBasText",false);
+        ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
+
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
-        adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
-        setupCamera(Size1.getHeight(), Size1.getWidth());
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-            connectCamera();
-        }
         //startPreview();
         if(PipelineEditorNumber==0){
-            Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();
         }
         if(PipelineEditorNumber==1){
             Toast.makeText(this, "Execute inverse Sensor Color Transform", Toast.LENGTH_SHORT).show();

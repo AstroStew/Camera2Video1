@@ -13,9 +13,10 @@
         android:defaultValue="false"
         />
     <SwitchPreference
-        android:title="Export RGB as Text"
+        android:title="Export RGB Screenshot as Text"
         android:key="exportRGBasText"
         android:defaultValue="false"
+        android:summary="Requires High Processing Power"
         />
     <SwitchPreference
         android:title="Convert RGB to RGGB as Text"
@@ -23,5 +24,6 @@
         android:defaultValue="false"
         android:dependency="exportRGBasText"
         />
+
 
 </PreferenceScreen>
