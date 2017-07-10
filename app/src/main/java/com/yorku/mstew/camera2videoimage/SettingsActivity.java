@@ -330,11 +330,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             ListPreference lp1=(ListPreference)findPreference("sensor_available_test_modes");
             CharSequence[] entries2=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
             CharSequence[] EntryValues2=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
+            ListPreference EdgeModeListPreferences=(ListPreference)findPreference("edge_options");
+            CharSequence[] entries3=new CharSequence[Camera2VideoImageActivity.EdgeModesAvailable.length];
+            CharSequence[] EntryValues3=new CharSequence[Camera2VideoImageActivity.EdgeModesAvailable.length];
             for(int i=0;i<Camera2VideoImageActivity.TestPatternModes.length;i++){
                 //entries[i]=""+Camera2VideoImageActivity.TestPatternModes[i];
 
                 if(Camera2VideoImageActivity.TestPatternModes[i]==0){
                     entries2[i]="Off";
+                    EntryValues2[i]=""+0;
                 }
                 if(Camera2VideoImageActivity.TestPatternModes[i]==1){
                     entries2[i]="Solid Color";
@@ -351,8 +355,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 if(Camera2VideoImageActivity.TestPatternModes[i]==256){
                     entries2[i]="Custom1";
                 }
-                EntryValues2[i]=""+i;
+                EntryValues2[i]=""+Camera2VideoImageActivity.TestPatternModes[i];
             }
+            for(int i=0;i<Camera2VideoImageActivity.EdgeModesAvailable.length;i++){
+                if(Camera2VideoImageActivity.EdgeModesAvailable[i]==0){
+                    entries3[i]="Off";
+                }
+                if(Camera2VideoImageActivity.EdgeModesAvailable[i]==1){
+                    entries3[i]="Fast";
+                }
+                if(Camera2VideoImageActivity.EdgeModesAvailable[i]==2){
+                    entries3[i]="High Quality";
+                }
+                if(Camera2VideoImageActivity.EdgeModesAvailable[i]==3){
+                    entries3[i]="Zero Shutter Lag";
+                }
+                EntryValues3[i]=""+Camera2VideoImageActivity.EdgeModesAvailable[i];
+            }
+            EdgeModeListPreferences.setEntries(entries3);
+            EdgeModeListPreferences.setEntryValues(EntryValues3);
 
             //int[]NoiseReductionModes=Camera2VideoImageActivity.NoiseReductionModes;
 
@@ -367,7 +388,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                     }
                     if(Camera2VideoImageActivity.NoiseReductionModes[i]==2){
-                        entries[i]="Noise Reduction Hiigh Quality";
+                        entries[i]="Noise Reduction High Quality";
 
                     }
                     if(Camera2VideoImageActivity.NoiseReductionModes[i]==3){

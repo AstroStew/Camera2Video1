@@ -419,6 +419,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int NoiseReductionModesint=1;
     public static int[] NoiseReductionModes;
     public static int[] TestPatternModes;
+    public static int [] EdgeModesAvailable;
+    int EdgeMode=1;
     int AntiBandingModeint=3;
 
     public static boolean NoiseReductionModesinit=true;
@@ -951,6 +953,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
+            EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
 
             for (int j=0;j<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;j++){
                 NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j]+",";
@@ -961,6 +964,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 TestPatternModes[k]=(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES))[k];
 
 
+            }
+            for(int l=0;l<(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length;l++){
+                EdgeModesAvailable[l]=(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES))[l];
             }
 
 
@@ -1167,6 +1173,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         NoiseReductionModesint=Integer.parseInt(sharedprefs1.getString("noise_reduction_mode","1"));
         AntiBandingModeint = Integer.parseInt(sharedprefs1.getString("control_antibanding_mode","3"));
         PatternTestint=Integer.parseInt(sharedprefs1.getString("sensor_available_test_modes","0"));
+        EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
+        String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
+        RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
 
@@ -3277,6 +3286,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.addTarget(previewSurface);
             mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
+            mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
                 //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
@@ -4509,8 +4519,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
         NoiseReductionModesint=Integer.parseInt(sharedprefs1.getString("noise_reduction_mode","1"));
         AntiBandingModeint = Integer.parseInt(sharedprefs1.getString("control_antibanding_mode","3"));
-        PatternTestint=Integer.parseInt(sharedprefs1.getString("sensor_available_test_modes","0"));
-
+        //PatternTestint=Integer.parseInt(sharedprefs1.getString("sensor_available_test_modes","0"));
+        EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
 

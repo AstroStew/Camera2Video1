@@ -4,6 +4,7 @@
         android:key="Capture_JPEG"
         android:title="Capture Jpeg"
         android:defaultValue="true"
+        android:enabled="false"
         />
 
     <SwitchPreference
@@ -33,10 +34,14 @@
         />
     <ListPreference
 
-    android:title="Test Pattern Options"
-    android:icon="@drawable/ic_insert_photo_black_24dp"
+    android:title="Test Patterns"
         android:key="sensor_available_test_modes"
         android:defaultValue="0"
+        />
+    <ListPreference
+        android:title="Edge Options"
+        android:key="edge_options"
+        android:defaultValue="1"
         />
 
 
