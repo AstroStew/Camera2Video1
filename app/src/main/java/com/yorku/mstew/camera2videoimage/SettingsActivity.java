@@ -327,6 +327,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             final ListPreference listPreference3=(ListPreference)findPreference("noise_reduction_mode");
             CharSequence[] entries=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
             CharSequence[] entryValues=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
+            ListPreference lp1=(ListPreference)findPreference("sensor_available_test_modes");
+            CharSequence[] entries2=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
+            CharSequence[] EntryValues2=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
+            for(int i=0;i<Camera2VideoImageActivity.TestPatternModes.length;i++){
+                //entries[i]=""+Camera2VideoImageActivity.TestPatternModes[i];
+
+                if(Camera2VideoImageActivity.TestPatternModes[i]==0){
+                    entries2[i]="Off";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==1){
+                    entries2[i]="Solid Color";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==2){
+                    entries2[i]="Color Bars";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==3){
+                    entries2[i]="Pattern Mode Fade To Gray";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==4){
+                    entries2[i]="PN9";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==256){
+                    entries2[i]="Custom1";
+                }
+                EntryValues2[i]=""+i;
+            }
+
             //int[]NoiseReductionModes=Camera2VideoImageActivity.NoiseReductionModes;
 
 
@@ -356,7 +383,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
 
 
-
+            lp1.setEntries(entries2);
+            lp1.setEntryValues(EntryValues2);
             listPreference3.setEntryValues(entryValues);
             listPreference3.setEntries(entries);
 
@@ -501,35 +529,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.testing);
-            ListPreference lp1=(ListPreference)findPreference("sensor_available_test_modes");
-            CharSequence[] entries=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
-            CharSequence[] EntryValues=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
-            for(int i=0;i<Camera2VideoImageActivity.TestPatternModes.length;i++){
-                //entries[i]=""+Camera2VideoImageActivity.TestPatternModes[i];
+            addPreferencesFromResource(R.xml.new_xml);
 
-                if(Camera2VideoImageActivity.TestPatternModes[i]==0){
-                    entries[i]="Off";
-                }
-                if(Camera2VideoImageActivity.TestPatternModes[i]==1){
-                    entries[i]="Solid Color";
-                }
-                if(Camera2VideoImageActivity.TestPatternModes[i]==2){
-                    entries[i]="Color Bars";
-                }
-                if(Camera2VideoImageActivity.TestPatternModes[i]==3){
-                    entries[i]="Pattern Mode Fade To Gray";
-                }
-                if(Camera2VideoImageActivity.TestPatternModes[i]==4){
-                    entries[i]="PN9";
-                }
-                if(Camera2VideoImageActivity.TestPatternModes[i]==256){
-                    entries[i]="Custom1";
-                }
-                 EntryValues[i]=""+i;
-            }
-            lp1.setEntries(entries);
-            lp1.setEntryValues(EntryValues);
         }
     }
 

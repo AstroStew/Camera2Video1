@@ -70,11 +70,9 @@
         android:title="Pipeline Editor"
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$PipelineEditor"
         />
-    <header
-        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$TestingPatterns"
-        android:title="Test Pattern Options"
-        android:icon="@drawable/ic_insert_photo_black_24dp"
-        />
+
+
+
 
 
 

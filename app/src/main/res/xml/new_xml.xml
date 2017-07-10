@@ -31,6 +31,13 @@
         android:key="noise_reduction_mode"
 
         />
+    <ListPreference
+
+    android:title="Test Pattern Options"
+    android:icon="@drawable/ic_insert_photo_black_24dp"
+        android:key="sensor_available_test_modes"
+        android:defaultValue="0"
+        />
 
 
 
