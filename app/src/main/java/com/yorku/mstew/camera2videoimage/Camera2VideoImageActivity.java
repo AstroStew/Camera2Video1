@@ -408,15 +408,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
      boolean ShowRealTimeInfoboolean=false;
     int FrameRate=30;
     int BitEncodingRate=8000000;
-    String NoiseReductionModeString;
+    String NoiseReductionModeString="";
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
     String CIEXYZvaluesString=null;
     boolean ShowCIEXYZValuesBoolean=true;
     byte[] bytes;
     boolean cameraReady=false;
-    int NoiseReductionModesint;
+    int NoiseReductionModesint=1;
     public static int[] NoiseReductionModes;
+    int AntiBandingModeint=3;
 
     public static boolean NoiseReductionModesinit=true;
 
@@ -946,10 +947,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
 
+            NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
 
-            for (int i=0;i<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;i++){
-                NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[i]+",";
-                NoiseReductionModes[i]=mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[i];
+            for (int j=0;j<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;j++){
+                NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j]+",";
+                NoiseReductionModes[j]=mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j];
 
             }
 
@@ -3272,6 +3274,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
             }
+            mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_ANTIBANDING_MODE,AntiBandingModeint);
 
             if (supports_face_detection_mode_simple && isSupports_face_detection_mode_full == false) {
                 mCaptureRequestBuilder.set(CaptureRequest.STATISTICS_FACE_DETECT_MODE, CaptureRequest.STATISTICS_FACE_DETECT_MODE_SIMPLE);
@@ -4492,6 +4495,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ExportasRGBasTextboolean=sharedprefs1.getBoolean("exportRGBasText",false);
         ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
         NoiseReductionModesint=Integer.parseInt(sharedprefs1.getString("noise_reduction_mode","1"));
+        AntiBandingModeint = Integer.parseInt(sharedprefs1.getString("control_antibanding_mode","3"));
+
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
 

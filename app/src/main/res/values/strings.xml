@@ -33,6 +33,19 @@
     <array name="resolutions_array">hello
 
     </array>
+    <string-array name="antibanding_modes">
+        <item>Off</item>
+        <item>50Hz</item>
+        <item>60Hz</item>
+        <item>Auto</item>
+    </string-array>
+    <string-array name="antibanding_modes_values">
+    <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+
+    </string-array>
     <string-array name="pref_Pipeline_Options">
         <item>NONE</item>
         <item>SENSOR_COLOR_TRASNFORM</item>

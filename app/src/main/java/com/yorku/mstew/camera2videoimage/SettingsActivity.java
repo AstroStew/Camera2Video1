@@ -328,14 +328,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             CharSequence[] entryValues=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
             //int[]NoiseReductionModes=Camera2VideoImageActivity.NoiseReductionModes;
 
-            if(Camera2VideoImageActivity.NoiseReductionModesinit){
+
                 for(int i=0;i<Camera2VideoImageActivity.NoiseReductionModes.length;i++){
-                    entries[i]=""+Camera2VideoImageActivity.NoiseReductionModes[i];
-                    entryValues[i]=""+i;
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==0){
+                        entries[i]="Noise Reduction Off";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==1){
+                        entries[i]="Noise Redction Fast";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==2){
+                        entries[i]="Noise Reduction Hiigh Quality";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==3){
+                        entries[i]="Noise Reduction Minimal";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==4){
+                        entries[i]="Noise Reduction Mode Zero Shutter lag";
+                    }
+                    //entries[i]=""+Camera2VideoImageActivity.NoiseReductionModes[i];
+                    entryValues[i]=""+Camera2VideoImageActivity.NoiseReductionModes[i];
 
                 }
-            }
-            Camera2VideoImageActivity.NoiseReductionModesinit=false;
+
+
 
             listPreference3.setEntryValues(entryValues);
             listPreference3.setEntries(entries);
@@ -441,6 +460,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.videosettings);
+
+            //bindPreferenceSummaryToValue(findPreference("control_antibanding_mode"));
             bindPreferenceSummaryToValue(findPreference("RecordTimeStop"));
             bindPreferenceSummaryToValue(findPreference("ChangeVideoFPS"));
             bindPreferenceSummaryToValue(findPreference("EncodingBitRate"));
