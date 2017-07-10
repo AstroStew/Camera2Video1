@@ -51,6 +51,7 @@ import static java.lang.System.getProperties;
 public class SettingsActivity extends AppCompatPreferenceActivity {
     static ArrayList<Size>newarraylist;
     public static Object[] SizeArray;
+
     boolean ResolutionChanged=false;
     boolean TimelapseChanged=false;
     static boolean ExitBooleanValue=false;
@@ -322,6 +323,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.new_xml);
+            final ListPreference listPreference3=(ListPreference)findPreference("noise_reduction_mode");
+            CharSequence[] entries=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
+            CharSequence[] entryValues=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
+            //int[]NoiseReductionModes=Camera2VideoImageActivity.NoiseReductionModes;
+
+            if(Camera2VideoImageActivity.NoiseReductionModesinit){
+                for(int i=0;i<Camera2VideoImageActivity.NoiseReductionModes.length;i++){
+                    entries[i]=""+Camera2VideoImageActivity.NoiseReductionModes[i];
+                    entryValues[i]=""+i;
+
+                }
+            }
+            Camera2VideoImageActivity.NoiseReductionModesinit=false;
+
+            listPreference3.setEntryValues(entryValues);
+            listPreference3.setEntries(entries);
 
 
 

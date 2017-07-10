@@ -408,13 +408,17 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
      boolean ShowRealTimeInfoboolean=false;
     int FrameRate=30;
     int BitEncodingRate=8000000;
+    String NoiseReductionModeString;
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
     String CIEXYZvaluesString=null;
     boolean ShowCIEXYZValuesBoolean=true;
     byte[] bytes;
     boolean cameraReady=false;
+    int NoiseReductionModesint;
+    public static int[] NoiseReductionModes;
 
+    public static boolean NoiseReductionModesinit=true;
 
     String s = "";
     String sTemp;
@@ -941,6 +945,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
+
+
+            for (int i=0;i<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;i++){
+                NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[i]+",";
+                NoiseReductionModes[i]=mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[i];
+
+            }
 
 
 
@@ -2794,6 +2805,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         + "\n" + "Camera Aperature: "+mCurrentAperatureValue
                                         + "\n" + "Control_AE_Compensation_Range: "+mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
                                         +"\n"+ "Control_AE_Compensation_Step: "+ mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
+                                        +"\n"+ "Noise Reduction Modes: "+NoiseReductionModeString
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
@@ -3249,6 +3261,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
             mCaptureRequestBuilder.addTarget(previewSurface);
+            mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
                 //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
@@ -4478,7 +4491,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         ExportasRGBasTextboolean=sharedprefs1.getBoolean("exportRGBasText",false);
         ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
-
+        NoiseReductionModesint=Integer.parseInt(sharedprefs1.getString("noise_reduction_mode","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
 

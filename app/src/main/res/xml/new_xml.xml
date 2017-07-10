@@ -25,6 +25,12 @@
         android:id="@+id/CapturePNG"
 
         />
+    <ListPreference
+        android:defaultValue="-1"
+        android:title="Noise Reduction Mode"
+        android:key="noise_reduction_mode"
+
+        />
 
 
 
