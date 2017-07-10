@@ -250,6 +250,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int[][] GreenPixelValues2;
     int[][] BluePixelValues2;
 
+    public int Colorfilter;
+
 
     private int mSceneMode = CONTROL_SCENE_MODE_FACE_PRIORITY;
     private int mAFMode = CONTROL_AF_MODE_AUTO;
@@ -312,6 +314,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean isAdjustingWB = false;
     public static ArrayList<Size> arraylist=new ArrayList<Size>();
     public static boolean arraylistcall=true;
+    String SensorinfoColorfiltering="";
 
 
 
@@ -968,6 +971,31 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             for(int l=0;l<(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length;l++){
                 EdgeModesAvailable[l]=(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES))[l];
             }
+        int SensorinfoColorFiltering=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
+
+
+
+
+        switch(SensorinfoColorFiltering){
+            case 0:
+                SensorinfoColorfiltering="RGGB";
+
+                break;
+            case 1:
+                SensorinfoColorfiltering="GRBG";
+                break;
+            case 2:
+                SensorinfoColorfiltering="GBRG";
+                break;
+            case 3:
+                SensorinfoColorfiltering="BGGR";
+                break;
+            case 4:
+                SensorinfoColorfiltering="RGB";
+                break;
+
+
+        }
 
 
 
@@ -1412,6 +1440,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                 int SensorReferenceIlluminant = mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
+
                                 String SensorReferenceILluminantString = null;
                                 switch (SensorReferenceIlluminant) {
                                     case 10:
@@ -1604,7 +1633,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
-                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
+                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t\t"+"Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
                                     );
 
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
@@ -2829,6 +2858,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         + "\n" + "Control_AE_Compensation_Range: "+mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
                                         +"\n"+ "Control_AE_Compensation_Step: "+ mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)
                                         +"\n"+ "Noise Reduction Modes: "+NoiseReductionModeString
+                                        +"\n"+ "Bayer Arrangement: "+ SensorinfoColorfiltering
+                                        +"\n"+ "Pipeline Max Depth: "+ mCameraCharacteristics.get(mCameraCharacteristics.REQUEST_PIPELINE_MAX_DEPTH)
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
@@ -3287,6 +3318,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
+
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
                 //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
@@ -4523,6 +4555,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
+        Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
 
         //startPreview();
         if(PipelineEditorNumber==0){
