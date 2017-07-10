@@ -392,7 +392,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     float alphafloat = (float) 0;
     SurfaceHolder holder;
     ImageButton MovementButtonn;
-    private CameraCharacteristics mCameraCharacteristics;
+    public CameraCharacteristics mCameraCharacteristics;
+    int PatternTestint;
     boolean MovementButtonnBoolen = true;
     boolean ControlAWBmodecloudydaylightavailableboolean = false;
     boolean ControlAWBmodedaylightavailableboolean = false;
@@ -417,6 +418,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean cameraReady=false;
     int NoiseReductionModesint=1;
     public static int[] NoiseReductionModes;
+    public static int[] TestPatternModes;
     int AntiBandingModeint=3;
 
     public static boolean NoiseReductionModesinit=true;
@@ -948,12 +950,19 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
 
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
+            TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
 
             for (int j=0;j<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;j++){
                 NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j]+",";
                 NoiseReductionModes[j]=mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j];
 
             }
+            for(int k=0;k<(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length;k++){
+                TestPatternModes[k]=(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES))[k];
+
+
+            }
+
 
 
 
@@ -1155,6 +1164,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ExportasRGBasTextboolean=sharedprefs1.getBoolean("exportRGBasText",false);
         ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
         ExposureCompensationtextview=(TextView)findViewById(R.id.exposure_compensation);
+        NoiseReductionModesint=Integer.parseInt(sharedprefs1.getString("noise_reduction_mode","1"));
+        AntiBandingModeint = Integer.parseInt(sharedprefs1.getString("control_antibanding_mode","3"));
+        PatternTestint=Integer.parseInt(sharedprefs1.getString("sensor_available_test_modes","0"));
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
 
@@ -3264,6 +3276,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
             mCaptureRequestBuilder.addTarget(previewSurface);
             mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
+            mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
                 //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON);
@@ -4496,6 +4509,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ExportAsRGGBasTextboolean=sharedprefs1.getBoolean("exportRGGBasText",false);
         NoiseReductionModesint=Integer.parseInt(sharedprefs1.getString("noise_reduction_mode","1"));
         AntiBandingModeint = Integer.parseInt(sharedprefs1.getString("control_antibanding_mode","3"));
+        PatternTestint=Integer.parseInt(sharedprefs1.getString("sensor_available_test_modes","0"));
 
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);

@@ -225,6 +225,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || ExportTxtFile.class.getName().equals(fragmentName)
                 || ExposureCompensation.class.getName().equals(fragmentName)
                 || PipelineEditor.class.getName().equals(fragmentName)
+                || TestingPatterns.class.getName().equals(fragmentName)
                 ;
     }
 
@@ -494,6 +495,41 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
 
+        }
+    }
+    public static class TestingPatterns extends PreferenceFragment{
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.testing);
+            ListPreference lp1=(ListPreference)findPreference("sensor_available_test_modes");
+            CharSequence[] entries=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
+            CharSequence[] EntryValues=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
+            for(int i=0;i<Camera2VideoImageActivity.TestPatternModes.length;i++){
+                //entries[i]=""+Camera2VideoImageActivity.TestPatternModes[i];
+
+                if(Camera2VideoImageActivity.TestPatternModes[i]==0){
+                    entries[i]="Off";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==1){
+                    entries[i]="Solid Color";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==2){
+                    entries[i]="Color Bars";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==3){
+                    entries[i]="Pattern Mode Fade To Gray";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==4){
+                    entries[i]="PN9";
+                }
+                if(Camera2VideoImageActivity.TestPatternModes[i]==256){
+                    entries[i]="Custom1";
+                }
+                 EntryValues[i]=""+i;
+            }
+            lp1.setEntries(entries);
+            lp1.setEntryValues(EntryValues);
         }
     }
 
