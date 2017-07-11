@@ -531,7 +531,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.videosettings);
 
-            //bindPreferenceSummaryToValue(findPreference("control_antibanding_mode"));
+
             bindPreferenceSummaryToValue(findPreference("RecordTimeStop"));
             bindPreferenceSummaryToValue(findPreference("ChangeVideoFPS"));
             bindPreferenceSummaryToValue(findPreference("EncodingBitRate"));

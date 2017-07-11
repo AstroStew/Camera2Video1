@@ -47,6 +47,14 @@
         android:title="Hot Pixel Mode"
         android:key="hot_pixel_mode"
         />
+    <ListPreference
+        android:title="Control Anti Banding Mode"
+        android:key="control_antibanding_mode"
+        android:entries="@array/antibanding_modes"
+        android:entryValues="@array/antibanding_modes_values"
+
+        />
+
 
 
 

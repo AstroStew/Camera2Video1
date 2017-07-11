@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
+
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -115,6 +116,15 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+import static org.opencv.imgcodecs.Imgcodecs.imwrite;
+import static org.opencv.imgproc.Imgproc.cvtColor;
+
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -670,6 +680,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     @Override
     protected void onResume() {
         super.onResume();
+        if(!OpenCVLoader.initDebug()){
+            Log.d(TAG,"Internal CV library not found. Using Open CV Manager for intialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0,this,mLoaderCallback);
+
+        }else{
+            Log.d(TAG,"Open CV library found inside package. Using It!");
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
 
 
         startBackgroundThread();
@@ -1152,6 +1170,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     }
 
     //NewClassExample v;
+
+    private BaseLoaderCallback mLoaderCallback=new BaseLoaderCallback(this){
+        @Override
+        public void onManagerConnected(int status){
+            switch (status){
+                case LoaderCallbackInterface.SUCCESS:
+                    Log.i(TAG,"Open CV loaded successfully");
+                    break;
+                default:
+                    super.onManagerConnected(status);
+                    break;
+            }
+        }
+    };
 
 
     @Override
