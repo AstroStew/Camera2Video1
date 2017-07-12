@@ -390,7 +390,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mChronoTick=0;
     private int mRecordChronoTick=0;
     private int RecordTimeLimit;
-    private int HotPixelMode=0;
     EditText mColorSpaceText1;
     EditText mColorSpaceText2;
     EditText mColorSpaceText3;
@@ -439,7 +438,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     public static int[] NoiseReductionModes;
     public static int[] TestPatternModes;
     public static int [] EdgeModesAvailable;
-    public  static int[] HotPixelModes;
     int EdgeMode=1;
     int AntiBandingModeint=3;
 
@@ -982,7 +980,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
             EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
-        HotPixelModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)).length];
 
             for (int j=0;j<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;j++){
                 NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j]+",";
@@ -997,11 +994,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             for(int l=0;l<(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length;l++){
                 EdgeModesAvailable[l]=(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES))[l];
             }
-            for (int m=0;m<(mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES).length);m++){
-                HotPixelModes[m]=mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)[m];
-
-            }
-
         int SensorinfoColorFiltering=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
 
 
@@ -1249,7 +1241,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
-        HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
 
@@ -3364,7 +3355,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
-            mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
 
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
@@ -4620,8 +4610,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
-        //Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
-        HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
+        Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
+
         //startPreview();
         if(PipelineEditorNumber==0){
             //Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();

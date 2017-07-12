@@ -333,26 +333,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             ListPreference EdgeModeListPreferences=(ListPreference)findPreference("edge_options");
             CharSequence[] entries3=new CharSequence[Camera2VideoImageActivity.EdgeModesAvailable.length];
             CharSequence[] EntryValues3=new CharSequence[Camera2VideoImageActivity.EdgeModesAvailable.length];
-            ListPreference HotPixelListPreferences=(ListPreference)findPreference("hot_pixel_mode");
-            CharSequence[] entries4=new CharSequence[Camera2VideoImageActivity.HotPixelModes.length];
-            CharSequence[] EntryValues4=new CharSequence[Camera2VideoImageActivity.HotPixelModes.length];
-
-            for(int i=0;i<Camera2VideoImageActivity.HotPixelModes.length;i++){
-                if(Camera2VideoImageActivity.HotPixelModes[i]==0){
-                    entries4[i]="Off";
-                }
-                if(Camera2VideoImageActivity.HotPixelModes[i]==1){
-                    entries4[i]="Fast";
-                }
-                if(Camera2VideoImageActivity.HotPixelModes[i]==2){
-                    entries4[i]="High Quality";
-                }
-                EntryValues4[i]=""+Camera2VideoImageActivity.HotPixelModes[i];
-
-            }
-            HotPixelListPreferences.setEntries(entries4);
-            HotPixelListPreferences.setEntryValues(EntryValues4);
-
             for(int i=0;i<Camera2VideoImageActivity.TestPatternModes.length;i++){
                 //entries[i]=""+Camera2VideoImageActivity.TestPatternModes[i];
 

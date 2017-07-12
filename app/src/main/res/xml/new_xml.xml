@@ -44,8 +44,11 @@
         android:defaultValue="1"
         />
     <ListPreference
-        android:title="Hot Pixel Mode"
-        android:key="hot_pixel_mode"
+        android:title="Change Bayer Filter"
+        android:key="bayer_filter_change"
+        android:entries="@array/color_filter_entries"
+        android:entryValues="@array/color_filter_entry_values"
+
         />
     <ListPreference
         android:title="Control Anti Banding Mode"
