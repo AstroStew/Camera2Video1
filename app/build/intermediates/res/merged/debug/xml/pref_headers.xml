@@ -1,0 +1,87 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$GeneralPreferenceFragment"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/pref_header_general"
+        />
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$NotificationPreferenceFragment"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/pref_header_notifications" />
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$DataSyncPreferenceFragment"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:title="@string/pref_header_data_sync" />
+    <header
+
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$RawCaptureClass"
+        android:title="Still Capture Settings"
+        android:icon="@drawable/ic_camera_black_24dp"
+        />
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$VideoEditinput"
+        android:icon="@drawable/ic_videocam_black_24dp"
+        android:title="Video Settings"
+        />
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$resolutionClass"
+        android:title="Resolution"
+        android:icon="@drawable/ic_photo_size_select_actual_black_24dp"/>
+    <header
+    android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"
+    android:title="Optical Stabilization"
+    android:key="OpticalStabilzation"
+        android:icon="@drawable/ic_vibration_black_24dp"
+    />
+
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$Timelapseinput"
+        android:title="Time Input"
+        android:icon="@drawable/custom_input_iso"
+        android:key="PhotoBurstInput"
+        />
+
+
+    <header
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ShowRealTimeInfo"
+        android:title="Show RealTime Information"
+        android:icon="@drawable/ic_slideshow_black_24dp"
+
+        />
+    <header
+
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ExportTxtFile"
+        android:title="ExportFile"
+        android:id="@+id/exportfile"
+        android:icon="@drawable/ic_exit_to_app_black_24dp2"/>
+    <header
+        android:title="Exposure Compensation"
+        android:icon="@drawable/customiso"
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$ExposureCompensation"
+    />
+    <header
+        android:title="Pipeline Editor"
+        android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$PipelineEditor"
+        />
+
+
+
+
+
+
+
+
+</preference-headers>
+
+
+
+
+
+

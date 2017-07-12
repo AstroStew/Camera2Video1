@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:title="Picture Capture Input Second Step "
+        android:defaultValue="5"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:key="PictureSecondStep"
+        />
+    <EditTextPreference
+        android:title="Picture Capture Time Limit"
+        android:defaultValue="0"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:key="PictureTimeLimit"
+        android:inputType="number"
+        />
+    <EditTextPreference
+        android:title="Video Timelapse Second Step"
+        android:defaultValue="5"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:key="VideoSecondStep"
+        />
+    <EditTextPreference
+        android:title="Video Timelapse Time Limit"
+        android:defaultValue="0"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:key="VideoTimelapseTimeLimit"
+        />
+
+
+</PreferenceScreen>

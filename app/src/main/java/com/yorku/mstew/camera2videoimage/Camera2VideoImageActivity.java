@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
-
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -116,16 +115,6 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-import static org.opencv.imgcodecs.Imgcodecs.imwrite;
-import static org.opencv.imgproc.Imgproc.cvtColor;
-
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -251,10 +240,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean WhiteBalanceWarmFluorescentBoolean = false;
     boolean WhiteBalanceIncandenscentBoolean = false;
     boolean WhiteBalanceAutoBoolean = true;
-    private int rawWidth=100;
-    private int rawHeight=100;
-    private int[][] totalResult;
-    private int[] totalResult1D;
     Size[] previewSizes;
     private boolean previewinit=true;
     int hheight=0;
@@ -390,6 +375,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mChronoTick=0;
     private int mRecordChronoTick=0;
     private int RecordTimeLimit;
+    private int HotPixelMode=0;
     EditText mColorSpaceText1;
     EditText mColorSpaceText2;
     EditText mColorSpaceText3;
@@ -438,6 +424,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     public static int[] NoiseReductionModes;
     public static int[] TestPatternModes;
     public static int [] EdgeModesAvailable;
+    public  static int[] HotPixelModes;
     int EdgeMode=1;
     int AntiBandingModeint=3;
 
@@ -683,14 +670,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     @Override
     protected void onResume() {
         super.onResume();
-        if(!OpenCVLoader.initDebug()){
-            Log.d(TAG,"Internal CV library not found. Using Open CV Manager for intialization");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0,this,mLoaderCallback);
-
-        }else{
-            Log.d(TAG,"Open CV library found inside package. Using It!");
-            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-        }
 
 
         startBackgroundThread();
@@ -980,6 +959,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
             EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
+        HotPixelModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)).length];
 
             for (int j=0;j<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;j++){
                 NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j]+",";
@@ -994,6 +974,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             for(int l=0;l<(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length;l++){
                 EdgeModesAvailable[l]=(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES))[l];
             }
+            for (int m=0;m<(mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES).length);m++){
+                HotPixelModes[m]=mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)[m];
+
+            }
+
         int SensorinfoColorFiltering=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
 
 
@@ -1168,20 +1153,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     //NewClassExample v;
 
-    private BaseLoaderCallback mLoaderCallback=new BaseLoaderCallback(this){
-        @Override
-        public void onManagerConnected(int status){
-            switch (status){
-                case LoaderCallbackInterface.SUCCESS:
-                    Log.i(TAG,"Open CV loaded successfully");
-                    break;
-                default:
-                    super.onManagerConnected(status);
-                    break;
-            }
-        }
-    };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1241,6 +1212,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
+        HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
 
@@ -1468,7 +1440,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             public void run() {
                 while (!Thread.interrupted()) {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
 
@@ -3355,6 +3327,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
+            mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
 
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
@@ -3831,17 +3804,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         if (planes.length > 0) {
                             Bytebufferplane1 = planes[0].getBuffer();
                         }
-                        Mat mat= new Mat();
-                        rawHeight=image.getHeight();
-                        rawWidth=image.getWidth();
-                        float mSampleLocationX,mSampleLocationY;
-                        totalResult=new int[rawHeight][rawWidth];
-                        int temp,temp2=0;
 
-                        if (Bytebufferplane1 != null) {
+                        float mSampleLocationX,mSampleLocationY;
+                        if (planes != null) {
                             if (WB_RAWTouchEnabled) {
-                                temp = 0;
-                                temp2 = 0;
+                                int temp = 0;
+                                int temp2 = 0;
                                  counterr = 0;
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
@@ -3865,20 +3833,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     }
                                 }
                                 Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
-                                for(int j=0;j<rawHeight;j++){
-                                    for(int i=0;i<rawHeight*2;i++){
-                                        temp= Bytebufferplane1.get((i)+((image.getWidth())*j*2))& 0xFF;
-                                        if(i%2==1){
-                                            totalResult[j][counterr]=(temp<<8)+temp2;
-                                            totalResult1D[count2]=totalResult[j][counterr];
-                                            count2++;
-                                            counterr++;
-                                        }else{
-                                            temp2=temp;
-                                        }
-                                    }
-                                }
-                                //Testing MinJae's Code
+
                                 int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
                                     s = "RG\nGB\n\n";
@@ -3985,9 +3940,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
 
                                 float normal =(float) Math.sqrt(Math.pow(totalR,2)+Math.pow(totalG,2)+(Math.pow(totalB,2)));
-                                totalR = (float)((totalR/32)/normal);
-                                totalG = (float)((totalG/64)/normal);
-                                totalB = (float)((totalB/32)/normal);
+                                totalR = (int) (totalR / Math.pow(BAYERHEIGHT / 2, 2));
+                                totalG = (int) (totalG / (Math.pow(BAYERHEIGHT / 2, 2)));
+                                totalB = (int) (totalB / Math.pow(BAYERHEIGHT / 2, 2));
                                 for(int i=lastindex-128;i<lastindex;i++){
                                     Bytebufferplane1.put(i,(byte)0);
                                 }
@@ -4610,8 +4565,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         EdgeMode=Integer.parseInt(sharedprefs1.getString("edge_options","1"));
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
-        Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
-
+        //Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
+        HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
         //startPreview();
         if(PipelineEditorNumber==0){
             //Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();

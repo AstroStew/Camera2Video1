@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/getCameraInfo"
+    android:title="Camera Info">
+
+</item>
+    <item
+        android:id="@+id/devButton"
+        android:title="Start"
+        />
+    <item
+        android:id="@+id/devButton2"
+        android:title="Reacquire WB"/>
+    <item
+        android:id="@+id/devButton3"
+        android:title="Dev Button (IDK)"/>
+
+<item
+    android:id="@+id/BasicManualMode"
+    android:title="Manual">
+    <menu>
+
+        <item
+            android:id="@+id/ChangeShutterSpeed"
+            android:title="ChangeShutterSpeed"
+            >
+            <menu>
+                <item
+                    android:id="@+id/ChangeShutterSpeedSeek"
+                    android:title="Custom Shutter Speed"
+                    android:icon="@drawable/customiso"
+                    />
+                <item
+                    android:id="@+id/ChangeShutterSpeedInput"
+                    android:title="Input Shutter Speed(ns)"
+                    android:icon="@drawable/custom_input_iso"
+                    />
+                <item
+                    android:id="@+id/ChangeShutterSpeedInput2"
+                    android:title="Input Shutter Speed(s)"
+                    android:icon="@drawable/custom_input_iso"
+                    />
+            </menu>
+        </item>
+        <item
+            android:id="@+id/ChangeIFocus"
+            android:title="Change Focus">
+            <menu>
+                <item
+                    android:id="@+id/manualFocus"
+                    android:title="Manual Seek Focus"
+                    android:icon="@drawable/customiso"
+                    />
+
+                <item
+                    android:id="@+id/manualinputFocus"
+                    android:title= "Manual Input Focus"
+                    android:icon="@drawable/custom_input_iso"/>
+
+
+
+                <item
+                    android:id="@+id/LockAutoFocus"
+                    android:title="Lock Auto Focus"
+                    android:icon="@drawable/ic_lock_black_24dp"
+
+                    />
+
+            </menu>
+
+
+
+
+        </item>
+
+    </menu>
+
+</item>
+
+
+<item
+    android:id="@+id/AdvancedManualMode"
+    android:title="Advanced">
+    <menu>
+        <item
+            android:id="@+id/ColorSpaceInput"
+            android:title="Color Space"
+            android:checkable="true"
+            android:icon="@drawable/custom_input_iso"
+            >
+
+        </item>
+
+
+
+
+
+    </menu>
+
+</item>
+    <item
+        android:id="@+id/ChangeISO"
+        android:title="Change ISO">
+        <menu>
+            <item
+                android:id="@+id/ISO100"
+                android:title="ISO100"
+                android:icon="@mipmap/isopic100"/>
+            <item
+                android:id="@+id/ISO200"
+                android:title="ISO200"
+                android:icon="@mipmap/isopic200"/>
+            <item
+                android:id="@+id/ISO400"
+                android:title="ISO400"
+                android:icon="@mipmap/isopic400"/>
+            <item
+                android:id="@+id/ISO800"
+                android:title="ISO800"
+                android:icon="@mipmap/isopic800"/>
+            <item
+                android:id="@+id/ISO1600"
+                android:title="ISO1600"
+                android:icon="@mipmap/isopic1600"/>
+            <item
+                android:id="@+id/customISO"
+                android:title="custom ISO"
+                android:icon="@drawable/customiso"/>
+            <item
+                android:id="@+id/custominputISO"
+                android:title="Input ISO"
+                android:icon="@drawable/custom_input_iso"
+                />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/ChangeWhiteBalance"
+        android:title="White Balance">
+        <menu>
+            <item
+                android:id="@+id/CustomWhiteBalance"
+                android:title="Custom RggbVector White Balance"
+                android:icon="@drawable/custom_input_iso"
+                android:checkable="true"
+
+                />
+            <item
+                android:id="@+id/WB_RAWTouch"
+                android:title="White Balance Raw Touch Enabler"
+                android:checkable="true"
+                android:checked="true"
+
+                />
+
+            <item
+                android:id="@+id/LockWhiteBalance"
+                android:title="Lock White Balance"
+                android:icon="@drawable/ic_lock_black_24dp"
+                android:checkable="true"
+                />
+
+            <item
+                android:checkable="true"
+                android:id="@+id/RawSpotWhiteBalance"
+                android:title="Raw Spot White Balance"
+                android:icon="@drawable/ic_all_out_black_black_24dp"/>
+
+
+            <item
+                android:id="@+id/ChooseWhiteBalance"
+                android:title="Choose White Balance"
+                android:icon="@drawable/ic_list_black_24dp"
+                >
+                <menu>
+                    <item
+                        android:id="@+id/WhiteBalanceCloudyDaylight"
+                        android:title="Cloud Daylight"
+                        android:icon="@drawable/ic_cloud_queue_black_24dp"
+                        android:checkable="true"
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceDaylight"
+                        android:title="Daylight"
+                        android:icon="@drawable/ic_wb_sunny_black_24dp"
+                        android:checkable="true"
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceFluorescent"
+                        android:title="Fluorescent"
+                        android:icon="@drawable/ic_highlight_black_black_24dp"
+                        android:checkable="true"
+
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceShade"
+                        android:title="Shade"
+                        android:icon="@drawable/ic_brightness_medium_black_24dp"
+                        android:checkable="true"
+
+
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceTwilight"
+                        android:title="Twilight"
+                        android:icon="@drawable/twilight"
+                        android:checkable="true"
+
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceWarmFluorescent"
+                        android:title="Warm Fluorescent"
+                        android:icon="@drawable/ic_highlight_black_black_24dp"
+                        android:checkable="true"
+
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceIncandenscent"
+                        android:title="Incandenscent"
+                        android:icon="@drawable/ic_wb_incandescent_black_24dp"
+                        android:checkable="true"
+                        />
+                    <item
+                        android:id="@+id/WhiteBalanceAuto"
+                        android:title="Auto"
+                        android:icon="@drawable/ic_wb_auto_black_24dp"
+                        android:checkable="true"
+                        />
+                </menu>
+
+            </item>
+
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="Roll Back Pipeline"
+        android:key="pipelineEditor"
+        android:entries="@array/pref_Pipeline_Options"
+        android:entryValues="@array/pref_Pipeline_Values"
+        android:defaultValue="0"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        />
+
+</PreferenceScreen>

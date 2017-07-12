@@ -46,20 +46,7 @@
         <item>3</item>
 
     </string-array>
-    <string-array name="color_filter_entries">
-        <item>RGGB</item>
-        <item>GRBG</item>
-        <item>GBRG</item>
-        <item>BGGR</item>
-        <item>RGB</item>
-    </string-array>
-    <string-array name="color_filter_entry_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
+
     <string-array name="pref_Pipeline_Options">
         <item>NONE</item>
         <item>SENSOR_COLOR_TRASNFORM</item>

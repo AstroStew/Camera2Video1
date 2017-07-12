@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="show_real_time_info"
+        android:title="Show Real Time info"
+
+        />
+    <SwitchPreference
+        android:dependency="show_real_time_info"
+        android:defaultValue="false"
+        android:key="ShowCIEXYZValues"
+        android:title="Show CIE XYZ Spot Values"
+        />
+
+</PreferenceScreen>
