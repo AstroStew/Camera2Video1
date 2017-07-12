@@ -102,6 +102,7 @@ MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\mstew\.android
 MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\mstew\.android\build-cache\5d91176a9cbbef4ee86a8bc45d9495a79120083f\output\AndroidManifest.xml:21:5-23:61
 MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\mstew\.android\build-cache\57a16bb114e55d0b08e07d5503ffa2b39b0d7bfd\output\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-compat:25.3.1] C:\Users\mstew\.android\build-cache\2bde8860815e622915a52d269ff200b600e8d173\output\AndroidManifest.xml:21:5-23:58
+MERGED from [Camera2VideoImage:openCVLibrary320:unspecified] C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\openCVLibrary320\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
 	tools:overrideLibrary
 		ADDED from [com.android.support:design:25.0.0] C:\Users\mstew\.android\build-cache\5f5234aa027fa6c22ec5136457f557768b4d0c26\output\AndroidManifest.xml:23:9-59
 	android:targetSdkVersion

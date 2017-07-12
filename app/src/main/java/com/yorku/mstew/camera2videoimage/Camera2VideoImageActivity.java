@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import org.opencv.core.Core;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -245,6 +246,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int hheight=0;
     int wwidth=0;
     Size Size1;
+
 
     int[][] RedPixelValues2;
     int[][] GreenPixelValues2;
