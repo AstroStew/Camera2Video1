@@ -319,6 +319,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     String SensorinfoColorfiltering="";
 
 
+    private int rawWidth=100;
+    private int rawHeight=100;
+    private int[][] totalResult;
+    private int[] totalResult1D;
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
     private int mCurrentAutoFocus;
@@ -374,6 +378,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int ColorSpaceGreen1;
     int ColorSpaceGreen2;
     int ColorSpaceGreen3;
+    int temp = 0;
+    int temp2 = 0;
     private int mChronoTick=0;
     private int mRecordChronoTick=0;
     private int RecordTimeLimit;
@@ -3808,10 +3814,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         }
 
                         float mSampleLocationX,mSampleLocationY;
-                        if (planes != null) {
+
+                        if (Bytebufferplane1 != null) {
                             if (WB_RAWTouchEnabled) {
-                                int temp = 0;
-                                int temp2 = 0;
+                                temp=0;
+                                temp2=0;
                                  counterr = 0;
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
@@ -3835,7 +3842,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     }
                                 }
                                 Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
-
+                                for(int j=0;j<rawHeight;j++){
+                                    for (int i=0; i<rawHeight*2;i++){
+                                        temp=Bytebufferplane1.get((i)+((image.getWidth())*j*2))&0xFF;
+                                        if(i%2==1){
+                                            totalResult[j][counterr]=(temp<<8)+temp2;
+                                            totalResult1D[count2]=totalResult[j][counterr];
+                                            count2++;
+                                            counterr++;
+                                        }else{
+                                            temp2=temp;
+                                        }
+                                    }
+                                }
+                                //Testing MinJae's Code REEE
                                 int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
                                     s = "RG\nGB\n\n";
@@ -3942,9 +3962,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
 
                                 float normal =(float) Math.sqrt(Math.pow(totalR,2)+Math.pow(totalG,2)+(Math.pow(totalB,2)));
-                                totalR = (int) (totalR / Math.pow(BAYERHEIGHT / 2, 2));
-                                totalG = (int) (totalG / (Math.pow(BAYERHEIGHT / 2, 2)));
-                                totalB = (int) (totalB / Math.pow(BAYERHEIGHT / 2, 2));
+                                totalR = (float)((totalR/32)/normal);
+                                totalG = (float)((totalG/64)/normal);
+                                totalB = (float)((totalB)/32)/normal;
                                 for(int i=lastindex-128;i<lastindex;i++){
                                     Bytebufferplane1.put(i,(byte)0);
                                 }
