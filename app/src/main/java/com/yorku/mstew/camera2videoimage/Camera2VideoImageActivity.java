@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.core.Core;
 
 import android.content.res.AssetManager;
@@ -117,6 +120,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -127,6 +134,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -195,6 +203,9 @@ import static com.yorku.mstew.camera2videoimage.R.menu.popup_menu;
 import static com.yorku.mstew.camera2videoimage.R.xml.resolution_xml;
 import static java.lang.StrictMath.max;
 import static java.lang.StrictMath.toIntExact;
+import static org.opencv.core.CvType.CV_16UC1;
+import static org.opencv.imgproc.Imgproc.cvtColor;
+
 import Jama.Matrix;
 
 
@@ -271,6 +282,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private boolean ExportAsRGGBasTextboolean=false;
     private int count2=0;
     public static boolean SettingresolutionChanged=false;
+    private Mat mMat2;
+    private Mat mMat;
 
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
@@ -296,6 +309,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mTotalRotation;
     double[][] cArray=null;
     boolean RefreshBoolean=false;
+    private String pixelData="";
 
     private TextView mTimeInterval;
     private int AutoLocks = 0;
@@ -1193,6 +1207,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 if(TestBoolean){
                     TestBoolean=false;
                     Toast.makeText(Camera2VideoImageActivity.this, "TestButton set to false", Toast.LENGTH_SHORT).show();
+                    CaptureandConvertRAWtoPNG();
+
+
+
+
+
                 }else if (!TestBoolean){
                     TestBoolean=true;
                     Toast.makeText(Camera2VideoImageActivity.this, "TestButton set to true", Toast.LENGTH_SHORT).show();
@@ -2932,53 +2952,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 startPreview();
                                 break;
                             case R.id.devButton2:
-                                mWBMode = -1;
-                                ColorSpaceInputBoolean = true;
-                                mVectorR = (float) totalG / totalR;
-                                mVectorG_EVEN = 1;
-                                mVectorG_ODD = 1;
-                                mVectorB = (float) totalG / totalB;
-                                startPreview();
+                                for(int j=0;j<rawHeight;j++){
+                                    for(int i=0;i<rawWidth;i++){
+                                        pixelData=pixelData+""+mMat2.get(j,i).toString();
+                                    }
+                                }
+                                generateNoteonSD(Camera2VideoImageActivity.this,"pixelData",pixelData);
                                 break;
                             case R.id.devButton3:
-                                String stringVal,stringTemp;
-                                stringVal="BG\nGR\n\n";
-                                for (int i=0;i<8;i++){
-                                    for (int j=0;j<8; j++){
-                                        if(i%2==0){
-                                            if(j%2==0){
-                                                stringTemp=String.valueOf((int)(pixelValues[i][j]*RggbChannelBlue));
-                                                stringVal=stringVal+""+stringTemp;
-                                            }else{
-                                                stringTemp=String.valueOf((int)pixelValues[i][j]);
-                                                stringVal=stringVal+""+stringTemp;
-                                            }
-
-                                        }else{
-                                            if(j%2==0){
-                                                stringTemp=String.valueOf((int)pixelValues[i][j]);
-                                                stringVal=stringVal+""+stringTemp;
-                                            }else{
-                                                stringTemp=String.valueOf((int)pixelValues[i][j]);
-                                                stringVal=stringVal+""+stringTemp;
-                                            }
-
-                                        }
-                                    }
-                                    stringVal=stringVal+"\n";
-                                }
-                                AlertDialog alertdialog3=new AlertDialog.Builder(Camera2VideoImageActivity.this).create();
-                                alertdialog3.setTitle("Alert");
-                                alertdialog3.setMessage(stringVal);
-                                alertdialog3.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        }
-                                );
-                                alertdialog3.show();
+                                CaptureandConvertRAWtoPNG();
 
                                 break;
                             case R.id.WB_RAWTouch:
@@ -3157,6 +3139,25 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     }
 
+    private void generateNoteonSD(Camera2VideoImageActivity context, String sFileName, String sBody) {
+    try{
+        File root=new File(Environment.getExternalStorageDirectory(),"Notes");
+        if(!root.exists()){
+            root.mkdirs();
+        }
+        File gpxfile=new File(root,sFileName);
+        FileWriter writer= new FileWriter(gpxfile);
+        writer.append(sBody);
+        writer.flush();
+        writer.close();
+        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+    }catch (IOException e){
+        e.printStackTrace();
+    }
+
+    }
+
+
     private void writeRGBPictureasText() {
         if(!txtfolder.exists()){
             txtfolder.mkdirs();
@@ -3326,6 +3327,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
 
         try {
+
+            //setSettings();
 
 
 
@@ -4201,7 +4204,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_SINGLE);
 
             }
-
+            //setSettings();
 
             //Testing Exposure Time
             //units nanoseconds
@@ -4275,6 +4278,24 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void setSettings() {
+        if(BooleanOpticalStabilizationOn){
+            mCaptureRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_ON);
+
+        } else {
+            mCaptureRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_OFF);
+
+        }
+        if(mSceneMode != CONTROL_SCENE_MODE_DISABLED){
+            mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_USE_SCENE_MODE);
+            mCaptureRequestBuilder.set(CaptureRequest.CONTROL_SCENE_MODE, mSceneMode);
+        }else{
+            mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
+        }
+
 
     }
 
@@ -4797,6 +4818,46 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         lab[0] = (int) (2.55*Ls + .5);
         lab[1] = (int) (as + .5);
         lab[2] = (int) (bs + .5);
+    }
+
+    private BaseLoaderCallback mLoaderCallback=new BaseLoaderCallback(this){
+
+        @Override
+        public void onManagerConnected(int status) {
+            switch (status){
+                case LoaderCallbackInterface.SUCCESS:
+                {
+                    Log.i(TAG,"OPEN CV loaded successfully");
+                }break;
+                default:
+                {
+                    super.onManagerConnected(status);
+                }break;
+            }
+
+
+        }
+    };
+    private void CaptureandConvertRAWtoPNG() {
+        for(int j=0;j<totalResult.length;j++){
+            for(int i=0; i<totalResult[0].length;i++){
+                mMat.put(j,i,totalResult[j][i]);
+
+            }
+        }
+        mMat2=new Mat(totalResult.length,totalResult[0].length,CV_16UC1);
+        Toast.makeText(Camera2VideoImageActivity.this, "Array2Mat Done", Toast.LENGTH_SHORT).show();
+        cvtColor(mMat,mMat2, Imgproc.COLOR_BayerBG2RGB);
+        mMat2.convertTo(mMat2, CV_16UC1,255);
+        MatOfInt matInt=new MatOfInt();
+        matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
+        File path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String filename="temp.png";
+        File file=new File(path,filename);
+        Boolean bool=null;
+        filename=file.toString();
+        bool=Imgcodecs.imwrite(filename,mMat2,matInt);
+
     }
 
 
