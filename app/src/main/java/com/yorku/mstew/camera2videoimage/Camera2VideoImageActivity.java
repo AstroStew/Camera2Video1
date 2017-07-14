@@ -11,9 +11,9 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.core.Core;
+
+
+
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -120,7 +120,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.core.MatOfInt;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -129,6 +134,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import static org.opencv.core.Core.absdiff;
+ import static org.opencv.core.CvType.CV_16SC1;
+import static org.opencv.core.CvType.CV_16U;
+import static org.opencv.core.CvType.CV_16UC1;
+ import static org.opencv.core.CvType.CV_8SC1;
+ import static org.opencv.core.CvType.CV_8U;
+import static org.opencv.imgcodecs.Imgcodecs.CV_IMWRITE_PNG_COMPRESSION;
+import static org.opencv.imgcodecs.Imgcodecs.imwrite;
+import static org.opencv.imgproc.Imgproc.cvtColor;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -203,8 +217,7 @@ import static com.yorku.mstew.camera2videoimage.R.menu.popup_menu;
 import static com.yorku.mstew.camera2videoimage.R.xml.resolution_xml;
 import static java.lang.StrictMath.max;
 import static java.lang.StrictMath.toIntExact;
-import static org.opencv.core.CvType.CV_16UC1;
-import static org.opencv.imgproc.Imgproc.cvtColor;
+
 
 import Jama.Matrix;
 
@@ -284,6 +297,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     public static boolean SettingresolutionChanged=false;
     private Mat mMat2;
     private Mat mMat;
+    private Mat mMat3;
+    private Mat tempMat;
+    private Mat finalMat;
+    private Mat sixtyFours;
 
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
@@ -333,8 +350,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     String SensorinfoColorfiltering="";
 
 
-    private int rawWidth=100;
-    private int rawHeight=100;
+    private int rawWidth=1500;
+    private int rawHeight=1500;
+    private int imageWidth=0;
+    private int imageHeight=0;
+
+
+
     private int[][] totalResult;
     private int[] totalResult1D;
 
@@ -488,6 +510,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean CapturePngBoolean=false;
     FileOutputStream output;
     File txtfolder;
+
 
 
     Rational[] SensorColorTransform1Values;
@@ -3826,6 +3849,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
                                 int lastindex=0;
+                                Mat mat= new Mat();
+                                imageWidth=image.getWidth();
+                                imageHeight=image.getHeight();
+                                totalResult=new int[rawHeight][rawWidth];
+                                totalResult1D=new int [rawHeight*rawWidth];
+                                mMat=new Mat(image.getHeight(),image.getWidth(),CV_16UC1);
+                                count2=0;
+
+
+
                                 int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
                                 int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
                                 for (int j = height; j < height + BAYERHEIGHT; j++) {
@@ -4845,10 +4878,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             }
         }
-        mMat2=new Mat(totalResult.length,totalResult[0].length,CV_16UC1);
+        mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
+        mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
+        finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
         Toast.makeText(Camera2VideoImageActivity.this, "Array2Mat Done", Toast.LENGTH_SHORT).show();
         cvtColor(mMat,mMat2, Imgproc.COLOR_BayerBG2RGB);
         mMat2.convertTo(mMat2, CV_16UC1,255);
+        mMat2.convertTo(mMat3, CV_16UC1,255);
         MatOfInt matInt=new MatOfInt();
         matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
         File path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -4856,7 +4892,37 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         File file=new File(path,filename);
         Boolean bool=null;
         filename=file.toString();
-        bool=Imgcodecs.imwrite(filename,mMat2,matInt);
+        bool=Imgcodecs.imwrite(filename,mMat3,matInt);
+        sixtyFours = new Mat(imageHeight, imageWidth, CV_16UC1);
+        sixtyFours.setTo(new Scalar(64));
+        cvtColor(sixtyFours, sixtyFours, Imgproc.COLOR_BayerBG2RGB);
+        sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
+        //sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
+
+        Mat satMinusBlack = new Mat(totalResult.length, totalResult[0].length, CV_16UC1);
+        satMinusBlack.setTo(Scalar.all(1/(1024-64)));
+        cvtColor(satMinusBlack, satMinusBlack, Imgproc.COLOR_BayerBG2RGB);
+        satMinusBlack.convertTo(satMinusBlack, CV_16UC1, 255);
+                                        //Core.subtract(mMat2, sixtyFours, finalMat);
+        Core.addWeighted(mMat2, 1.0, sixtyFours, -1.0, 0.0, finalMat);
+
+        MatOfInt matInt2 = new MatOfInt();
+        matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
+        File path2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String filename2 = "temp2.png";
+        File file2 = new File(path2, filename2);
+        Boolean bool2 = null;
+        filename2 = file2.toString();
+        bool2 = Imgcodecs.imwrite(filename2, finalMat, matInt2);
+
+        MatOfInt matInt3 = new MatOfInt();
+        matInt3.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
+        File path3 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String filename3 = "temp3.png";
+        File file3 = new File(path3, filename3);
+        Boolean bool3 = null;
+        filename3 = file3.toString();
+        bool3 = Imgcodecs.imwrite(filename3, sixtyFours, matInt3);
 
     }
 
