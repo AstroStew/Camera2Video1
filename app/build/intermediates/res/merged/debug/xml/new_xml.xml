@@ -47,6 +47,13 @@
         android:title="Hot Pixel Mode"
         android:key="hot_pixel_mode"
         />
+    <EditTextPreference
+        android:title="Set JPEG Quality"
+        android:key="set_jpeg_quality"
+        android:inputType="number"
+
+
+        />
 
 
 

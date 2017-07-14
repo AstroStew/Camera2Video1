@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -336,6 +337,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             ListPreference HotPixelListPreferences=(ListPreference)findPreference("hot_pixel_mode");
             CharSequence[] entries4=new CharSequence[Camera2VideoImageActivity.HotPixelModes.length];
             CharSequence[] EntryValues4=new CharSequence[Camera2VideoImageActivity.HotPixelModes.length];
+            EditTextPreference JPEGQualityPreference=(EditTextPreference)findPreference("set_jpeg_quality");
+            bindPreferenceSummaryToValue(findPreference("set_jpeg_quality"));
+
+
 
             for(int i=0;i<Camera2VideoImageActivity.HotPixelModes.length;i++){
                 if(Camera2VideoImageActivity.HotPixelModes[i]==0){

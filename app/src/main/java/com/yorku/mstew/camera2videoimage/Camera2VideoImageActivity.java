@@ -162,6 +162,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import java.util.Scanner;
 import java.util.zip.Inflater;
 
@@ -266,6 +267,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean WhiteBalanceIncandenscentBoolean = false;
     boolean WhiteBalanceAutoBoolean = true;
     Size[] previewSizes;
+    private byte JPEGQuality=85;
     private boolean previewinit=true;
     int hheight=0;
     int wwidth=0;
@@ -3362,6 +3364,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
             mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
+            mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,JPEGQuality);
+
 
             if(ExposureCompensationSeekBarboolean){
                 //fill in here
@@ -3879,11 +3883,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
                                 for(int j=0;j<rawHeight;j++){
-                                    for (int i=0; i<rawHeight*2;i++){
+                                    count2=0;
+                                    for (int i=0; i<rawWidth*2;i++){
                                         temp=Bytebufferplane1.get((i)+((image.getWidth())*j*2))&0xFF;
                                         if(i%2==1){
                                             totalResult[j][counterr]=(temp<<8)+temp2;
-                                            totalResult1D[count2]=totalResult[j][counterr];
+                                            //totalResult1D[count2]=totalResult[j][counterr];
                                             count2++;
                                             counterr++;
                                         }else{
@@ -4643,6 +4648,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         //Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
+        JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
+
+
         //startPreview();
         if(PipelineEditorNumber==0){
             //Toast.makeText(this, "Do Nothing", Toast.LENGTH_SHORT).show();
@@ -4894,17 +4902,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         filename=file.toString();
         bool=Imgcodecs.imwrite(filename,mMat3,matInt);
         sixtyFours = new Mat(imageHeight, imageWidth, CV_16UC1);
-        sixtyFours.setTo(new Scalar(64));
+        sixtyFours.setTo(new Scalar(15));
         cvtColor(sixtyFours, sixtyFours, Imgproc.COLOR_BayerBG2RGB);
         sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
         //sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
 
         Mat satMinusBlack = new Mat(totalResult.length, totalResult[0].length, CV_16UC1);
-        satMinusBlack.setTo(Scalar.all(1/(1024-64)));
+        satMinusBlack.setTo(Scalar.all(255/(1399-15)));
+        double constant=(255.0/(1399.0-15.0));
         cvtColor(satMinusBlack, satMinusBlack, Imgproc.COLOR_BayerBG2RGB);
         satMinusBlack.convertTo(satMinusBlack, CV_16UC1, 255);
                                         //Core.subtract(mMat2, sixtyFours, finalMat);
-        Core.addWeighted(mMat2, 1.0, sixtyFours, -1.0, 0.0, finalMat);
+        Core.addWeighted(mMat2,constant,sixtyFours,constant,0.0,finalMat);
 
         MatOfInt matInt2 = new MatOfInt();
         matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
@@ -4922,7 +4931,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         File file3 = new File(path3, filename3);
         Boolean bool3 = null;
         filename3 = file3.toString();
-        bool3 = Imgcodecs.imwrite(filename3, sixtyFours, matInt3);
+        bool3 = Imgcodecs.imwrite(filename3, tempMat, matInt3);
 
     }
 
