@@ -454,6 +454,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean ControlAWBmodetwilightavailableboolean = false;
     boolean WBrunOnce = true;
     boolean CaptureAveragepixelCountBooleanOn = false;
+    public static int MaxRawValueOutput;
+    int ToneMapMode=1;
+
     Button readButton;
     String scannedfilestring;
      boolean ShowRealTimeInfoboolean=false;
@@ -512,6 +515,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean CapturePngBoolean=false;
     FileOutputStream output;
     File txtfolder;
+    public static int [] AvailableTonemapModes;
 
 
 
@@ -1007,6 +1011,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
             EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
         HotPixelModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)).length];
+        AvailableTonemapModes=new int[mCameraCharacteristics.get(mCameraCharacteristics.TONEMAP_AVAILABLE_TONE_MAP_MODES).length];
 
             for (int j=0;j<(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length;j++){
                 NoiseReductionModeString=NoiseReductionModeString+mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)[j]+",";
@@ -1025,9 +1030,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 HotPixelModes[m]=mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)[m];
 
             }
+            for (int n=0;n<(mCameraCharacteristics.get(mCameraCharacteristics.TONEMAP_AVAILABLE_TONE_MAP_MODES)).length;n++){
+                AvailableTonemapModes[n]=mCameraCharacteristics.get(mCameraCharacteristics.TONEMAP_AVAILABLE_TONE_MAP_MODES)[n];
+            }
 
         int SensorinfoColorFiltering=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
-
+        MaxRawValueOutput=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL);
 
 
 
@@ -1266,6 +1274,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         String TempRecordTimeLimitString=sharedprefs1.getString("RecordTimeStop","0");
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
+        ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
 
@@ -2922,6 +2931,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         +"\n"+ "Noise Reduction Modes: "+NoiseReductionModeString
                                         +"\n"+ "Bayer Arrangement: "+ SensorinfoColorfiltering
                                         +"\n"+ "Pipeline Max Depth: "+ mCameraCharacteristics.get(mCameraCharacteristics.REQUEST_PIPELINE_MAX_DEPTH)
+                                        +"\n"+"Tonemap Max Curve Points"+ mCameraCharacteristics.get(mCameraCharacteristics.TONEMAP_MAX_CURVE_POINTS)
+                                        +"\n"+ "Tonemap Availabe Modes "
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
@@ -3365,6 +3376,19 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
             mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
             mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,JPEGQuality);
+            mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_MODE,ToneMapMode);
+            if(ToneMapMode==0){
+                //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_CURVE,)
+                //input special custome curve code here
+            }
+            if(ToneMapMode==3){
+                //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_GAMMA,...)
+                //input gaamma value curve here
+            }
+            if(ToneMapMode==4){
+                //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_PRESET_CURVE,...)
+                //input present curve code here
+            }
 
 
             if(ExposureCompensationSeekBarboolean){
@@ -4649,6 +4673,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         //Colorfilter=Integer.parseInt(sharedprefs1.getString("bayer_filter_change",""+mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT)));
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
         JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
+        ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
+
 
 
         //startPreview();

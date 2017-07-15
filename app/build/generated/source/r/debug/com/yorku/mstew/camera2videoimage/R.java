@@ -42,6 +42,8 @@ public final class R {
         public static final int resolutions_array=0x7f0d000b;
         public static final int sensor_reference_entries=0x7f0d000c;
         public static final int sensor_reference_entry_values=0x7f0d000d;
+        public static final int tonemap_mode_options=0x7f0d000e;
+        public static final int tonemap_mode_values=0x7f0d000f;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"

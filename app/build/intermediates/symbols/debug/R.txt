@@ -29,6 +29,8 @@ int array pref_sync_frequency_values 0x7f0d000a
 int array resolutions_array 0x7f0d000b
 int array sensor_reference_entries 0x7f0d000c
 int array sensor_reference_entry_values 0x7f0d000d
+int array tonemap_mode_options 0x7f0d000e
+int array tonemap_mode_values 0x7f0d000f
 int attr actionBarDivider 0x7f010072
 int attr actionBarItemBackground 0x7f010073
 int attr actionBarPopupTheme 0x7f01006c

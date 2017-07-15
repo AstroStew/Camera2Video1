@@ -59,6 +59,20 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+<string-array name="tonemap_mode_options">
+    <item>Contrast_Curve</item>
+    <item>Fast</item>
+    <item>High Quality</item>
+    <item>Gamma Value</item>
+    <item>Preset Curve</item>
+</string-array>
+    <string-array name="tonemap_mode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
 
     <!-- Example settings for Data & Sync -->

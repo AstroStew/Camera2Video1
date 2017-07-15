@@ -52,7 +52,14 @@
         android:key="set_jpeg_quality"
         android:inputType="number"
         android:hint="Number between 1-100"
-
+        />
+    <EditTextPreference
+        android:title="Change Black Level"
+        android:key="change_black_level"
+        />
+    <ListPreference
+        android:title="Tonemap Mode"
+        android:key="tonemap_mode"
 
         />
 
