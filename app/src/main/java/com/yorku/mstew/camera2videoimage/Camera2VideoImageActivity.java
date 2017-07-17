@@ -2900,19 +2900,41 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             case R.id.getCameraInfo:
                                 LayoutInflater inflater2 = LayoutInflater.from(Camera2VideoImageActivity.this);
                                 View cameraInfoSubView = inflater2.inflate(R.layout.camera_info_alertdialog, null);
-                                mCameraInfoTextView = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView);
-                                mCameraInfoTextView.setText("Camera Resolutions:");
-                                mCameraInfoTextView.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView2 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView2);
-                                mCameraInfoTextView2.setText("Supported Camera Scenes:");
-                                mCameraInfoTextView2.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView3 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView3);
-                                mCameraInfoTextView3.setText("Supported Effects:");
-                                mCameraInfoTextView3.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView4 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView4);
-                                mCameraInfoTextView4.setText("Supported Face Detections");
-                                mCameraInfoTextView4.setMovementMethod(new ScrollingMovementMethod());
+
+
+
                                 mCameraInfoTextView5 = (TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
+                                String newText ="";
+                                String newText2="";
+                                String newText3="";
+                                String newText4="";
+                                StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                                previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
+
+                                for (int i = 0; i < previewSizes.length; i++) {
+
+                                    newText= newText+" , " + previewSizes[i] + ""; // can manipulate using substring also
+
+                                }
+                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length; i++) {
+
+                                    newText2 =  newText2 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i] + " , ";
+
+                                }
+
+                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length; i++) {
+
+                                     newText3= newText3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
+
+                                }
+
+                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+
+                                    newText4 = newText4 + " " + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] + " ";
+                                    //AWBArr[i]=mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i];
+
+                                }
+                                mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
 
                                 mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
                                         + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
@@ -2932,36 +2954,23 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         +"\n"+ "Bayer Arrangement: "+ SensorinfoColorfiltering
                                         +"\n"+ "Pipeline Max Depth: "+ mCameraCharacteristics.get(mCameraCharacteristics.REQUEST_PIPELINE_MAX_DEPTH)
                                         +"\n"+"Tonemap Max Curve Points"+ mCameraCharacteristics.get(mCameraCharacteristics.TONEMAP_MAX_CURVE_POINTS)
-                                        +"\n"+ "Tonemap Availabe Modes "
+                                        +"\n"+"Len Available Aperature: "+mCameraCharacteristics.get(mCameraCharacteristics.LENS_INFO_AVAILABLE_APERTURES)
+                                        +"\n"+"Resolutions: " + newText
+                                        +"\n"+"Supported Scenes: "+ newText2
+                                        +"\n"+"Supported Effects: " + newText3
+                                        +"\n"+"Supported Face Detection: "+ newText4
+
                                         + "\n" + "Supported Auto White Balances"
 
                                 );
-                                mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
-                                StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                                previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
 
-                                for (int i = 0; i < previewSizes.length; i++) {
-                                    String oldTextView = mCameraInfoTextView.getText().toString();
-                                    String newText = oldTextView + " , " + previewSizes[i] + ""; // can manipulate using substring also
-                                    mCameraInfoTextView.setText(newText);
-                                }
-                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length; i++) {
-                                    String oldTextView2 = mCameraInfoTextView2.getText().toString();
-                                    String newText2 = oldTextView2 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i] + " , ";
-                                    mCameraInfoTextView2.setText(newText2);
-                                }
-                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length; i++) {
-                                    String oldTextView3 = mCameraInfoTextView3.getText().toString();
-                                    String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
-                                    mCameraInfoTextView3.setText(newText3);
-                                }
 
-                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
-                                    String oldTextView4 = mCameraInfoTextView5.getText().toString();
-                                    String newText4 = oldTextView4 + " " + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] + " ";
-                                    //AWBArr[i]=mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i];
-                                    mCameraInfoTextView5.setText(newText4);
-                                }
+
+                                
+
+
+
+
 
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Camera2VideoImageActivity.this);
@@ -2972,9 +2981,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         dialog.cancel();
                                     }
                                 });
-                                String oldTextView4 = mCameraInfoTextView4.getText().toString();
 
-                                mCameraInfoTextView4.setText(oldTextView4 + " " + OFFtext + ", " + SIMPLEtext + "" + FULLtext + "");
+                                
 
 
                                 AlertDialog alertDialog2 = builder.create();
@@ -3373,6 +3381,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.addTarget(previewSurface);
             mCaptureRequestBuilder.set(CaptureRequest.NOISE_REDUCTION_MODE,NoiseReductionModesint);
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_MODE,PatternTestint);
+            mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_DATA,new int[]{0,0,255,255});
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
             mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
             mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,JPEGQuality);
