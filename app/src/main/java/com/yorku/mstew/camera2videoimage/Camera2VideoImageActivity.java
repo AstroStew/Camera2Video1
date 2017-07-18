@@ -692,10 +692,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if(previewinit){
                 Size1=new Size(height,width);
             }
+            setupCamera(1600,1200);
 
 
             Toast.makeText(Camera2VideoImageActivity.this, width+""+height, Toast.LENGTH_SHORT).show();
-            if(mCurrentHeight>0){
+            /*if(mCurrentHeight>0){
                 setupCamera(mCurrentHeight,mCurrentWidth);
             }else{
                 if(width>height){
@@ -703,7 +704,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 }else{
                     setupCamera(width,height);
                 }
-            }
+            }*/
 
             connectCamera();
 
