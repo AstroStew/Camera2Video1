@@ -507,6 +507,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
     private boolean ChangeWhiteBalanceSpotRawOn = false;
+    private ImageReader mRawImageReader;
+    private ImageReader mImageReader;
     int TempVideoTimeLimit;
     private static int mDeviceOrientation;
     public static final int UPSIDE_DOWN = 3;
@@ -3872,7 +3874,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private Size mImageSize;
     private Size mRawImageSize;
 
-    private ImageReader mImageReader;
+
 
 
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener =
@@ -3901,7 +3903,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                 }
             };
-    private ImageReader mRawImageReader;
+
     private final ImageReader.OnImageAvailableListener mOnRawImageAvailableListener =
             new ImageReader.OnImageAvailableListener() {
                 @Override
