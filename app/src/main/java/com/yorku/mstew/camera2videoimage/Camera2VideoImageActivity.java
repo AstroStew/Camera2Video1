@@ -221,7 +221,7 @@ import static java.lang.StrictMath.max;
 import static java.lang.StrictMath.toIntExact;
 
 
-//import Jama.Matrix;
+import Jama.Matrix;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -555,7 +555,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-    /*Jama.Matrix SensorColorTransform1Matrix;
+    Jama.Matrix SensorColorTransform1Matrix;
     Jama.Matrix SensorColorTransform1MatrixInverse;
     Jama.Matrix SensorColorTransform2Matrix;
     Jama.Matrix SensorColorTransform2MatrixInverse;
@@ -567,7 +567,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Jama.Matrix SensorCalibrationTransform1MatrixInverse;
     Jama.Matrix SensorCalibrationTransform2Matrix;
     Jama.Matrix SensorCalibrationTransform2MatrixInverse;
-    Jama.Matrix RGGBChannelMatrix;*/
+    Jama.Matrix RGGBChannelMatrix;
 
     
 
@@ -692,11 +692,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if(previewinit){
                 Size1=new Size(height,width);
             }
-            setupCamera(1600,1200);
+
 
 
             Toast.makeText(Camera2VideoImageActivity.this, width+""+height, Toast.LENGTH_SHORT).show();
-            /*if(mCurrentHeight>0){
+            if(mCurrentHeight>0){
                 setupCamera(mCurrentHeight,mCurrentWidth);
             }else{
                 if(width>height){
@@ -704,7 +704,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 }else{
                     setupCamera(width,height);
                 }
-            }*/
+            }
 
             connectCamera();
 
@@ -1000,7 +1000,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     (Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[1]));
 
         }
-        /*
+
         RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
         SensorColorTranform1Array= new double[][]{{SensorColorTransform1DoubleValues[0],SensorColorTransform1DoubleValues[1],SensorColorTransform1DoubleValues[2]},{SensorColorTransform1DoubleValues[3],SensorColorTransform1DoubleValues[4],SensorColorTransform1DoubleValues[5]},{SensorColorTransform1DoubleValues[6],SensorColorTransform1DoubleValues[7],SensorColorTransform1DoubleValues[8]}};
               SensorColorTranform2Array= new double[][]{{SensorColorTransform2DoubleValues[0],SensorColorTransform2DoubleValues[1],SensorColorTransform2DoubleValues[2]},{SensorColorTransform2DoubleValues[3],SensorColorTransform2DoubleValues[4],SensorColorTransform2DoubleValues[5]},{SensorColorTransform2DoubleValues[6],SensorColorTransform2DoubleValues[7],SensorColorTransform2DoubleValues[8]}};
@@ -1020,7 +1020,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
-            */
+
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
             EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
@@ -3034,7 +3034,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 //ChangeWhiteBalanceSpotRawOn = true;
                                 wbThreadisEnabled = !wbThreadisEnabled;
                                 isAdjustingWB2=false;
-                                startPreview();
+                                //startPreview();
                                 break;
                             case R.id.devButton2:
                                 for(int j=0;j<rawHeight;j++){
@@ -3916,6 +3916,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         if (planes.length > 0) {
                             Bytebufferplane1 = planes[0].getBuffer();
                         }
+                        pixelValues = new int[BAYERHEIGHT][BAYERWIDTH];
 
                         float mSampleLocationX,mSampleLocationY;
 
@@ -3957,7 +3958,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             }
 
-                                pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
+
                                 int offsetWidth=width%2;
                                 int lastindex=0;
                                 Mat mat= new Mat();
@@ -4004,7 +4005,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             }
                             Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
                                 //Testing MinJae's Code REEE
-                                int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
+                                int mFilterArrangement = mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
                                     s = "RG\nGB\n\n";
                                     totalR = totalG = totalB = 0;
