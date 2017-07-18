@@ -122,6 +122,7 @@ import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -220,7 +221,7 @@ import static java.lang.StrictMath.max;
 import static java.lang.StrictMath.toIntExact;
 
 
-import Jama.Matrix;
+//import Jama.Matrix;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -444,6 +445,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean isItOka = true;
     float BallInspectorx, BallInspectory;
     float alphafloat = (float) 0;
+    private int height;
+    private int width;
     SurfaceHolder holder;
     ImageButton MovementButtonn;
     public CameraCharacteristics mCameraCharacteristics;
@@ -550,7 +553,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-    Jama.Matrix SensorColorTransform1Matrix;
+    /*Jama.Matrix SensorColorTransform1Matrix;
     Jama.Matrix SensorColorTransform1MatrixInverse;
     Jama.Matrix SensorColorTransform2Matrix;
     Jama.Matrix SensorColorTransform2MatrixInverse;
@@ -562,7 +565,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Jama.Matrix SensorCalibrationTransform1MatrixInverse;
     Jama.Matrix SensorCalibrationTransform2Matrix;
     Jama.Matrix SensorCalibrationTransform2MatrixInverse;
-    Jama.Matrix RGGBChannelMatrix;
+    Jama.Matrix RGGBChannelMatrix;*/
 
     
 
@@ -728,7 +731,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     protected void onResume() {
         super.onResume();
 
-
+        startBackgroundThread();
+        if(!OpenCVLoader.initDebug()){
+            Log.d(TAG,"Internal OpenCv library not found.Using OpenCV Manager for intialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0,this, mLoaderCallback);
+        }else{
+            Log.d(TAG,"OpenCV library found inside package. Using it!");
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
         startBackgroundThread();
 
         if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
@@ -853,7 +863,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     //Trying to implement facial recognition
 
                     super.onCaptureCompleted(session, request, result);
-                    mCaptureResult = result;
+                    //mCaptureResult = result;
                     process(result);
 
                     //
@@ -993,6 +1003,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     (Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[1]));
 
         }
+        /*
         RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
         SensorColorTranform1Array= new double[][]{{SensorColorTransform1DoubleValues[0],SensorColorTransform1DoubleValues[1],SensorColorTransform1DoubleValues[2]},{SensorColorTransform1DoubleValues[3],SensorColorTransform1DoubleValues[4],SensorColorTransform1DoubleValues[5]},{SensorColorTransform1DoubleValues[6],SensorColorTransform1DoubleValues[7],SensorColorTransform1DoubleValues[8]}};
               SensorColorTranform2Array= new double[][]{{SensorColorTransform2DoubleValues[0],SensorColorTransform2DoubleValues[1],SensorColorTransform2DoubleValues[2]},{SensorColorTransform2DoubleValues[3],SensorColorTransform2DoubleValues[4],SensorColorTransform2DoubleValues[5]},{SensorColorTransform2DoubleValues[6],SensorColorTransform2DoubleValues[7],SensorColorTransform2DoubleValues[8]}};
@@ -1012,7 +1023,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
-
+            */
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
             EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
@@ -1246,19 +1257,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         testbutton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TestBoolean){
-                    TestBoolean=false;
-                    Toast.makeText(Camera2VideoImageActivity.this, "TestButton set to false", Toast.LENGTH_SHORT).show();
-                    CaptureandConvertRAWtoPNG();
-
-
-
-
-
-                }else if (!TestBoolean){
-                    TestBoolean=true;
-                    Toast.makeText(Camera2VideoImageActivity.this, "TestButton set to true", Toast.LENGTH_SHORT).show();
+                if((redPixelData-greePixelData<0)&&(redPixelData-greePixelData>-7)){
+                    mVectorR=mVectorR+0.05f;
+                }else if(redPixelData-greePixelData>0 && redPixelData-greePixelData<7){
+                    mVectorR=mVectorR-0.05f;
+                }else if(redPixelData-greePixelData<0){
+                    mVectorR=mVectorR-0.1f;
+                }else{
+                    mVectorR=mVectorR-0.1f;
                 }
+                startPreview();
 
             }
         });
@@ -1780,6 +1788,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if (MediaStore.ACTION_IMAGE_CAPTURE.equals(action)) {
             mRequestingAppUri = intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
         }
+
+        //
 
         mFlashButtonOnOff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3916,6 +3926,39 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             temp=0;
                             temp2=0;
                             counterr = 0;
+                            if(BallInspectorx<0){
+                                mSampleLocationX=0;
+                            }else{
+                                mSampleLocationX=BallInspectorx-(WhiteBalanceBallInspector.getWidth()/8);
+                            }
+                            if(BallInspectory<0){
+                                mSampleLocationY=0;
+                            } else{
+                                mSampleLocationY=(float)(BallInspectory-WhiteBalanceBallInspector.getHeight()/8);
+                            }
+                            if(((double)mCurrentHeight/(double)mCurrentWidth)>(14.0/9.0)){
+                                height =(int)((mTextureView.getWidth()-mSampleLocationX)*(image.getHeight()*0.75/mTextureView.getWidth()))+380;
+                                width=(int)((mSampleLocationY*(image.getWidth()/mTextureView.getHeight())));
+                            }else if((((double)mCurrentHeight/(double)mCurrentWidth)<(double)14.0/9.0) &&
+                            (((double)mCurrentHeight/(double)mCurrentWidth))>(double)(1.2)){
+                                height=(int)((mTextureView.getWidth()-mSampleLocationX)*(image.getWidth()/mTextureView.getWidth()));
+                                width=(int)(mSampleLocationY*(image.getWidth()*1.33/mTextureView.getHeight()))-506;
+                                if(width<0){
+                                    width=0;
+                                }else if(width>4044-128){
+                                    width=4044-128;
+                                }
+                                if(height>3040){
+                                    height=3042;
+                                }
+                            }else if(((double)mCurrentHeight/(double)mCurrentHeight)<(1.2)){
+                                height =(int)(mSampleLocationY*(image.getHeight()/mTextureView.getWidth()))-380;
+                                width=(int)(mSampleLocationX*(image.getWidth()/mTextureView.getHeight()));
+                            }else{
+                                height=(int)(mSampleLocationY*(image.getHeight()/mTextureView.getWidth()));
+                                width=(int)(mSampleLocationX*(image.getWidth()/mTextureView.getHeight()));
+
+                            }
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
                                 int offsetWidth=width%2;
@@ -3930,8 +3973,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-                                int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
-                                int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
+                                //int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
+                                //int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
                                 
                                 Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
                                 for(int j=0;j<rawHeight;j++){
