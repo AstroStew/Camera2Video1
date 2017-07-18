@@ -739,7 +739,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             Log.d(TAG,"OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
-        startBackgroundThread();
+        //startBackgroundThread();
 
         if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
             Sensor s=sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
@@ -944,12 +944,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             SensorColorTransform1Values=new Rational[9];
             ColorSpaceTransformSensorColorTransform1.copyElements(SensorColorTransform1Values,0);
 
-
             /* SensorColorTransorm1Array= new Rational[][]{{SensorColorTransform1Values[0], SensorColorTransform1Values[1], SensorColorTransform1Values[2]}, {SensorColorTransform1Values[3], SensorColorTransform1Values[4]
                     , SensorColorTransform1Values[5]}, {SensorColorTransform1Values[6], SensorColorTransform1Values[7], SensorColorTransform1Values[8]}};*/
-
-            
-            
 
             ColorSpaceTransform ColorSpaceTransformSensorColorTransform2=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2);
             SensorColorTransform2Values=new Rational[9];
@@ -963,8 +959,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ColorSpaceTransform ColorSpaceTransformForwardMatrix1=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1);
             ForwardMatrix1Values=new Rational[9];
             ColorSpaceTransformForwardMatrix1.copyElements(ForwardMatrix1Values,0);
-
-
 
             ColorSpaceTransform ColorSpaceTransformForwardMatrix2=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2);
             ForwardMatrix2Values=new Rational[9];
@@ -980,7 +974,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             PipeDreams();
             
-
+            return;
             //continue;
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -4005,6 +3999,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     lastindex=(i)+((image.getWidth())*j*2);
                                 }
                             }
+                            Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
                                 //Testing MinJae's Code REEE
                                 int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
