@@ -231,6 +231,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int progressValue;
     private EditText mTextSeekBar;
     boolean TestBoolean=false;
+    private int mRawImageFormat=ImageFormat.RAW_SENSOR;
     private EditText mMinimumShutterSpeed;
     private EditText mMaximumShutterSpeed;
     private Button mAutobutton;
@@ -258,6 +259,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int ISOseekProgress;
     private boolean ISOinputboolean = false;
     private int mWBMode = CONTROL_AWB_MODE_AUTO;
+
+    private boolean mColorCorrectionMode=false;
     boolean WhiteBalanceCloudyDaylightBoolean = false;
     boolean WhiteBalanceDaylightBoolean = false;
     boolean WhiteBalanceFluorescentBoolean = false;
@@ -303,6 +306,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private Mat tempMat;
     private Mat finalMat;
     private Mat sixtyFours;
+    private int pixel;
 
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
@@ -344,7 +348,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int TotalRedPixelData;
     int TotalBluePixelData;
     int TotalGreenPixelData;
-    private boolean wbThreadIsEnabled = false;
+
     private boolean isAdjustingWB2 = false;
     private boolean isAdjustingWB = false;
     public static ArrayList<Size> arraylist=new ArrayList<Size>();
@@ -352,8 +356,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     String SensorinfoColorfiltering="";
 
 
-    private int rawWidth=1500;
-    private int rawHeight=1500;
+    private int rawWidth=200;
+    private int rawHeight=200;
     private int imageWidth=0;
     private int imageHeight=0;
 
@@ -490,8 +494,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int averageR;
     int averageG;
     int averageB;
-    private final int BAYERHEIGHT = 128;
+    private final int BAYERHEIGHT = 64;
     private final int BAYERWIDTH = 128;
+    private double intervalTime=0;
     private int[][] pixelValues;
     private boolean wbThreadisEnabled = false;
     private static float mVectorR = 1.0f;
@@ -682,6 +687,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if(previewinit){
                 Size1=new Size(height,width);
             }
+
 
             Toast.makeText(Camera2VideoImageActivity.this, width+""+height, Toast.LENGTH_SHORT).show();
             if(mCurrentHeight>0){
@@ -908,8 +914,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             //mPNGImagheReader=ImageReader.newInstance(mPNGImageSize.getWidth(),mPNGImageSize.getHeight(),ImageFormat.P,1)
 
 
-            mRawImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.RAW_SENSOR), rotatedWidth, rotatedHeight);
-            mRawImageReader = ImageReader.newInstance(mRawImageSize.getWidth(), mRawImageSize.getHeight(), ImageFormat.RAW_SENSOR, 1);
+            mRawImageSize = chooseOptimalSize(map.getOutputSizes(mRawImageFormat), rotatedWidth, rotatedHeight);
+            mRawImageReader = ImageReader.newInstance(mRawImageSize.getWidth(), mRawImageSize.getHeight(), mRawImageFormat, 1);
             mRawImageReader.setOnImageAvailableListener(mOnRawImageAvailableListener, mBackgroundHandler);
 
 
@@ -1101,9 +1107,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private void adjustWhiteBalanceOnTouch() {
         try {
-
+            Toast.makeText(this, "Part1", Toast.LENGTH_SHORT).show();
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+            Toast.makeText(this, "Part2", Toast.LENGTH_SHORT).show();
             mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
+
             CameraCaptureSession.CaptureCallback stillCaptureCallback = new CameraCaptureSession.CaptureCallback() {
                 @Override
                 public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
@@ -1119,6 +1127,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -1337,6 +1346,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         Surfaceview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                Bitmap bitmappy=mTextureView.getBitmap();
+                //pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
+
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -1352,9 +1364,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         BallInspectory = event.getY();
                         break;
                 }
-                isAdjustingWB2 = true;
-                isAdjustingWB = true;
-
+                isAdjustingWB=true;
+                isAdjustingWB2=true;
 
                 return true;
             }
@@ -1502,7 +1513,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             public void run() {
                 while (!Thread.interrupted()) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                         runOnUiThread(new Runnable() {
                             @Override
 
@@ -1578,27 +1589,46 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                     if (isAdjustingWB && isAdjustingWB2) {
                                         isAdjustingWB = false;
-
                                         adjustWhiteBalanceOnTouch();
-                                        isAdjustingWB2=false;
-
                                     }
-
-
-                                if (ChangeWhiteBalanceSpotRawOn) {
-                                    ChangeWhiteBalanceSpotRawOn = false;
-                                }
-
-
-                                if (mWBSurface.isValid()) {
-
-                                    Bitmap bitmappy = mTextureView.getBitmap();
-                                    ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
-
-                                    int pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
                                     redPixelData = Color.red(pixel);
                                     bluePixelData = Color.blue(pixel);
                                     greePixelData = Color.green(pixel);
+                                    if (wbThreadisEnabled) {
+                                        Toast.makeText(Camera2VideoImageActivity.this, "Part 3", Toast.LENGTH_SHORT).show();
+                                        Canvas circleCanvas=holder.lockCanvas();
+                                        circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+                                        if(WhiteBalanceBallInspector!=null){
+                                            circleCanvas.drawBitmap(WhiteBalanceBallInspector,BallInspectorx,BallInspectory,null);
+                                        }
+                                        holder.unlockCanvasAndPost(circleCanvas);
+
+                                    }else{
+                                        Canvas circleCanvas=holder.lockCanvas();
+                                        circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+                                        if(WhiteBalanceBallInspector !=null){
+                                            circleCanvas.drawBitmap(WhiteBalanceBallInspector,0,0,null);
+                                        }
+                                        holder.unlockCanvasAndPost(circleCanvas);
+                                    }
+
+
+
+
+
+
+                                /*if (ChangeWhiteBalanceSpotRawOn) {
+                                    ChangeWhiteBalanceSpotRawOn = false;
+
+                                }*/
+
+
+                                /*if (mWBSurface.isValid()) {
+
+                                    Bitmap bitmappy2 = mTextureView.getBitmap();
+                                    ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
+
+
 
 
                                     int totalheight = WhiteBalanceBallInspector.getHeight();
@@ -1616,7 +1646,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         for (topleftheight = (int) BallInspectory - (totalheight / 2); topleftheight < (totalheight + topleftheightstatic); topleftheight++) {
                                             for (topeleftwidth = (int) BallInspectorx - (totalwidth / 2); topeleftwidth < (totalwidth + topleftwidthstatic); topeleftwidth++) {
                                                 int pixel2;
-                                                pixel2 = bitmappy.getPixel((int) topeleftwidth, (int) topleftheight);
+                                                pixel2 = bitmappy2.getPixel((int) topeleftwidth, (int) topleftheight);
                                                 if (Color.red(pixel2) < 255) {
                                                     TotalRedPixelData = TotalRedPixelData + Color.red(pixel2);
                                                     TotalGreenPixelData = TotalGreenPixelData + Color.green(pixel2);
@@ -1632,20 +1662,23 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                         CaptureAveragepixelCountBooleanOn = false;
                                     }
+                                    if(wbThreadisEnabled) {}
 
-                                    Canvas c = holder.lockCanvas();
-                                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-                                    if (!MovementButtonnBoolen || CaptureAveragepixelCountBooleanOn) {
-                                        if (WhiteBalanceBallInspector != null) {
-                                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                                        Canvas c = holder.lockCanvas();
+                                        c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+                                        if (!MovementButtonnBoolen || CaptureAveragepixelCountBooleanOn) {
+                                            if (WhiteBalanceBallInspector != null) {
+                                                c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                                            }
                                         }
-                                    }
 
-                                    holder.unlockCanvasAndPost(c);
+                                        holder.unlockCanvasAndPost(c);
 
 
-                                }
+
+                                }*/
                                 String convertSS;
                                 String PixelValues;
                                 StringBuffer sbuffer = new StringBuffer();
@@ -2982,7 +3015,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     }
                                 });
 
-                                
+
 
 
                                 AlertDialog alertDialog2 = builder.create();
@@ -2991,8 +3024,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                             case R.id.devButton:
-                                ChangeWhiteBalanceSpotRawOn = true;
-                                wbThreadisEnabled = !wbThreadIsEnabled;
+                                //ChangeWhiteBalanceSpotRawOn = true;
+                                wbThreadisEnabled = !wbThreadisEnabled;
+                                isAdjustingWB2=false;
                                 startPreview();
                                 break;
                             case R.id.devButton2:
@@ -3858,7 +3892,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                         image.close();
                     }
-                    isAdjustingWB2=false;
+
 
 
                 }
@@ -3879,12 +3913,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         float mSampleLocationX,mSampleLocationY;
 
                         if (Bytebufferplane1 != null) {
-                            if (WB_RAWTouchEnabled) {
-                                temp=0;
-                                temp2=0;
-                                 counterr = 0;
+                            temp=0;
+                            temp2=0;
+                            counterr = 0;
 
                                 pixelValues = new int[BAYERHEIGHT][BAYERHEIGHT];
+                                int offsetWidth=width%2;
                                 int lastindex=0;
                                 Mat mat= new Mat();
                                 imageWidth=image.getWidth();
@@ -3898,25 +3932,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                 int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
                                 int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
-                                for (int j = height; j < height + BAYERHEIGHT; j++) {
-                                    counterr = 0;
-                                    for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
-                                        temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
-
-
-
-                                        if (i % 2 == 1) {
-                                            pixelValues[j - height][counterr] = (temp << 8) + temp2;
-                                            counterr++;
-                                        } else {
-                                            temp2 = temp;
-                                        }
-                                        lastindex=(i)+((image.getWidth())*j*2);
-                                    }
-                                }
+                                
                                 Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
                                 for(int j=0;j<rawHeight;j++){
-                                    count2=0;
+                                    counterr=0;
                                     for (int i=0; i<rawWidth*2;i++){
                                         temp=Bytebufferplane1.get((i)+((image.getWidth())*j*2))&0xFF;
                                         if(i%2==1){
@@ -3929,6 +3948,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                     }
                                 }
+                            Toast.makeText(Camera2VideoImageActivity.this, "Finished", Toast.LENGTH_SHORT).show();
+                            for (int j = height; j < height + BAYERHEIGHT; j++) {
+                                counterr = 0;
+                                for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
+                                    temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
+                                    if (i % 2 == 1) {
+                                        pixelValues[j - height][counterr] = (temp << 8) + temp2;
+                                        counterr++;
+                                    } else {
+                                        temp2 = temp;
+                                    }
+                                    lastindex=(i)+((image.getWidth())*j*2);
+                                }
+                            }
                                 //Testing MinJae's Code REEE
                                 int mFilterArrangement = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
@@ -4059,7 +4092,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                 Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
-                            }
+
 
 
 
@@ -4070,13 +4103,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                         } else {
+                            mWBMode=-1;
+                            mColorCorrectionMode=true;
+                            mVectorR=(float)(totalG/totalR);
+                            mVectorG_EVEN=1;
+                            mVectorG_ODD=1;
+                            mVectorB=(float)(totalG/totalB);
                             startPreview();
                             image.close();
                         }
-
-
                     }
-                    isAdjustingWB2 = false;
                 }
             };
 
@@ -4304,7 +4340,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         @Override
                         public void onCaptureCompleted (CameraCaptureSession session,CaptureRequest request, TotalCaptureResult result)
                         {
-                            /*super.onCaptureCompleted(session,request,result);
+                            super.onCaptureCompleted(session,request,result);
                             mCaptureResult=result;
 
                             if(count2< -1){
@@ -4326,7 +4362,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     }
                                 }.start();
                             }
-                            count2++;*/
+                            counterr++;
 
                             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
 
@@ -4352,7 +4388,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     }
 
-    private void setSettings() {
+    /*private void setSettings() {
         if(BooleanOpticalStabilizationOn){
             mCaptureRequestBuilder.set(CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE, CaptureRequest.LENS_OPTICAL_STABILIZATION_MODE_ON);
 
@@ -4368,7 +4404,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
 
 
-    }
+    }*/
 
     private class ImageSaver implements Runnable {
 
@@ -4377,9 +4413,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         private final CameraCharacteristics mCameraCharacteristics;
 
 
-        private ImageSaver(Image mImage, CaptureResult mCaptureResult, CameraCharacteristics mCameraCharacteristics) {
-            this.mImage = mImage;
-            this.mCaptureResult = mCaptureResult;
+        private ImageSaver(Image image, CaptureResult captureResult, CameraCharacteristics mCameraCharacteristics) {
+            mImage = image;
+            mCaptureResult = captureResult;
             this.mCameraCharacteristics = mCameraCharacteristics;
 
         }
@@ -4923,11 +4959,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
         mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
         mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
+        tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
         finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
         Toast.makeText(Camera2VideoImageActivity.this, "Array2Mat Done", Toast.LENGTH_SHORT).show();
         cvtColor(mMat,mMat2, Imgproc.COLOR_BayerBG2RGB);
-        mMat2.convertTo(mMat2, CV_16UC1,255);
         mMat2.convertTo(mMat3, CV_16UC1,255);
+        mMat2.convertTo(mMat2, CV_16UC1,255);
+        Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
         MatOfInt matInt=new MatOfInt();
         matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
         File path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
