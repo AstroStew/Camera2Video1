@@ -525,6 +525,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean CapturePngBoolean=false;
     FileOutputStream output;
     File txtfolder;
+    File PNGRAWfolder;
     public static int [] AvailableTonemapModes;
 
 
@@ -1250,6 +1251,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         setContentView(R.layout.activity_camera2_video_image);
         //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
         txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
+        PNGRAWfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"");
+
         Button testbutton1=(Button) findViewById(R.id.testbutton);
         testbutton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -4908,72 +4911,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     //testingrgb to lab
 
 
-    public void rgb2lab(int R, int G, int B, int[] lab) {
 
-
-        float r, g, b, X, Y, Z, fx, fy, fz, xr, yr, zr;
-        float Ls, as, bs;
-        float eps = 216.f/24389.f;
-        float k = 24389.f/27.f;
-
-        float Xr = 0.964221f;  // reference white D50
-        float Yr = 1.0f;
-        float Zr = 0.825211f;
-
-        // RGB to XYZ
-        r = R/255.f; //R 0..1
-        g = G/255.f; //G 0..1
-        b = B/255.f; //B 0..1
-
-        // assuming sRGB (D65)
-        if (r <= 0.04045)
-            r = r/12;
-        else
-            r = (float) Math.pow((r+0.055)/1.055,2.4);
-
-        if (g <= 0.04045)
-            g = g/12;
-        else
-            g = (float) Math.pow((g+0.055)/1.055,2.4);
-
-        if (b <= 0.04045)
-            b = b/12;
-        else
-            b = (float) Math.pow((b+0.055)/1.055,2.4);
-
-
-        X =  0.436052025f*r     + 0.385081593f*g + 0.143087414f *b;
-        Y =  0.222491598f*r     + 0.71688606f *g + 0.060621486f *b;
-        Z =  0.013929122f*r     + 0.097097002f*g + 0.71418547f  *b;
-
-        // XYZ to Lab
-        xr = X/Xr;
-        yr = Y/Yr;
-        zr = Z/Zr;
-
-        if ( xr > eps )
-            fx =  (float) Math.pow(xr, 1/3.);
-        else
-            fx = (float) ((k * xr + 16.) / 116.);
-
-        if ( yr > eps )
-            fy =  (float) Math.pow(yr, 1/3.);
-        else
-            fy = (float) ((k * yr + 16.) / 116.);
-
-        if ( zr > eps )
-            fz =  (float) Math.pow(zr, 1/3.);
-        else
-            fz = (float) ((k * zr + 16.) / 116);
-
-        Ls = ( 116 * fy ) - 16;
-        as = 500*(fx-fy);
-        bs = 200*(fy-fz);
-
-        lab[0] = (int) (2.55*Ls + .5);
-        lab[1] = (int) (as + .5);
-        lab[2] = (int) (bs + .5);
-    }
 
     private BaseLoaderCallback mLoaderCallback=new BaseLoaderCallback(this){
 
@@ -5011,9 +4949,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
         MatOfInt matInt=new MatOfInt();
         matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
-        File path=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        //File path=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Camera2PNG_(fromRaw)");
+        if(!PNGRAWfolder.exists()){
+            PNGRAWfolder.mkdirs();
+        }
         String filename="temp.png";
-        File file=new File(path,filename);
+        File file=new File(PNGRAWfolder,filename);
         Boolean bool=null;
         filename=file.toString();
         bool=Imgcodecs.imwrite(filename,mMat3,matInt);
@@ -5033,18 +4974,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         MatOfInt matInt2 = new MatOfInt();
         matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
-        File path2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        //File path2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String filename2 = "temp2.png";
-        File file2 = new File(path2, filename2);
+        File file2 = new File(PNGRAWfolder, filename2);
         Boolean bool2 = null;
         filename2 = file2.toString();
         bool2 = Imgcodecs.imwrite(filename2, finalMat, matInt2);
 
         MatOfInt matInt3 = new MatOfInt();
         matInt3.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
-        File path3 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        //File path3 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String filename3 = "temp3.png";
-        File file3 = new File(path3, filename3);
+        File file3 = new File(PNGRAWfolder, filename3);
         Boolean bool3 = null;
         filename3 = file3.toString();
         bool3 = Imgcodecs.imwrite(filename3, tempMat, matInt3);
