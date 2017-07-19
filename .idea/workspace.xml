@@ -15,7 +15,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" />
     </list>
@@ -52,12 +51,12 @@
       <file leaf-file-name="Camera2VideoImageActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="3918" column="69" selection-start-line="3918" selection-start-column="69" selection-end-line="3918" selection-end-column="69" />
+            <state relative-caret-position="558">
+              <caret line="1616" column="83" selection-start-line="1616" selection-start-column="83" selection-end-line="1616" selection-end-column="83" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#187870#202818#0" expanded="true" />
-                <element signature="e#202817#202818#0" expanded="true" />
+                <element signature="e#187875#202823#0" expanded="true" />
+                <element signature="e#202822#202823#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -3260,8 +3259,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#187870#202818#0" expanded="true" />
-            <element signature="e#202817#202818#0" expanded="true" />
+            <element signature="e#187875#202823#0" expanded="true" />
+            <element signature="e#202822#202823#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3348,8 +3347,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#187870#202818#0" expanded="true" />
-            <element signature="e#202817#202818#0" expanded="true" />
+            <element signature="e#187875#202823#0" expanded="true" />
+            <element signature="e#202822#202823#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3436,8 +3435,8 @@
           <caret line="1013" column="29" selection-start-line="1013" selection-start-column="8" selection-end-line="1013" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#187870#202818#0" expanded="true" />
-            <element signature="e#202817#202818#0" expanded="true" />
+            <element signature="e#187875#202823#0" expanded="true" />
+            <element signature="e#202822#202823#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3523,8 +3522,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#187870#202818#0" expanded="true" />
-            <element signature="e#202817#202818#0" expanded="true" />
+            <element signature="e#187875#202823#0" expanded="true" />
+            <element signature="e#202822#202823#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3535,8 +3534,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#187870#202818#0" expanded="true" />
-            <element signature="e#202817#202818#0" expanded="true" />
+            <element signature="e#187875#202823#0" expanded="true" />
+            <element signature="e#202822#202823#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3719,12 +3718,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="3918" column="69" selection-start-line="3918" selection-start-column="69" selection-end-line="3918" selection-end-column="69" />
+        <state relative-caret-position="558">
+          <caret line="1616" column="83" selection-start-line="1616" selection-start-column="83" selection-end-line="1616" selection-end-column="83" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#187870#202818#0" expanded="true" />
-            <element signature="e#202817#202818#0" expanded="true" />
+            <element signature="e#187875#202823#0" expanded="true" />
+            <element signature="e#202822#202823#0" expanded="true" />
           </folding>
         </state>
       </provider>

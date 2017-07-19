@@ -1608,13 +1608,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                         holder.unlockCanvasAndPost(circleCanvas);
 
-                                    }else{
+                                    }else{ /*
                                         Canvas circleCanvas=holder.lockCanvas();
                                         circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
                                         if(WhiteBalanceBallInspector !=null){
                                             circleCanvas.drawBitmap(WhiteBalanceBallInspector,0,0,null);
                                         }
-                                        holder.unlockCanvasAndPost(circleCanvas);
+                                        holder.unlockCanvasAndPost(circleCanvas);*/
                                     }
 
 
