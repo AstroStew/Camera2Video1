@@ -525,7 +525,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean CapturePngBoolean=false;
     FileOutputStream output;
     File txtfolder;
-    File PNGRAWfolder;
+    File PNGRAWfolder=null;
     public static int [] AvailableTonemapModes;
 
 
@@ -1251,7 +1251,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         setContentView(R.layout.activity_camera2_video_image);
         //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
         txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
-        PNGRAWfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"");
+        PNGRAWfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Camera2PNG_(fromRaw)");
 
         Button testbutton1=(Button) findViewById(R.id.testbutton);
         testbutton1.setOnClickListener(new View.OnClickListener() {
@@ -1603,7 +1603,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     bluePixelData = Color.blue(pixel);
                                     greePixelData = Color.green(pixel);
                                     if (wbThreadisEnabled) {
-                                        Toast.makeText(Camera2VideoImageActivity.this, "Part 3", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(Camera2VideoImageActivity.this, "Part 3", Toast.LENGTH_SHORT).show();
                                         Canvas circleCanvas=holder.lockCanvas();
                                         circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
                                         if(WhiteBalanceBallInspector!=null){

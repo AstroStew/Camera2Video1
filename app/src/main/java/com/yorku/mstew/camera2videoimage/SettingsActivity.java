@@ -328,6 +328,81 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             final ListPreference listPreference3=(ListPreference)findPreference("noise_reduction_mode");
             CharSequence[] entries=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
             CharSequence[] entryValues=new CharSequence[Camera2VideoImageActivity.NoiseReductionModes.length];
+
+
+
+
+
+
+
+
+
+
+            //int[]NoiseReductionModes=Camera2VideoImageActivity.NoiseReductionModes;
+
+
+                for(int i=0;i<Camera2VideoImageActivity.NoiseReductionModes.length;i++){
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==0){
+                        entries[i]="Noise Reduction Off";
+                        entryValues[i]="0";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==1){
+                        entries[i]="Noise Redction Fast";
+                        entryValues[i]="1";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==2){
+                        entries[i]="Noise Reduction High Quality";
+                        entryValues[i]="2";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==3){
+                        entries[i]="Noise Reduction Minimal";
+                        entryValues[i]="3";
+
+                    }
+                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==4){
+                        entries[i]="Noise Reduction Mode Zero Shutter lag";
+                        entryValues[i]="4";
+                    }
+                    //entries[i]=""+Camera2VideoImageActivity.NoiseReductionModes[i];
+
+                }
+
+
+
+            listPreference3.setEntryValues(entryValues);
+            listPreference3.setEntries(entries);
+
+
+
+
+            //WhitePoingListPreference.setEntryValues();
+            
+            setHasOptionsMenu(true);
+            
+            
+
+        }
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item){
+            int id=item.getItemId();
+
+            return true;
+        }
+
+    }
+    public static class resolutionClass extends PreferenceFragment{
+        @Override
+        public void onCreate (Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.resolution_xml);
+            final ListPreference listPreference=(ListPreference)findPreference("resolution_list");
+            Camera2VideoImageActivity.SettingresolutionChanged=true;
+            SizeArray=newarraylist.toArray();
+            CharSequence[] entries=new CharSequence[SizeArray.length];
+            CharSequence[] entryValues=new CharSequence[SizeArray.length];
             ListPreference lp1=(ListPreference)findPreference("sensor_available_test_modes");
             CharSequence[] entries2=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
             CharSequence[] EntryValues2=new CharSequence[Camera2VideoImageActivity.TestPatternModes.length];
@@ -339,14 +414,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             CharSequence[] EntryValues4=new CharSequence[Camera2VideoImageActivity.HotPixelModes.length];
             EditTextPreference JPEGQualityPreference=(EditTextPreference)findPreference("set_jpeg_quality");
             bindPreferenceSummaryToValue(findPreference("set_jpeg_quality"));
-
-            EditTextPreference ChangeBlackLevelPref=(EditTextPreference)findPreference("change_black_level");
-            ChangeBlackLevelPref.setText("Set number <"+Camera2VideoImageActivity.MaxRawValueOutput);
-            bindPreferenceSummaryToValue(findPreference("change_black_level"));
-
             ListPreference ToneMapPref=(ListPreference)findPreference("tonemap_mode");
             CharSequence[] entries5=new CharSequence[Camera2VideoImageActivity.AvailableTonemapModes.length];
             CharSequence[] EntryValues5=new CharSequence[Camera2VideoImageActivity.AvailableTonemapModes.length];
+            EditTextPreference ChangeBlackLevelPref=(EditTextPreference)findPreference("change_black_level");
+            ChangeBlackLevelPref.setText("Set number <"+Camera2VideoImageActivity.MaxRawValueOutput);
+            bindPreferenceSummaryToValue(findPreference("change_black_level"));
 
             for(int i=0;i<Camera2VideoImageActivity.AvailableTonemapModes.length;i++){
                 if(Camera2VideoImageActivity.AvailableTonemapModes[i]==0){
@@ -372,11 +445,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             }
 
+
             ToneMapPref.setEntries(entries5);
             ToneMapPref.setEntryValues(EntryValues5);
-
-
-
             for(int j=0;j<Camera2VideoImageActivity.HotPixelModes.length;j++){
                 if(Camera2VideoImageActivity.HotPixelModes[j]==0){
                     entries4[j]="Off";
@@ -446,79 +517,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             EdgeModeListPreferences.setEntries(entries3);
             EdgeModeListPreferences.setEntryValues(EntryValues3);
-
-            //int[]NoiseReductionModes=Camera2VideoImageActivity.NoiseReductionModes;
-
-
-                for(int i=0;i<Camera2VideoImageActivity.NoiseReductionModes.length;i++){
-                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==0){
-                        entries[i]="Noise Reduction Off";
-                        entryValues[i]="0";
-
-                    }
-                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==1){
-                        entries[i]="Noise Redction Fast";
-                        entryValues[i]="1";
-
-                    }
-                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==2){
-                        entries[i]="Noise Reduction High Quality";
-                        entryValues[i]="2";
-
-                    }
-                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==3){
-                        entries[i]="Noise Reduction Minimal";
-                        entryValues[i]="3";
-
-                    }
-                    if(Camera2VideoImageActivity.NoiseReductionModes[i]==4){
-                        entries[i]="Noise Reduction Mode Zero Shutter lag";
-                        entryValues[i]="4";
-                    }
-                    //entries[i]=""+Camera2VideoImageActivity.NoiseReductionModes[i];
-
-                }
-
-
-            lp1.setEntries(entries2);
-            lp1.setEntryValues(EntryValues2);
-            listPreference3.setEntryValues(entryValues);
-            listPreference3.setEntries(entries);
-
-
-
-
-            //WhitePoingListPreference.setEntryValues();
-            
-            setHasOptionsMenu(true);
-            
-            
-
-        }
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item){
-            int id=item.getItemId();
-
-            return true;
-        }
-
-    }
-    public static class resolutionClass extends PreferenceFragment{
-        @Override
-        public void onCreate (Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.resolution_xml);
-            final ListPreference listPreference=(ListPreference)findPreference("resolution_list");
-            Camera2VideoImageActivity.SettingresolutionChanged=true;
-            SizeArray=newarraylist.toArray();
-            CharSequence[] entries=new CharSequence[SizeArray.length];
-            CharSequence[] entryValues=new CharSequence[SizeArray.length];
             for (int i=0;i<SizeArray.length;i++){
                 entries[i]=SizeArray[i].toString();
                 entryValues[i]=""+i;
             }
 
             setHasOptionsMenu(true);
+            lp1.setEntries(entries2);
+            lp1.setEntryValues(EntryValues2);
             listPreference.setEntries(entries);
             listPreference.setEntryValues(entryValues);
 

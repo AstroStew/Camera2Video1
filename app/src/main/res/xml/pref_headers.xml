@@ -31,7 +31,7 @@
 
     <header
         android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$resolutionClass"
-        android:title="Resolution"
+        android:title="Addtional Settings"
         android:icon="@drawable/ic_photo_size_select_actual_black_24dp"/>
     <header
     android:fragment="com.yorku.mstew.camera2videoimage.SettingsActivity$OpticalStabilization"

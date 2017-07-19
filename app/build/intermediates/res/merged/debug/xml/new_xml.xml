@@ -32,36 +32,7 @@
         android:key="noise_reduction_mode"
 
         />
-    <ListPreference
 
-    android:title="Test Patterns"
-        android:key="sensor_available_test_modes"
-        android:defaultValue="0"
-        />
-    <ListPreference
-        android:title="Edge Options"
-        android:key="edge_options"
-        android:defaultValue="1"
-        />
-    <ListPreference
-        android:title="Hot Pixel Mode"
-        android:key="hot_pixel_mode"
-        />
-    <EditTextPreference
-        android:title="Set JPEG Quality"
-        android:key="set_jpeg_quality"
-        android:inputType="number"
-        android:hint="Number between 1-100"
-        />
-    <EditTextPreference
-        android:title="Change Black Level"
-        android:key="change_black_level"
-        />
-    <ListPreference
-        android:title="Tonemap Mode"
-        android:key="tonemap_mode"
-
-        />
 
 
 
