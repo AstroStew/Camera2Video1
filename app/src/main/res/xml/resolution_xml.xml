@@ -38,5 +38,14 @@
         android:key="tonemap_mode"
 
         />
+    <SwitchPreference
+        android:title="Read Raw pixels on Tap"
+        android:key="readRawonTap"
+        />
+    <SwitchPreference
+        android:title="Convert RAw pixels to PNG"
+        android:key="convertRawtoPNG"
+        android:dependency="readRawonTap"
+        />
 
 </PreferenceScreen>

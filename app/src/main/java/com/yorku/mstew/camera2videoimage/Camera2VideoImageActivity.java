@@ -483,6 +483,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     public  static int[] HotPixelModes;
     int EdgeMode=1;
     int AntiBandingModeint=3;
+    boolean readRawonTap=false;
 
     public static boolean NoiseReductionModesinit=true;
 
@@ -1292,6 +1293,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         RecordTimeLimit=Integer.parseInt(TempRecordTimeLimitString);
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
         ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
+        readRawonTap=sharedprefs1.getBoolean("readRawonTap",false);
+
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
 
@@ -1355,7 +1358,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Bitmap bitmappy=mTextureView.getBitmap();
-                //pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
+                pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
 
 
                 switch (event.getAction()) {
@@ -1422,6 +1425,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         MovementButtonn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                wbThreadisEnabled = !wbThreadisEnabled;
+
                 if (MovementButtonnBoolen) {
                     MovementButtonnBoolen = false;
                     MovementButtonn.setImageResource(R.drawable.ic_all_out_black_24dp);
@@ -1521,7 +1526,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             public void run() {
                 while (!Thread.interrupted()) {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
 
@@ -1594,22 +1599,23 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                                 if (cameraReady){
 
-
-                                    if (isAdjustingWB && isAdjustingWB2) {
-                                        isAdjustingWB = false;
-                                        adjustWhiteBalanceOnTouch();
+                                    if(readRawonTap) {
+                                        if (isAdjustingWB && isAdjustingWB2) {
+                                            isAdjustingWB = false;
+                                            adjustWhiteBalanceOnTouch();
+                                        }
                                     }
                                     redPixelData = Color.red(pixel);
                                     bluePixelData = Color.blue(pixel);
                                     greePixelData = Color.green(pixel);
                                     if (wbThreadisEnabled) {
                                         //Toast.makeText(Camera2VideoImageActivity.this, "Part 3", Toast.LENGTH_SHORT).show();
-                                        Canvas circleCanvas=holder.lockCanvas();
-                                        circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+                                        //Canvas circleCanvas=holder.lockCanvas();
+                                        //circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
                                         if(WhiteBalanceBallInspector!=null){
-                                            circleCanvas.drawBitmap(WhiteBalanceBallInspector,BallInspectorx,BallInspectory,null);
+                                            //circleCanvas.drawBitmap(WhiteBalanceBallInspector,BallInspectorx,BallInspectory,null);
                                         }
-                                        holder.unlockCanvasAndPost(circleCanvas);
+                                        //holder.unlockCanvasAndPost(circleCanvas);
 
                                     }else{ /*
                                         Canvas circleCanvas=holder.lockCanvas();
@@ -1631,7 +1637,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }*/
 
 
-                                /*if (mWBSurface.isValid()) {
+                                if (mWBSurface.isValid()) {
 
                                     Bitmap bitmappy2 = mTextureView.getBitmap();
                                     ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
@@ -1648,7 +1654,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     int topeleftwidth;
 
 
-                                    ////*
+
                                     if (CaptureAveragepixelCountBooleanOn) {
 
                                         for (topleftheight = (int) BallInspectory - (totalheight / 2); topleftheight < (totalheight + topleftheightstatic); topleftheight++) {
@@ -1670,7 +1676,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                         CaptureAveragepixelCountBooleanOn = false;
                                     }
-                                    if(wbThreadisEnabled) {}
+
 
 
                                         Canvas c = holder.lockCanvas();
@@ -1686,7 +1692,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-                                }*/
+                                }
                                 String convertSS;
                                 String PixelValues;
                                 StringBuffer sbuffer = new StringBuffer();
@@ -1727,7 +1733,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
 
 
-                                if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn) {
+                                if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn || wbThreadisEnabled) {
                                     PixelValues = "Red Value: " + redPixelData
                                             + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
                                             + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
@@ -3218,7 +3224,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
         });
 
-        //RefreshScreen();
+
         //end of onCreate
 
 
@@ -4742,6 +4748,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
 
         String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","8000000");
+        readRawonTap=sharedprefs1.getBoolean("readRawonTap",false);
         BitEncodingRate=Integer.parseInt(BitEncodingRateString);
         String FrameRateString=sharedprefs1.getString("ChangeVideoFPS","30");
         FrameRate=Integer.parseInt(FrameRateString);
@@ -4765,6 +4772,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
         JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
         ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
+
 
 
 
