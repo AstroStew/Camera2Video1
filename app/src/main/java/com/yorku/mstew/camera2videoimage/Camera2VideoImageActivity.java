@@ -3890,6 +3890,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                     if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
+                        mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,JPEGQuality);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
                         //mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
