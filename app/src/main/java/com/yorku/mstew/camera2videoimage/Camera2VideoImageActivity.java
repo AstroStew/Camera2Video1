@@ -357,8 +357,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     String SensorinfoColorfiltering="";
 
 
-    private int rawWidth=200;
-    private int rawHeight=200;
+    private int rawWidth=400;
+    private int rawHeight=400;
     private int imageWidth=0;
     private int imageHeight=0;
 
@@ -441,6 +441,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean ForwardMatrixInputBoolean = false;
     boolean SensorColorTransformInputBoolean = false;
     Bitmap WhiteBalanceBallInspector;
+    boolean Capture_JPEG=true;
     byte[] byteArray;
     boolean isItOka = true;
     float BallInspectorx, BallInspectory;
@@ -461,6 +462,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean ControlAWBmodetwilightavailableboolean = false;
     boolean WBrunOnce = true;
     boolean CaptureAveragepixelCountBooleanOn = false;
+    boolean ConvertRAWtoPNG=false;
     public static int MaxRawValueOutput;
     int ToneMapMode=1;
 
@@ -1058,7 +1060,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         switch(SensorinfoColorFiltering){
             case 0:
                 SensorinfoColorfiltering="RGGB";
-
                 break;
             case 1:
                 SensorinfoColorfiltering="GRBG";
@@ -1136,6 +1137,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), null, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+        if(ConvertRAWtoPNG){
+            CaptureandConvertRAWtoPNG();
+            Toast.makeText(this, "Captured PNG from RAW", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -1294,6 +1299,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
         ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
         readRawonTap=sharedprefs1.getBoolean("readRawonTap",false);
+        ConvertRAWtoPNG=sharedprefs1.getBoolean("ConvertRAWtoPNG",false);
+        Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
@@ -3090,6 +3097,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 if (ExportasRGBasTextboolean){
                     Toast.makeText(Camera2VideoImageActivity.this, "Read RGB and export", Toast.LENGTH_SHORT).show();
                     writeRGBPictureasText();
@@ -3101,7 +3109,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                 mStillImageButton.setImageResource(R.mipmap.campic);
                 if (!mBurstOn) {
-                    lockFocus();
+
+                        lockFocus();
+
+
                     //startStillCaptureRequest();
                 }
                 if (mBurstOn) {
@@ -3974,6 +3985,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 Mat mat= new Mat();
                                 imageWidth=image.getWidth();
                                 imageHeight=image.getHeight();
+
+
                                 totalResult=new int[rawHeight][rawWidth];
                                 totalResult1D=new int [rawHeight*rawWidth];
                                 mMat=new Mat(image.getHeight(),image.getWidth(),CV_16UC1);
@@ -4337,7 +4350,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 try {
                     output=new FileOutputStream(mPngImageFileName);
                     //bitmap.compress(Bitmap.CompressFormat.PNG,100,output);
-                    //output.close();
+                    output.close();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -4380,6 +4393,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 createImageFileName(); //forImage
                                 if (mRawImageCaptureon) {
                                     createRawImageFileName(); //for RawImage
+                                }
+                                if(ConvertRAWtoPNG){
+                                    createPNgImageFileName();
                                 }
 
 
@@ -4437,6 +4453,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void createPNgImageFileName() {
 
     }
 
@@ -4772,6 +4792,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         HotPixelMode=Integer.parseInt(sharedprefs1.getString("hot_pixel_mode","0"));
         JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
         ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
+        ConvertRAWtoPNG=sharedprefs1.getBoolean("ConvertRAWtoPNG",false);
+        Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
 
 
 
