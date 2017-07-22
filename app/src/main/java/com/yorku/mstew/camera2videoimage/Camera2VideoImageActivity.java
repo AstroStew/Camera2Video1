@@ -1279,7 +1279,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
-        boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+        final boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
@@ -3109,8 +3109,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                 mStillImageButton.setImageResource(R.mipmap.campic);
                 if (!mBurstOn) {
-
+                    if(Capture_JPEG || RawwithJPEg){
                         lockFocus();
+
+                    }
+
+
 
 
                     //startStillCaptureRequest();
