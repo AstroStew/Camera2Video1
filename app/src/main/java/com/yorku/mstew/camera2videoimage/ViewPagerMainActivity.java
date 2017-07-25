@@ -99,7 +99,7 @@ public class ViewPagerMainActivity extends AppCompatActivity {
         dotsLayout.removeAllViews();
         for(int i=0; i<dots.length;i++){
             dots[i]=new TextView(this);
-            dots[i].setText(Html.fromHtml("&/8226;"));
+            dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
             dots[i].setTextColor(colorInactive[position]);
             dotsLayout.addView(dots[i]);
