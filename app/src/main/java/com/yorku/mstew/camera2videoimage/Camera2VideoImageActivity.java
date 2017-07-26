@@ -58,6 +58,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -409,6 +410,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static final int _DATA_Z = 2;
     private int ORIENTATION_UNKNOWN = -1;
     private int tempOrientRounded = -1;
+    boolean ViewpagerManagerInit=true;
+
 
 
 
@@ -900,10 +903,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         super.onCreate(savedInstanceState);
 
-        sm=(SensorManager)getSystemService(SENSOR_SERVICE);
-        if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
-            Sensor s=sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
-            sm.registerListener(this,s,SensorManager.SENSOR_DELAY_NORMAL);
+        sm = (SensorManager) getSystemService(SENSOR_SERVICE);
+        if (sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size() != 0) {
+            Sensor s = sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
+            sm.registerListener(this, s, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -915,8 +918,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
-        setContentView(R.layout.activity_camera2_video_image);
         SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+        boolean ifOnCreate = false;
+
+
+        ifOnCreate = sharedprefs1.getBoolean("onCreatePref", true);
+
+        setContentView(R.layout.activity_camera2_video_image);
+
+
+
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
@@ -2777,7 +2788,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         //RefreshScreen();
         //end of onCreate
-
+        if (ifOnCreate) {
+            ifOnCreate = false;
+            SharedPreferences.Editor spe=sharedprefs1.edit();
+            spe.putBoolean("onCreatePref",false);
+            //Intent i = new Intent(this, ViewPagerMainActivity.class);
+            //startActivity(i);
+        }
 
 
 

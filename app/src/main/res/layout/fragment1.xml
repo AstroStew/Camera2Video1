@@ -20,6 +20,10 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="Camera"
+        android:textColor="@android:color/white"
+        android:textSize="40dp"
+        android:textAlignment="center"
+        android:elegantTextHeight="true"
 
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
