@@ -68,7 +68,7 @@ public class ViewPagerMainActivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(ViewPagerMainActivity.this,ViewPagerMainActivity2.class);
+                Intent i =new Intent(ViewPagerMainActivity.this,Camera2VideoImageActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -82,7 +82,7 @@ public class ViewPagerMainActivity extends AppCompatActivity {
                 if(current<layouts.length){
                    viewPager.setCurrentItem(current);
                 }else{
-                    Intent i =new Intent(ViewPagerMainActivity.this,ViewPagerMainActivity2.class);
+                    Intent i =new Intent(ViewPagerMainActivity.this,Camera2VideoImageActivity.class);
                     startActivity(i);
                     finish();
                 }
