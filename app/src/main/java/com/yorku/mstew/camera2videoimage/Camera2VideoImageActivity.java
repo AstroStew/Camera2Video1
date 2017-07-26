@@ -213,6 +213,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private SeekBar mSeekBar2;
     private ImageButton mFlipCamera;
     private Boolean FlipNumberBoolean = false;
+    private boolean ifOnCreate=false;
     private int FlipNumber;
     private TextView mCameraInfoTextView;
     private TextView mCameraInfoTextView2;
@@ -378,6 +379,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int BitEncodingRate=8000000;
     private static final Rational ONE_R=new Rational(1,1);
     private static final Rational ZERO_R=Rational.ZERO;
+     SharedPreferences sharedprefs1;
 
 
     String s = "";
@@ -749,6 +751,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
             mCameraCharacteristics = cameraCharacteristics;
+            if (ifOnCreate) {
+                ifOnCreate = false;
+                SharedPreferences.Editor spe=sharedprefs1.edit();
+                spe.putBoolean("onCreatePref",false);
+                spe.commit();
+                Toast.makeText(this, "Initialized", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, ViewPagerMainActivity.class);
+                startActivity(i);
+            }
             //continue;
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -918,175 +929,165 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         //WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
-        SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
-        boolean ifOnCreate = false;
+        sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+        //boolean ifOnCreate = false;
 
 
         ifOnCreate = sharedprefs1.getBoolean("onCreatePref", true);
+
 
         setContentView(R.layout.activity_camera2_video_image);
 
 
 
+
+
         boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
-        boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
-        ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",true);
+            boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
+            ShowRealTimeInfoboolean = sharedprefs1.getBoolean("show_real_time_info", true);
 
 
-        BooleanOpticalStabilizationOn=OpticalStabilization;
-        mRawImageCaptureon=RawwithJPEg;
+            BooleanOpticalStabilizationOn = OpticalStabilization;
+            mRawImageCaptureon = RawwithJPEg;
 
 
+            BallInspectorx = BallInspectory = 600;
+            WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
+
+            SurfaceView k = (SurfaceView) findViewById(R.id.surfaceView);
+            k.setZOrderOnTop(true);
+            final SurfaceHolder holder = k.getHolder();
+            holder.setFormat(PixelFormat.TRANSLUCENT);
+            final Surface g = holder.getSurface();
+            k.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            BallInspectorx = event.getX();
+                            BallInspectory = event.getY();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            BallInspectorx = event.getX();
+                            BallInspectory = event.getY();
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            BallInspectorx = event.getX();
+                            BallInspectory = event.getY();
+                            break;
+                    }
+                    isAdjustingWB2 = true;
+                    isAdjustingWB = true;
 
 
-
-
-
-
-
-
-        BallInspectorx = BallInspectory = 600;
-        WhiteBalanceBallInspector = BitmapFactory.decodeResource(getResources(), R.mipmap.wbselection);
-
-        SurfaceView k = (SurfaceView) findViewById(R.id.surfaceView);
-        k.setZOrderOnTop(true);
-        final SurfaceHolder holder = k.getHolder();
-        holder.setFormat(PixelFormat.TRANSLUCENT);
-        final Surface g = holder.getSurface();
-        k.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        BallInspectorx = event.getX();
-                        BallInspectory = event.getY();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        BallInspectorx = event.getX();
-                        BallInspectory = event.getY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        BallInspectorx = event.getX();
-                        BallInspectory = event.getY();
-                        break;
+                    return true;
                 }
-                isAdjustingWB2 = true;
-                isAdjustingWB = true;
+            });
 
 
-                return true;
-            }
-        });
+            mMediaRecorder = new MediaRecorder();
 
 
-        mMediaRecorder = new MediaRecorder();
+            //new stuff
+            //new ModifyXMLFile();
 
 
-    //new stuff
-        //new ModifyXMLFile();
+            //mIsAuto2=false;
+            //this is new
+            mTextureView = (TextureView) findViewById(R.id.textureView);
+            mStillImageButton = (ImageButton) findViewById(R.id.CameraButton);
+            mTimeInterval = (TextView) findViewById(R.id.TimeIntervalDisplay);
+            mChronometer = (Chronometer) findViewById(R.id.chronometer);
+            mFlipCamera = (ImageButton) findViewById(R.id.FlipButton);
+            mFlashButtonOnOff = (ImageButton) findViewById(R.id.FlashButton);
+            mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
+            mSettingsButton = (ImageButton) findViewById(R.id.SettingImageButton);
+            MovementButtonn = (ImageButton) findViewById(R.id.MovementButton);
 
+            //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
+            MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (CaptureAveragepixelCountBooleanOn == false) {
+                        TotalRedPixelData = 0;
+                        TotalBluePixelData = 0;
+                        TotalGreenPixelData = 0;
+                        MovementButtonnBoolen = true;
+                        CaptureAveragepixelCountBooleanOn = true;
+                        Toast.makeText(getApplicationContext(), "Average Pixel Activation", Toast.LENGTH_SHORT).show();
+                    } else {
 
-        //mIsAuto2=false;
-        //this is new
-        mTextureView = (TextureView) findViewById(R.id.textureView);
-        mStillImageButton = (ImageButton) findViewById(R.id.CameraButton);
-        mTimeInterval = (TextView) findViewById(R.id.TimeIntervalDisplay);
-        mChronometer = (Chronometer) findViewById(R.id.chronometer);
-        mFlipCamera = (ImageButton) findViewById(R.id.FlipButton);
-        mFlashButtonOnOff = (ImageButton) findViewById(R.id.FlashButton);
-        mRecordImageButton = (ImageButton) findViewById(R.id.VideoButton);
-        mSettingsButton = (ImageButton) findViewById(R.id.SettingImageButton);
-        MovementButtonn = (ImageButton) findViewById(R.id.MovementButton);
+                        //Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
+                    }
 
-        //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
-        MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (CaptureAveragepixelCountBooleanOn == false) {
-                    TotalRedPixelData = 0;
-                    TotalBluePixelData = 0;
-                    TotalGreenPixelData = 0;
-                    MovementButtonnBoolen = true;
-                    CaptureAveragepixelCountBooleanOn = true;
-                    Toast.makeText(getApplicationContext(), "Average Pixel Activation", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    //Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
+                    return false;
                 }
+            });
 
-                return false;
-            }
-        });
+            MovementButtonn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (MovementButtonnBoolen) {
+                        MovementButtonnBoolen = false;
+                        MovementButtonn.setImageResource(R.drawable.ic_all_out_black_24dp);
+                        Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned on", Toast.LENGTH_SHORT).show();
 
-        MovementButtonn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MovementButtonnBoolen) {
-                    MovementButtonnBoolen = false;
-                    MovementButtonn.setImageResource(R.drawable.ic_all_out_black_24dp);
-                    Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned on", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    {
-                        if (!CaptureAveragepixelCountBooleanOn) {
+                    } else {
+                        {
+                            if (!CaptureAveragepixelCountBooleanOn) {
 
 
-                            MovementButtonnBoolen = true;
-                            MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
-                            Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
+                                MovementButtonnBoolen = true;
+                                MovementButtonn.setImageResource(R.drawable.ic_highlight_off_black_24dp);
+                                Toast.makeText(Camera2VideoImageActivity.this, "Movement Button Turned Off", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
-
                     }
                 }
-            }
-        });
+            });
 
 
+            final BottomNavigationView mCom = (BottomNavigationView) findViewById(R.id.NavBot);
+            mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    int pposition3 = item.getItemId();
+                    switch (pposition3) {
 
 
+                        case R.id.CameraMenu:
 
 
-
-        final BottomNavigationView mCom = (BottomNavigationView) findViewById(R.id.NavBot);
-        mCom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int pposition3 = item.getItemId();
-                switch (pposition3) {
+                            mStillImageButton.setVisibility(View.VISIBLE);
+                            mRecordImageButton.setVisibility(View.INVISIBLE);
+                            mSettingsButton.setVisibility(View.INVISIBLE);
 
 
-                    case R.id.CameraMenu:
+                            break;
+                        case R.id.VideoMenu:
+                            mRecordImageButton.setVisibility(View.VISIBLE);
+                            mStillImageButton.setVisibility(View.INVISIBLE);
+                            mSettingsButton.setVisibility(View.INVISIBLE);
 
 
-                        mStillImageButton.setVisibility(View.VISIBLE);
-                        mRecordImageButton.setVisibility(View.INVISIBLE);
-                        mSettingsButton.setVisibility(View.INVISIBLE);
+                            break;
+                        case R.id.AdvancedSettingsMenu:
 
 
-                        break;
-                    case R.id.VideoMenu:
-                        mRecordImageButton.setVisibility(View.VISIBLE);
-                        mStillImageButton.setVisibility(View.INVISIBLE);
-                        mSettingsButton.setVisibility(View.INVISIBLE);
+                            mStillImageButton.setVisibility(View.INVISIBLE);
+                            mRecordImageButton.setVisibility(View.INVISIBLE);
+                            mSettingsButton.setVisibility(View.VISIBLE);
+                            mSettingsButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
 
-                        break;
-                    case R.id.AdvancedSettingsMenu:
-
-
-                        mStillImageButton.setVisibility(View.INVISIBLE);
-                        mRecordImageButton.setVisibility(View.INVISIBLE);
-                        mSettingsButton.setVisibility(View.VISIBLE);
-                        mSettingsButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-
-                                Intent SettingsIntent=new Intent(getApplicationContext(),SettingsActivity.class);
-                                startActivity(SettingsIntent);
-                            }
-                        });
+                                    Intent SettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                                    startActivity(SettingsIntent);
+                                }
+                            });
 
 
                         /*mSettingsButton.setOnClickListener(new View.OnClickListener() {
@@ -1245,640 +1246,1109 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             }
                         });*/
 
-                        break;
-                    case R.id.PageMenu:
-                        Intent pageintent = new Intent(getApplicationContext(), TabedMenuActivity.class);
-                        startActivity(pageintent);
-                        break;
+                            break;
+                        case R.id.PageMenu:
+                            Intent pageintent = new Intent(getApplicationContext(), TabedMenuActivity.class);
+                            startActivity(pageintent);
+                            break;
+                    }
+                    return false;
                 }
-                return false;
+            });
+
+            createVideoFolder();
+            createImageFolder();
+            mInfoTextView = (TextView) findViewById(R.id.infotextView2);
+
+            if (ShowRealTimeInfoboolean) {
+                mInfoTextView.setVisibility(View.VISIBLE);
+            } else {
+                mInfoTextView.setVisibility(View.INVISIBLE);
             }
-        });
-
-        createVideoFolder();
-        createImageFolder();
-        mInfoTextView = (TextView) findViewById(R.id.infotextView2);
-
-        if(ShowRealTimeInfoboolean){
-            mInfoTextView.setVisibility(View.VISIBLE);
-        }else{
-            mInfoTextView.setVisibility(View.INVISIBLE);
-        }
 
 
+            mFocusTextView = (TextView) findViewById(R.id.infoTextView);
+            //we have to create a new thread in order to get real time info from ISO SS adn Aperature
 
-        mFocusTextView = (TextView) findViewById(R.id.infoTextView);
-        //we have to create a new thread in order to get real time info from ISO SS adn Aperature
-
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!Thread.interrupted()) {
-                    try {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-
-
-                            public void run() {
-
-                                if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
-                                    adjustWhiteBalanceOnTouch();
-                                    isAdjustingWB = false;
-                                }
+            (new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (!Thread.interrupted()) {
+                        try {
+                            Thread.sleep(1000);
+                            runOnUiThread(new Runnable() {
+                                @Override
 
 
-                                if (ChangeWhiteBalanceSpotRawOn) {
+                                public void run() {
+
+                                    if (isAdjustingWB && isAdjustingWB2 && WB_RAWTouchEnabled) {
+                                        adjustWhiteBalanceOnTouch();
+                                        isAdjustingWB = false;
+                                    }
 
 
-                                    ChangeWhiteBalanceSpotRawOn = false;
-                                }
+                                    if (ChangeWhiteBalanceSpotRawOn) {
 
 
-                                if (g.isValid()) {
-                                    Bitmap bitmappy = mTextureView.getBitmap();
-
-                                    ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
+                                        ChangeWhiteBalanceSpotRawOn = false;
+                                    }
 
 
-                                    int pixel;
-                                    pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
-                                    redPixelData = Color.red(pixel);
-                                    bluePixelData = Color.blue(pixel);
-                                    greePixelData = Color.green(pixel);
+                                    if (g.isValid()) {
+                                        Bitmap bitmappy = mTextureView.getBitmap();
+
+                                        ByteBuffer bytebuffer1 = ByteBuffer.allocate(1);
 
 
-                                    int totalheight = WhiteBalanceBallInspector.getHeight();
-                                    int totalwidth = WhiteBalanceBallInspector.getWidth();
-                                    int totalbitmapspace = totalheight * totalwidth;
-                                    int topleftheightstatic = (int) BallInspectory - (int) (totalheight / 2);
-                                    int topleftwidthstatic = (int) BallInspectorx - (int) (totalwidth / 2);
-                                    int topleftheight;
-                                    int topeleftwidth;
+                                        int pixel;
+                                        pixel = bitmappy.getPixel((int) BallInspectorx, (int) BallInspectory);
+                                        redPixelData = Color.red(pixel);
+                                        bluePixelData = Color.blue(pixel);
+                                        greePixelData = Color.green(pixel);
 
 
-                                    ////*
-                                    if (CaptureAveragepixelCountBooleanOn) {
-
-                                        for (topleftheight = (int) BallInspectory - (totalheight / 2); topleftheight < (totalheight + topleftheightstatic); topleftheight++) {
-                                            for (topeleftwidth = (int) BallInspectorx - (totalwidth / 2); topeleftwidth < (totalwidth + topleftwidthstatic); topeleftwidth++) {
-                                                int pixel2;
-                                                pixel2 = bitmappy.getPixel((int) topeleftwidth, (int) topleftheight);
-                                                if (Color.red(pixel2) < 255) {
-                                                    TotalRedPixelData = TotalRedPixelData + Color.red(pixel2);
-                                                    TotalGreenPixelData = TotalGreenPixelData + Color.green(pixel2);
-                                                    TotalBluePixelData = TotalBluePixelData + Color.blue(pixel2);
-                                                    AverageredPixelData = (TotalRedPixelData / totalbitmapspace);
-                                                    AveragegreenPixelData = TotalGreenPixelData / totalbitmapspace;
-                                                    AveragebluePixelData = TotalBluePixelData / totalbitmapspace;
+                                        int totalheight = WhiteBalanceBallInspector.getHeight();
+                                        int totalwidth = WhiteBalanceBallInspector.getWidth();
+                                        int totalbitmapspace = totalheight * totalwidth;
+                                        int topleftheightstatic = (int) BallInspectory - (int) (totalheight / 2);
+                                        int topleftwidthstatic = (int) BallInspectorx - (int) (totalwidth / 2);
+                                        int topleftheight;
+                                        int topeleftwidth;
 
 
+                                        ////*
+                                        if (CaptureAveragepixelCountBooleanOn) {
+
+                                            for (topleftheight = (int) BallInspectory - (totalheight / 2); topleftheight < (totalheight + topleftheightstatic); topleftheight++) {
+                                                for (topeleftwidth = (int) BallInspectorx - (totalwidth / 2); topeleftwidth < (totalwidth + topleftwidthstatic); topeleftwidth++) {
+                                                    int pixel2;
+                                                    pixel2 = bitmappy.getPixel((int) topeleftwidth, (int) topleftheight);
+                                                    if (Color.red(pixel2) < 255) {
+                                                        TotalRedPixelData = TotalRedPixelData + Color.red(pixel2);
+                                                        TotalGreenPixelData = TotalGreenPixelData + Color.green(pixel2);
+                                                        TotalBluePixelData = TotalBluePixelData + Color.blue(pixel2);
+                                                        AverageredPixelData = (TotalRedPixelData / totalbitmapspace);
+                                                        AveragegreenPixelData = TotalGreenPixelData / totalbitmapspace;
+                                                        AveragebluePixelData = TotalBluePixelData / totalbitmapspace;
+
+
+                                                    }
                                                 }
+
+                                            }
+                                            CaptureAveragepixelCountBooleanOn = false;
+                                        }
+
+                                        Canvas c = holder.lockCanvas();
+                                        c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+                                        if (!MovementButtonnBoolen || CaptureAveragepixelCountBooleanOn) {
+                                            if (WhiteBalanceBallInspector != null) {
+                                                c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
+                                            }
+                                        }
+
+                                        holder.unlockCanvasAndPost(c);
+
+
+                                    }
+                                    String convertSS;
+                                    String PixelValues;
+
+
+                                    if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn) {
+                                        PixelValues = "Red Value: " + redPixelData
+                                                + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
+                                                + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
+                                                + AveragebluePixelData
+                                        ;
+                                    } else {
+                                        PixelValues = "";
+                                    }
+                                    mTotalRotation = sensorDeviceRotation(mCameraCharacteristics, mDeviceOrientation);
+
+                                    if (1000000000 / mCurrentSSvalue <= 1) {
+                                        convertSS = String.valueOf(mCurrentSSvalue / 1000000000);
+                                    } else {
+                                        convertSS = "1/" + String.valueOf(1000000000 / mCurrentSSvalue);
+                                    }
+                                    if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
+                                        mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
+                                                mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" + PixelValues
+                                        );
+
+                                    } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
+                                        mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
+                                                + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" + PixelValues
+                                        ); // this action have to be in UI thread
+                                    }
+
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+            })).start();
+
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            if (MediaStore.ACTION_IMAGE_CAPTURE.equals(action)) {
+                mRequestingAppUri = intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
+            }
+
+            mFlashButtonOnOff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    //Toast.makeText(getApplicationContext(), "Flash", Toast.LENGTH_SHORT).show();
+                    PopupMenu popMenu2 = new PopupMenu(Camera2VideoImageActivity.this, mFlashButtonOnOff);
+
+                    popMenu2.inflate(R.menu.flash_popup_menu);
+                    popMenu2.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            int position2 = item.getItemId();
+                            switch (position2) {
+                                case R.id.FlashOff:
+                                    mFlashButtonOnOff.setImageResource(R.drawable.ic_flash_off_black_24dp);
+                                    mFlashMode = 0;
+                                    startPreview();
+
+
+                                    break;
+                                case R.id.FlashAuto:
+                                    mFlashButtonOnOff.setImageResource(R.drawable.ic_flash_auto_black_24dp);
+                                    mFlashMode = 1;
+
+
+                                    break;
+                                case R.id.FlashOn:
+                                    mFlashButtonOnOff.setImageResource(R.drawable.ic_flash_on_black_24dp);
+                                    mFlashMode = 2;
+                                    break;
+                                case R.id.TorchOn:
+                                    mFlashButtonOnOff.setImageResource(R.drawable.ic_highlight_black_24dp);
+                                    mFlashMode = 3;
+                                    startPreview();
+                                    break;
+
+
+                            }
+                            return false;
+                        }
+                    });
+
+                    popMenu2.show();
+
+
+                }
+            });
+
+
+            mFlipCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (FlipNumberBoolean) {
+
+                        FlipNumberBoolean = false;
+                        FlipNumber = 0;
+                        mFlipCamera.setImageResource(R.drawable.flipfront);
+                        closeCamera();
+                        stopBackgroundThread();
+
+                        startBackgroundThread();
+
+                        if (mTextureView.isAvailable()) {
+                            setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
+                            connectCamera();
+
+                        } else {
+                            mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+                        }
+                    } else {
+
+                        FlipNumberBoolean = true;
+                        FlipNumber = 1;
+                        mFlipCamera.setImageResource(R.drawable.flipback);
+                        closeCamera();
+                        stopBackgroundThread();
+                        startBackgroundThread();
+                        if (mTextureView.isAvailable()) {
+                            setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
+                            connectCamera();
+                        } else {
+                            mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+                        }
+
+
+                    }
+                }
+            });
+            mModebutton = (Button) findViewById(R.id.button);
+            mAutobutton = (Button) findViewById(R.id.Auto);
+            mAutobutton.setText("AUTO ON");
+            mAutobutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (AutoNumber == 0) {
+                        AutoNumber = 1;
+                        Toast.makeText(getApplicationContext(), "AUTO OFF", Toast.LENGTH_SHORT).show();
+                        mAutobutton.setText("AUTO OFF");
+                        startPreview();
+
+                    } else if (AutoNumber == 1) {
+                        AutoNumber = 0;
+                        Toast.makeText(getApplicationContext(), "AUTO ON", Toast.LENGTH_SHORT).show();
+                        mAutobutton.setText("AUTO ON");
+                        ColorSpaceInputBoolean = false;
+                        startPreview();
+
+
+                    } else if (AutoNumber == 2) {
+                        AutoNumber = 0;
+                        Toast.makeText(getApplicationContext(), "SceneAutoOff", Toast.LENGTH_SHORT).show();
+                        mAutobutton.setText("AUTO ON");
+                        startPreview();
+
+                    }
+                }
+
+            });
+            mAutobutton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AutoNumber = 2;
+
+                    Toast.makeText(getApplicationContext(), "AutoNumber now 2", Toast.LENGTH_SHORT).show();
+                    mAutobutton.setText("AUTO SCENE");
+                    startPreview();
+
+                    return true;
+                }
+            });
+            mModebutton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    menuonline = true;
+
+                    //Toast.makeText(Camera2VideoImageActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                    final PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                    SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0, 100, 0, "Available Effects");
+                    SubMenu submenu3 = popupMenu.getMenu().addSubMenu(0, 200, 0, "Available Scenes");
+
+
+                    if (WBrunOnce) {
+                        for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
+                                ControlAWBmodeincandescentavailableboolean = true;
+                            }
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 3) {
+                                ControlAWBmodefluorescentavailableboolean = true;
+                            }
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 4) {
+                                ControlAWBmodewarmfluorescentavailableboolean = true;
+                            }
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 5) {
+                                ControlAWBmodedaylightavailableboolean = true;
+                            }
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 6) {
+                                ControlAWBmodecloudydaylightavailableboolean = true;
+                            }
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 7) {
+                                ControlAWBmodetwilightavailableboolean = true;
+
+                            }
+                            if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 8) {
+                                ControlAWBmodeshadeavailableboolean = true;
+
+                            }
+                        }
+                        WBrunOnce = false;
+                    }
+
+
+                    final MenuItem AutoWhiteBalanceItem = popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
+                    AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
+
+                    final MenuItem WhiteBalanceCloudyDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
+                    WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
+                    WhiteBalanceCloudyDaylightItem.setEnabled(ControlAWBmodecloudydaylightavailableboolean);
+                    final MenuItem WhiteBalanceDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceDaylight);
+                    WhiteBalanceDaylightItem.setChecked(WhiteBalanceDaylightBoolean);
+                    WhiteBalanceDaylightItem.setEnabled(ControlAWBmodedaylightavailableboolean);
+                    final MenuItem WhiteBalanceFluorescentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceFluorescent);
+                    WhiteBalanceFluorescentItem.setChecked(WhiteBalanceFluorescentBoolean);
+                    WhiteBalanceFluorescentItem.setEnabled(ControlAWBmodefluorescentavailableboolean);
+                    final MenuItem WhiteBalanceShadeItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceShade);
+                    WhiteBalanceShadeItem.setChecked(WhiteBalanceShadeBoolean);
+                    WhiteBalanceShadeItem.setEnabled(ControlAWBmodeshadeavailableboolean);
+                    final MenuItem WhiteBalanceTwilightitem = popupMenu.getMenu().findItem(R.id.WhiteBalanceTwilight);
+                    WhiteBalanceTwilightitem.setChecked(WhiteBalanceTwilightBoolean);
+                    WhiteBalanceTwilightitem.setEnabled(ControlAWBmodetwilightavailableboolean);
+                    final MenuItem WhiteBalanceWarmFluorescentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceWarmFluorescent);
+                    WhiteBalanceWarmFluorescentItem.setChecked(WhiteBalanceWarmFluorescentBoolean);
+                    WhiteBalanceWarmFluorescentItem.setEnabled(ControlAWBmodewarmfluorescentavailableboolean);
+                    final MenuItem WhiteBalanceIncandenscentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceIncandenscent);
+                    WhiteBalanceIncandenscentItem.setChecked(WhiteBalanceIncandenscentBoolean);
+                    WhiteBalanceIncandenscentItem.setEnabled(ControlAWBmodeincandescentavailableboolean);
+                    final MenuItem WhiteBalanceAutoItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
+                    WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
+                    final MenuItem ColorSpaceCheckedItem = popupMenu.getMenu().findItem(R.id.ColorSpaceInput);
+                    ColorSpaceCheckedItem.setChecked(ColorSpaceInputBoolean);
+                    final MenuItem WhiteBalanceCheckedItem = popupMenu.getMenu().findItem(R.id.CustomWhiteBalance);
+                    WhiteBalanceCheckedItem.setChecked(CustomeWhiteBalanceBoolean);
+                    final MenuItem WB_RAWTouchItem = popupMenu.getMenu().findItem(R.id.WB_RAWTouch);
+                    WB_RAWTouchItem.setChecked(WB_RAWTouchEnabled);
+
+
+                    final int[] SupportedSceneModes = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
+
+
+                    for (int i = 0; i < SupportedSceneModes.length; i++) {
+                        SupportedSceneModes[i] = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i];
+
+                    }
+                    final int[] AvailableEffectsArray1 = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length];
+                    for (int i = 0; i < AvailableEffectsArray1.length; i++) {
+                        AvailableEffectsArray1[i] = (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i]);
+                    }
+                    final String[] AvailableEffectsArray2 = new String[AvailableEffectsArray1.length];
+                    for (int i = 0; i < AvailableEffectsArray1.length; i++) {
+                        if (AvailableEffectsArray1[i] == 0) {
+                            AvailableEffectsArray2[i] = "OFF";
+                        }
+                        if (AvailableEffectsArray1[i] == 1) {
+                            AvailableEffectsArray2[i] = "Mono";
+                        }
+                        if (AvailableEffectsArray1[i] == 2) {
+                            AvailableEffectsArray2[i] = "Negative";
+                        }
+                        if (AvailableEffectsArray1[i] == 3) {
+                            AvailableEffectsArray2[i] = "Solarize";
+                        }
+                        if (AvailableEffectsArray1[i] == 4) {
+                            AvailableEffectsArray2[i] = "Sepia";
+                        }
+                        if (AvailableEffectsArray1[i] == 5) {
+                            AvailableEffectsArray2[i] = "Posterize";
+                        }
+                        if (AvailableEffectsArray1[i] == 6) {
+                            AvailableEffectsArray2[i] = "Whiteboard";
+                        }
+                        if (AvailableEffectsArray1[i] == 7) {
+                            AvailableEffectsArray2[i] = "Blackboard";
+                        }
+                        if (AvailableEffectsArray1[i] == 8) {
+                            AvailableEffectsArray2[i] = "Aqua";
+                        }
+                        submenu2.add(0, i + 100, 0, "" + AvailableEffectsArray2[i]);
+
+                    }
+                    final int[] Scenearray = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
+
+                    for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length; i++) {
+                        Scenearray[i] = (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i]);
+
+                    }
+
+                    final String[] Scenearray2 = new String[Scenearray.length];
+                    for (int i = 0; i < Scenearray.length; i++) {
+                        switch (Scenearray[i]) {
+                            case 0:
+                                Scenearray2[i] = "Disable";
+
+                                break;
+                            case 1:
+                                Scenearray2[i] = "Face Priority";
+
+                                break;
+                            case 2:
+                                Scenearray2[i] = "Action Scene";
+
+                                break;
+                            case 3:
+                                Scenearray2[i] = "Portrait ";
+
+                                break;
+                            case 4:
+                                Scenearray2[i] = "Landscape";
+
+                                break;
+                            case 5:
+                                Scenearray2[i] = "Night ";
+
+                                break;
+                            case 6:
+                                Scenearray2[i] = "Night Portrait";
+
+                                break;
+                            case 7:
+                                Scenearray2[i] = "Theatre";
+
+                                break;
+                            case 8:
+                                Scenearray2[i] = "Beach";
+
+                                break;
+                            case 9:
+                                Scenearray2[i] = "Snow";
+
+                                break;
+                            case 10:
+                                Scenearray2[i] = "Sunset";
+
+                                break;
+                            case 11:
+                                Scenearray2[i] = "Steadyphoto";
+
+                                break;
+                            case 12:
+                                Scenearray2[i] = "Fireworks";
+
+                                break;
+                            case 13:
+                                Scenearray2[i] = "Sports";
+
+                                break;
+                            case 14:
+                                Scenearray2[i] = "Party";
+
+                                break;
+                            case 15:
+                                Scenearray2[i] = "Candlelight";
+
+                                break;
+                            case 16:
+                                Scenearray2[i] = "Barcode";
+
+                                break;
+                            case 18:
+                                Scenearray2[i] = "HDR";
+
+                                break;
+
+                        }
+                        submenu3.add(0, i + 200, 0, "" + Scenearray2[i]);
+
+                    }
+
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            //add settings
+                            int position = item.getItemId();
+
+                            for (int i = 0; i < AvailableEffectsArray2.length; i++) {
+                                if (position == 100 + i) {
+                                    mCameraEffect = AvailableEffectsArray1[i];
+                                    startPreview();
+                                }
+
+                            }
+                            for (int i = 0; i < Scenearray2.length; i++) {
+                                if (position == 200 + i) {
+                                    mSceneMode = Scenearray[i];
+                                    startPreview();
+                                }
+                            }
+
+
+                            final Range<Long> ShutterSpeed = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE);
+                            final long ShutterSpeed1 = (ShutterSpeed.getLower());
+
+                            final long ShutterSpeed2 = (ShutterSpeed.getUpper());
+                            //Toast.makeText(getApplicationContext(), "ShutterSpeedMax: "+ ShutterSpeed2, Toast.LENGTH_LONG).show();
+                            double ShutterSpeed1Double = (double) ShutterSpeed1 / 1000000000;
+                            double ShutterSpeed2Double = (double) ShutterSpeed2 / 1000000000;
+                            //trying to convert to fractions
+                            double x = 1 / ShutterSpeed1Double;
+                            if (ShutterSpeed2Double <= 1) {
+                                double y = 1 / ShutterSpeed2Double;
+                                ShutterSpeed2String = ("1" + "/" + (int) y);
+                            } else {
+                                double y = ShutterSpeed2Double;
+                                ShutterSpeed2String = ("" + (int) y);
+
+                            }
+                            ShutterSpeed1String = ("1" + "/" + (int) x);
+                            //since ShutterSpeed1 is usually a fraction anyways
+
+                            mISOtext = (EditText) findViewById(R.id.ISOtext);
+                            if (ISOvalue == 0) {
+                                mISOtext.setText("ISO:AUTO");
+                            }
+
+                            final Range<Integer> ISOrange = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE);
+                            final int LowestISO = ISOrange.getLower();
+                            final int HighestISO = ISOrange.getUpper();
+
+
+                            mChangeFocusSeekBar = (SeekBar) findViewById(R.id.FocusChangeSeekBar);
+                            mChangeFocusSeekBar.setMax((int) ((int) (1 / mMaxFocusDistance - 1 / mMinFocusDistance) / 0.05));
+
+                            mCloseALLbutton = (ImageButton) findViewById(R.id.CloseALLbutton);
+                            mCloseALLbutton.setVisibility(View.VISIBLE);
+                            mSeekbar = (SeekBar) findViewById(R.id.seekBar);
+                            mISOseekbar = (SeekBar) findViewById(R.id.ISOseekbar);
+                            mTextSeekBar = (EditText) findViewById(R.id.editText);
+                            mMinimumShutterSpeed = (EditText) findViewById(R.id.MinimumShutterSpeed);
+                            mMaximumShutterSpeed = (EditText) findViewById(R.id.MaximumShutterSpeed);
+
+
+                            mCloseALLbutton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mISOtext.getVisibility() == View.VISIBLE) {
+                                        mISOtext.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mFocusTextView.getVisibility() == View.VISIBLE) {
+                                        mFocusTextView.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    if (mSeekbar.getVisibility() == View.VISIBLE) {
+                                        mSeekbar.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mISOseekbar.getVisibility() == View.VISIBLE) {
+                                        mISOseekbar.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mTextSeekBar.getVisibility() == View.VISIBLE) {
+                                        mTextSeekBar.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mMinimumShutterSpeed.getVisibility() == View.VISIBLE) {
+                                        mMinimumShutterSpeed.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mMaximumShutterSpeed.getVisibility() == View.VISIBLE) {
+                                        mMaximumShutterSpeed.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mChangeFocusSeekBar.getVisibility() == View.VISIBLE) {
+                                        mChangeFocusSeekBar.setVisibility(View.INVISIBLE);
+                                    }
+                                    if (mTimeInterval.getVisibility() == View.VISIBLE) {
+                                        mTimeInterval.setVisibility(View.INVISIBLE);
+                                    }
+
+
+                                }
+                            });
+
+                            //mRawCheckBox = (CheckBox) findViewById(R.id.RawInput);
+
+                            switch (position) {
+                                case R.id.LockAutoFocus:
+
+                                    if (!lockFocusEnableIsChecked) {
+                                        lockFocusEnableIsChecked = true;
+                                        Toast.makeText(getApplicationContext(), "AutoFocus lock Enabled", Toast.LENGTH_SHORT).show();
+                                        //UnlockFocusSpecialBooleanCaptureon=true;
+
+
+                                        startPreview();
+
+
+                                    } else if (lockFocusEnableIsChecked) {
+                                        lockFocusEnableIsChecked = false;
+                                        Toast.makeText(getApplicationContext(), "AutoFocus Unlock Enabled", Toast.LENGTH_SHORT).show();
+
+                                        //mFocusTextView.setVisibility(View.INVISIBLE);
+
+
+                                        UnlockFocusSpecialBooleanCaptureon = false;
+                                        startPreview();
+
+                                    }
+                                    break;
+
+
+                                case R.id.manualFocus:
+                                    if (!manualFocusEnableIsChecked) {
+                                        manualFocusEnableIsChecked = true;
+                                        mFocusTextView.setVisibility(View.VISIBLE);
+                                        Toast.makeText(getApplicationContext(), "Manual Focus Activated", Toast.LENGTH_SHORT).show();
+
+                                        startPreview();
+                                    } else if (manualFocusEnableIsChecked) {
+                                        manualFocusEnableIsChecked = false;
+                                        mFocusTextView.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(getApplicationContext(), "Auto Focus Enabled", Toast.LENGTH_SHORT).show();
+                                        startPreview();
+                                    }
+                                    if (mChangeFocusSeekBar.getVisibility() == View.VISIBLE) {
+                                        mChangeFocusSeekBar.setVisibility(View.INVISIBLE);
+                                    } else if (mChangeFocusSeekBar.getVisibility() == View.INVISIBLE) {
+
+                                        mChangeFocusSeekBar.setVisibility(View.VISIBLE);
+                                        mChangeFocusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                                            @Override
+                                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                mFocusDistance = (progress * 0.05);
+                                                mFocusTextView.setText(String.format("Focal Distance: " + "%.2f", mFocusDistance) + "m");
                                             }
 
+                                            @Override
+                                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                            }
+
+                                            @Override
+                                            public void onStopTrackingTouch(SeekBar seekBar) {
+                                                startPreview();
+
+                                            }
+                                        });
+                                    }
+                                    //startPreview();
+                                    break;
+                                case R.id.manualinputFocus:
+
+                                    //Toast.makeText(getApplicationContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
+                                    LayoutInflater inflate5 = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                    View ThemanualinputView = inflate5.inflate(R.layout.manual_focus_input, null);
+                                    AlertDialog.Builder manualinputalert = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                    manualinputalert.setTitle("Manual Focus Input");
+                                    manualinputalert.setView(ThemanualinputView);
+                                    manualinputalert.setCancelable(true);
+                                    mManualFocusInput = (EditText) ThemanualinputView.findViewById(R.id.FocusEditText);
+                                    manualinputalert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+
                                         }
-                                        CaptureAveragepixelCountBooleanOn = false;
+                                    });
+                                    manualinputalert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (!manualFocusEnableIsChecked) {
+                                                manualFocusEnableIsChecked = true;
+                                                mFocusTextView.setVisibility(View.VISIBLE);
+                                                Toast.makeText(getApplicationContext(), "Manual Focus Activated", Toast.LENGTH_SHORT).show();
+
+
+                                            } else if (manualFocusEnableIsChecked) {
+                                                manualFocusEnableIsChecked = false;
+                                                mFocusTextView.setVisibility(View.INVISIBLE);
+                                                Toast.makeText(getApplicationContext(), "Auto Focus Enabled", Toast.LENGTH_SHORT).show();
+
+                                            }
+
+                                            double TempManualFocusInput = Double.parseDouble(mManualFocusInput.getText().toString());
+                                            mFocusTextView.setText(TempManualFocusInput + "");
+                                            mFocusDistance = TempManualFocusInput;
+
+                                        }
+                                    });
+                                    manualinputalert.show();
+                                    startPreview();
+
+
+                                    break;
+
+
+                                case R.id.ColorSpaceInput:
+
+                                    if (ColorSpaceInputBoolean) {
+                                        ColorSpaceInputBoolean = false;
+                                        Toast.makeText(getApplicationContext(), "Colour SpaceTurned OFF", Toast.LENGTH_SHORT).show();
+                                        startPreview();
+                                    } else {
+                                        //ColorSpaceInputBoolean=true;
+                                        Toast.makeText(getApplicationContext(), "Colour Space Turned ON", Toast.LENGTH_SHORT).show();
+
+
+                                        final LayoutInflater ColorSpaceinflater = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                        final View ColourSpaceView = ColorSpaceinflater.inflate(R.layout.colorspaceinput, null);
+                                        final AlertDialog.Builder ColourSpaceThing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                        ColourSpaceThing.setTitle("Colour Space input : ");
+                                        ColourSpaceThing.setView(ColourSpaceView);
+                                        ColourSpaceThing.setCancelable(true);
+                                        //EditTextBoxes
+                                        mColorSpaceText1 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText1);
+                                        mColorSpaceText2 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText2);
+                                        mColorSpaceText3 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText3);
+                                        mColorSpaceText4 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText4);
+                                        mColorSpaceText5 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText5);
+                                        mColorSpaceText6 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText6);
+                                        mColorSpaceText7 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText7);
+                                        mColorSpaceText8 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText8);
+                                        mColorSpaceText9 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText9);
+
+                                        ColourSpaceThing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                                ColorSpaceInputBoolean = false;
+                                                Toast.makeText(getApplicationContext(), "Colour SpaceTurned OFF", Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        });
+
+                                        ColourSpaceThing.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                ColorSpaceInputBoolean = true;
+                                                int TempWhiteBalanceInputEditText1 = Integer.parseInt(mColorSpaceText1.getText().toString());
+                                                int TempWhiteBalanceInputEditText2 = Integer.parseInt(mColorSpaceText2.getText().toString());
+                                                int TempWhiteBalanceInputEditText3 = Integer.parseInt(mColorSpaceText3.getText().toString());
+                                                int TempWhiteBalanceInputEditText4 = Integer.parseInt(mColorSpaceText4.getText().toString());
+                                                int TempWhiteBalanceInputEditText5 = Integer.parseInt(mColorSpaceText5.getText().toString());
+                                                int TempWhiteBalanceInputEditText6 = Integer.parseInt(mColorSpaceText6.getText().toString());
+                                                int TempWhiteBalanceInputEditText7 = Integer.parseInt(mColorSpaceText7.getText().toString());
+                                                int TempWhiteBalanceInputEditText8 = Integer.parseInt(mColorSpaceText8.getText().toString());
+                                                int TempWhiteBalanceInputEditText9 = Integer.parseInt(mColorSpaceText9.getText().toString());
+                                                ColorSpaceRed1 = TempWhiteBalanceInputEditText1;
+                                                ColorSpaceRed2 = TempWhiteBalanceInputEditText2;
+                                                ColorSpaceRed3 = TempWhiteBalanceInputEditText3;
+                                                ColorSpaceGreen1 = TempWhiteBalanceInputEditText4;
+                                                ColorSpaceGreen2 = TempWhiteBalanceInputEditText5;
+                                                ColorSpaceGreen3 = TempWhiteBalanceInputEditText6;
+                                                ColorSpaceBlue1 = TempWhiteBalanceInputEditText7;
+                                                ColorSpaceBlue2 = TempWhiteBalanceInputEditText8;
+                                                ColorSpaceBlue3 = TempWhiteBalanceInputEditText9;
+                                                startPreview();
+
+
+                                            }
+                                        });
+                                        ColourSpaceThing.show();
                                     }
 
-                                    Canvas c = holder.lockCanvas();
-                                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                                    break;
+                                case R.id.BasicManualMode:
+                                    if (AutoNumber == 0) {
+                                        AutoNumber = 1;
+                                        Toast.makeText(getApplicationContext(), "AUTO OFF", Toast.LENGTH_SHORT).show();
+                                        mAutobutton.setText("AUTO OFF");
+                                    }
+                                    startPreview();
+                                    break;
+                                case R.id.AdvancedManualMode:
 
-                                    if (!MovementButtonnBoolen || CaptureAveragepixelCountBooleanOn) {
-                                        if (WhiteBalanceBallInspector != null) {
-                                            c.drawBitmap(WhiteBalanceBallInspector, BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 2), BallInspectory - (WhiteBalanceBallInspector.getHeight() / 2), null);
-                                        }
+                                    break;
+
+                                case R.id.LockWhiteBalance:
+                                    if (AutoWhiteBalancelockBoolean) {
+                                        AutoWhiteBalancelockBoolean = false;
+                                        item.setChecked(false);
+                                        //wip
+                                        //AutoWhiteBalanceUnlock();
+                                    } else {
+                                        //wip
+                                        //AutoWhiteBalanceLock();
+                                        item.setChecked(true);
+                                        AutoWhiteBalancelockBoolean = true;
+                                    }
+                                    //lock if unlocked
+                                    //unlock if lock
+                                    startPreview();
+                                    break;
+                                case R.id.CustomWhiteBalance:
+                                    if (CustomeWhiteBalanceBoolean) {
+                                        CustomeWhiteBalanceBoolean = false;
+                                        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO);
+                                        Toast.makeText(getApplicationContext(), "Color Correction Auto", Toast.LENGTH_SHORT).show();
+                                        startPreview();
+                                    } else {
+                                        CustomeWhiteBalanceBoolean = true;
+                                        //implement seek bar here
+
+                                        LayoutInflater WhiteBalanceInflater1 = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                        View WhiteBalance1 = WhiteBalanceInflater1.inflate(R.layout.whitebalance1_info_alertdialog, null);
+                                        AlertDialog.Builder WhiteBalanceThing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                        WhiteBalanceThing.setTitle("Colour inputs");
+                                        WhiteBalanceThing.setView(WhiteBalance1);
+                                        WhiteBalanceThing.setCancelable(true);
+                                        mWhitebalance1 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText1);
+                                        mWhitebalance2 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText2);
+                                        mWhitebalance3 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText3);
+                                        mWhitebalance4 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText4);
+                                        WhiteBalanceThing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                        WhiteBalanceThing.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                double mWhitebalance1temp = Double.parseDouble(mWhitebalance1.getText().toString());
+                                                double mWhitebalance2temp = Double.parseDouble(mWhitebalance2.getText().toString());
+                                                double mWhitebalance3temp = Double.parseDouble(mWhitebalance3.getText().toString());
+                                                double mWhitebalance4temp = Double.parseDouble(mWhitebalance4.getText().toString());
+                                                RggbChannelBlue = mWhitebalance4temp;
+                                                RggbChannelG_even = mWhitebalance2temp;
+                                                RggbChannelG_odd = mWhitebalance3temp;
+                                                RggbChsnnelR = mWhitebalance1temp;
+                                                startPreview();
+
+
+                                            }
+                                        });
+
+                                        WhiteBalanceThing.show();
+                                        //Toast.makeText(getApplicationContext(), "Color Correction Manual", Toast.LENGTH_SHORT).show();
+
+
                                     }
 
-                                    holder.unlockCanvasAndPost(c);
+                                    //Slider Activation
 
 
-                                }
-                                String convertSS;
-                                String PixelValues;
+                                    break;
 
 
-                                if (MovementButtonnBoolen == false || CaptureAveragepixelCountBooleanOn) {
-                                    PixelValues = "Red Value: " + redPixelData
-                                            + " Green Pixel Data : " + greePixelData + " Blue Pixel Data :" + bluePixelData
-                                            + " Average Red Value :" + AverageredPixelData + " Average Green Value : " + AveragegreenPixelData + " Average Blue Value : "
-                                            + AveragebluePixelData
-                                    ;
-                                } else {
-                                    PixelValues = "";
-                                }
-                                mTotalRotation=sensorDeviceRotation(mCameraCharacteristics,mDeviceOrientation);
+                                case R.id.WhiteBalanceCloudyDaylight:
+                                    if (!WhiteBalanceCloudyDaylightBoolean) {
+                                        mWBMode = CONTROL_AWB_MODE_CLOUDY_DAYLIGHT;
+                                        WhiteBalanceCloudyDaylightBoolean = true;
+                                    } else {
+                                        WhiteBalanceAutoBoolean = true;
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceCloudyDaylightBoolean = false;
 
-                                if (1000000000 / mCurrentSSvalue <= 1) {
-                                    convertSS = String.valueOf(mCurrentSSvalue / 1000000000);
-                                } else {
-                                    convertSS = "1/" + String.valueOf(1000000000 / mCurrentSSvalue);
-                                }
-                                if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
-                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
-                                            mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" + PixelValues
-                                    );
 
-                                } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
-                                    mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
-                                            + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Lens Aperature" + mCurrentAperatureValue + "\t\t\t\t" + PixelValues
-                                    ); // this action have to be in UI thread
-                                }
+                                    }
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
 
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }
-        })).start();
-
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        if (MediaStore.ACTION_IMAGE_CAPTURE.equals(action)) {
-            mRequestingAppUri = intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT);
-        }
-
-        mFlashButtonOnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                //Toast.makeText(getApplicationContext(), "Flash", Toast.LENGTH_SHORT).show();
-                PopupMenu popMenu2 = new PopupMenu(Camera2VideoImageActivity.this, mFlashButtonOnOff);
-
-                popMenu2.inflate(R.menu.flash_popup_menu);
-                popMenu2.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int position2 = item.getItemId();
-                        switch (position2) {
-                            case R.id.FlashOff:
-                                mFlashButtonOnOff.setImageResource(R.drawable.ic_flash_off_black_24dp);
-                                mFlashMode = 0;
-                                startPreview();
-
-
-                                break;
-                            case R.id.FlashAuto:
-                                mFlashButtonOnOff.setImageResource(R.drawable.ic_flash_auto_black_24dp);
-                                mFlashMode = 1;
-
-
-                                break;
-                            case R.id.FlashOn:
-                                mFlashButtonOnOff.setImageResource(R.drawable.ic_flash_on_black_24dp);
-                                mFlashMode = 2;
-                                break;
-                            case R.id.TorchOn:
-                                mFlashButtonOnOff.setImageResource(R.drawable.ic_highlight_black_24dp);
-                                mFlashMode = 3;
-                                startPreview();
-                                break;
-
-
-                        }
-                        return false;
-                    }
-                });
-
-                popMenu2.show();
-
-
-            }
-        });
-
-
-        mFlipCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (FlipNumberBoolean) {
-
-                    FlipNumberBoolean = false;
-                    FlipNumber = 0;
-                    mFlipCamera.setImageResource(R.drawable.flipfront);
-                    closeCamera();
-                    stopBackgroundThread();
-
-                    startBackgroundThread();
-
-                    if (mTextureView.isAvailable()) {
-                        setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
-                        connectCamera();
-
-                    } else {
-                        mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
-                    }
-                } else {
-
-                    FlipNumberBoolean = true;
-                    FlipNumber = 1;
-                    mFlipCamera.setImageResource(R.drawable.flipback);
-                    closeCamera();
-                    stopBackgroundThread();
-                    startBackgroundThread();
-                    if (mTextureView.isAvailable()) {
-                        setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
-                        connectCamera();
-                    } else {
-                        mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
-                    }
-
-
-                }
-            }
-        });
-        mModebutton = (Button) findViewById(R.id.button);
-        mAutobutton = (Button) findViewById(R.id.Auto);
-        mAutobutton.setText("AUTO ON");
-        mAutobutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (AutoNumber == 0) {
-                    AutoNumber = 1;
-                    Toast.makeText(getApplicationContext(), "AUTO OFF", Toast.LENGTH_SHORT).show();
-                    mAutobutton.setText("AUTO OFF");
-                    startPreview();
-
-                } else if (AutoNumber == 1) {
-                    AutoNumber = 0;
-                    Toast.makeText(getApplicationContext(), "AUTO ON", Toast.LENGTH_SHORT).show();
-                    mAutobutton.setText("AUTO ON");
-                    ColorSpaceInputBoolean = false;
-                    startPreview();
-
-
-                } else if (AutoNumber == 2) {
-                    AutoNumber = 0;
-                    Toast.makeText(getApplicationContext(), "SceneAutoOff", Toast.LENGTH_SHORT).show();
-                    mAutobutton.setText("AUTO ON");
-                    startPreview();
-
-                }
-            }
-
-        });
-        mAutobutton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                AutoNumber = 2;
-
-                Toast.makeText(getApplicationContext(), "AutoNumber now 2", Toast.LENGTH_SHORT).show();
-                mAutobutton.setText("AUTO SCENE");
-                startPreview();
-
-                return true;
-            }
-        });
-        mModebutton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                menuonline = true;
-
-                //Toast.makeText(Camera2VideoImageActivity.this, "clicked", Toast.LENGTH_SHORT).show();
-                final PopupMenu popupMenu = new PopupMenu(Camera2VideoImageActivity.this, mModebutton);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-                SubMenu submenu2 = popupMenu.getMenu().addSubMenu(0, 100, 0, "Available Effects");
-                SubMenu submenu3= popupMenu.getMenu().addSubMenu(0, 200,0,"Available Scenes");
-
-
-                if (WBrunOnce) {
-                    for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 2) {
-                            ControlAWBmodeincandescentavailableboolean = true;
-                        }
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 3) {
-                            ControlAWBmodefluorescentavailableboolean = true;
-                        }
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 4) {
-                            ControlAWBmodewarmfluorescentavailableboolean = true;
-                        }
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 5) {
-                            ControlAWBmodedaylightavailableboolean = true;
-                        }
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 6) {
-                            ControlAWBmodecloudydaylightavailableboolean = true;
-                        }
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 7) {
-                            ControlAWBmodetwilightavailableboolean = true;
-
-                        }
-                        if (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] == 8) {
-                            ControlAWBmodeshadeavailableboolean = true;
-
-                        }
-                    }
-                    WBrunOnce = false;
-                }
-
-
-                final MenuItem AutoWhiteBalanceItem = popupMenu.getMenu().findItem(R.id.LockWhiteBalance);
-                AutoWhiteBalanceItem.setChecked(AutoWhiteBalancelockBoolean);
-
-                final MenuItem WhiteBalanceCloudyDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceCloudyDaylight);
-                WhiteBalanceCloudyDaylightItem.setChecked(WhiteBalanceCloudyDaylightBoolean);
-                WhiteBalanceCloudyDaylightItem.setEnabled(ControlAWBmodecloudydaylightavailableboolean);
-                final MenuItem WhiteBalanceDaylightItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceDaylight);
-                WhiteBalanceDaylightItem.setChecked(WhiteBalanceDaylightBoolean);
-                WhiteBalanceDaylightItem.setEnabled(ControlAWBmodedaylightavailableboolean);
-                final MenuItem WhiteBalanceFluorescentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceFluorescent);
-                WhiteBalanceFluorescentItem.setChecked(WhiteBalanceFluorescentBoolean);
-                WhiteBalanceFluorescentItem.setEnabled(ControlAWBmodefluorescentavailableboolean);
-                final MenuItem WhiteBalanceShadeItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceShade);
-                WhiteBalanceShadeItem.setChecked(WhiteBalanceShadeBoolean);
-                WhiteBalanceShadeItem.setEnabled(ControlAWBmodeshadeavailableboolean);
-                final MenuItem WhiteBalanceTwilightitem = popupMenu.getMenu().findItem(R.id.WhiteBalanceTwilight);
-                WhiteBalanceTwilightitem.setChecked(WhiteBalanceTwilightBoolean);
-                WhiteBalanceTwilightitem.setEnabled(ControlAWBmodetwilightavailableboolean);
-                final MenuItem WhiteBalanceWarmFluorescentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceWarmFluorescent);
-                WhiteBalanceWarmFluorescentItem.setChecked(WhiteBalanceWarmFluorescentBoolean);
-                WhiteBalanceWarmFluorescentItem.setEnabled(ControlAWBmodewarmfluorescentavailableboolean);
-                final MenuItem WhiteBalanceIncandenscentItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceIncandenscent);
-                WhiteBalanceIncandenscentItem.setChecked(WhiteBalanceIncandenscentBoolean);
-                WhiteBalanceIncandenscentItem.setEnabled(ControlAWBmodeincandescentavailableboolean);
-                final MenuItem WhiteBalanceAutoItem = popupMenu.getMenu().findItem(R.id.WhiteBalanceAuto);
-                WhiteBalanceAutoItem.setChecked(WhiteBalanceAutoBoolean);
-                final MenuItem ColorSpaceCheckedItem=popupMenu.getMenu().findItem(R.id.ColorSpaceInput);
-                ColorSpaceCheckedItem.setChecked(ColorSpaceInputBoolean);
-                final MenuItem WhiteBalanceCheckedItem=popupMenu.getMenu().findItem(R.id.CustomWhiteBalance);
-                WhiteBalanceCheckedItem.setChecked(CustomeWhiteBalanceBoolean);
-                final MenuItem WB_RAWTouchItem = popupMenu.getMenu().findItem(R.id.WB_RAWTouch);
-                WB_RAWTouchItem.setChecked(WB_RAWTouchEnabled);
-
-
-
-
-
-                final int[] SupportedSceneModes = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
-
-
-                for (int i = 0; i < SupportedSceneModes.length; i++) {
-                    SupportedSceneModes[i] = mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i];
-
-                }
-                final int[] AvailableEffectsArray1 = new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length];
-                for (int i = 0; i < AvailableEffectsArray1.length; i++) {
-                    AvailableEffectsArray1[i] = (mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i]);
-                }
-                final String[] AvailableEffectsArray2 = new String[AvailableEffectsArray1.length];
-                for (int i = 0; i < AvailableEffectsArray1.length; i++) {
-                    if (AvailableEffectsArray1[i] == 0) {
-                        AvailableEffectsArray2[i] = "OFF";
-                    }
-                    if (AvailableEffectsArray1[i] == 1) {
-                        AvailableEffectsArray2[i] = "Mono";
-                    }
-                    if (AvailableEffectsArray1[i] == 2) {
-                        AvailableEffectsArray2[i] = "Negative";
-                    }
-                    if (AvailableEffectsArray1[i] == 3) {
-                        AvailableEffectsArray2[i] = "Solarize";
-                    }
-                    if (AvailableEffectsArray1[i] == 4) {
-                        AvailableEffectsArray2[i] = "Sepia";
-                    }
-                    if (AvailableEffectsArray1[i] == 5) {
-                        AvailableEffectsArray2[i] = "Posterize";
-                    }
-                    if (AvailableEffectsArray1[i] == 6) {
-                        AvailableEffectsArray2[i] = "Whiteboard";
-                    }
-                    if (AvailableEffectsArray1[i] == 7) {
-                        AvailableEffectsArray2[i] = "Blackboard";
-                    }
-                    if (AvailableEffectsArray1[i] == 8) {
-                        AvailableEffectsArray2[i] = "Aqua";
-                    }
-                    submenu2.add(0, i + 100, 0, "" + AvailableEffectsArray2[i]);
-
-                }
-                final int[] Scenearray=new int[mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length];
-
-                for(int i=0;i<mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length;i++){
-                    Scenearray[i]=(mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i]);
-
-                }
-
-                final String[] Scenearray2=new String[Scenearray.length];
-                for(int i=0;i<Scenearray.length;i++){
-                    switch(Scenearray[i]){
-                        case 0:
-                            Scenearray2[i]="Disable";
-
-                            break;
-                        case 1:
-                            Scenearray2[i]="Face Priority";
-
-                            break;
-                        case 2:Scenearray2[i]="Action Scene";
-
-                            break;
-                        case 3:Scenearray2[i]="Portrait ";
-
-                            break;
-                        case 4:Scenearray2[i]="Landscape";
-
-                            break;
-                        case 5:Scenearray2[i]="Night ";
-
-                            break;
-                        case 6:Scenearray2[i]="Night Portrait";
-
-                            break;
-                        case 7:Scenearray2[i]="Theatre";
-
-                            break;
-                        case 8:Scenearray2[i]="Beach";
-
-                            break;
-                        case 9:Scenearray2[i]="Snow";
-
-                            break;
-                        case 10:Scenearray2[i]="Sunset";
-
-                            break;
-                        case 11:Scenearray2[i]="Steadyphoto";
-
-                            break;
-                        case 12:Scenearray2[i]="Fireworks";
-
-                            break;
-                        case 13:Scenearray2[i]="Sports";
-
-                            break;
-                        case 14:Scenearray2[i]="Party";
-
-                            break;
-                        case 15:Scenearray2[i]="Candlelight";
-
-                            break;
-                        case 16:Scenearray2[i]="Barcode";
-
-                            break;
-                        case 18:Scenearray2[i]="HDR";
-
-                            break;
-
-                    }
-                    submenu3.add(0,i+200,0,""+Scenearray2[i]);
-
-                }
-
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        //add settings
-                        int position = item.getItemId();
-
-                        for (int i = 0; i < AvailableEffectsArray2.length; i++) {
-                            if (position == 100 + i) {
-                                mCameraEffect = AvailableEffectsArray1[i];
-                                startPreview();
-                            }
-
-                        }
-                        for(int i=0;i<Scenearray2.length;i++){
-                            if(position==200+i){
-                                mSceneMode=Scenearray[i];
-                                startPreview();
-                            }
-                        }
-
-
-                        final Range<Long> ShutterSpeed = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE);
-                        final long ShutterSpeed1 = (ShutterSpeed.getLower());
-
-                        final long ShutterSpeed2 = (ShutterSpeed.getUpper());
-                        //Toast.makeText(getApplicationContext(), "ShutterSpeedMax: "+ ShutterSpeed2, Toast.LENGTH_LONG).show();
-                        double ShutterSpeed1Double = (double) ShutterSpeed1 / 1000000000;
-                        double ShutterSpeed2Double = (double) ShutterSpeed2 / 1000000000;
-                        //trying to convert to fractions
-                        double x = 1 / ShutterSpeed1Double;
-                        if (ShutterSpeed2Double <= 1) {
-                            double y = 1 / ShutterSpeed2Double;
-                            ShutterSpeed2String = ("1" + "/" + (int) y);
-                        } else {
-                            double y = ShutterSpeed2Double;
-                            ShutterSpeed2String = ("" + (int) y);
-
-                        }
-                        ShutterSpeed1String = ("1" + "/" + (int) x);
-                        //since ShutterSpeed1 is usually a fraction anyways
-
-                        mISOtext = (EditText) findViewById(R.id.ISOtext);
-                        if (ISOvalue == 0) {
-                            mISOtext.setText("ISO:AUTO");
-                        }
-
-                        final Range<Integer> ISOrange = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE);
-                        final int LowestISO = ISOrange.getLower();
-                        final int HighestISO = ISOrange.getUpper();
-
-
-                        mChangeFocusSeekBar = (SeekBar) findViewById(R.id.FocusChangeSeekBar);
-                        mChangeFocusSeekBar.setMax((int) ((int) (1 / mMaxFocusDistance - 1 / mMinFocusDistance) / 0.05));
-
-                        mCloseALLbutton = (ImageButton) findViewById(R.id.CloseALLbutton);
-                        mCloseALLbutton.setVisibility(View.VISIBLE);
-                        mSeekbar = (SeekBar) findViewById(R.id.seekBar);
-                        mISOseekbar = (SeekBar) findViewById(R.id.ISOseekbar);
-                        mTextSeekBar = (EditText) findViewById(R.id.editText);
-                        mMinimumShutterSpeed = (EditText) findViewById(R.id.MinimumShutterSpeed);
-                        mMaximumShutterSpeed = (EditText) findViewById(R.id.MaximumShutterSpeed);
-
-
-                        mCloseALLbutton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (mISOtext.getVisibility() == View.VISIBLE) {
-                                    mISOtext.setVisibility(View.INVISIBLE);
-                                }
-                                if (mFocusTextView.getVisibility() == View.VISIBLE) {
-                                    mFocusTextView.setVisibility(View.INVISIBLE);
-                                }
-
-                                if (mSeekbar.getVisibility() == View.VISIBLE) {
-                                    mSeekbar.setVisibility(View.INVISIBLE);
-                                }
-                                if (mISOseekbar.getVisibility() == View.VISIBLE) {
-                                    mISOseekbar.setVisibility(View.INVISIBLE);
-                                }
-                                if (mTextSeekBar.getVisibility() == View.VISIBLE) {
-                                    mTextSeekBar.setVisibility(View.INVISIBLE);
-                                }
-                                if (mMinimumShutterSpeed.getVisibility() == View.VISIBLE) {
-                                    mMinimumShutterSpeed.setVisibility(View.INVISIBLE);
-                                }
-                                if (mMaximumShutterSpeed.getVisibility() == View.VISIBLE) {
-                                    mMaximumShutterSpeed.setVisibility(View.INVISIBLE);
-                                }
-                                if (mChangeFocusSeekBar.getVisibility() == View.VISIBLE) {
-                                    mChangeFocusSeekBar.setVisibility(View.INVISIBLE);
-                                }
-                                if (mTimeInterval.getVisibility() == View.VISIBLE) {
-                                    mTimeInterval.setVisibility(View.INVISIBLE);
-                                }
-
-
-                            }
-                        });
-
-                        //mRawCheckBox = (CheckBox) findViewById(R.id.RawInput);
-
-                        switch (position) {
-                            case R.id.LockAutoFocus:
-
-                                if (!lockFocusEnableIsChecked) {
-                                    lockFocusEnableIsChecked = true;
-                                    Toast.makeText(getApplicationContext(), "AutoFocus lock Enabled", Toast.LENGTH_SHORT).show();
-                                    //UnlockFocusSpecialBooleanCaptureon=true;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
 
 
                                     startPreview();
+                                    break;
+                                case R.id.WhiteBalanceDaylight:
+
+                                    if (!WhiteBalanceDaylightBoolean) {
+                                        mWBMode = CONTROL_AWB_MODE_DAYLIGHT;
+                                        WhiteBalanceDaylightBoolean = true;
+                                    } else {
+                                        WhiteBalanceAutoBoolean = true;
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
 
 
-                                } else if (lockFocusEnableIsChecked) {
-                                    lockFocusEnableIsChecked = false;
-                                    Toast.makeText(getApplicationContext(), "AutoFocus Unlock Enabled", Toast.LENGTH_SHORT).show();
+                                        WhiteBalanceDaylightBoolean = false;
+                                    }
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
 
-                                    //mFocusTextView.setVisibility(View.INVISIBLE);
+
+                                    startPreview();
+                                    break;
+                                case R.id.WhiteBalanceFluorescent:
+
+                                    if (!WhiteBalanceFluorescentBoolean) {
+
+                                        WhiteBalanceFluorescentBoolean = true;
+                                        mWBMode = CONTROL_AWB_MODE_FLUORESCENT;
+                                        WhiteBalanceAutoBoolean = false;
+                                        //put the rest
+                                    } else {
+                                        WhiteBalanceFluorescentBoolean = false;
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceAutoBoolean = true;
+
+                                    }
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
+
+                                    startPreview();
+                                    break;
+                                case R.id.WhiteBalanceShade:
+
+                                    if (!WhiteBalanceShadeBoolean) {
+                                        WhiteBalanceShadeBoolean = true;
+                                        mWBMode = CONTROL_AWB_MODE_SHADE;
+                                    } else {
+                                        WhiteBalanceShadeBoolean = false;
+
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceAutoBoolean = true;
+                                    }
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
+
+                                    startPreview();
+                                    break;
+                                case R.id.WhiteBalanceTwilight:
+                                    if (!WhiteBalanceTwilightBoolean) {
+                                        mWBMode = CONTROL_AWB_MODE_TWILIGHT;
+                                        WhiteBalanceTwilightBoolean = true;
+
+                                    } else {
+                                        WhiteBalanceTwilightBoolean = false;
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceAutoBoolean = true;
+                                    }
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
 
 
-                                    UnlockFocusSpecialBooleanCaptureon = false;
+                                    startPreview();
+                                    break;
+                                case R.id.WhiteBalanceWarmFluorescent:
+                                    if (!WhiteBalanceWarmFluorescentBoolean) {
+                                        mWBMode = CONTROL_AWB_MODE_WARM_FLUORESCENT;
+                                        WhiteBalanceWarmFluorescentBoolean = true;
+
+                                    } else {
+                                        WhiteBalanceWarmFluorescentBoolean = false;
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceAutoBoolean = true;
+                                    }
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceIncandenscentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
+
+
+                                    startPreview();
+                                    break;
+                                case R.id.WhiteBalanceIncandenscent:
+                                    if (!WhiteBalanceIncandenscentBoolean) {
+                                        mWBMode = CONTROL_AWB_MODE_INCANDESCENT;
+                                        WhiteBalanceIncandenscentBoolean = true;
+
+                                    } else {
+                                        WhiteBalanceIncandenscentBoolean = false;
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceAutoBoolean = true;
+                                    }
+                                    WhiteBalanceAutoBoolean = false;
+                                    WhiteBalanceWarmFluorescentBoolean = false;
+                                    WhiteBalanceTwilightBoolean = false;
+                                    WhiteBalanceShadeBoolean = false;
+                                    WhiteBalanceFluorescentBoolean = false;
+                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    WhiteBalanceDaylightBoolean = false;
+                                    SpotLockedWhiteBalanceBoolean = false;
+
+
+                                    startPreview();
+                                    break;
+                                case R.id.WhiteBalanceAuto:
+                                    if (mWBMode != CONTROL_AWB_MODE_AUTO) {
+                                        mWBMode = CONTROL_AWB_MODE_AUTO;
+                                        WhiteBalanceAutoBoolean = true;
+                                        WhiteBalanceIncandenscentBoolean = false;
+                                        WhiteBalanceWarmFluorescentBoolean = false;
+                                        WhiteBalanceTwilightBoolean = false;
+                                        WhiteBalanceShadeBoolean = false;
+                                        WhiteBalanceFluorescentBoolean = false;
+                                        WhiteBalanceCloudyDaylightBoolean = false;
+                                        WhiteBalanceDaylightBoolean = false;
+                                        SpotLockedWhiteBalanceBoolean = false;
+
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "AUTO is already on", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    startPreview();
+                                    break;
+
+
+                                case R.id.ChangeISO:
+                                    if (!ISOinputboolean) {
+                                        ISOinputboolean = true;
+                                    } else {
+                                        ISOinputboolean = false;
+                                    }
+
+
+                                    mISOtext.setVisibility(View.VISIBLE);
+                                    break;
+
+                                case R.id.ISO100:
+
+                                    //Toast.makeText(getApplicationContext(), "100 ISO", Toast.LENGTH_SHORT).show();
+                                    ISOvalue = 100;
+                                    mISOtext.setText("ISO:" + ISOvalue);
+
+                                    startPreview();
+                                    break;
+                                case R.id.ISO200:
+                                    ISOvalue = 200;
+
+                                    mISOtext.setText("ISO:" + ISOvalue);
+                                    startPreview();
+                                    break;
+                                case R.id.ISO400:
+                                    ISOvalue = 400;
+                                    mISOtext.setText("ISO:" + ISOvalue);
                                     startPreview();
 
-                                }
-                                break;
-
-
-                            case R.id.manualFocus:
-                                if (!manualFocusEnableIsChecked) {
-                                    manualFocusEnableIsChecked = true;
-                                    mFocusTextView.setVisibility(View.VISIBLE);
-                                    Toast.makeText(getApplicationContext(), "Manual Focus Activated", Toast.LENGTH_SHORT).show();
-
+                                    //Toast.makeText(getApplicationContext(), "400 ISO", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.ISO800:
+                                    ISOvalue = 800;
+                                    mISOtext.setText("ISO:" + ISOvalue);
                                     startPreview();
-                                } else if (manualFocusEnableIsChecked) {
-                                    manualFocusEnableIsChecked = false;
-                                    mFocusTextView.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(getApplicationContext(), "Auto Focus Enabled", Toast.LENGTH_SHORT).show();
+
+                                    //Toast.makeText(getApplicationContext(), "800", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.ISO1600:
+                                    ISOvalue = 1600;
+                                    mISOtext.setText("ISO:" + ISOvalue);
                                     startPreview();
-                                }
-                                if (mChangeFocusSeekBar.getVisibility() == View.VISIBLE) {
-                                    mChangeFocusSeekBar.setVisibility(View.INVISIBLE);
-                                } else if (mChangeFocusSeekBar.getVisibility() == View.INVISIBLE) {
+                                    //Toast.makeText(getApplicationContext(), "1600", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.customISO:
+                                    Toast.makeText(getApplicationContext(), "Custom ISO", Toast.LENGTH_SHORT).show();
 
-                                    mChangeFocusSeekBar.setVisibility(View.VISIBLE);
-                                    mChangeFocusSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                    mISOseekbar.setVisibility(View.VISIBLE);
 
+                                    mISOseekbar.setMax((int) HighestISO - LowestISO);
+
+                                    mISOseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                         @Override
                                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                            mFocusDistance = (progress * 0.05);
-                                            mFocusTextView.setText(String.format("Focal Distance: " + "%.2f", mFocusDistance) + "m");
+                                            progress = ISOprogressValue;
                                         }
 
                                         @Override
@@ -1888,180 +2358,31 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                         @Override
                                         public void onStopTrackingTouch(SeekBar seekBar) {
+                                            mISOtext.setText("ISO:" + (mISOseekbar.getProgress() + LowestISO));
+                                            ISOseekProgress = (mISOseekbar.getProgress() + LowestISO);
+                                            ISOvalue = ISOseekProgress;
                                             startPreview();
 
                                         }
                                     });
-                                }
-                                //startPreview();
-                                break;
-                            case R.id.manualinputFocus:
 
-                                //Toast.makeText(getApplicationContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
-                                LayoutInflater inflate5 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                View ThemanualinputView = inflate5.inflate(R.layout.manual_focus_input, null);
-                                AlertDialog.Builder manualinputalert = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                manualinputalert.setTitle("Manual Focus Input");
-                                manualinputalert.setView(ThemanualinputView);
-                                manualinputalert.setCancelable(true);
-                                mManualFocusInput = (EditText) ThemanualinputView.findViewById(R.id.FocusEditText);
-                                manualinputalert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-
-                                    }
-                                });
-                                manualinputalert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (!manualFocusEnableIsChecked) {
-                                            manualFocusEnableIsChecked = true;
-                                            mFocusTextView.setVisibility(View.VISIBLE);
-                                            Toast.makeText(getApplicationContext(), "Manual Focus Activated", Toast.LENGTH_SHORT).show();
-
-
-                                        } else if (manualFocusEnableIsChecked) {
-                                            manualFocusEnableIsChecked = false;
-                                            mFocusTextView.setVisibility(View.INVISIBLE);
-                                            Toast.makeText(getApplicationContext(), "Auto Focus Enabled", Toast.LENGTH_SHORT).show();
-
-                                        }
-
-                                        double TempManualFocusInput = Double.parseDouble(mManualFocusInput.getText().toString());
-                                        mFocusTextView.setText(TempManualFocusInput + "");
-                                        mFocusDistance = TempManualFocusInput;
-
-                                    }
-                                });
-                                manualinputalert.show();
-                                startPreview();
-
-
-                                break;
-
-
-
-                            case R.id.ColorSpaceInput:
-
-                                if (ColorSpaceInputBoolean) {
-                                    ColorSpaceInputBoolean = false;
-                                    Toast.makeText(getApplicationContext(), "Colour SpaceTurned OFF", Toast.LENGTH_SHORT).show();
                                     startPreview();
-                                } else {
-                                    //ColorSpaceInputBoolean=true;
-                                    Toast.makeText(getApplicationContext(), "Colour Space Turned ON", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.custominputISO:
 
 
-                                    final LayoutInflater ColorSpaceinflater = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                    final View ColourSpaceView = ColorSpaceinflater.inflate(R.layout.colorspaceinput, null);
-                                    final AlertDialog.Builder ColourSpaceThing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                    ColourSpaceThing.setTitle("Colour Space input : ");
-                                    ColourSpaceThing.setView(ColourSpaceView);
-                                    ColourSpaceThing.setCancelable(true);
-                                    //EditTextBoxes
-                                    mColorSpaceText1 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText1);
-                                    mColorSpaceText2 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText2);
-                                    mColorSpaceText3 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText3);
-                                    mColorSpaceText4 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText4);
-                                    mColorSpaceText5 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText5);
-                                    mColorSpaceText6 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText6);
-                                    mColorSpaceText7 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText7);
-                                    mColorSpaceText8 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText8);
-                                    mColorSpaceText9 = (EditText) ColourSpaceView.findViewById(R.id.WhiteBalanceInputEditText9);
-
-                                    ColourSpaceThing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                    LayoutInflater inflater = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                    final View subsubView = inflater.inflate(R.layout.manual_input_alertdialog, null);
+                                    final AlertDialog.Builder manualISODialog = new AlertDialog.Builder(Camera2VideoImageActivity.this);
 
 
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            ColorSpaceInputBoolean = false;
-                                            Toast.makeText(getApplicationContext(), "Colour SpaceTurned OFF", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-
-                                    ColourSpaceThing.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            ColorSpaceInputBoolean = true;
-                                            int TempWhiteBalanceInputEditText1 = Integer.parseInt(mColorSpaceText1.getText().toString());
-                                            int TempWhiteBalanceInputEditText2 = Integer.parseInt(mColorSpaceText2.getText().toString());
-                                            int TempWhiteBalanceInputEditText3 = Integer.parseInt(mColorSpaceText3.getText().toString());
-                                            int TempWhiteBalanceInputEditText4 = Integer.parseInt(mColorSpaceText4.getText().toString());
-                                            int TempWhiteBalanceInputEditText5 = Integer.parseInt(mColorSpaceText5.getText().toString());
-                                            int TempWhiteBalanceInputEditText6 = Integer.parseInt(mColorSpaceText6.getText().toString());
-                                            int TempWhiteBalanceInputEditText7 = Integer.parseInt(mColorSpaceText7.getText().toString());
-                                            int TempWhiteBalanceInputEditText8 = Integer.parseInt(mColorSpaceText8.getText().toString());
-                                            int TempWhiteBalanceInputEditText9 = Integer.parseInt(mColorSpaceText9.getText().toString());
-                                            ColorSpaceRed1 = TempWhiteBalanceInputEditText1;
-                                            ColorSpaceRed2 = TempWhiteBalanceInputEditText2;
-                                            ColorSpaceRed3 = TempWhiteBalanceInputEditText3;
-                                            ColorSpaceGreen1 = TempWhiteBalanceInputEditText4;
-                                            ColorSpaceGreen2 = TempWhiteBalanceInputEditText5;
-                                            ColorSpaceGreen3 = TempWhiteBalanceInputEditText6;
-                                            ColorSpaceBlue1 = TempWhiteBalanceInputEditText7;
-                                            ColorSpaceBlue2 = TempWhiteBalanceInputEditText8;
-                                            ColorSpaceBlue3 = TempWhiteBalanceInputEditText9;
-                                            startPreview();
-
-
-                                        }
-                                    });
-                                    ColourSpaceThing.show();
-                                }
-
-                                break;
-                            case R.id.BasicManualMode:
-                                if (AutoNumber == 0) {
-                                    AutoNumber = 1;
-                                    Toast.makeText(getApplicationContext(), "AUTO OFF", Toast.LENGTH_SHORT).show();
-                                    mAutobutton.setText("AUTO OFF");
-                                }
-                                startPreview();
-                                break;
-                            case R.id.AdvancedManualMode:
-
-                                break;
-
-                            case R.id.LockWhiteBalance:
-                                if (AutoWhiteBalancelockBoolean) {
-                                    AutoWhiteBalancelockBoolean = false;
-                                    item.setChecked(false);
-                                    //wip
-                                    //AutoWhiteBalanceUnlock();
-                                } else {
-                                    //wip
-                                    //AutoWhiteBalanceLock();
-                                    item.setChecked(true);
-                                    AutoWhiteBalancelockBoolean = true;
-                                }
-                                //lock if unlocked
-                                //unlock if lock
-                                startPreview();
-                                break;
-                            case R.id.CustomWhiteBalance:
-                                if (CustomeWhiteBalanceBoolean) {
-                                    CustomeWhiteBalanceBoolean = false;
-                                    mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_AUTO);
-                                    Toast.makeText(getApplicationContext(), "Color Correction Auto", Toast.LENGTH_SHORT).show();
-                                    startPreview();
-                                } else {
-                                    CustomeWhiteBalanceBoolean = true;
-                                    //implement seek bar here
-
-                                    LayoutInflater WhiteBalanceInflater1 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                    View WhiteBalance1 = WhiteBalanceInflater1.inflate(R.layout.whitebalance1_info_alertdialog, null);
-                                    AlertDialog.Builder WhiteBalanceThing = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                    WhiteBalanceThing.setTitle("Colour inputs");
-                                    WhiteBalanceThing.setView(WhiteBalance1);
-                                    WhiteBalanceThing.setCancelable(true);
-                                    mWhitebalance1 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText1);
-                                    mWhitebalance2 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText2);
-                                    mWhitebalance3 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText3);
-                                    mWhitebalance4 = (EditText) WhiteBalance1.findViewById(R.id.WhiteBalanceInputEditText4);
-                                    WhiteBalanceThing.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                    mISOEditText = (EditText) subsubView.findViewById(R.id.isoEditText);
+                                    mISOEditTextView = (TextView) subsubView.findViewById(R.id.isoTitle);
+                                    mISOEditTextView.setText("ISO Range:" + LowestISO + "to" + HighestISO);
+                                    manualISODialog.setTitle("Manual ISO Input");
+                                    manualISODialog.setView(subsubView);
+                                    manualISODialog.setCancelable(true);
+                                    manualISODialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
 
 
                                         @Override
@@ -2069,732 +2390,418 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                             dialog.dismiss();
                                         }
                                     });
-                                    WhiteBalanceThing.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                    manualISODialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            double mWhitebalance1temp = Double.parseDouble(mWhitebalance1.getText().toString());
-                                            double mWhitebalance2temp = Double.parseDouble(mWhitebalance2.getText().toString());
-                                            double mWhitebalance3temp = Double.parseDouble(mWhitebalance3.getText().toString());
-                                            double mWhitebalance4temp = Double.parseDouble(mWhitebalance4.getText().toString());
-                                            RggbChannelBlue = mWhitebalance4temp;
-                                            RggbChannelG_even = mWhitebalance2temp;
-                                            RggbChannelG_odd = mWhitebalance3temp;
-                                            RggbChsnnelR = mWhitebalance1temp;
+                                            int tempISO = Integer.parseInt(mISOEditText.getText().toString());
+                                            if (tempISO <= HighestISO && tempISO >= LowestISO) {
+                                                ISOvalue = tempISO;
+                                                mISOtext.setText("ISO:" + ISOvalue);
+                                                startPreview();
+                                                return;
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "ISO value is out of range", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    manualISODialog.show();
+
+                                    break;
+                                case R.id.ChangeShutterSpeedSeek:
+
+                                    mSeekbar.setVisibility(View.VISIBLE);
+                                    mSeekbar.setProgress(progressValue);
+
+                                    mTextSeekBar.setVisibility(View.VISIBLE);
+                                    if (ShutterSpeed2Double < 1) {
+                                        mSeekbar.setMax((int) (ShutterSpeed2 - ShutterSpeed1));
+                                    } else {
+                                        //Working on a precision bar for camera's with higher shutter speed capacity
+                                        Toast.makeText(getApplicationContext(), "Precision Option Available", Toast.LENGTH_SHORT).show();
+                                        mSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
+                                        mSeekBar2.setVisibility(View.VISIBLE);
+                                        mSeekbar.setMax((int) Math.round(ShutterSpeed2Double));
+                                        mTextSeekBar.setText("Shutter Speed(in s)");
+                                    }
+
+                                    //Note:The SeekBar can only take Interger Values. If ShutterSpeed2-ShutterSpeed1==0 then the ShutterSpeed difference is too great
+                                    //Integers can
+                                    //mSeekbar.setProgress(100000);
+
+                                    mMinimumShutterSpeed.setVisibility(View.VISIBLE);
+                                    mMinimumShutterSpeed.setText(ShutterSpeed1String);
+
+                                    mMaximumShutterSpeed.setVisibility(View.VISIBLE);
+                                    mMaximumShutterSpeed.setText(ShutterSpeed2String);
+                                    mSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                                        @Override
+                                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                                            progress = progressValue;
+
+                                        }
+
+                                        @Override
+                                        public void onStartTrackingTouch(SeekBar seekBar) {
+                                            //Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                        @Override
+                                        public void onStopTrackingTouch(SeekBar seekBar) {
+                                            mTextSeekBar.setText("Shutter Speed(in ns):" + (mSeekbar.getProgress() + ShutterSpeed1) + "/" + Math.round(mSeekbar.getMax() + ShutterSpeed1));
+                                            Toast.makeText(getApplicationContext(), "Setting Shutter Speed", Toast.LENGTH_SHORT).show();
+                                            ShutterSpeedValue = (mSeekbar.getProgress() + ShutterSpeed1);
+
                                             startPreview();
-
-
                                         }
                                     });
 
-                                    WhiteBalanceThing.show();
-                                    //Toast.makeText(getApplicationContext(), "Color Correction Manual", Toast.LENGTH_SHORT).show();
+
+                                    break;
+                                case R.id.ChangeShutterSpeedInput:
 
 
-                                }
-
-                                //Slider Activation
-
-
-                                break;
-
-
-                            case R.id.WhiteBalanceCloudyDaylight:
-                                if (!WhiteBalanceCloudyDaylightBoolean) {
-                                    mWBMode = CONTROL_AWB_MODE_CLOUDY_DAYLIGHT;
-                                    WhiteBalanceCloudyDaylightBoolean = true;
-                                } else {
-                                    WhiteBalanceAutoBoolean = true;
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceCloudyDaylightBoolean = false;
+                                    LayoutInflater inflater3 = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                    final View ChangeShutterSpeedView = inflater3.inflate(R.layout.shutterspeed_input_alertdialog, null);
+                                    final AlertDialog.Builder manualShutterSpeedDialog = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                    mShutterSpeedEditText = (EditText) ChangeShutterSpeedView.findViewById(R.id.ShutterSpeedEditText);
+                                    mShutterSpeedEditTextView = (TextView) ChangeShutterSpeedView.findViewById(R.id.ShutterSpeedTitle);
+                                    mShutterSpeedEditTextView.setText("ShutterSpeed Range: " + ShutterSpeed1 + " to " + ShutterSpeed2);
+                                    manualShutterSpeedDialog.setTitle("Manual Shutter Speed Input");
+                                    manualShutterSpeedDialog.setView(ChangeShutterSpeedView);
+                                    manualShutterSpeedDialog.setCancelable(true);
+                                    manualShutterSpeedDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
 
 
-                                }
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceIncandenscentBoolean = false;
-                                WhiteBalanceWarmFluorescentBoolean = false;
-                                WhiteBalanceTwilightBoolean = false;
-                                WhiteBalanceShadeBoolean = false;
-                                WhiteBalanceFluorescentBoolean = false;
-
-                                WhiteBalanceDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceDaylight:
-
-                                if (!WhiteBalanceDaylightBoolean) {
-                                    mWBMode = CONTROL_AWB_MODE_DAYLIGHT;
-                                    WhiteBalanceDaylightBoolean = true;
-                                } else {
-                                    WhiteBalanceAutoBoolean = true;
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-
-
-                                    WhiteBalanceDaylightBoolean = false;
-                                }
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceIncandenscentBoolean = false;
-                                WhiteBalanceWarmFluorescentBoolean = false;
-                                WhiteBalanceTwilightBoolean = false;
-                                WhiteBalanceShadeBoolean = false;
-                                WhiteBalanceFluorescentBoolean = false;
-                                WhiteBalanceCloudyDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceFluorescent:
-
-                                if (!WhiteBalanceFluorescentBoolean) {
-
-                                    WhiteBalanceFluorescentBoolean = true;
-                                    mWBMode = CONTROL_AWB_MODE_FLUORESCENT;
-                                    WhiteBalanceAutoBoolean = false;
-                                    //put the rest
-                                } else {
-                                    WhiteBalanceFluorescentBoolean = false;
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean = true;
-
-                                }
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceIncandenscentBoolean = false;
-                                WhiteBalanceWarmFluorescentBoolean = false;
-                                WhiteBalanceTwilightBoolean = false;
-                                WhiteBalanceShadeBoolean = false;
-
-                                WhiteBalanceCloudyDaylightBoolean = false;
-                                WhiteBalanceDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceShade:
-
-                                if (!WhiteBalanceShadeBoolean) {
-                                    WhiteBalanceShadeBoolean = true;
-                                    mWBMode = CONTROL_AWB_MODE_SHADE;
-                                } else {
-                                    WhiteBalanceShadeBoolean = false;
-
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean = true;
-                                }
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceIncandenscentBoolean = false;
-                                WhiteBalanceWarmFluorescentBoolean = false;
-                                WhiteBalanceTwilightBoolean = false;
-                                WhiteBalanceFluorescentBoolean = false;
-                                WhiteBalanceCloudyDaylightBoolean = false;
-                                WhiteBalanceDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceTwilight:
-                                if (!WhiteBalanceTwilightBoolean) {
-                                    mWBMode = CONTROL_AWB_MODE_TWILIGHT;
-                                    WhiteBalanceTwilightBoolean = true;
-
-                                } else {
-                                    WhiteBalanceTwilightBoolean = false;
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean = true;
-                                }
-                                WhiteBalanceIncandenscentBoolean = false;
-                                WhiteBalanceWarmFluorescentBoolean = false;
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceShadeBoolean = false;
-                                WhiteBalanceFluorescentBoolean = false;
-                                WhiteBalanceCloudyDaylightBoolean = false;
-                                WhiteBalanceDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceWarmFluorescent:
-                                if (!WhiteBalanceWarmFluorescentBoolean) {
-                                    mWBMode = CONTROL_AWB_MODE_WARM_FLUORESCENT;
-                                    WhiteBalanceWarmFluorescentBoolean = true;
-
-                                } else {
-                                    WhiteBalanceWarmFluorescentBoolean = false;
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean = true;
-                                }
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceIncandenscentBoolean = false;
-                                WhiteBalanceTwilightBoolean = false;
-                                WhiteBalanceShadeBoolean = false;
-                                WhiteBalanceFluorescentBoolean = false;
-                                WhiteBalanceCloudyDaylightBoolean = false;
-                                WhiteBalanceDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceIncandenscent:
-                                if (!WhiteBalanceIncandenscentBoolean) {
-                                    mWBMode = CONTROL_AWB_MODE_INCANDESCENT;
-                                    WhiteBalanceIncandenscentBoolean = true;
-
-                                } else {
-                                    WhiteBalanceIncandenscentBoolean = false;
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean = true;
-                                }
-                                WhiteBalanceAutoBoolean = false;
-                                WhiteBalanceWarmFluorescentBoolean = false;
-                                WhiteBalanceTwilightBoolean = false;
-                                WhiteBalanceShadeBoolean = false;
-                                WhiteBalanceFluorescentBoolean = false;
-                                WhiteBalanceCloudyDaylightBoolean = false;
-                                WhiteBalanceDaylightBoolean = false;
-                                SpotLockedWhiteBalanceBoolean = false;
-
-
-                                startPreview();
-                                break;
-                            case R.id.WhiteBalanceAuto:
-                                if (mWBMode != CONTROL_AWB_MODE_AUTO) {
-                                    mWBMode = CONTROL_AWB_MODE_AUTO;
-                                    WhiteBalanceAutoBoolean = true;
-                                    WhiteBalanceIncandenscentBoolean = false;
-                                    WhiteBalanceWarmFluorescentBoolean = false;
-                                    WhiteBalanceTwilightBoolean = false;
-                                    WhiteBalanceShadeBoolean = false;
-                                    WhiteBalanceFluorescentBoolean = false;
-                                    WhiteBalanceCloudyDaylightBoolean = false;
-                                    WhiteBalanceDaylightBoolean = false;
-                                    SpotLockedWhiteBalanceBoolean = false;
-
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "AUTO is already on", Toast.LENGTH_SHORT).show();
-
-                                }
-                                startPreview();
-                                break;
-
-
-                            case R.id.ChangeISO:
-                                if (!ISOinputboolean) {
-                                    ISOinputboolean = true;
-                                } else {
-                                    ISOinputboolean = false;
-                                }
-
-
-                                mISOtext.setVisibility(View.VISIBLE);
-                                break;
-
-                            case R.id.ISO100:
-
-                                //Toast.makeText(getApplicationContext(), "100 ISO", Toast.LENGTH_SHORT).show();
-                                ISOvalue = 100;
-                                mISOtext.setText("ISO:" + ISOvalue);
-
-                                startPreview();
-                                break;
-                            case R.id.ISO200:
-                                ISOvalue = 200;
-
-                                mISOtext.setText("ISO:" + ISOvalue);
-                                startPreview();
-                                break;
-                            case R.id.ISO400:
-                                ISOvalue = 400;
-                                mISOtext.setText("ISO:" + ISOvalue);
-                                startPreview();
-
-                                //Toast.makeText(getApplicationContext(), "400 ISO", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.ISO800:
-                                ISOvalue = 800;
-                                mISOtext.setText("ISO:" + ISOvalue);
-                                startPreview();
-
-                                //Toast.makeText(getApplicationContext(), "800", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.ISO1600:
-                                ISOvalue = 1600;
-                                mISOtext.setText("ISO:" + ISOvalue);
-                                startPreview();
-                                //Toast.makeText(getApplicationContext(), "1600", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.customISO:
-                                Toast.makeText(getApplicationContext(), "Custom ISO", Toast.LENGTH_SHORT).show();
-
-                                mISOseekbar.setVisibility(View.VISIBLE);
-
-                                mISOseekbar.setMax((int) HighestISO - LowestISO);
-
-                                mISOseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                    @Override
-                                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                        progress = ISOprogressValue;
-                                    }
-
-                                    @Override
-                                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                                    }
-
-                                    @Override
-                                    public void onStopTrackingTouch(SeekBar seekBar) {
-                                        mISOtext.setText("ISO:" + (mISOseekbar.getProgress() + LowestISO));
-                                        ISOseekProgress = (mISOseekbar.getProgress() + LowestISO);
-                                        ISOvalue = ISOseekProgress;
-                                        startPreview();
-
-                                    }
-                                });
-
-                                startPreview();
-                                break;
-                            case R.id.custominputISO:
-
-
-                                LayoutInflater inflater = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                final View subsubView = inflater.inflate(R.layout.manual_input_alertdialog, null);
-                                final AlertDialog.Builder manualISODialog = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-
-
-                                mISOEditText = (EditText) subsubView.findViewById(R.id.isoEditText);
-                                mISOEditTextView = (TextView) subsubView.findViewById(R.id.isoTitle);
-                                mISOEditTextView.setText("ISO Range:" + LowestISO + "to" + HighestISO);
-                                manualISODialog.setTitle("Manual ISO Input");
-                                manualISODialog.setView(subsubView);
-                                manualISODialog.setCancelable(true);
-                                manualISODialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-
-
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                manualISODialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        int tempISO = Integer.parseInt(mISOEditText.getText().toString());
-                                        if (tempISO <= HighestISO && tempISO >= LowestISO) {
-                                            ISOvalue = tempISO;
-                                            mISOtext.setText("ISO:" + ISOvalue);
-                                            startPreview();
-                                            return;
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "ISO value is out of range", Toast.LENGTH_SHORT).show();
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
                                         }
-                                    }
-                                });
-                                manualISODialog.show();
-
-                                break;
-                            case R.id.ChangeShutterSpeedSeek:
-
-                                mSeekbar.setVisibility(View.VISIBLE);
-                                mSeekbar.setProgress(progressValue);
-
-                                mTextSeekBar.setVisibility(View.VISIBLE);
-                                if (ShutterSpeed2Double < 1) {
-                                    mSeekbar.setMax((int) (ShutterSpeed2 - ShutterSpeed1));
-                                } else {
-                                    //Working on a precision bar for camera's with higher shutter speed capacity
-                                    Toast.makeText(getApplicationContext(), "Precision Option Available", Toast.LENGTH_SHORT).show();
-                                    mSeekBar2 = (SeekBar) findViewById(R.id.seekBar2);
-                                    mSeekBar2.setVisibility(View.VISIBLE);
-                                    mSeekbar.setMax((int) Math.round(ShutterSpeed2Double));
-                                    mTextSeekBar.setText("Shutter Speed(in s)");
-                                }
-
-                                //Note:The SeekBar can only take Interger Values. If ShutterSpeed2-ShutterSpeed1==0 then the ShutterSpeed difference is too great
-                                //Integers can
-                                //mSeekbar.setProgress(100000);
-
-                                mMinimumShutterSpeed.setVisibility(View.VISIBLE);
-                                mMinimumShutterSpeed.setText(ShutterSpeed1String);
-
-                                mMaximumShutterSpeed.setVisibility(View.VISIBLE);
-                                mMaximumShutterSpeed.setText(ShutterSpeed2String);
-                                mSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-                                    @Override
-                                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                                        progress = progressValue;
-
-                                    }
-
-                                    @Override
-                                    public void onStartTrackingTouch(SeekBar seekBar) {
-                                        //Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
-
-                                    }
-
-                                    @Override
-                                    public void onStopTrackingTouch(SeekBar seekBar) {
-                                        mTextSeekBar.setText("Shutter Speed(in ns):" + (mSeekbar.getProgress() + ShutterSpeed1) + "/" + Math.round(mSeekbar.getMax() + ShutterSpeed1));
-                                        Toast.makeText(getApplicationContext(), "Setting Shutter Speed", Toast.LENGTH_SHORT).show();
-                                        ShutterSpeedValue = (mSeekbar.getProgress() + ShutterSpeed1);
-
-                                        startPreview();
-                                    }
-                                });
+                                    });
 
 
-                                break;
-                            case R.id.ChangeShutterSpeedInput:
-
-
-                                LayoutInflater inflater3 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                final View ChangeShutterSpeedView = inflater3.inflate(R.layout.shutterspeed_input_alertdialog, null);
-                                final AlertDialog.Builder manualShutterSpeedDialog = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                mShutterSpeedEditText = (EditText) ChangeShutterSpeedView.findViewById(R.id.ShutterSpeedEditText);
-                                mShutterSpeedEditTextView = (TextView) ChangeShutterSpeedView.findViewById(R.id.ShutterSpeedTitle);
-                                mShutterSpeedEditTextView.setText("ShutterSpeed Range: " + ShutterSpeed1 + " to " + ShutterSpeed2);
-                                manualShutterSpeedDialog.setTitle("Manual Shutter Speed Input");
-                                manualShutterSpeedDialog.setView(ChangeShutterSpeedView);
-                                manualShutterSpeedDialog.setCancelable(true);
-                                manualShutterSpeedDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-
-
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-
-
-                                manualShutterSpeedDialog.setPositiveButton("Confirm ", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        int tempShutterSpeed = Integer.parseInt(mShutterSpeedEditText.getText().toString());
-                                        if (tempShutterSpeed <= ShutterSpeed2 && tempShutterSpeed >= ShutterSpeed1) {
-                                            ShutterSpeedValue = tempShutterSpeed;
-                                            //.setText("ISO:"+ ISOvalue);
-                                            startPreview();
-                                            return;
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "ShutterSpeed value is out of range", Toast.LENGTH_SHORT).show();
+                                    manualShutterSpeedDialog.setPositiveButton("Confirm ", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            int tempShutterSpeed = Integer.parseInt(mShutterSpeedEditText.getText().toString());
+                                            if (tempShutterSpeed <= ShutterSpeed2 && tempShutterSpeed >= ShutterSpeed1) {
+                                                ShutterSpeedValue = tempShutterSpeed;
+                                                //.setText("ISO:"+ ISOvalue);
+                                                startPreview();
+                                                return;
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "ShutterSpeed value is out of range", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    }
-                                });
-                                manualShutterSpeedDialog.show();
+                                    });
+                                    manualShutterSpeedDialog.show();
 
-                                break;
-                            case R.id.ChangeShutterSpeedInput2:
-                                LayoutInflater inflater4 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                final View ChangeShutterSpeedView2 = inflater4.inflate(R.layout.shutterspeed_input_alertdialog2, null);
-                                final AlertDialog.Builder manualShutterSpeedDialog2 = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                mShutterSpeedEditText2 = (EditText) ChangeShutterSpeedView2.findViewById(R.id.ShutterSpeedEditText2);
-                                mShutterSpeedEditTextView2 = (TextView) ChangeShutterSpeedView2.findViewById(R.id.ShutterSpeedTitle2);
-                                mShutterSpeedEditTextView2.setText("ShutterSpeed Range: " + ShutterSpeed1String + " to " + ShutterSpeed2String);
-                                manualShutterSpeedDialog2.setTitle("Manual Shutter Speed Input");
-                                manualShutterSpeedDialog2.setView(ChangeShutterSpeedView2);
-                                manualShutterSpeedDialog2.setCancelable(true);
-                                manualShutterSpeedDialog2.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-
-
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
+                                    break;
+                                case R.id.ChangeShutterSpeedInput2:
+                                    LayoutInflater inflater4 = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                    final View ChangeShutterSpeedView2 = inflater4.inflate(R.layout.shutterspeed_input_alertdialog2, null);
+                                    final AlertDialog.Builder manualShutterSpeedDialog2 = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                    mShutterSpeedEditText2 = (EditText) ChangeShutterSpeedView2.findViewById(R.id.ShutterSpeedEditText2);
+                                    mShutterSpeedEditTextView2 = (TextView) ChangeShutterSpeedView2.findViewById(R.id.ShutterSpeedTitle2);
+                                    mShutterSpeedEditTextView2.setText("ShutterSpeed Range: " + ShutterSpeed1String + " to " + ShutterSpeed2String);
+                                    manualShutterSpeedDialog2.setTitle("Manual Shutter Speed Input");
+                                    manualShutterSpeedDialog2.setView(ChangeShutterSpeedView2);
+                                    manualShutterSpeedDialog2.setCancelable(true);
+                                    manualShutterSpeedDialog2.setNegativeButton("Close", new DialogInterface.OnClickListener() {
 
 
-                                manualShutterSpeedDialog2.setPositiveButton("Confirm ", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String tempShutterSpeedString[] = new String[2];
-                                        String tt;
-                                        tt = mShutterSpeedEditText2.getText().toString();
-                                        //make regex if statement here to satify numbers numbers greater than 1
-                                        tempShutterSpeedString = tt.split("/");
-                                        double tempShutterSpeed1 = Double.parseDouble(tempShutterSpeedString[0]);
-                                        double tempShutterSpeed2 = Double.parseDouble(tempShutterSpeedString[1]);
-
-                                        double tempShutterSpeed = ((tempShutterSpeed1 / tempShutterSpeed2) * 1000000000);
-                                        if (tempShutterSpeed <= ShutterSpeed2 && tempShutterSpeed >= ShutterSpeed1) {
-                                            ShutterSpeedValue = (long) tempShutterSpeed;
-                                            //.setText("ISO:"+ ISOvalue);
-                                            startPreview();
-                                            return;
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "ShutterSpeed value is out of range", Toast.LENGTH_SHORT).show();
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
                                         }
+                                    });
+
+
+                                    manualShutterSpeedDialog2.setPositiveButton("Confirm ", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String tempShutterSpeedString[] = new String[2];
+                                            String tt;
+                                            tt = mShutterSpeedEditText2.getText().toString();
+                                            //make regex if statement here to satify numbers numbers greater than 1
+                                            tempShutterSpeedString = tt.split("/");
+                                            double tempShutterSpeed1 = Double.parseDouble(tempShutterSpeedString[0]);
+                                            double tempShutterSpeed2 = Double.parseDouble(tempShutterSpeedString[1]);
+
+                                            double tempShutterSpeed = ((tempShutterSpeed1 / tempShutterSpeed2) * 1000000000);
+                                            if (tempShutterSpeed <= ShutterSpeed2 && tempShutterSpeed >= ShutterSpeed1) {
+                                                ShutterSpeedValue = (long) tempShutterSpeed;
+                                                //.setText("ISO:"+ ISOvalue);
+                                                startPreview();
+                                                return;
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "ShutterSpeed value is out of range", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                    manualShutterSpeedDialog2.show();
+
+
+                                    break;
+
+                                case R.id.getCameraInfo:
+                                    LayoutInflater inflater2 = LayoutInflater.from(Camera2VideoImageActivity.this);
+                                    View cameraInfoSubView = inflater2.inflate(R.layout.camera_info_alertdialog, null);
+                                    mCameraInfoTextView = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView);
+                                    mCameraInfoTextView.setText("Camera Resolutions:");
+                                    mCameraInfoTextView.setMovementMethod(new ScrollingMovementMethod());
+                                    mCameraInfoTextView2 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView2);
+                                    mCameraInfoTextView2.setText("Supported Camera Scenes:");
+                                    mCameraInfoTextView2.setMovementMethod(new ScrollingMovementMethod());
+                                    mCameraInfoTextView3 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView3);
+                                    mCameraInfoTextView3.setText("Supported Effects:");
+                                    mCameraInfoTextView3.setMovementMethod(new ScrollingMovementMethod());
+                                    mCameraInfoTextView4 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView4);
+                                    mCameraInfoTextView4.setText("Supported Face Detections");
+                                    mCameraInfoTextView4.setMovementMethod(new ScrollingMovementMethod());
+                                    mCameraInfoTextView5 = (TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
+
+                                    mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
+                                            + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
+                                            + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
+                                            + "\n" + "Standard reference illuminant:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)
+                                            + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
+                                            + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
+                                            + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
+                                            + "\n" + "SENSOR_COLOR_TRANSFORM_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
+                                            + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
+                                            + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
+                                            + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
+
+                                            + "\n" + "Supported Auto White Balances"
+
+                                    );
+                                    mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
+                                    StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                                    previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
+
+                                    for (int i = 0; i < previewSizes.length; i++) {
+                                        String oldTextView = mCameraInfoTextView.getText().toString();
+                                        String newText = oldTextView + " , " + previewSizes[i] + ""; // can manipulate using substring also
+                                        mCameraInfoTextView.setText(newText);
                                     }
-                                });
-                                manualShutterSpeedDialog2.show();
-
-
-                                break;
-
-                            case R.id.getCameraInfo:
-                                LayoutInflater inflater2 = LayoutInflater.from(Camera2VideoImageActivity.this);
-                                View cameraInfoSubView = inflater2.inflate(R.layout.camera_info_alertdialog, null);
-                                mCameraInfoTextView = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView);
-                                mCameraInfoTextView.setText("Camera Resolutions:");
-                                mCameraInfoTextView.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView2 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView2);
-                                mCameraInfoTextView2.setText("Supported Camera Scenes:");
-                                mCameraInfoTextView2.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView3 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView3);
-                                mCameraInfoTextView3.setText("Supported Effects:");
-                                mCameraInfoTextView3.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView4 = (TextView) cameraInfoSubView.findViewById(R.id.cameraInfoTextView4);
-                                mCameraInfoTextView4.setText("Supported Face Detections");
-                                mCameraInfoTextView4.setMovementMethod(new ScrollingMovementMethod());
-                                mCameraInfoTextView5 = (TextView) cameraInfoSubView.findViewById(R.id.MoreInfo);
-
-                                mCameraInfoTextView5.setText("Shutter Speed Information(in s):" + ShutterSpeed1String + "-" + ShutterSpeed2String + "\n" + "ISO Range:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE)
-                                        + "\n" + "White Level:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL) + "\n" + "Sensor Physical Size: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)
-                                        + "\n" + "Sensor Max Analog Sensitivity:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_MAX_ANALOG_SENSITIVITY)
-                                        + "\n" + "Standard reference illuminant:" + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1)
-                                        + "\n" + "Camera Compensation Range:" + mCameraCharacteristics.get(mCameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)
-                                        + "\n" + "Flash Available: " + mCameraCharacteristics.get(CameraCharacteristics.FLASH_INFO_AVAILABLE)
-                                        + "\n" + "Supported Available Burst Capabilities:" + contains(mCameraCharacteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES), CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE)
-                                        + "\n" + "SENSOR_COLOR_TRANSFORM_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM1)
-                                        + "\n" + "SENSOR_COLOR_TRANSFORM_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_COLOR_TRANSFORM2)
-                                        + "\n" + "FORWARD_MATRIX_1: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX1)
-                                        + "\n" + "FORWARD_MATRIX_2: " + mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_FORWARD_MATRIX2)
-
-                                        + "\n" + "Supported Auto White Balances"
-
-                                );
-                                mCameraInfoTextView5.setMovementMethod(new ScrollingMovementMethod());
-                                StreamConfigurationMap scmap = mCameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                                previewSizes = scmap.getOutputSizes(ImageFormat.JPEG);
-
-                                for (int i = 0; i < previewSizes.length; i++) {
-                                    String oldTextView = mCameraInfoTextView.getText().toString();
-                                    String newText = oldTextView + " , " + previewSizes[i] + ""; // can manipulate using substring also
-                                    mCameraInfoTextView.setText(newText);
-                                }
-                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length; i++) {
-                                    String oldTextView2 = mCameraInfoTextView2.getText().toString();
-                                    String newText2 = oldTextView2 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i] + " , ";
-                                    mCameraInfoTextView2.setText(newText2);
-                                }
-                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length; i++) {
-                                    String oldTextView3 = mCameraInfoTextView3.getText().toString();
-                                    String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
-                                    mCameraInfoTextView3.setText(newText3);
-                                }
-
-                                for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
-                                    String oldTextView4 = mCameraInfoTextView5.getText().toString();
-                                    String newText4 = oldTextView4 + " " + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] + " ";
-                                    //AWBArr[i]=mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i];
-                                    mCameraInfoTextView5.setText(newText4);
-                                }
-
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Camera2VideoImageActivity.this);
-                                builder.setView(cameraInfoSubView);
-                                builder.setTitle("Camera Information");
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
+                                    for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES).length; i++) {
+                                        String oldTextView2 = mCameraInfoTextView2.getText().toString();
+                                        String newText2 = oldTextView2 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES)[i] + " , ";
+                                        mCameraInfoTextView2.setText(newText2);
                                     }
-                                });
-                                String oldTextView4 = mCameraInfoTextView4.getText().toString();
+                                    for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS).length; i++) {
+                                        String oldTextView3 = mCameraInfoTextView3.getText().toString();
+                                        String newText3 = oldTextView3 + "" + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS)[i] + " , ";
+                                        mCameraInfoTextView3.setText(newText3);
+                                    }
 
-                                mCameraInfoTextView4.setText(oldTextView4 + " " + OFFtext + ", " + SIMPLEtext + "" + FULLtext + "");
-
-
-                                AlertDialog alertDialog2 = builder.create();
-                                alertDialog2.show();
-                                break;
-
-
-                            case R.id.devButton:
-                                ChangeWhiteBalanceSpotRawOn = true;
-                                wbThreadisEnabled = !wbThreadIsEnabled;
-                                startPreview();
-                                break;
-                            case R.id.devButton2:
-                                mWBMode = -1;
-                                ColorSpaceInputBoolean = true;
-                                mVectorR = (float) totalG / totalR;
-                                mVectorG_EVEN = 1;
-                                mVectorG_ODD = 1;
-                                mVectorB = (float) totalG / totalB;
-                                startPreview();
-                                break;
-                            case R.id.WB_RAWTouch:
-                                if (WB_RAWTouchEnabled) {
-                                    WB_RAWTouchEnabled = false;
-                                } else {
-                                    WB_RAWTouchEnabled = true;
-                                }
-                                startPreview();
+                                    for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length; i++) {
+                                        String oldTextView4 = mCameraInfoTextView5.getText().toString();
+                                        String newText4 = oldTextView4 + " " + mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i] + " ";
+                                        //AWBArr[i]=mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES)[i];
+                                        mCameraInfoTextView5.setText(newText4);
+                                    }
 
 
-                            default:
-                                return false;
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                    builder.setView(cameraInfoSubView);
+                                    builder.setTitle("Camera Information");
+                                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    String oldTextView4 = mCameraInfoTextView4.getText().toString();
+
+                                    mCameraInfoTextView4.setText(oldTextView4 + " " + OFFtext + ", " + SIMPLEtext + "" + FULLtext + "");
+
+
+                                    AlertDialog alertDialog2 = builder.create();
+                                    alertDialog2.show();
+                                    break;
+
+
+                                case R.id.devButton:
+                                    ChangeWhiteBalanceSpotRawOn = true;
+                                    wbThreadisEnabled = !wbThreadIsEnabled;
+                                    startPreview();
+                                    break;
+                                case R.id.devButton2:
+                                    mWBMode = -1;
+                                    ColorSpaceInputBoolean = true;
+                                    mVectorR = (float) totalG / totalR;
+                                    mVectorG_EVEN = 1;
+                                    mVectorG_ODD = 1;
+                                    mVectorB = (float) totalG / totalB;
+                                    startPreview();
+                                    break;
+                                case R.id.WB_RAWTouch:
+                                    if (WB_RAWTouchEnabled) {
+                                        WB_RAWTouchEnabled = false;
+                                    } else {
+                                        WB_RAWTouchEnabled = true;
+                                    }
+                                    startPreview();
+
+
+                                default:
+                                    return false;
+                            }
+                            return true;
                         }
-                        return true;
+
+                    });
+                    popupMenu.show();
+
+                }
+
+            });
+
+
+            mStillImageButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onClick(View v) {
+
+                    try {
+                        checkJPEGWriteStoragePermission();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
-                });
-                popupMenu.show();
 
-            }
+                    mStillImageButton.setImageResource(R.mipmap.campic);
+                    if (!mBurstOn) {
+                        lockFocus();
+                        //startStillCaptureRequest();
+                    }
+                    if (mBurstOn) {
+                        //Toast.makeText(getApplicationContext(), "Burst Done", Toast.LENGTH_SHORT).show();
+                        mBurstOn = false;
+                    }
+                    if (mChronometer.getVisibility() == View.VISIBLE) {
+                        mTimeInterval.setVisibility(View.INVISIBLE);
+                        mChronometer.stop();
+                        mChronometer.setVisibility(View.INVISIBLE);
 
-        });
-
-
-        mStillImageButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    checkJPEGWriteStoragePermission();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    }
                 }
+            });
+            mStillImageButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mStillImageButton.setImageResource(R.mipmap.btn_timelapse);
+                    mTimeInterval.setVisibility(View.VISIBLE);
+                    mTimeInterval.setText("Second Step:" + SecondStep);
 
 
-                mStillImageButton.setImageResource(R.mipmap.campic);
-                if (!mBurstOn) {
-                    lockFocus();
-                    //startStillCaptureRequest();
-                }
-                if (mBurstOn) {
-                    //Toast.makeText(getApplicationContext(), "Burst Done", Toast.LENGTH_SHORT).show();
-                    mBurstOn = false;
-                }
-                if (mChronometer.getVisibility() == View.VISIBLE) {
-                    mTimeInterval.setVisibility(View.INVISIBLE);
-                    mChronometer.stop();
-                    mChronometer.setVisibility(View.INVISIBLE);
-
-                }
-            }
-        });
-        mStillImageButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mStillImageButton.setImageResource(R.mipmap.btn_timelapse);
-                mTimeInterval.setVisibility(View.VISIBLE);
-                mTimeInterval.setText("Second Step:" + SecondStep);
+                    mBurstOn = true;
+                    Toast.makeText(getApplicationContext(), "Burst Started", Toast.LENGTH_SHORT).show();
+                    mChronometer.setBase(SystemClock.elapsedRealtime());
+                    mChronometer.setVisibility(View.VISIBLE);
+                    mChronometer.start();
+                    mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                        @Override
+                        public void onChronometerTick(Chronometer chronometer) {
+                            ChronoCount = ChronoCount + 1;
 
 
-                mBurstOn = true;
-                Toast.makeText(getApplicationContext(), "Burst Started", Toast.LENGTH_SHORT).show();
-                mChronometer.setBase(SystemClock.elapsedRealtime());
-                mChronometer.setVisibility(View.VISIBLE);
-                mChronometer.start();
-                mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-                    @Override
-                    public void onChronometerTick(Chronometer chronometer) {
-                        ChronoCount = ChronoCount + 1;
+                            //chronometer.refreshDrawableState();
+                            if (mPhotoTimeLimitNumber == 1) {
 
 
-                        //chronometer.refreshDrawableState();
-                        if (mPhotoTimeLimitNumber == 1) {
-
-
-                            if (ChronoCount % SecondStep == 0) {
-                                lockFocus();
-                            }
-
-                        } else if (mPhotoTimeLimitNumber == 0) {
-                            if (ChronoCount == (PhotoBurstTimeStop)) {
                                 if (ChronoCount % SecondStep == 0) {
                                     lockFocus();
                                 }
 
-                                mChronometer.stop();
-                                mChronometer.setVisibility(View.INVISIBLE);
-                                mStillImageButton.setImageResource(R.mipmap.campic);
-                            } else {
-                                if (ChronoCount % SecondStep == 0) {
-                                    lockFocus();
+                            } else if (mPhotoTimeLimitNumber == 0) {
+                                if (ChronoCount == (PhotoBurstTimeStop)) {
+                                    if (ChronoCount % SecondStep == 0) {
+                                        lockFocus();
+                                    }
+
+                                    mChronometer.stop();
+                                    mChronometer.setVisibility(View.INVISIBLE);
+                                    mStillImageButton.setImageResource(R.mipmap.campic);
+                                } else {
+                                    if (ChronoCount % SecondStep == 0) {
+                                        lockFocus();
+                                    }
                                 }
+
+
                             }
 
+                        }
+                    });
 
+
+                    //mStillImageButton.setImageResource(R.mipmap.campic);
+
+
+                    return true;
+                }
+            });
+
+
+            mRecordImageButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onClick(View v) {
+                    if (mIsRecording || mIsTimelapse) {
+                        mChronometer.stop();
+                        mChronometer.setVisibility(View.INVISIBLE);
+                        mIsRecording = false;
+                        mIsTimelapse = false;
+                        mRecordImageButton.setImageResource(R.mipmap.vidpiconline);
+                        mTimeInterval.setVisibility(View.INVISIBLE);
+                        mMediaRecorder.stop();
+                        mMediaRecorder.reset();
+                        Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mVideoFileName)));
+                        sendBroadcast(mediaStoreUpdateIntent);
+
+
+                        startPreview();
+                    } else {
+                        //mIsRecording = true;
+
+
+                        mRecordImageButton.setImageResource(R.mipmap.vidpicbusy);
+                        try {
+                            checkWriteStoragePermission();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
 
                     }
-                });
+                }
 
-
-                //mStillImageButton.setImageResource(R.mipmap.campic);
-
-
-                return true;
-            }
-        });
-
-
-        mRecordImageButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                if (mIsRecording || mIsTimelapse) {
-                    mChronometer.stop();
-                    mChronometer.setVisibility(View.INVISIBLE);
-                    mIsRecording = false;
-                    mIsTimelapse = false;
-                    mRecordImageButton.setImageResource(R.mipmap.vidpiconline);
-                    mTimeInterval.setVisibility(View.INVISIBLE);
-                    mMediaRecorder.stop();
-                    mMediaRecorder.reset();
-                    Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mVideoFileName)));
-                    sendBroadcast(mediaStoreUpdateIntent);
-
-
-                    startPreview();
-                } else {
-                    //mIsRecording = true;
-
-
-                    mRecordImageButton.setImageResource(R.mipmap.vidpicbusy);
+            });
+            mRecordImageButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public boolean onLongClick(View v) {
+                    mIsTimelapse = true;
+                    mTimeInterval.setVisibility(View.VISIBLE);
+                    mTimeInterval.setText("Pictures per Second: " + VideoTimelapsSecondStep);
                     try {
                         checkWriteStoragePermission();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    return true;
 
                 }
-            }
+            });
 
-        });
-        mRecordImageButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public boolean onLongClick(View v) {
-                mIsTimelapse = true;
-                mTimeInterval.setVisibility(View.VISIBLE);
-                mTimeInterval.setText("Pictures per Second: " + VideoTimelapsSecondStep);
-                try {
-                    checkWriteStoragePermission();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return true;
+            //RefreshScreen();
+            //end of onCreate
 
-            }
-        });
 
-        //RefreshScreen();
-        //end of onCreate
-        if (ifOnCreate) {
-            ifOnCreate = false;
-            SharedPreferences.Editor spe=sharedprefs1.edit();
-            spe.putBoolean("onCreatePref",false);
-            //Intent i = new Intent(this, ViewPagerMainActivity.class);
-            //startActivity(i);
-        }
 
 
 
