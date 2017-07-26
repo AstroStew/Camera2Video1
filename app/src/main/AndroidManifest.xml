@@ -31,6 +31,8 @@
             android:name=".TabedMenuActivity"
             android:label="@string/title_activity_tabed_menu"
             android:theme="@style/AppTheme"></activity>
+        <activity android:name=".ViewPagerMainActivity"
+            android:label="ViewPagerMainActivity"></activity>
     </application>
 
 </manifest>

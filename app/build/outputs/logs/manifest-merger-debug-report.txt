@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:2:1-36:12
+ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:2:1-38:12
 	package
 		ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:3:5-48
 		INJECTED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml
@@ -26,7 +26,7 @@ ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\A
 	android:name
 		ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:7:22-68
 application
-ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:9:5-34:19
+ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:9:5-36:19
 MERGED from [com.android.support:design:25.0.0] C:\Users\mstew\.android\build-cache\5f5234aa027fa6c22ec5136457f557768b4d0c26\output\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:appcompat-v7:25.1.1] C:\Users\mstew\.android\build-cache\b620a26301377096abee49c0cf75e805aca61472\output\AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:animated-vector-drawable:25.1.1] C:\Users\mstew\.android\build-cache\5c7235d2e5eaf8f0e12f8509ca6a3f0aa2c4cd22\output\AndroidManifest.xml:22:5-20
@@ -87,6 +87,12 @@ ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\A
 		ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:33:13-44
 	android:name
 		ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:31:13-46
+activity#com.yorku.mstew.camera2videoimage.ViewPagerMainActivity
+ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:34:9-35:62
+	android:label
+		ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:35:13-50
+	android:name
+		ADDED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml:34:19-56
 uses-sdk
 INJECTED from C:\Users\mstew\AndroidStudioProjects\Camera2VideoImage\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:design:25.0.0] C:\Users\mstew\.android\build-cache\5f5234aa027fa6c22ec5136457f557768b4d0c26\output\AndroidManifest.xml:21:5-23:62

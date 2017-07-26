@@ -41,6 +41,9 @@
             android:name="com.yorku.mstew.camera2videoimage.TabedMenuActivity"
             android:label="@string/title_activity_tabed_menu"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.yorku.mstew.camera2videoimage.ViewPagerMainActivity"
+            android:label="ViewPagerMainActivity" />
     </application>
 
 </manifest>

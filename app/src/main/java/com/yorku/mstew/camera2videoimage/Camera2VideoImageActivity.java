@@ -441,6 +441,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean ForwardMatrixInputBoolean = false;
     boolean SensorColorTransformInputBoolean = false;
     Bitmap WhiteBalanceBallInspector;
+    boolean ifOnCreate=false;
     boolean Capture_JPEG=true;
     byte[] byteArray;
     boolean isItOka = true;
@@ -556,6 +557,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Rational[] SensorCalibrationTransform2Values;
     double[] SensorCalibrationTransform2DoubleValues=new double[9];
     double[][]SensorCalibrationTransform2Array;
+    SharedPreferences sharedprefs1;
 
 
 
@@ -1076,7 +1078,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         }
-
+        if(ifOnCreate)
+        {
+            ifOnCreate=false;
+            SharedPreferences.Editor spe=sharedprefs1.edit();
+            spe.putBoolean("onCreatePref",false);
+            spe.commit();
+            Intent i=new Intent(this,ViewPagerMainActivity.class);
+            startActivity(i);
+        }
 
 
 
@@ -1278,7 +1288,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         });
 
 
-        SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+         sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+         ifOnCreate=sharedprefs1.getBoolean("onCreatePref",true);
         final boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
@@ -4756,7 +4767,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     public void RefreshScreen() {
         RefreshBoolean=true;
         // SharedPreferences sharedprefs1 = null;
-        SharedPreferences sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
+        sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         if(SettingresolutionChanged){
             final String resolutionlist=sharedprefs1.getString("resolution_list", "1");
             Size1=previewSizes[Integer.parseInt(resolutionlist)];
