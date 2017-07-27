@@ -4,13 +4,37 @@
     android:layout_height="match_parent"
     android:background="#b44770"
     >
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_videocam_black_24dp"
+
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Video Features"
+        android:textSize="40dp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textAlignment="center"
+
+        android:id="@+id/textView4"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true" />
     <TextView
         android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:text="More Information Here"
-        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:text="~Video Recording
+~Timelapse Video (Long Click on Video Button)
+"
+
         android:textColor="@android:color/white"
-        />
+        android:id="@+id/textView3"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

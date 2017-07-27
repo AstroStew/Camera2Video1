@@ -8,24 +8,37 @@
 
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_photo_camera_black_24dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/emblem6"
         android:layout_gravity="center"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="25dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/imageView" />
     <TextView
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="Camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome To Camera2API"
         android:textColor="@android:color/white"
         android:textSize="40dp"
         android:textAlignment="center"
         android:elegantTextHeight="true"
 
         android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />]
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="
+This App is an Experiment to explore the extend of the new Camera 2 API
+It was Created by Min Jae and Mike Stewart at the Lassonde School Of Engineering.
+This project was spearheaded by Professor Michael Brown of York University with Supervision from Abdelrahman Kamel
+"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/darker_gray"
+        />
 
 </RelativeLayout>

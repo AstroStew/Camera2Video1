@@ -58,7 +58,7 @@ public class ViewPagerMainActivity extends AppCompatActivity {
 
 
 
-        layouts=new int[]{R.layout.fragment1,R.layout.fragment2,R.layout.fragment3};
+        layouts=new int[]{R.layout.fragment1,R.layout.fragment2,R.layout.fragment3,R.layout.fragment4};
         addButtonDots(0);
         changeStatusBarBolor();
         viewpageradapter=new ViewPagerAdapter();

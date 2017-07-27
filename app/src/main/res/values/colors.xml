@@ -6,20 +6,24 @@
     <color name="dot_dark_screen1">#C23835</color>
     <color name="dot_dark_screen2">#6A1B9A</color>
     <color name="dot_dark_screen3">#00695C</color>
+    <color name="dot_dark_screen4">#f11111</color>
 
     <color name="dot_light_screen1">#F8BBD0</color>
     <color name="dot_light_screen_2">#E1BEE7</color>
     <color name="dot_light_screen_3">#80CBC4</color>
+    <color name="dot_light_screen_4">#ffffff</color>
 
 
     <array name="dot_inactive" >
         <item>@color/dot_dark_screen1</item>
         <item>@color/dot_dark_screen2</item>
         <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
     </array>
     <array name="dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen_2</item>
         <item>@color/dot_light_screen_3</item>
+        <item>@color/dot_light_screen_4</item>
     </array>
 </resources>

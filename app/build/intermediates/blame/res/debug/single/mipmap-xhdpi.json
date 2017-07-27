@@ -56,6 +56,10 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-xhdpi\\isopic100.png"
     },
     {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\emblem6.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-xhdpi\\emblem6.png"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi\\busybee.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-xhdpi\\busybee.png"
     }
