@@ -13,4 +13,10 @@
         android:title="ImageView Launcher"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/Tutbutton"
+        android:title="Tutorial"
+        android:orderInCategory="102"
+        app:showAsAction="never"
+        />
 </menu>

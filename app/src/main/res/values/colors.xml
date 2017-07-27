@@ -4,14 +4,14 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="dot_dark_screen1">#C23835</color>
-    <color name="dot_dark_screen2">#6A1B9A</color>
-    <color name="dot_dark_screen3">#00695C</color>
-    <color name="dot_dark_screen4">#f11111</color>
+    <color name="dot_dark_screen2">#990029</color>
+    <color name="dot_dark_screen3">#803350</color>
+    <color name="dot_dark_screen4">#ff471a</color>
 
     <color name="dot_light_screen1">#F8BBD0</color>
-    <color name="dot_light_screen_2">#E1BEE7</color>
-    <color name="dot_light_screen_3">#80CBC4</color>
-    <color name="dot_light_screen_4">#ffffff</color>
+    <color name="dot_light_screen_2">#ffb3c7</color>
+    <color name="dot_light_screen_3">#dba4b9</color>
+    <color name="dot_light_screen_4">#ffc2b3</color>
 
 
     <array name="dot_inactive" >

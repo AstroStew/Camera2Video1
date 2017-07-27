@@ -38,15 +38,7 @@
                     "endOffset": 607
                 },
                 "from": {
-                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml",
-                    "position": {
-                        "startLine": 22,
-                        "startColumn": 4,
-                        "startOffset": 865,
-                        "endLine": 27,
-                        "endColumn": 12,
-                        "endOffset": 1095
-                    }
+                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml"
                 }
             },
             {
@@ -59,15 +51,7 @@
                     "endOffset": 832
                 },
                 "from": {
-                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml",
-                    "position": {
-                        "startLine": 16,
-                        "startColumn": 4,
-                        "startOffset": 633,
-                        "endLine": 21,
-                        "endColumn": 12,
-                        "endOffset": 859
-                    }
+                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml"
                 }
             },
             {
@@ -1358,7 +1342,14 @@
                     "endOffset": 10658
                 },
                 "from": {
-                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml"
+                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 308,
+                        "endColumn": 50,
+                        "endOffset": 354
+                    }
                 }
             },
             {
@@ -1413,7 +1404,14 @@
                     "endOffset": 10867
                 },
                 "from": {
-                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml"
+                    "file": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\values\\colors.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 521,
+                        "endColumn": 52,
+                        "endOffset": 569
+                    }
                 }
             },
             {

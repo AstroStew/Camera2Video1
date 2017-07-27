@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:configChanges="orientation|screenSize"
-        android:icon="@mipmap/campic"
+        android:icon="@mipmap/emblem6"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

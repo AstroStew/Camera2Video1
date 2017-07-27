@@ -86,6 +86,10 @@ public class TabedMenuActivity extends AppCompatActivity {
             Intent ImageViewIntent=new Intent(getApplicationContext(), Page.class);
             startActivity(ImageViewIntent);
         }
+        if(id==R.id.Tutbutton){
+            Intent i=new Intent(getApplicationContext(),ViewPagerMainActivity.class);
+            startActivity(i);
+        }
 
         return super.onOptionsItemSelected(item);
     }
