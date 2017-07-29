@@ -137,6 +137,9 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Sections: %1$d</string>
     <string name="title_activity_tabed_menu">TabedMenuActivity</string>
-
+    <string name="wikilink">https://docs.google.com/document/d/1ry0PapwrdjWBNmrmT83O05COyDPzGQ0oozbmWkNVnvQ/edit?usp=sharing</string>
+    <string name="mobileapplicationlink">https://www.youtube.com/channel/UC4jh7YBBb0UnPIef2NOSJhQ</string>
+    <string name="mikeemail">camera2api@gmail.com</string>
+    <string name="meettheresearcherslink">http://www.lassondeundergraduateresearch.com/2017-summer-research#/meet-the-researchers/</string>
 
 </resources>
