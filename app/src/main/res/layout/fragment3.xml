@@ -26,21 +26,19 @@
         android:layout_alignTop="@+id/imageView2"
         android:layout_alignLeft="@+id/imageView2"
         android:layout_alignStart="@+id/imageView2"
-        android:layout_marginTop="10dp" />
-    <TextView
-        android:layout_width="300dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/imageView7" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/videofeatures"
 
-        android:layout_height="50dp"
-        android:text="Video Features"
-        android:textSize="40dp"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textStyle="italic"
+        android:id="@+id/imageView6"
+        android:layout_alignTop="@+id/imageView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="174dp" />
 
-        android:id="@+id/textView4"
-        android:layout_below="@+id/imageView2"
-        android:layout_centerHorizontal="true" />
     <TextView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -52,10 +50,7 @@
 
         android:textColor="@android:color/white"
         android:id="@+id/textView3"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_alignRight="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4" />
+        android:layout_below="@+id/imageView6"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
