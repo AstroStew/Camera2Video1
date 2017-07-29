@@ -308,6 +308,10 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\drawable\\ic_notifications_black_24dp.xml"
     },
     {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_camerapic2.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\drawable\\ic_camerapic2.xml"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\gradient.xml",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\drawable\\gradient.xml"
     },

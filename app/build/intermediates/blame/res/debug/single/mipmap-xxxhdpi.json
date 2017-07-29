@@ -4,6 +4,10 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-xxxhdpi\\exitpic.png"
     },
     {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi\\camerapic2.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-xxxhdpi\\camerapic2.png"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi\\isopic100.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-xxxhdpi\\isopic100.png"
     },

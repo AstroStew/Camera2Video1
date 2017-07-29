@@ -62,5 +62,9 @@
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\vidpicbusy.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\vidpicbusy.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\camerapic2.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\camerapic2.png"
     }
 ]

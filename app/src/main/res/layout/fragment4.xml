@@ -3,6 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff8566">
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        android:text="Thank You"
+        android:textStyle="bold"
+        android:fontFamily=""
+
+
+        />
+
 
 
 </LinearLayout>
