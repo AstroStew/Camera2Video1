@@ -5038,7 +5038,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(!PNGRAWfolder.exists()){
             PNGRAWfolder.mkdirs();
         }
-        String filename="temp1.png";
+        String filename="temp"+date+".png";
         File file=new File(PNGRAWfolder,filename);
         Boolean bool=null;
         filename=file.toString();
@@ -5067,7 +5067,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         MatOfInt matInt2 = new MatOfInt();
         matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
         //File path2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String filename2 = "s2BlackLightSubtraction.png";
+        String filename2 = "s2BlackLightSubtraction"+date+".png";
         File file2 = new File(PNGRAWfolder, filename2);
         Boolean bool2 = null;
         filename2 = file2.toString();
@@ -5076,7 +5076,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         MatOfInt matInt3 = new MatOfInt();
         matInt3.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
         //File path3 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String filename3 = "s5WhiteBalancing.png";
+        String filename3 = "s5WhiteBalancing"+date+".png";
         File file3 = new File(PNGRAWfolder, filename3);
         Boolean bool3 = null;
         filename3 = file3.toString();
