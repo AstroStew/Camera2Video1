@@ -3,6 +3,7 @@ package com.yorku.mstew.camera2videoimage;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by mstew on 2017-06-25.
  */
@@ -31,11 +34,17 @@ public class ViewPagerMainActivity extends AppCompatActivity {
     private TextView[] dots;
     private LinearLayout dotsLayout;
     private ViewPagerAdapter viewpageradapter;
+    Typeface myTypeFace;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        myTypeFace=Typeface.createFromAsset(getAssets(),"sensationsandqualities.ttf");
+        //TextView textview7=(TextView)findViewById(R.id.textView7);
+        //textview7.setTypeface(myTypeFace);
         viewPagerManager=new ViewPagerManager(this);
         if(!viewPagerManager.Check()){
             viewPagerManager.setFirst(false);
@@ -126,13 +135,24 @@ public class ViewPagerMainActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addButtonDots(position);
+
+            if(position==0){
+                //TextView textview17=(TextView)findViewById(R.id.textView14);
+                //textview17.setTypeface(myTypeFace);
+            }
+
             if(position==layouts.length-1){
                 next.setText("Proceed");
                 skip.setVisibility(View.GONE);
+                TextView textview7=(TextView)findViewById(R.id.textView7);
+                textview7.setTypeface(myTypeFace);
+                TextView textview5=(TextView)findViewById(R.id.textView5);
+                textview5.setTypeface(myTypeFace);
 
-            }else{
+            } else{
                 next.setText("NEXT");
                 skip.setVisibility(View.VISIBLE);
+
             }
         }
 

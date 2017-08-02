@@ -143,6 +143,7 @@ import static org.opencv.core.CvType.CV_16UC1;
  import static org.opencv.core.CvType.CV_8U;
 import static org.opencv.imgcodecs.Imgcodecs.CV_IMWRITE_PNG_COMPRESSION;
 import static org.opencv.imgcodecs.Imgcodecs.imwrite;
+import static org.opencv.imgproc.Imgproc.COLOR_BGR2BGR555;
 import static org.opencv.imgproc.Imgproc.cvtColor;
 
 import java.io.File;
@@ -260,7 +261,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int ISOseekProgress;
     private boolean ISOinputboolean = false;
     private int mWBMode = CONTROL_AWB_MODE_AUTO;
-
+    private Sound sound;
     private boolean mColorCorrectionMode=false;
     boolean WhiteBalanceCloudyDaylightBoolean = false;
     boolean WhiteBalanceDaylightBoolean = false;
@@ -558,6 +559,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     double[] SensorCalibrationTransform2DoubleValues=new double[9];
     double[][]SensorCalibrationTransform2Array;
     SharedPreferences sharedprefs1;
+    //private Mat finalMat;
+    private Mat s1RawImage;
+    private Mat s2BlackLightSubration;
+    private Mat s3LeensCorrection;
+    private Mat s4NoiseReduction;
+    private Mat s5WhiteBalancing;
+    private Mat s6ColorSpace;
 
 
 
@@ -1266,6 +1274,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         setContentView(R.layout.activity_camera2_video_image);
         //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
+
+        sound=new Sound(this);
         txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
         PNGRAWfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Camera2PNG_(fromRaw)");
 
@@ -3121,6 +3131,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 mStillImageButton.setImageResource(R.mipmap.campic);
                 if (!mBurstOn) {
                     if(Capture_JPEG || RawwithJPEg){
+
+                        sound.playHitSound();
                         lockFocus();
 
                     }
@@ -4977,20 +4989,43 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
     };
     private void CaptureandConvertRAWtoPNG() {
+        tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
+        s1RawImage=new Mat(imageHeight,imageHeight,CV_16UC1);
+        s2BlackLightSubration=new Mat(imageHeight,imageWidth,CV_16UC1);
+        s3LeensCorrection=new Mat(imageHeight,imageWidth,CV_16UC1);
+        s4NoiseReduction=new Mat(imageHeight,imageWidth,CV_16UC1);
+        s5WhiteBalancing=new Mat(imageHeight,imageWidth,CV_16UC1);
+        s6ColorSpace=new Mat(imageHeight,imageWidth,CV_16UC1);
         for(int j=0;j<totalResult.length;j++){
             for(int i=0; i<totalResult[0].length;i++){
                 mMat.put(j,i,totalResult[j][i]);
+                if(j%2==0 && i%2==0){
+                    s5WhiteBalancing.put(j,i,totalResult[j][i]*mVectorB);
+                }else if(j%2==1 && i%2==1){
+                    s5WhiteBalancing.put(j,i,totalResult[j][i]*mVectorR);
+                }else{
+                    s5WhiteBalancing.put(j,i,totalResult[j][i]);
+                }
 
             }
         }
-        mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
-        mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
-        tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
-        finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
-        Toast.makeText(Camera2VideoImageActivity.this, "Array2Mat Done", Toast.LENGTH_SHORT).show();
-        cvtColor(mMat,mMat2, Imgproc.COLOR_BayerBG2RGB);
-        mMat2.convertTo(mMat3, CV_16UC1,255);
-        mMat2.convertTo(mMat2, CV_16UC1,255);
+        //mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
+       // mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
+
+
+        //finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
+        //Toast.makeText(Camera2VideoImageActivity.this, "Array2Mat Done", Toast.LENGTH_SHORT).show();
+        //cvtColor(mMat,mMat2, Imgproc.COLOR_BayerBG2RGB);
+        //mMat2.convertTo(mMat3, CV_16UC1,255);
+       // mMat2.convertTo(mMat2, CV_16UC1,255);
+        cvtColor(mMat,s1RawImage,Imgproc.COLOR_BayerBG2RGB);
+        cvtColor(s5WhiteBalancing,s5WhiteBalancing,Imgproc.COLOR_BayerBG2RGB);
+        s1RawImage.convertTo(mMat3,CV_16UC1,255);
+        s1RawImage.convertTo(s1RawImage,CV_16UC1,255);
+        s5WhiteBalancing.convertTo(s5WhiteBalancing,CV_16UC1,255);
+
+
+
         Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
         MatOfInt matInt=new MatOfInt();
         matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
@@ -5010,30 +5045,37 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         //sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
 
         Mat satMinusBlack = new Mat(totalResult.length, totalResult[0].length, CV_16UC1);
-        satMinusBlack.setTo(Scalar.all(255/(1399-15)));
-        double constant=(255.0/(1399.0-15.0));
+        //satMinusBlack.setTo(Scalar.all(255/(1399-15)));
+        //double constant=(255.0/(1399.0-15.0));
+        int blacklevel=mCameraCharacteristics.get(CameraCharacteristics.SENSOR_BLACK_LEVEL_PATTERN).getOffsetForIndex(0,0);
+        int whitelevel=mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_WHITE_LEVEL);
+        satMinusBlack.setTo(Scalar.all(255/(whitelevel-blacklevel)));
+        double constant=(255.0/(whitelevel-blacklevel));
+
         cvtColor(satMinusBlack, satMinusBlack, Imgproc.COLOR_BayerBG2RGB);
         satMinusBlack.convertTo(satMinusBlack, CV_16UC1, 255);
                                         //Core.subtract(mMat2, sixtyFours, finalMat);
-        Core.addWeighted(mMat2,constant,sixtyFours,constant,0.0,finalMat);
+        //Core.addWeighted(mMat2,constant,sixtyFours,constant,0.0,finalMat);
+        Core.addWeighted(s1RawImage,constant,sixtyFours,constant,0.0,s2BlackLightSubration);
+        Core.addWeighted(s5WhiteBalancing,constant,sixtyFours,constant,0.0,s5WhiteBalancing);
 
         MatOfInt matInt2 = new MatOfInt();
         matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
         //File path2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String filename2 = "temp2.png";
+        String filename2 = "s2BlackLightSubtraction.png";
         File file2 = new File(PNGRAWfolder, filename2);
         Boolean bool2 = null;
         filename2 = file2.toString();
-        bool2 = Imgcodecs.imwrite(filename2, finalMat, matInt2);
+        bool2 = Imgcodecs.imwrite(filename2, s2BlackLightSubration, matInt2);
 
         MatOfInt matInt3 = new MatOfInt();
         matInt3.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
         //File path3 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String filename3 = "temp3.png";
+        String filename3 = "s5WhiteBalancing.png";
         File file3 = new File(PNGRAWfolder, filename3);
         Boolean bool3 = null;
         filename3 = file3.toString();
-        bool3 = Imgcodecs.imwrite(filename3, tempMat, matInt3);
+        bool3 = Imgcodecs.imwrite(filename3, s5WhiteBalancing, matInt3);
 
     }
 
