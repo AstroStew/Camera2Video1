@@ -4989,6 +4989,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
     };
     private void CaptureandConvertRAWtoPNG() {
+        String date=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
         tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
         s1RawImage=new Mat(imageHeight,imageHeight,CV_16UC1);
         s2BlackLightSubration=new Mat(imageHeight,imageWidth,CV_16UC1);
@@ -5033,7 +5035,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(!PNGRAWfolder.exists()){
             PNGRAWfolder.mkdirs();
         }
-        String filename="temp.png";
+        String filename="temp1"+date+".png";
         File file=new File(PNGRAWfolder,filename);
         Boolean bool=null;
         filename=file.toString();
