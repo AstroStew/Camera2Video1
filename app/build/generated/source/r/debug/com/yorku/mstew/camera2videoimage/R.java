@@ -3473,9 +3473,9 @@ containing a value of this type.
         public static final int textView13=0x7f0f00d1;
         public static final int textView14=0x7f0f00c1;
         public static final int textView3=0x7f0f00c8;
-        public static final int textView5=0x7f0f00c9;
-        public static final int textView6=0x7f0f00ca;
-        public static final int textView7=0x7f0f00cb;
+        public static final int textView5=0x7f0f00ca;
+        public static final int textView6=0x7f0f00cb;
+        public static final int textView7=0x7f0f00c9;
         public static final int textView8=0x7f0f00cc;
         public static final int textView9=0x7f0f00cd;
         public static final int text_input_password_toggle=0x7f0f00ba;

@@ -3971,7 +3971,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             Bytebufferplane1 = planes[0].getBuffer();
                         }
                         pixelValues = new int[BAYERHEIGHT][BAYERWIDTH];
-                        
+
 
                         float mSampleLocationX,mSampleLocationY;
 

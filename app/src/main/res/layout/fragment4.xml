@@ -9,7 +9,8 @@
         android:src="@mipmap/thanku2"
         android:scaleType="fitCenter"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView5"
