@@ -30,6 +30,7 @@ import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
+import android.hardware.camera2.params.BlackLevelPattern;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
@@ -122,6 +123,8 @@ import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.Utils;
+
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -4992,7 +4995,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         String date=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
         tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
-        s1RawImage=new Mat(imageHeight,imageHeight,CV_16UC1);
+        s1RawImage=new Mat(imageHeight,imageWidth,CV_16UC1);
         s2BlackLightSubration=new Mat(imageHeight,imageWidth,CV_16UC1);
         s3LeensCorrection=new Mat(imageHeight,imageWidth,CV_16UC1);
         s4NoiseReduction=new Mat(imageHeight,imageWidth,CV_16UC1);
@@ -5012,7 +5015,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
         }
         //mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
-       // mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
+        mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
 
 
         //finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
@@ -5035,7 +5038,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(!PNGRAWfolder.exists()){
             PNGRAWfolder.mkdirs();
         }
-        String filename="temp1"+date+".png";
+        String filename="temp1.png";
         File file=new File(PNGRAWfolder,filename);
         Boolean bool=null;
         filename=file.toString();
