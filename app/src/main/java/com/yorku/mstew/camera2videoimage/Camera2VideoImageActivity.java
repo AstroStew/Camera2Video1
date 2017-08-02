@@ -361,10 +361,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     String SensorinfoColorfiltering="";
 
 
-    private int rawWidth=400;
-    private int rawHeight=400;
+
     private int imageWidth=0;
     private int imageHeight=0;
+    private int rawWidth=2000;
+    private int rawHeight=2000;
 
 
 
@@ -1070,6 +1071,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
+
         switch(SensorinfoColorFiltering){
             case 0:
                 SensorinfoColorfiltering="RGGB";
@@ -1140,6 +1142,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private void adjustWhiteBalanceOnTouch() {
         try {
             Toast.makeText(this, "Part1", Toast.LENGTH_SHORT).show();
+
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             Toast.makeText(this, "Part2", Toast.LENGTH_SHORT).show();
             mCaptureRequestBuilder.addTarget(mRawImageReader.getSurface());
@@ -3968,6 +3971,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             Bytebufferplane1 = planes[0].getBuffer();
                         }
                         pixelValues = new int[BAYERHEIGHT][BAYERWIDTH];
+                        
 
                         float mSampleLocationX,mSampleLocationY;
 
@@ -4993,7 +4997,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     };
     private void CaptureandConvertRAWtoPNG() {
         String date=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
+        rawHeight=imageHeight;
+        rawWidth=imageWidth;
         tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
         s1RawImage=new Mat(imageHeight,imageWidth,CV_16UC1);
         s2BlackLightSubration=new Mat(imageHeight,imageWidth,CV_16UC1);

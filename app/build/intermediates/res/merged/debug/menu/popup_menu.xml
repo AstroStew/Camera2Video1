@@ -15,7 +15,7 @@
         android:title="Reacquire WB"/>
     <item
         android:id="@+id/devButton3"
-        android:title="Dev Button (IDK)"/>
+        android:title="Capture PNG"/>
 
 <item
     android:id="@+id/BasicManualMode"
