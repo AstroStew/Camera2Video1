@@ -1125,8 +1125,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                         Toast.makeText(this, "App requires access to camera", Toast.LENGTH_SHORT).show();
                     }
-                    requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO},
+                    requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             REQUEST_CAMERA_PERMISSION_RESULT);
+
                 }
                 //return;
             } else {
@@ -4779,8 +4780,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
 
+
             }else{
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+
 
             }
         }
