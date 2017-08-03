@@ -399,7 +399,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.resolution_xml);
             final ListPreference listPreference=(ListPreference)findPreference("resolution_list");
-            Camera2VideoImageActivity.SettingresolutionChanged=true;
+            if(listPreference.getValue()!=null){
+                Camera2VideoImageActivity.SettingresolutionChanged=true;
+            }
+
             SizeArray=newarraylist.toArray();
             CharSequence[] entries=new CharSequence[SizeArray.length];
             CharSequence[] entryValues=new CharSequence[SizeArray.length];
