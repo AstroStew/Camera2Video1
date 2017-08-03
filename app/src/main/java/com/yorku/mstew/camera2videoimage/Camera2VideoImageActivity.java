@@ -1636,7 +1636,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     if(readRawonTap) {
                                         if (isAdjustingWB && isAdjustingWB2) {
                                             isAdjustingWB = false;
-                                            adjustWhiteBalanceOnTouch();
+                                            if(!MovementButtonnBoolen){
+                                                adjustWhiteBalanceOnTouch();
+                                            }
+
                                         }
                                     }
                                     redPixelData = Color.red(pixel);
