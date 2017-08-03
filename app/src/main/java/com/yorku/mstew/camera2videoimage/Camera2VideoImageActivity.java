@@ -364,8 +364,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private int imageWidth=0;
     private int imageHeight=0;
-    private int rawWidth=2000;
-    private int rawHeight=2000;
+    private int rawWidth=500;
+    private int rawHeight=500;
 
 
 
@@ -471,6 +471,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     boolean ConvertRAWtoPNG=false;
     public static int MaxRawValueOutput;
     int ToneMapMode=1;
+    TextView pngcapturenote;
 
     Button readButton;
     String scannedfilestring;
@@ -570,6 +571,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private Mat s4NoiseReduction;
     private Mat s5WhiteBalancing;
     private Mat s6ColorSpace;
+    ImageButton pngfromRawImageButton;
 
 
 
@@ -1125,6 +1127,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                         Toast.makeText(this, "App requires access to camera", Toast.LENGTH_SHORT).show();
                     }
+
                     requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             REQUEST_CAMERA_PERMISSION_RESULT);
 
@@ -1163,10 +1166,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-        if(ConvertRAWtoPNG){
-            CaptureandConvertRAWtoPNG();
-            Toast.makeText(this, "Captured PNG from RAW", Toast.LENGTH_SHORT).show();
-        }
+
+
+
 
 
     }
@@ -1378,7 +1380,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-
+        pngfromRawImageButton=(ImageButton)findViewById(R.id.pngcapture);
+        pngcapturenote=(TextView)findViewById(R.id.pngcapturenote);
+        pngcapturenote.setVisibility(View.INVISIBLE);
+        pngfromRawImageButton.setVisibility(View.INVISIBLE);
+        pngfromRawImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CaptureandConvertRAWtoPNG();
+            }
+        });
 
 
         BallInspectorx = BallInspectory = 600;
@@ -3875,7 +3886,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         mMediaRecorder.setVideoFrameRate(FrameRate);
          mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        //mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setOrientationHint(mTotalRotation);
 
         mMediaRecorder.prepare();
@@ -4196,6 +4207,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                 Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
 
+                            if(ConvertRAWtoPNG){
+                                CaptureandConvertRAWtoPNG();
+                            }
 
 
 
@@ -5003,8 +5017,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     };
     private void CaptureandConvertRAWtoPNG() {
         String date=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        rawHeight=imageHeight;
-        rawWidth=imageWidth;
+
+
         tempMat=new Mat(imageHeight,imageWidth,CV_16UC1);
         s1RawImage=new Mat(imageHeight,imageWidth,CV_16UC1);
         s2BlackLightSubration=new Mat(imageHeight,imageWidth,CV_16UC1);
