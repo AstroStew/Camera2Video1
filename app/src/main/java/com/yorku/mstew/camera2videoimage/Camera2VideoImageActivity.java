@@ -814,7 +814,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     e.printStackTrace();
                 }
             } else {
-
+                //startPreview();
             }
             startPreview();
         }
@@ -1115,25 +1115,27 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                        Toast.makeText(this, "App requires access to camera", Toast.LENGTH_SHORT).show();
-                    }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED) {
+
+                    cameraManager.openCamera(mCameraId, mCameraDeviceStateCallback, mBackgroundHandler);
+
+                }else{
+                        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                            Toast.makeText(this, "App requires access to camera", Toast.LENGTH_SHORT).show();
+
+
+                        }
                     requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             REQUEST_CAMERA_PERMISSION_RESULT);
 
+
                 }
-                //return;
-            } else {
+
+
+
+                } else {
 
 
                 cameraManager.openCamera(mCameraId, mCameraDeviceStateCallback, mBackgroundHandler);
@@ -1429,7 +1431,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         });
 
 
-        mMediaRecorder = new MediaRecorder();
+
 
 
     //new stuff
@@ -1553,6 +1555,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         });
 
         createVideoFolder();
+        mMediaRecorder = new MediaRecorder();
         createImageFolder();
         mInfoTextView = (TextView) findViewById(R.id.infotextView2);
 
@@ -3879,15 +3882,20 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private void setupMediaRecorder() throws IOException {
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
-        //mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(BitEncodingRate);
         mMediaRecorder.setVideoFrameRate(FrameRate);
+
          mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setOrientationHint(mTotalRotation);
+
+
+
+
 
         mMediaRecorder.prepare();
     }
@@ -3915,14 +3923,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                         @Override
                         public void onConfigured(CameraCaptureSession session) {
-
-                            mRecordCaptureSession = session;
-
                             try {
-                                mRecordCaptureSession.setRepeatingRequest(mCaptureRequestBuilder.build(), null, null);
+                                session.setRepeatingRequest(mCaptureRequestBuilder.build(),null,null);
                             } catch (CameraAccessException e) {
                                 e.printStackTrace();
                             }
+                            //mRecordCaptureSession = session;
+
+                            /*try {
+                                mRecordCaptureSession.setRepeatingRequest(mCaptureRequestBuilder.build(), null, null);
+                            } catch (CameraAccessException e) {
+                                e.printStackTrace();
+                            }*/
                         }
 
                         @Override
