@@ -1,6 +1,7 @@
 package com.yorku.mstew.camera2videoimage;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
@@ -107,6 +108,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
@@ -364,8 +367,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private int imageWidth=0;
     private int imageHeight=0;
-    private int rawWidth=500;
-    private int rawHeight=500;
+    private int rawWidth=25;
+    private int rawHeight=25;
 
 
 
@@ -428,6 +431,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int ColorSpaceGreen3;
     int temp = 0;
     int temp2 = 0;
+    Animation loadingAnimation;
     private int mChronoTick=0;
     private int mRecordChronoTick=0;
     private int RecordTimeLimit;
@@ -456,6 +460,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int width;
     SurfaceHolder holder;
     ImageButton MovementButtonn;
+    ImageView loadingemblem1;
     public CameraCharacteristics mCameraCharacteristics;
     int PatternTestint;
     boolean MovementButtonnBoolen = true;
@@ -493,6 +498,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int EdgeMode=1;
     int AntiBandingModeint=3;
     boolean readRawonTap=false;
+    boolean loadingalphaboolinit=true;
 
     public static boolean NoiseReductionModesinit=true;
 
@@ -537,6 +543,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     File txtfolder;
     File PNGRAWfolder=null;
     public static int [] AvailableTonemapModes;
+    View alphaview;
+    boolean loadingalphabool=false;
 
 
 
@@ -1308,6 +1316,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
         });
 
+        loadingAnimation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotateloading);
+        loadingemblem1=(ImageView)findViewById(R.id.loadingemblem);
+        alphaview=(View)findViewById(R.id.alphaview);
+
+
 
          sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
          ifOnCreate=sharedprefs1.getBoolean("onCreatePref",true);
@@ -1380,18 +1393,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-
-
-        pngfromRawImageButton=(ImageButton)findViewById(R.id.pngcapture);
-        pngcapturenote=(TextView)findViewById(R.id.pngcapturenote);
-        pngcapturenote.setVisibility(View.INVISIBLE);
-        pngfromRawImageButton.setVisibility(View.INVISIBLE);
-        pngfromRawImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CaptureandConvertRAWtoPNG();
-            }
-        });
 
 
         BallInspectorx = BallInspectory = 600;
@@ -1585,6 +1586,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                 int SensorReferenceIlluminant = mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_REFERENCE_ILLUMINANT1);
 
+
                                 String SensorReferenceILluminantString = null;
                                 switch (SensorReferenceIlluminant) {
                                     case 10:
@@ -1652,6 +1654,21 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         if (isAdjustingWB && isAdjustingWB2) {
                                             isAdjustingWB = false;
                                             if(!MovementButtonnBoolen){
+                                                /*loadingalphabool=true;
+                                                if(loadingalphabool==true){
+
+                                                    loadingalphaboolinit=false;
+                                                    loadingemblem1.setVisibility(View.VISIBLE);
+                                                    alphaview.setAlpha(0.5f);
+                                                    loadingemblem1.setAnimation(loadingAnimation);
+
+                                                }else if (loadingalphabool==false){
+                                                    loadingemblem1.setVisibility(View.INVISIBLE);
+                                                    alphaview.setAlpha(0.0f);
+
+                                                }*/
+
+
                                                 adjustWhiteBalanceOnTouch();
                                             }
 
@@ -4221,6 +4238,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             if(ConvertRAWtoPNG){
                                 CaptureandConvertRAWtoPNG();
+                                //loadingalphabool=false;
+
+
                             }
 
 
@@ -5069,6 +5089,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
+        alphaview.setAlpha(0.0f);
+        loadingalphabool=false;
         MatOfInt matInt=new MatOfInt();
         matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
         //File path=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Camera2PNG_(fromRaw)");

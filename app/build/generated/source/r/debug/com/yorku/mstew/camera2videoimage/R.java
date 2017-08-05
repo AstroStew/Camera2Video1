@@ -26,6 +26,7 @@ public final class R {
         public static final int design_fab_out=0x7f05000e;
         public static final int design_snackbar_in=0x7f05000f;
         public static final int design_snackbar_out=0x7f050010;
+        public static final int rotateloading=0x7f050011;
     }
     public static final class array {
         public static final int antibanding_modes=0x7f0e0000;
@@ -3309,6 +3310,7 @@ containing a value of this type.
         public static final int add=0x7f0f0024;
         public static final int alertTitle=0x7f0f0060;
         public static final int all=0x7f0f0012;
+        public static final int alphaview=0x7f0f009a;
         public static final int always=0x7f0f0042;
         public static final int any=0x7f0f002c;
         public static final int appbar=0x7f0f00a0;
@@ -3394,6 +3396,7 @@ containing a value of this type.
         public static final int line3=0x7f0f00ec;
         public static final int listMode=0x7f0f0016;
         public static final int list_item=0x7f0f0050;
+        public static final int loadingemblem=0x7f0f009b;
         public static final int main_content=0x7f0f009f;
         public static final int manualFocus=0x7f0f0119;
         public static final int manualinputFocus=0x7f0f011a;
@@ -3414,8 +3417,6 @@ containing a value of this type.
         public static final int parent=0x7f0f000d;
         public static final int parentPanel=0x7f0f0055;
         public static final int pin=0x7f0f003a;
-        public static final int pngcapture=0x7f0f009a;
-        public static final int pngcapturenote=0x7f0f009b;
         public static final int progress=0x7f0f008e;
         public static final int progress_circular=0x7f0f0006;
         public static final int progress_horizontal=0x7f0f0007;
@@ -3615,15 +3616,16 @@ containing a value of this type.
         public static final int isopic200=0x7f03000b;
         public static final int isopic400=0x7f03000c;
         public static final int isopic800=0x7f03000d;
-        public static final int settingss=0x7f03000e;
-        public static final int thank=0x7f03000f;
-        public static final int thanku2=0x7f030010;
-        public static final int videofeatures=0x7f030011;
-        public static final int vidpicbusy=0x7f030012;
-        public static final int vidpiconline=0x7f030013;
-        public static final int wbselection=0x7f030014;
-        public static final int welcometocamera2api=0x7f030015;
-        public static final int whitebalancething=0x7f030016;
+        public static final int loadingemblem=0x7f03000e;
+        public static final int settingss=0x7f03000f;
+        public static final int thank=0x7f030010;
+        public static final int thanku2=0x7f030011;
+        public static final int videofeatures=0x7f030012;
+        public static final int vidpicbusy=0x7f030013;
+        public static final int vidpiconline=0x7f030014;
+        public static final int wbselection=0x7f030015;
+        public static final int welcometocamera2api=0x7f030016;
+        public static final int whitebalancething=0x7f030017;
     }
     public static final class raw {
         public static final int takepic=0x7f070000;
