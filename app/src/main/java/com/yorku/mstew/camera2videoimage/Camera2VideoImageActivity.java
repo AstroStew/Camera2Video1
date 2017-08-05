@@ -1667,6 +1667,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                                     alphaview.setAlpha(0.0f);
 
                                                 }*/
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        loadingemblem1.setVisibility(View.VISIBLE);
+                                                        alphaview.setAlpha(0.5f);
+                                                    }
+                                                });
+
 
 
                                                 adjustWhiteBalanceOnTouch();
@@ -4238,6 +4246,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                             if(ConvertRAWtoPNG){
                                 CaptureandConvertRAWtoPNG();
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        loadingemblem1.setVisibility(View.INVISIBLE);
+                                        alphaview.setAlpha(0f);
+                                    }
+                                });
+
                                 //loadingalphabool=false;
 
 
@@ -5090,7 +5107,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
         alphaview.setAlpha(0.0f);
-        loadingalphabool=false;
+
+
+        //loadingalphabool=false;
         MatOfInt matInt=new MatOfInt();
         matInt.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION,0);
         //File path=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Camera2PNG_(fromRaw)");
