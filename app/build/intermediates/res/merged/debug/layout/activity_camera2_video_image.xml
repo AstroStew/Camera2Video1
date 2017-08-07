@@ -112,6 +112,7 @@
         android:layout_height="wrap_content"
         android:text="Auto"
 
+
         android:layout_alignBottom="@+id/CameraButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -439,6 +440,20 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
          />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loadingtext"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:textStyle="italic"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:layout_centerInParent="true"
+        android:text="LOADING"
+        />
+
+
 
 
 

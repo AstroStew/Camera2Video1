@@ -259,6 +259,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int FlipNumber;
     private TextView mCameraInfoTextView;
     private TextView mCameraInfoTextView2;
+    private TextView loadingtext;
     private TextView mCameraInfoTextView3;
     private TextView mCameraInfoTextView4;
     private TextView mCameraInfoTextView5;
@@ -1323,6 +1324,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
+         loadingtext=(TextView)findViewById(R.id.loadingtext);
+
+
          sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
          ifOnCreate=sharedprefs1.getBoolean("onCreatePref",true);
         final boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
@@ -1668,11 +1672,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                                     alphaview.setAlpha(0.0f);
 
                                                 }*/
-
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        loadingtext.setVisibility(View.VISIBLE);
                                                         loadingemblem1.setVisibility(View.VISIBLE);
-                                                        loadingemblem1.startAnimation(loadingAnimation);
+
+                                                        loadingemblem1.setAnimation(loadingAnimation);
                                                         loadingAnimation.setRepeatCount(Animation.INFINITE);
                                                         alphaview.setAlpha(0.5f);
+                                                    }
+                                                });
+
 
 
 
@@ -5100,7 +5111,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-        Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Array2MatDone", Toast.LENGTH_SHORT).show();
 
 
 
@@ -5160,6 +5171,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                loadingtext.setVisibility(View.INVISIBLE);
+                loadingemblem1.clearAnimation();
+                loadingAnimation.cancel();
+                loadingAnimation.reset();
                 loadingemblem1.setVisibility(View.INVISIBLE);
 
                 alphaview.setAlpha(0f);
