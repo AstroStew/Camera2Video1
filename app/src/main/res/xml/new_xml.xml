@@ -21,16 +21,21 @@
 
     <SwitchPreference
         android:defaultValue="false"
-        android:title="Capture PNG"
+        android:title="Capture PNG Screenshot"
         android:key="Capture_PNG"
         android:id="@+id/CapturePNG"
 
         />
     <ListPreference
-        android:defaultValue="-1"
+        android:defaultValue="1"
         android:title="Noise Reduction Mode"
         android:key="noise_reduction_mode"
 
+        />
+    <SwitchPreference
+        android:key="ExposureCompensationSwitch"
+        android:defaultValue="false"
+        android:title="Exposure Compensation ON/OFF"
         />
 
 

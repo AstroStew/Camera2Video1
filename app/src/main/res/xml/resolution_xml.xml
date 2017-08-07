@@ -44,7 +44,7 @@
         android:key="readRawonTap"
         />
     <SwitchPreference
-        android:title="Convert RAw pixels to PNG"
+        android:title="Automatically Convert Raw to PNG"
         android:key="ConvertRAWtoPNG"
         android:dependency="readRawonTap"
         />
