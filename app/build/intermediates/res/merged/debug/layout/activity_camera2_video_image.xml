@@ -437,7 +437,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:visibility="invisible"
-        android:src="@mipmap/loadingemblem"
+        android:src="@mipmap/loadingemblem_lowerquality"
         android:id="@+id/loadingemblem"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"

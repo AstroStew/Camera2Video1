@@ -64,6 +64,10 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\btn_timelapse.png"
     },
     {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\loadingemblem_lowerquality.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\loadingemblem_lowerquality.png"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\exitpic.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\exitpic.png"
     },

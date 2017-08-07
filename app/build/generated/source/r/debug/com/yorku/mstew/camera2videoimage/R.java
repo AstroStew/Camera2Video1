@@ -3618,15 +3618,16 @@ containing a value of this type.
         public static final int isopic400=0x7f03000c;
         public static final int isopic800=0x7f03000d;
         public static final int loadingemblem=0x7f03000e;
-        public static final int settingss=0x7f03000f;
-        public static final int thank=0x7f030010;
-        public static final int thanku2=0x7f030011;
-        public static final int videofeatures=0x7f030012;
-        public static final int vidpicbusy=0x7f030013;
-        public static final int vidpiconline=0x7f030014;
-        public static final int wbselection=0x7f030015;
-        public static final int welcometocamera2api=0x7f030016;
-        public static final int whitebalancething=0x7f030017;
+        public static final int loadingemblem_lowerquality=0x7f03000f;
+        public static final int settingss=0x7f030010;
+        public static final int thank=0x7f030011;
+        public static final int thanku2=0x7f030012;
+        public static final int videofeatures=0x7f030013;
+        public static final int vidpicbusy=0x7f030014;
+        public static final int vidpiconline=0x7f030015;
+        public static final int wbselection=0x7f030016;
+        public static final int welcometocamera2api=0x7f030017;
+        public static final int whitebalancething=0x7f030018;
     }
     public static final class raw {
         public static final int takepic=0x7f070000;
