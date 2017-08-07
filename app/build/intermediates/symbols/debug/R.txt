@@ -808,13 +808,13 @@ int id ChooseWhiteBalance 0x7f0f012c
 int id CloseALLbutton 0x7f0f0083
 int id ColorSpaceInput 0x7f0f011e
 int id CustomWhiteBalance 0x7f0f0128
-int id ExposureCompensationSeekBar 0x7f0f0097
+int id ExposureCompensationSeekBar 0x7f0f0095
 int id FlashAuto 0x7f0f010a
 int id FlashButton 0x7f0f0093
 int id FlashOff 0x7f0f0109
 int id FlashOn 0x7f0f010b
-int id FlipButton 0x7f0f0094
-int id FocusChangeSeekBar 0x7f0f0095
+int id FlipButton 0x7f0f0096
+int id FocusChangeSeekBar 0x7f0f0097
 int id FocusEditText 0x7f0f00d7
 int id FocusTitle 0x7f0f00d6
 int id ISO100 0x7f0f0120
@@ -822,7 +822,7 @@ int id ISO1600 0x7f0f0124
 int id ISO200 0x7f0f0121
 int id ISO400 0x7f0f0122
 int id ISO800 0x7f0f0123
-int id ISOseekbar 0x7f0f0096
+int id ISOseekbar 0x7f0f0098
 int id ISOtext 0x7f0f0089
 int id ImageView 0x7f0f009e
 int id ImageViewLaunch 0x7f0f010e
@@ -843,7 +843,7 @@ int id PhotoBurstTimeLimitInputTitle 0x7f0f00f4
 int id PinchZoomImageView 0x7f0f009f
 int id RawInput 0x7f0f0103
 int id RawSpotWhiteBalance 0x7f0f012b
-int id SettingImageButton 0x7f0f008b
+int id SettingImageButton 0x7f0f008c
 int id ShowRealTimeInfo 0x7f0f0104
 int id ShutterSpeedEditText 0x7f0f00f7
 int id ShutterSpeedEditText2 0x7f0f00f9
@@ -916,7 +916,7 @@ int id beginning 0x7f0f0040
 int id bottom 0x7f0f002f
 int id btn_next 0x7f0f00c0
 int id btn_skip 0x7f0f00c1
-int id button 0x7f0f008c
+int id button 0x7f0f008b
 int id buttonPanel 0x7f0f0053
 int id cancel_action 0x7f0f00de
 int id center 0x7f0f0030
@@ -957,7 +957,7 @@ int id exitUntilCollapsed 0x7f0f0021
 int id expand_activities_button 0x7f0f004d
 int id expanded_menu 0x7f0f0062
 int id exportfile 0x7f0f00ff
-int id exposure_compensation 0x7f0f0098
+int id exposure_compensation 0x7f0f0099
 int id fab 0x7f0f00a4
 int id fill 0x7f0f003d
 int id fill_horizontal 0x7f0f003e
@@ -1061,7 +1061,7 @@ int id submenuarrow 0x7f0f0066
 int id submit_area 0x7f0f0077
 int id surfaceView 0x7f0f007c
 int id tabMode 0x7f0f0018
-int id testbutton 0x7f0f0099
+int id testbutton 0x7f0f0094
 int id text 0x7f0f00ee
 int id text2 0x7f0f00ec
 int id textSpacerNoButtons 0x7f0f005a

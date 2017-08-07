@@ -253,6 +253,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private String ShutterSpeed2String;
     private String ShutterSpeed1String;
     private static Uri mRequestingAppUri;
+    ByteBuffer Bytebufferplane1;
     private SeekBar mSeekBar2;
     private ImageButton mFlipCamera;
     private Boolean FlipNumberBoolean = false;
@@ -1320,7 +1321,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         loadingAnimation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotateloading);
         loadingemblem1=(ImageView)findViewById(R.id.loadingemblem);
 
-        alphaview=(View)findViewById(R.id.alphaview);
+
 
 
 
@@ -1354,6 +1355,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
+        alphaview=(View)findViewById(R.id.alphaview);
 
 
         ExposureCompensationtextview.setText(""+ExposureCompensationIntegerProgress);
@@ -1672,17 +1674,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                                     alphaview.setAlpha(0.0f);
 
                                                 }*/
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
+
                                                         loadingtext.setVisibility(View.VISIBLE);
                                                         loadingemblem1.setVisibility(View.VISIBLE);
 
                                                         loadingemblem1.setAnimation(loadingAnimation);
                                                         loadingAnimation.setRepeatCount(Animation.INFINITE);
                                                         alphaview.setAlpha(0.5f);
-                                                    }
-                                                });
 
 
 
@@ -4030,7 +4028,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     if (!mIsWritingRawImage) {
                         Image image = reader.acquireLatestImage();
                         Image.Plane[] planes = image.getPlanes();
-                        ByteBuffer Bytebufferplane1 = null;
+                         Bytebufferplane1 = null;
                         if (planes.length > 0) {
                             Bytebufferplane1 = planes[0].getBuffer();
                         }

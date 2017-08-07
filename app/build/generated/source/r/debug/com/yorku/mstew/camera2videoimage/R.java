@@ -3213,13 +3213,13 @@ containing a value of this type.
         public static final int CloseALLbutton=0x7f0f0083;
         public static final int ColorSpaceInput=0x7f0f011e;
         public static final int CustomWhiteBalance=0x7f0f0128;
-        public static final int ExposureCompensationSeekBar=0x7f0f0097;
+        public static final int ExposureCompensationSeekBar=0x7f0f0095;
         public static final int FlashAuto=0x7f0f010a;
         public static final int FlashButton=0x7f0f0093;
         public static final int FlashOff=0x7f0f0109;
         public static final int FlashOn=0x7f0f010b;
-        public static final int FlipButton=0x7f0f0094;
-        public static final int FocusChangeSeekBar=0x7f0f0095;
+        public static final int FlipButton=0x7f0f0096;
+        public static final int FocusChangeSeekBar=0x7f0f0097;
         public static final int FocusEditText=0x7f0f00d7;
         public static final int FocusTitle=0x7f0f00d6;
         public static final int ISO100=0x7f0f0120;
@@ -3227,7 +3227,7 @@ containing a value of this type.
         public static final int ISO200=0x7f0f0121;
         public static final int ISO400=0x7f0f0122;
         public static final int ISO800=0x7f0f0123;
-        public static final int ISOseekbar=0x7f0f0096;
+        public static final int ISOseekbar=0x7f0f0098;
         public static final int ISOtext=0x7f0f0089;
         public static final int ImageView=0x7f0f009e;
         public static final int ImageViewLaunch=0x7f0f010e;
@@ -3248,7 +3248,7 @@ containing a value of this type.
         public static final int PinchZoomImageView=0x7f0f009f;
         public static final int RawInput=0x7f0f0103;
         public static final int RawSpotWhiteBalance=0x7f0f012b;
-        public static final int SettingImageButton=0x7f0f008b;
+        public static final int SettingImageButton=0x7f0f008c;
         public static final int ShowRealTimeInfo=0x7f0f0104;
         public static final int ShutterSpeedEditText=0x7f0f00f7;
         public static final int ShutterSpeedEditText2=0x7f0f00f9;
@@ -3321,7 +3321,7 @@ containing a value of this type.
         public static final int bottom=0x7f0f002f;
         public static final int btn_next=0x7f0f00c0;
         public static final int btn_skip=0x7f0f00c1;
-        public static final int button=0x7f0f008c;
+        public static final int button=0x7f0f008b;
         public static final int buttonPanel=0x7f0f0053;
         public static final int cancel_action=0x7f0f00de;
         public static final int center=0x7f0f0030;
@@ -3362,7 +3362,7 @@ containing a value of this type.
         public static final int expand_activities_button=0x7f0f004d;
         public static final int expanded_menu=0x7f0f0062;
         public static final int exportfile=0x7f0f00ff;
-        public static final int exposure_compensation=0x7f0f0098;
+        public static final int exposure_compensation=0x7f0f0099;
         public static final int fab=0x7f0f00a4;
         public static final int fill=0x7f0f003d;
         public static final int fill_horizontal=0x7f0f003e;
@@ -3466,7 +3466,7 @@ containing a value of this type.
         public static final int submit_area=0x7f0f0077;
         public static final int surfaceView=0x7f0f007c;
         public static final int tabMode=0x7f0f0018;
-        public static final int testbutton=0x7f0f0099;
+        public static final int testbutton=0x7f0f0094;
         public static final int text=0x7f0f00ee;
         public static final int text2=0x7f0f00ec;
         public static final int textSpacerNoButtons=0x7f0f005a;

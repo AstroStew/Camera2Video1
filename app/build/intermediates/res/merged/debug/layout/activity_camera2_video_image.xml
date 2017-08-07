@@ -172,6 +172,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/CameraButton"
         android:layout_alignStart="@+id/CameraButton" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/CameraButton"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Mode" />
+
     <ImageButton
         android:text="Video_Button"
         android:layout_width="wrap_content"
@@ -205,17 +216,6 @@
         android:layout_alignRight="@+id/CameraButton"
         android:layout_alignEnd="@+id/CameraButton" />
 
-
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mode"
-
-        android:layout_alignBottom="@+id/CameraButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -293,6 +293,15 @@
         android:layout_below="@+id/FlashButton"
         android:layout_alignLeft="@+id/FlashButton"
         android:layout_alignStart="@+id/FlashButton" />
+    <Button
+        android:id="@+id/testbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ExposureCompensationSeekBar"
+        android:layout_alignStart="@+id/ExposureCompensationSeekBar"
+        android:layout_below="@+id/ExposureCompensationSeekBar"
+        android:layout_marginTop="31dp"
+        android:text="Button" />
 
     <SeekBar
         android:id="@+id/seekBar2"
@@ -365,6 +374,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/infotextView2" />
 
+
     <SeekBar
         android:id="@+id/ISOseekbar"
         android:layout_width="wrap_content"
@@ -414,15 +424,7 @@
         android:layout_marginRight="13dp"
          />
 
-    <Button
-        android:id="@+id/testbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ExposureCompensationSeekBar"
-        android:layout_alignStart="@+id/ExposureCompensationSeekBar"
-        android:layout_below="@+id/ExposureCompensationSeekBar"
-        android:layout_marginTop="31dp"
-        android:text="Button" />
+
 
     <View
         android:layout_width="match_parent"
