@@ -1318,6 +1318,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         loadingAnimation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotateloading);
         loadingemblem1=(ImageView)findViewById(R.id.loadingemblem);
+
         alphaview=(View)findViewById(R.id.alphaview);
 
 
@@ -1667,13 +1668,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                                     alphaview.setAlpha(0.0f);
 
                                                 }*/
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
+
                                                         loadingemblem1.setVisibility(View.VISIBLE);
+                                                        loadingemblem1.startAnimation(loadingAnimation);
+                                                        loadingAnimation.setRepeatCount(Animation.INFINITE);
                                                         alphaview.setAlpha(0.5f);
-                                                    }
-                                                });
+
+
 
 
 
@@ -4247,13 +4248,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             if(ConvertRAWtoPNG){
                                 CaptureandConvertRAWtoPNG();
 
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        loadingemblem1.setVisibility(View.INVISIBLE);
-                                        alphaview.setAlpha(0f);
-                                    }
-                                });
+
 
                                 //loadingalphabool=false;
 
@@ -5106,7 +5101,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         Toast.makeText(this, "Array2Mat Ddone", Toast.LENGTH_SHORT).show();
-        alphaview.setAlpha(0.0f);
+
+
 
 
         //loadingalphabool=false;
@@ -5159,6 +5155,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         Boolean bool3 = null;
         filename3 = file3.toString();
         bool3 = Imgcodecs.imwrite(filename3, s5WhiteBalancing, matInt3);
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadingemblem1.setVisibility(View.INVISIBLE);
+
+                alphaview.setAlpha(0f);
+            }
+        });
 
     }
 
