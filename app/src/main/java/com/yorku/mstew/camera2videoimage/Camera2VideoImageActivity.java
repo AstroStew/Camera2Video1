@@ -1444,8 +1444,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-    //new stuff
-        //new ModifyXMLFile();
+
 
 
         //mIsAuto2=false;
@@ -3710,6 +3709,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         PreCaptureCall, mBackgroundHandler);
 
                             } catch (CameraAccessException e) {
+                                Log.d(TAG,"Acces DEnied");
                                 e.printStackTrace();
                             }
                         }
@@ -4081,6 +4081,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 int offsetWidth=width%2;
                                 int lastindex=0;
                                 Mat mat= new Mat();
+                            //
                             rawWidth=image.getWidth();
                             rawHeight=image.getHeight();
                                 imageWidth=image.getWidth();
@@ -5187,7 +5188,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 alphaview.setAlpha(0f);
             }
         });
-        startPreview();
+        //Intent intent1=new Intent(this, Camera2VideoImageActivity.class);
+        //startActivity(intent1);
 
     }
 
