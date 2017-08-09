@@ -1084,6 +1084,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
+
+
         switch(SensorinfoColorFiltering){
             case 0:
                 SensorinfoColorfiltering="RGGB";
@@ -2940,7 +2942,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         mTextSeekBar.setText("Shutter Speed(in ns):" + (mSeekbar.getProgress() + ShutterSpeed1) + "/" + Math.round(mSeekbar.getMax() + ShutterSpeed1));
                                         Toast.makeText(getApplicationContext(), "Setting Shutter Speed", Toast.LENGTH_SHORT).show();
                                         ShutterSpeedValue = (mSeekbar.getProgress() + ShutterSpeed1);
-
+                                        AutoNumber=1;
                                         startPreview();
                                     }
                                 });
@@ -4079,6 +4081,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 int offsetWidth=width%2;
                                 int lastindex=0;
                                 Mat mat= new Mat();
+                            rawWidth=image.getWidth();
+                            rawHeight=image.getHeight();
                                 imageWidth=image.getWidth();
                                 imageHeight=image.getHeight();
 
@@ -4861,12 +4865,17 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         // SharedPreferences sharedprefs1 = null;
         sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
         if(SettingresolutionChanged){
-            final String resolutionlist=sharedprefs1.getString("resolution_list", "1");
-            Size1=previewSizes[Integer.parseInt(resolutionlist)];
-            mCurrentWidth=Size1.getWidth();
-            mCurrentHeight=Size1.getHeight();
-            adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
-            setupCamera(Size1.getHeight(), Size1.getWidth());
+            final String resolutionlist=sharedprefs1.getString("resolution_list", null);
+
+            if(resolutionlist!=null){
+                Size1=previewSizes[Integer.parseInt(resolutionlist)];
+                mCurrentWidth=Size1.getWidth();
+                mCurrentHeight=Size1.getHeight();
+                adjustAspectRatio(Size1.getHeight(), Size1.getWidth());
+                setupCamera(Size1.getHeight(), Size1.getWidth());
+            }
+
+
 
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                 connectCamera();
@@ -5093,7 +5102,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
         }
         //mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
-        mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
+        //mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
 
 
         //finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
@@ -5103,13 +5112,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
        // mMat2.convertTo(mMat2, CV_16UC1,255);
         cvtColor(mMat,s1RawImage,Imgproc.COLOR_BayerBG2RGB);
         cvtColor(s5WhiteBalancing,s5WhiteBalancing,Imgproc.COLOR_BayerBG2RGB);
-        s1RawImage.convertTo(mMat3,CV_16UC1,255);
+        //s1RawImage.convertTo(mMat3,CV_16UC1,255);
         s1RawImage.convertTo(s1RawImage,CV_16UC1,255);
         s5WhiteBalancing.convertTo(s5WhiteBalancing,CV_16UC1,255);
 
 
 
-        Toast.makeText(this, "Array2MatDone", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Demosiacing Done", Toast.LENGTH_SHORT).show();
 
 
 
@@ -5125,7 +5134,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         File file=new File(PNGRAWfolder,filename);
         Boolean bool=null;
         filename=file.toString();
-        bool=Imgcodecs.imwrite(filename,mMat3,matInt);
+        bool=Imgcodecs.imwrite(filename,s1RawImage,matInt);
         sixtyFours = new Mat(imageHeight, imageWidth, CV_16UC1);
         sixtyFours.setTo(new Scalar(15));
         cvtColor(sixtyFours, sixtyFours, Imgproc.COLOR_BayerBG2RGB);
@@ -5178,6 +5187,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 alphaview.setAlpha(0f);
             }
         });
+        startPreview();
 
     }
 
