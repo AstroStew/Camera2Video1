@@ -4084,12 +4084,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             //
                             rawWidth=image.getWidth();
                             rawHeight=image.getHeight();
+                            totalResult=new int[rawHeight][rawWidth];
+                            totalResult1D=new int [rawHeight*rawWidth];
                                 imageWidth=image.getWidth();
                                 imageHeight=image.getHeight();
 
 
-                                totalResult=new int[rawHeight][rawWidth];
-                                totalResult1D=new int [rawHeight*rawWidth];
+
                                 mMat=new Mat(image.getHeight(),image.getWidth(),CV_16UC1);
                                 count2=0;
 
@@ -4098,7 +4099,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 //int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
                                 //int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
                                 
-                                Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
                                 for(int j=0;j<rawHeight;j++){
                                     counterr=0;
                                     for (int i=0; i<rawWidth*2;i++){
@@ -4116,8 +4117,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             Toast.makeText(Camera2VideoImageActivity.this, "Finished", Toast.LENGTH_SHORT).show();
                             for (int j = height; j < height + BAYERHEIGHT; j++) {
                                 counterr = 0;
-                                for (int i = width; i < width + (BAYERWIDTH * 2); i++) {
-                                    temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j)) & 0xFF;
+                                for (int i = width*2; i < (width*2) + (BAYERWIDTH * 2); i++) {
+                                    temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j*2)) & 0xFF;
                                     if (i % 2 == 1) {
                                         pixelValues[j - height][counterr] = (temp << 8) + temp2;
                                         counterr++;
