@@ -421,7 +421,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             CharSequence[] entries5=new CharSequence[Camera2VideoImageActivity.AvailableTonemapModes.length];
             CharSequence[] EntryValues5=new CharSequence[Camera2VideoImageActivity.AvailableTonemapModes.length];
             EditTextPreference ChangeBlackLevelPref=(EditTextPreference)findPreference("change_black_level");
-            ChangeBlackLevelPref.setText("Set number <"+Camera2VideoImageActivity.MaxRawValueOutput);
+            ChangeBlackLevelPref.setSummary("Set number <"+Camera2VideoImageActivity.MaxRawValueOutput);
             bindPreferenceSummaryToValue(findPreference("change_black_level"));
 
             for(int i=0;i<Camera2VideoImageActivity.AvailableTonemapModes.length;i++){

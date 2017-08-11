@@ -349,6 +349,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mCameraEffect = 0;
     private long mCurrentSSvalue = 500000000;
     private float mCurrentAperatureValue;
+    private int CurrentJPEGQuality;
+
     int redPixelData;
     int bluePixelData;
     int greePixelData;
@@ -786,6 +788,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             connectCamera();
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+
         }
         if(previewinit)
         {
@@ -1852,12 +1855,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
                                             mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t\t"+"Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
+                                    +CurrentJPEGQuality
+
                                     );
 
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
                                             + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
-                                    ); // this action have to be in UI thread
+                                    +CurrentJPEGQuality
+                                    );
                                 }
                                 if (rggbChannelVector != null) {
                                     if (!CustomeWhiteBalanceBoolean) {
@@ -3544,7 +3550,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mCaptureRequestBuilder.set(CaptureRequest.SENSOR_TEST_PATTERN_DATA,new int[]{0,0,255,255});
             mCaptureRequestBuilder.set(CaptureRequest.EDGE_MODE,EdgeMode);
             mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
-            mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,JPEGQuality);
+            mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
             mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_MODE,ToneMapMode);
             if(ToneMapMode==0){
                 //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_CURVE,)
@@ -4019,7 +4025,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                     if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
-                        mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,JPEGQuality);
+                        mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
                         //mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
@@ -4442,6 +4448,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             } else if(!mIsRecording ||!mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_STILL_CAPTURE);
+                mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
             }
 
 
@@ -4924,6 +4931,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
         ConvertRAWtoPNG=sharedprefs1.getBoolean("ConvertRAWtoPNG",false);
         Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
+
 
 
 
