@@ -358,6 +358,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int TotalRedPixelData;
     int TotalBluePixelData;
     int TotalGreenPixelData;
+    private boolean blacklightSubtractionIsEnabled=true;
 
     private boolean isAdjustingWB2 = false;
     private boolean isAdjustingWB = false;
@@ -1179,6 +1180,17 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(), null, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        }
+        if(!ConvertRAWtoPNG && readRawonTap){
+
+                    loadingtext.setVisibility(View.INVISIBLE);
+                    loadingemblem1.clearAnimation();
+                    loadingAnimation.cancel();
+                    loadingAnimation.reset();
+                    loadingemblem1.setVisibility(View.INVISIBLE);
+
+                    alphaview.setAlpha(0f);
+
         }
 
 
@@ -5090,15 +5102,26 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         s4NoiseReduction=new Mat(imageHeight,imageWidth,CV_16UC1);
         s5WhiteBalancing=new Mat(imageHeight,imageWidth,CV_16UC1);
         s6ColorSpace=new Mat(imageHeight,imageWidth,CV_16UC1);
+
+
+        int blacklevel=mCameraCharacteristics.get(CameraCharacteristics.SENSOR_BLACK_LEVEL_PATTERN).getOffsetForIndex(0,0);
+        int whitelevel=mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_WHITE_LEVEL);
+        double constant;
+        if(blacklightSubtractionIsEnabled){
+            constant=(whitelevel/(whitelevel-blacklevel));
+        }else{
+            constant=1.00;
+            blacklevel=0;
+        }
         for(int j=0;j<totalResult.length;j++){
             for(int i=0; i<totalResult[0].length;i++){
-                mMat.put(j,i,totalResult[j][i]);
+                mMat.put(j,i,(totalResult[j][i]-blacklevel)*constant);
                 if(j%2==0 && i%2==0){
-                    s5WhiteBalancing.put(j,i,totalResult[j][i]*mVectorB);
+                    s5WhiteBalancing.put(j,i,(totalResult[j][i]*mVectorB-blacklevel)*constant);
                 }else if(j%2==1 && i%2==1){
-                    s5WhiteBalancing.put(j,i,totalResult[j][i]*mVectorR);
+                    s5WhiteBalancing.put(j,i,(totalResult[j][i]*mVectorR-blacklevel)*constant);
                 }else{
-                    s5WhiteBalancing.put(j,i,totalResult[j][i]);
+                    s5WhiteBalancing.put(j,i,(totalResult[j][i]-blacklevel)*constant);
                 }
 
             }
@@ -5115,8 +5138,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         cvtColor(mMat,s1RawImage,Imgproc.COLOR_BayerBG2RGB);
         cvtColor(s5WhiteBalancing,s5WhiteBalancing,Imgproc.COLOR_BayerBG2RGB);
         //s1RawImage.convertTo(mMat3,CV_16UC1,255);
-        s1RawImage.convertTo(s1RawImage,CV_16UC1,255);
-        s5WhiteBalancing.convertTo(s5WhiteBalancing,CV_16UC1,255);
+        s1RawImage.convertTo(s1RawImage,CV_16UC1,35536/whitelevel);
+        s5WhiteBalancing.convertTo(s5WhiteBalancing,CV_16UC1,35536/whitelevel);
 
 
 
@@ -5138,25 +5161,16 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         filename=file.toString();
         bool=Imgcodecs.imwrite(filename,s1RawImage,matInt);
         sixtyFours = new Mat(imageHeight, imageWidth, CV_16UC1);
-        sixtyFours.setTo(new Scalar(15));
+        sixtyFours.setTo(new Scalar(16));
         cvtColor(sixtyFours, sixtyFours, Imgproc.COLOR_BayerBG2RGB);
         sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
         //sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
 
         Mat satMinusBlack = new Mat(totalResult.length, totalResult[0].length, CV_16UC1);
-        //satMinusBlack.setTo(Scalar.all(255/(1399-15)));
-        //double constant=(255.0/(1399.0-15.0));
-        int blacklevel=mCameraCharacteristics.get(CameraCharacteristics.SENSOR_BLACK_LEVEL_PATTERN).getOffsetForIndex(0,0);
-        int whitelevel=mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_WHITE_LEVEL);
-        satMinusBlack.setTo(Scalar.all(255/(whitelevel-blacklevel)));
-        double constant=(255.0/(whitelevel-blacklevel));
-
-        cvtColor(satMinusBlack, satMinusBlack, Imgproc.COLOR_BayerBG2RGB);
-        satMinusBlack.convertTo(satMinusBlack, CV_16UC1, 255);
-                                        //Core.subtract(mMat2, sixtyFours, finalMat);
+                            //Core.subtract(mMat2, sixtyFours, finalMat);
         //Core.addWeighted(mMat2,constant,sixtyFours,constant,0.0,finalMat);
-        Core.addWeighted(s1RawImage,constant,sixtyFours,constant,0.0,s2BlackLightSubration);
-        Core.addWeighted(s5WhiteBalancing,constant,sixtyFours,constant,0.0,s5WhiteBalancing);
+        Core.addWeighted(s1RawImage,1.0,sixtyFours,0.0,0.0,s2BlackLightSubration);
+        //Core.addWeighted(s5WhiteBalancing,1.0,sixtyFours,0.0,0.0,s5WhiteBalancing);
 
         MatOfInt matInt2 = new MatOfInt();
         matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
