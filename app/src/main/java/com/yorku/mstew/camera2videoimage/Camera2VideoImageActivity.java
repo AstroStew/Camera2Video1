@@ -783,11 +783,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
 
         if (mTextureView.isAvailable()) {
-            setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
+            setupCamera(Size1.getWidth(), Size1.getHeight());
             //adjustAspectRatio(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+
+            //setupCamera(Size1.getWidth(),Size1.getHeight());
 
         }
         if(previewinit)
@@ -1369,6 +1371,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         readRawonTap=sharedprefs1.getBoolean("readRawonTap",false);
         ConvertRAWtoPNG=sharedprefs1.getBoolean("ConvertRAWtoPNG",false);
         Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
+        JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
+
 
 
         ExposureCompensationSeekBar=(SeekBar)findViewById(R.id.ExposureCompensationSeekBar);
@@ -1855,14 +1859,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
                                             mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t\t"+"Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
-                                    +CurrentJPEGQuality
+
 
                                     );
 
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
                                             + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
-                                    +CurrentJPEGQuality
+
                                     );
                                 }
                                 if (rggbChannelVector != null) {
