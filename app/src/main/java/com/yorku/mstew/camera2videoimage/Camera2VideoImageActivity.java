@@ -4264,10 +4264,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         }
                                         s = s + "\n\n";*/
 
-                                            totalB=totalB+pixelValues[i][j];
-                                        totalG=totalG+pixelValues[i][j+1];
-                                            totalG=totalG+pixelValues[i+1][j];
-                                            totalR=totalR+pixelValues[i+1][j+1];
+                                            totalB = totalB + pixelValues[i][j];
+                                            totalG = totalG + pixelValues[i][j + 1];
+                                            totalG = totalG + pixelValues[i + 1][j];
+                                            totalR = totalR + pixelValues[i + 1][j + 1];
+                                        }
 
                                     }
                                 }
@@ -4327,7 +4328,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                     }
                 }
-            }
+            };
 
 
 
