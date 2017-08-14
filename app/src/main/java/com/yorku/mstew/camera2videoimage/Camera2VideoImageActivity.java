@@ -3607,6 +3607,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             } else if (!CustomeWhiteBalanceBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
             }
+            if(mWBMode == CONTROL_AWB_MODE_AUTO && ColorSpaceInputBoolean==false){
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
+            }else if(mWBMode == -1 && ColorSpaceInputBoolean == false){
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
+                RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
+            }
 
             if (mWBMode == -1) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
@@ -4115,6 +4122,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                 mMat=new Mat(image.getHeight(),image.getWidth(),CV_16UC1);
                                 count2=0;
+                            byte[] rawByte=new byte[Bytebufferplane1.remaining()];
+                            Bytebufferplane1.get(rawByte);
+
 
 
 
@@ -4125,7 +4135,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 for(int j=0;j<rawHeight;j++){
                                     counterr=0;
                                     for (int i=0; i<rawWidth*2;i++){
-                                        temp=Bytebufferplane1.get((i)+((image.getWidth())*j*2))&0xFF;
+                                        temp=rawByte[((i)+((imageWidth)*j*2))]&0xFF;
                                         if(i%2==1){
                                             totalResult[j][counterr]=(temp<<8)+temp2;
                                             //totalResult1D[count2]=totalResult[j][counterr];
@@ -4232,9 +4242,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     }
                                 } else if (mFilterArrangement == 3) {
                                     s = "BG\nGR\n\n";
-                                    for (int i = 0; i < BAYERHEIGHT; i++) {
-                                        for (int j = 0; j < BAYERWIDTH; j++) {
-                                            if (i % 2 == 0) {
+                                    for(int i=0;i<BAYERHEIGHT;i=i+2) {
+                                        for (int j = 0; j < BAYERWIDTH; j=j+2) {
+                                            /*if (i % 2 == 0) {
                                                 if (j % 2 == 0) {
                                                     totalB = totalB + pixelValues[i][j];
                                                 }
@@ -4252,7 +4262,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                             }
                                             s = s + pixelValues[i][j] + " ";
                                         }
-                                        s = s + "\n\n";
+                                        s = s + "\n\n";*/
+
+                                            totalB=totalB+pixelValues[i][j];
+                                        totalG=totalG+pixelValues[i][j+1];
+                                            totalG=totalG+pixelValues[i+1][j];
+                                            totalR=totalR+pixelValues[i+1][j+1];
 
                                     }
                                 }
@@ -4281,7 +4296,21 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                 Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
+                                    if (!isAdjustingWB2) {
 
+                                        mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
+
+
+                                    } else {
+                                        mWBMode=-1;
+                                        ColorSpaceInputBoolean=true;
+                                        mVectorR=(float)(totalG/totalR);
+                                        mVectorG_EVEN=1;
+                                        mVectorG_ODD=1;
+                                        mVectorB=(float)(totalG/totalB);
+                                        startPreview();
+                                        image.close();
+                                    }
                             if(ConvertRAWtoPNG){
                                 CaptureandConvertRAWtoPNG();
 
@@ -4295,24 +4324,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                         }
-                        if (!isAdjustingWB2) {
 
-                            mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
-
-
-                        } else {
-                            mWBMode=-1;
-                            mColorCorrectionMode=true;
-                            mVectorR=(float)(totalG/totalR);
-                            mVectorG_EVEN=1;
-                            mVectorG_ODD=1;
-                            mVectorB=(float)(totalG/totalB);
-                            startPreview();
-                            image.close();
-                        }
                     }
                 }
-            };
+            }
 
 
 
