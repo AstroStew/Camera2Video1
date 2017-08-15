@@ -3615,10 +3615,17 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
             }
 
-            if (mWBMode == -1) {
+            if (mWBMode == -1 && ColorSpaceInputBoolean==true) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
                 RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
+
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, new ColorSpaceTransform(new int[]{
+                        ColorSpaceRed1, 256, ColorSpaceRed2, 256, ColorSpaceRed3, 256,
+                        ColorSpaceGreen1, 256, ColorSpaceGreen2, 256, ColorSpaceGreen3, 256,
+                        ColorSpaceBlue1, 256, ColorSpaceBlue2, 256, ColorSpaceBlue3, 256
+                }));
 
             }
             if (BooleanOpticalStabilizationOn) {
@@ -3674,7 +3681,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if (mFlashMode == 3) {
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_TORCH);
             }
-            if (ColorSpaceInputBoolean) {
+            if (mWBMode!=-1 && ColorSpaceInputBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, new ColorSpaceTransform(new int[]{
