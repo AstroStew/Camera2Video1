@@ -105,11 +105,52 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="314">
-              <caret line="3620" column="93" selection-start-line="3620" selection-start-column="93" selection-end-line="3620" selection-end-column="93" />
+              <caret line="3635" column="12" selection-start-line="3635" selection-start-column="12" selection-end-line="3635" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#193464#209410#0" expanded="true" />
-                <element signature="e#209409#209410#0" expanded="true" />
+                <element signature="e#147250#149067#0" expanded="true" />
+                <element signature="e#149066#149067#0" expanded="true" />
+                <element signature="e#193211#209157#0" expanded="true" />
+                <element signature="e#209156#209157#0" expanded="true" />
+                <marker date="1502838063387" expanded="false" signature="99589:99728" ph="(item) → {" />
+                <marker date="1502838063387" expanded="false" signature="103011:103135" ph="(v) → {" />
+                <marker date="1502838063387" expanded="false" signature="104979:105010" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="109514:109692" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="109784:109823" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="109904:110082" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="111227:111266" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="113955:114143" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="114457:114500" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="114586:114772" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="118310:118353" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="121815:122003" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="122102:122145" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="122231:122417" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="123360:123403" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="138240:138420" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="138511:138550" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="138625:138803" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="139525:139564" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="144112:144292" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="144383:144422" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="144514:144692" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="145477:145516" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="146847:147027" ph="(dialog, which) → {" />
+                <marker date="1502838063387" expanded="false" signature="147118:147157" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="155343:155472" ph="(dialog, id) → {" />
+                <marker date="1502838063387" expanded="false" signature="155562:155601" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="157269:157293" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="157339:157355" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="157405:157551" ph="(v) → {" />
+                <marker date="1502838063387" expanded="false" signature="158937:158952" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="159004:159107" ph="(v) → {" />
+                <marker date="1502838063387" expanded="false" signature="159670:159822" ph="(chronometer) → {" />
+                <marker date="1502838063387" expanded="false" signature="160910:160933" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="161048:161063" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="161114:161260" ph="(v) → {" />
+                <marker date="1502838063387" expanded="false" signature="162395:162411" ph="}" />
+                <marker date="1502838063387" expanded="false" signature="162464:162621" ph="(v) → {" />
+                <marker date="1502838063387" expanded="false" signature="163020:163035" ph="}" />
               </folding>
             </state>
           </provider>
@@ -120,7 +161,22 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="55902">
               <caret line="2576" column="79" selection-start-line="2576" selection-start-column="79" selection-end-line="2576" selection-end-column="79" />
-              <folding />
+              <folding>
+                <element signature="e#0#168968#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#3476#3477#0" expanded="false" />
+                <element signature="e#3521#3522#0" expanded="false" />
+                <element signature="e#3627#3628#0" expanded="false" />
+                <element signature="e#3673#3674#0" expanded="false" />
+                <element signature="e#4650#4651#0" expanded="false" />
+                <element signature="e#4685#4686#0" expanded="false" />
+                <element signature="e#5504#5505#0" expanded="false" />
+                <element signature="e#5564#5565#0" expanded="false" />
+                <element signature="e#6132#6133#0" expanded="false" />
+                <element signature="e#6175#6176#0" expanded="false" />
+                <element signature="e#6322#6323#0" expanded="false" />
+                <element signature="e#6369#6370#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -138,7 +194,7 @@
       <file leaf-file-name="SettingsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/SettingsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8294">
+            <state relative-caret-position="8360">
               <caret line="417" column="35" selection-start-line="417" selection-start-column="31" selection-end-line="417" selection-end-column="35" />
               <folding />
             </state>
@@ -2804,7 +2860,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="device.picker.selection" value="LGH815ded0c0c8" />
+    <property name="device.picker.selection" value="06157df6b9456828" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
@@ -3184,8 +3240,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35085836" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1396348" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5030303" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44576877" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5030303" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3256,7 +3312,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4915</line>
+          <line>4920</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
@@ -3268,13 +3324,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>3617</line>
+          <line>3637</line>
           <properties />
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4543</line>
+          <line>4548</line>
           <properties method="onCaptureStarted" />
           <option name="timeStamp" value="45" />
         </line-breakpoint>
@@ -3386,18 +3442,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6402">
           <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
-          <folding>
-            <element signature="e#17162#17163#0" expanded="false" />
-            <element signature="e#17201#17202#0" expanded="false" />
-            <element signature="e#24554#24555#0" expanded="false" />
-            <element signature="e#24602#24603#0" expanded="false" />
-            <element signature="e#24658#24659#0" expanded="false" />
-            <element signature="e#24687#24688#0" expanded="false" />
-            <element signature="e#24741#24742#0" expanded="false" />
-            <element signature="e#24770#24771#0" expanded="false" />
-            <element signature="e#24847#24848#0" expanded="false" />
-            <element signature="e#24879#24880#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3626,7 +3670,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="55902">
           <caret line="2576" column="79" selection-start-line="2576" selection-start-column="79" selection-end-line="2576" selection-end-column="79" />
-          <folding />
+          <folding>
+            <element signature="e#0#168968#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#3476#3477#0" expanded="false" />
+            <element signature="e#3521#3522#0" expanded="false" />
+            <element signature="e#3627#3628#0" expanded="false" />
+            <element signature="e#3673#3674#0" expanded="false" />
+            <element signature="e#4650#4651#0" expanded="false" />
+            <element signature="e#4685#4686#0" expanded="false" />
+            <element signature="e#5504#5505#0" expanded="false" />
+            <element signature="e#5564#5565#0" expanded="false" />
+            <element signature="e#6132#6133#0" expanded="false" />
+            <element signature="e#6175#6176#0" expanded="false" />
+            <element signature="e#6322#6323#0" expanded="false" />
+            <element signature="e#6369#6370#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3665,7 +3724,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/SettingsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8294">
+        <state relative-caret-position="8360">
           <caret line="417" column="35" selection-start-line="417" selection-start-column="31" selection-end-line="417" selection-end-column="35" />
           <folding />
         </state>
@@ -3674,11 +3733,52 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
-          <caret line="3620" column="93" selection-start-line="3620" selection-start-column="93" selection-end-line="3620" selection-end-column="93" />
+          <caret line="3635" column="12" selection-start-line="3635" selection-start-column="12" selection-end-line="3635" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#193464#209410#0" expanded="true" />
-            <element signature="e#209409#209410#0" expanded="true" />
+            <element signature="e#147250#149067#0" expanded="true" />
+            <element signature="e#149066#149067#0" expanded="true" />
+            <element signature="e#193211#209157#0" expanded="true" />
+            <element signature="e#209156#209157#0" expanded="true" />
+            <marker date="1502838063387" expanded="false" signature="99589:99728" ph="(item) → {" />
+            <marker date="1502838063387" expanded="false" signature="103011:103135" ph="(v) → {" />
+            <marker date="1502838063387" expanded="false" signature="104979:105010" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="109514:109692" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="109784:109823" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="109904:110082" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="111227:111266" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="113955:114143" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="114457:114500" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="114586:114772" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="118310:118353" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="121815:122003" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="122102:122145" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="122231:122417" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="123360:123403" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="138240:138420" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="138511:138550" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="138625:138803" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="139525:139564" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="144112:144292" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="144383:144422" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="144514:144692" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="145477:145516" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="146847:147027" ph="(dialog, which) → {" />
+            <marker date="1502838063387" expanded="false" signature="147118:147157" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="155343:155472" ph="(dialog, id) → {" />
+            <marker date="1502838063387" expanded="false" signature="155562:155601" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="157269:157293" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="157339:157355" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="157405:157551" ph="(v) → {" />
+            <marker date="1502838063387" expanded="false" signature="158937:158952" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="159004:159107" ph="(v) → {" />
+            <marker date="1502838063387" expanded="false" signature="159670:159822" ph="(chronometer) → {" />
+            <marker date="1502838063387" expanded="false" signature="160910:160933" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="161048:161063" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="161114:161260" ph="(v) → {" />
+            <marker date="1502838063387" expanded="false" signature="162395:162411" ph="}" />
+            <marker date="1502838063387" expanded="false" signature="162464:162621" ph="(v) → {" />
+            <marker date="1502838063387" expanded="false" signature="163020:163035" ph="}" />
           </folding>
         </state>
       </provider>

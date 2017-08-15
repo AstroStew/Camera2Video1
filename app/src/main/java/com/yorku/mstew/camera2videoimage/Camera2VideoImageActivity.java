@@ -1036,6 +1036,24 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     (Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[0])/Double.parseDouble(ForwardMatrix2Values[i].toString().split("/")[1]));
 
         }
+        for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES).length; i++) {
+
+
+            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 0) {
+                OFFtext = "OFF";
+
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 1) {
+                SIMPLEtext = "SIMPLE";
+                supports_face_detection_mode_simple = true;
+            }
+            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 2) {
+                FULLtext = "FULL";
+                isSupports_face_detection_mode_full = true;
+            }
+            //String newText4 = oldTextView4 + "" + mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i]+ " , ";
+
+        }
 
         RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
         SensorColorTranform1Array= new double[][]{{SensorColorTransform1DoubleValues[0],SensorColorTransform1DoubleValues[1],SensorColorTransform1DoubleValues[2]},{SensorColorTransform1DoubleValues[3],SensorColorTransform1DoubleValues[4],SensorColorTransform1DoubleValues[5]},{SensorColorTransform1DoubleValues[6],SensorColorTransform1DoubleValues[7],SensorColorTransform1DoubleValues[8]}};
@@ -2950,6 +2968,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                         progress = progressValue;
 
+
                                     }
 
                                     @Override
@@ -2963,7 +2982,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         mTextSeekBar.setText("Shutter Speed(in ns):" + (mSeekbar.getProgress() + ShutterSpeed1) + "/" + Math.round(mSeekbar.getMax() + ShutterSpeed1));
                                         Toast.makeText(getApplicationContext(), "Setting Shutter Speed", Toast.LENGTH_SHORT).show();
                                         ShutterSpeedValue = (mSeekbar.getProgress() + ShutterSpeed1);
-                                        AutoNumber=1;
+
+                                        if(AutoNumber !=1){
+                                            AutoNumber=1;
+                                        }
                                         startPreview();
                                     }
                                 });
@@ -3033,6 +3055,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         String tempShutterSpeedString[] = new String[2];
+                                        if(AutoNumber !=1){
+                                            AutoNumber=1;
+                                        }
                                         String tt;
                                         tt = mShutterSpeedEditText2.getText().toString();
                                         //make regex if statement here to satify numbers numbers greater than 1
@@ -3521,24 +3546,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-        for (int i = 0; i < mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES).length; i++) {
 
-
-            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 0) {
-                OFFtext = "OFF";
-
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 1) {
-                SIMPLEtext = "SIMPLE";
-                supports_face_detection_mode_simple = true;
-            }
-            if (mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i] == 2) {
-                FULLtext = "FULL";
-                isSupports_face_detection_mode_full = true;
-            }
-            //String newText4 = oldTextView4 + "" + mCameraCharacteristics.get(CameraCharacteristics.STATISTICS_INFO_AVAILABLE_FACE_DETECT_MODES)[i]+ " , ";
-
-        }
 
         try {
 
@@ -3594,7 +3602,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, 1);
             }
-            if (AutoNumber == 1) {
+            if (AutoNumber == 1 || ISOinputboolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, ShutterSpeedValue);
                 mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
@@ -3604,7 +3612,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if (CustomeWhiteBalanceBoolean) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, new RggbChannelVector((float) RggbChsnnelR, (float) RggbChannelG_even, (float) RggbChannelG_odd, (float) RggbChannelBlue));
-            } else if (!CustomeWhiteBalanceBoolean) {
+            } else if (!CustomeWhiteBalanceBoolean && mWBMode !=-1) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
             }
             if(mWBMode == CONTROL_AWB_MODE_AUTO && ColorSpaceInputBoolean==false){
@@ -3614,18 +3622,33 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
             }
-
-            if (mWBMode == -1 && ColorSpaceInputBoolean==true) {
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
-                RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
-                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
-
+            else if(mWBMode !=-1 && ColorSpaceInputBoolean==true) {
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
                 mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, new ColorSpaceTransform(new int[]{
                         ColorSpaceRed1, 256, ColorSpaceRed2, 256, ColorSpaceRed3, 256,
                         ColorSpaceGreen1, 256, ColorSpaceGreen2, 256, ColorSpaceGreen3, 256,
                         ColorSpaceBlue1, 256, ColorSpaceBlue2, 256, ColorSpaceBlue3, 256
                 }));
+            }
+
+
+            
+
+            else if (mWBMode == -1 && ColorSpaceInputBoolean==true) {
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
+                RggbChannelVector UNIT_GAIN = new RggbChannelVector(mVectorR, mVectorG_EVEN, mVectorG_ODD, mVectorB);
+
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_GAINS, UNIT_GAIN);
+
+
+                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, new ColorSpaceTransform(new int[]{
+                        ColorSpaceRed1, 256, ColorSpaceRed2, 256, ColorSpaceRed3, 256,
+                        ColorSpaceGreen1, 256, ColorSpaceGreen2, 256, ColorSpaceGreen3, 256,
+                        ColorSpaceBlue1, 256, ColorSpaceBlue2, 256, ColorSpaceBlue3, 256
+                }));
+
 
             }
             if (BooleanOpticalStabilizationOn) {
@@ -3681,27 +3704,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             if (mFlashMode == 3) {
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_TORCH);
             }
-            if (mWBMode!=-1 && ColorSpaceInputBoolean) {
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CameraMetadata.CONTROL_AWB_MODE_OFF);
-                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_TRANSFORM_MATRIX);
-                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_TRANSFORM, new ColorSpaceTransform(new int[]{
-                        ColorSpaceRed1, 256, ColorSpaceRed2, 256, ColorSpaceRed3, 256,
-                        ColorSpaceGreen1, 256, ColorSpaceGreen2, 256, ColorSpaceGreen3, 256,
-                        ColorSpaceBlue1, 256, ColorSpaceBlue2, 256, ColorSpaceBlue3, 256
-                }));
-            } else if (!ColorSpaceInputBoolean) {
-                mCaptureRequestBuilder.set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_FAST);
-            }
-            if (ISOinputboolean) {
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CameraMetadata.CONTROL_AE_MODE_OFF);
-                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, ShutterSpeedValue);
-                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
-
-            }
-            if (SensorColorTransformInputBoolean) {
 
 
-            }
+
 
             final CameraCaptureSession.CaptureCallback PreCaptureCall = new CameraCaptureSession.CaptureCallback() {
                 @Override
