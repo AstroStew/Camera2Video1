@@ -6,7 +6,7 @@ Sister Application: https://github.com/minjaekim96/camera2_learn
 
 # Updates
 - made a README.md
--small bug Changes
+- small bug Changes
 
 
 # Purpose
