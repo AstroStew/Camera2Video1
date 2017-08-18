@@ -22,7 +22,6 @@ The goal of this project was to create an application that could manipulate the 
  - Video Capture
  - Timelapse and Intervalometer
  - *Export Digital Imaging Steps* *
- - l
 # The Digital Imaging Pipeline
 As seen below, the digital imaging pipeline follows a 12 steps process. Each steps has a function applied to it.  *Due to Camera2 API abilities to access this pipeline we were able to isolate steps 1(RAW Image),2(Black Light Subtraction), and 6 (White Balancing)apply demoisiacing to them and export them as PNG files. 
 [![N|Solid](https://karaimer.github.io/camera-pipeline/image/Fig_02_pipeline_figure_final.png)](https://karaimer.github.io/camera-pipeline/)
