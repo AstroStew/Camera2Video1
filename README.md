@@ -5,11 +5,13 @@
 Sister Application: https://github.com/minjaekim96/camera2_learn
 
 # Updates
-- made a Read me
+- made a README.md
+- small bug Changes
 
 
 # Purpose
 The goal of this project was to create an application that could manipulate the Digital Imaging Pipeline using Android's Camera 2 API system.The Digital Imagine Pipeline Model was based off of Hakki Can Karamier's work in ["A Software Platform for Manipulating the Camera Imaging Pipeline"](https://karaimer.github.io/camera-pipeline/).
+ Exploring the pipeline could lead to advances in computer vision, aesthetic photography, and many more.  
 
 # Features
  - JPEG,RAW and PNG Capture
@@ -32,10 +34,12 @@ As seen below, the digital imaging pipeline follows a 12 steps process. Each ste
 - Resolutions are not always compatable with the phone
 - Not yet optimized for all devices
 
+# Future Plans
+As of right now we are done coding this application due to schooling. We hope that someday an application like this can access all steps of the pipeline. 
 
 
- 
 
 # Contributing
-All contributes to this project must be made through GitHub's 
-See [CONTRIBUTING.md]()
+All contributes to this project must be made through GitHub's pull module
+
+See [CONTRIBUTING.md](https://github.com/mstewart2525/Camera2Video1/blob/master/CONTRIBUTING.md)
