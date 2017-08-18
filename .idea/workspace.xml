@@ -16,6 +16,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" />
     </list>
@@ -104,53 +105,10 @@
       <file leaf-file-name="Camera2VideoImageActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="3635" column="12" selection-start-line="3635" selection-start-column="12" selection-end-line="3635" selection-end-column="12" />
+            <state relative-caret-position="-1958">
+              <caret line="897" column="22" selection-start-line="897" selection-start-column="22" selection-end-line="897" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#147250#149067#0" expanded="true" />
-                <element signature="e#149066#149067#0" expanded="true" />
-                <element signature="e#193211#209157#0" expanded="true" />
-                <element signature="e#209156#209157#0" expanded="true" />
-                <marker date="1502838063387" expanded="false" signature="99589:99728" ph="(item) → {" />
-                <marker date="1502838063387" expanded="false" signature="103011:103135" ph="(v) → {" />
-                <marker date="1502838063387" expanded="false" signature="104979:105010" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="109514:109692" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="109784:109823" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="109904:110082" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="111227:111266" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="113955:114143" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="114457:114500" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="114586:114772" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="118310:118353" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="121815:122003" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="122102:122145" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="122231:122417" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="123360:123403" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="138240:138420" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="138511:138550" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="138625:138803" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="139525:139564" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="144112:144292" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="144383:144422" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="144514:144692" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="145477:145516" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="146847:147027" ph="(dialog, which) → {" />
-                <marker date="1502838063387" expanded="false" signature="147118:147157" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="155343:155472" ph="(dialog, id) → {" />
-                <marker date="1502838063387" expanded="false" signature="155562:155601" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="157269:157293" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="157339:157355" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="157405:157551" ph="(v) → {" />
-                <marker date="1502838063387" expanded="false" signature="158937:158952" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="159004:159107" ph="(v) → {" />
-                <marker date="1502838063387" expanded="false" signature="159670:159822" ph="(chronometer) → {" />
-                <marker date="1502838063387" expanded="false" signature="160910:160933" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="161048:161063" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="161114:161260" ph="(v) → {" />
-                <marker date="1502838063387" expanded="false" signature="162395:162411" ph="}" />
-                <marker date="1502838063387" expanded="false" signature="162464:162621" ph="(v) → {" />
-                <marker date="1502838063387" expanded="false" signature="163020:163035" ph="}" />
               </folding>
             </state>
           </provider>
@@ -186,7 +144,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38720">
               <caret line="1777" column="0" selection-start-line="1777" selection-start-column="0" selection-end-line="1777" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="e#0#150695#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -196,7 +157,11 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="8360">
               <caret line="417" column="35" selection-start-line="417" selection-start-column="31" selection-end-line="417" selection-end-column="35" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#7158#7159#0" expanded="false" />
+                <element signature="e#7201#7202#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -206,7 +171,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="308">
               <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -3219,7 +3186,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3251462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3229,8 +3196,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6690224" sideWeight="0.5021482" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66865313" sideWeight="0.49785176" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3736842" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2205006" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3736842" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924694" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -3312,25 +3279,25 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4920</line>
+          <line>4918</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>870</line>
+          <line>868</line>
           <properties />
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>3637</line>
+          <line>3635</line>
           <properties />
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4548</line>
+          <line>4546</line>
           <properties method="onCaptureStarted" />
           <option name="timeStamp" value="45" />
         </line-breakpoint>
@@ -3363,23 +3330,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment2.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="1400">
           <caret line="35" column="43" selection-start-line="35" selection-start-column="43" selection-end-line="35" selection-end-column="43" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment3.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment3.xml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="1320">
           <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/font/fontfam.xml" />
@@ -3429,13 +3396,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/popup_menu.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/openCVLibrary320/src/main/java/org/opencv/core/Mat.java">
@@ -3446,13 +3413,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment4.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="5" column="10" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="10" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
@@ -3468,23 +3435,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/alpatest.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment1.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1078">
           <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_image_view_main.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_image_view_main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-25/android/os/Handler.java">
@@ -3502,93 +3469,93 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_tabed_menu.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/advancedsettings.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/advancedsettings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/videosettings.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_notification.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_data_sync.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/optical_stabilization.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pipeline_editor.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_general.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/exposure_compensation_seekbar.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/videosettings.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_notification.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_data_sync.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/optical_stabilization.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pipeline_editor.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_general.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/exposure_compensation_seekbar.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="6" selection-end-column="10" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/pref_headers.xml">
@@ -3599,14 +3566,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/new_xml.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/btn_timelapse.png">
@@ -3640,21 +3607,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_camera2_video_image.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9944">
           <caret line="452" column="28" selection-start-line="452" selection-start-column="28" selection-end-line="452" selection-end-column="28" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Sound.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3662,7 +3631,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38720">
           <caret line="1777" column="0" selection-start-line="1777" selection-start-column="0" selection-end-line="1777" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#150695#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3690,95 +3662,56 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/resolution_xml.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="748">
           <caret line="34" column="39" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="39" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/page_layout.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/page_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/whitebalance1_info_alertdialog.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/SettingsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8360">
           <caret line="417" column="35" selection-start-line="417" selection-start-column="31" selection-end-line="417" selection-end-column="35" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#7158#7159#0" expanded="false" />
+            <element signature="e#7201#7202#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="3635" column="12" selection-start-line="3635" selection-start-column="12" selection-end-line="3635" selection-end-column="12" />
+        <state relative-caret-position="-1958">
+          <caret line="897" column="22" selection-start-line="897" selection-start-column="22" selection-end-line="897" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#147250#149067#0" expanded="true" />
-            <element signature="e#149066#149067#0" expanded="true" />
-            <element signature="e#193211#209157#0" expanded="true" />
-            <element signature="e#209156#209157#0" expanded="true" />
-            <marker date="1502838063387" expanded="false" signature="99589:99728" ph="(item) → {" />
-            <marker date="1502838063387" expanded="false" signature="103011:103135" ph="(v) → {" />
-            <marker date="1502838063387" expanded="false" signature="104979:105010" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="109514:109692" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="109784:109823" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="109904:110082" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="111227:111266" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="113955:114143" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="114457:114500" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="114586:114772" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="118310:118353" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="121815:122003" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="122102:122145" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="122231:122417" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="123360:123403" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="138240:138420" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="138511:138550" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="138625:138803" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="139525:139564" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="144112:144292" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="144383:144422" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="144514:144692" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="145477:145516" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="146847:147027" ph="(dialog, which) → {" />
-            <marker date="1502838063387" expanded="false" signature="147118:147157" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="155343:155472" ph="(dialog, id) → {" />
-            <marker date="1502838063387" expanded="false" signature="155562:155601" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="157269:157293" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="157339:157355" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="157405:157551" ph="(v) → {" />
-            <marker date="1502838063387" expanded="false" signature="158937:158952" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="159004:159107" ph="(v) → {" />
-            <marker date="1502838063387" expanded="false" signature="159670:159822" ph="(chronometer) → {" />
-            <marker date="1502838063387" expanded="false" signature="160910:160933" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="161048:161063" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="161114:161260" ph="(v) → {" />
-            <marker date="1502838063387" expanded="false" signature="162395:162411" ph="}" />
-            <marker date="1502838063387" expanded="false" signature="162464:162621" ph="(v) → {" />
-            <marker date="1502838063387" expanded="false" signature="163020:163035" ph="}" />
           </folding>
         </state>
       </provider>

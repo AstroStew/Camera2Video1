@@ -637,7 +637,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 orientation += 360;
             }
         }
-        //^^ thanks to google for that code
+        //^^ this code deals with orientation based on your X,Y,Z values
         //now we must figure out which orientation based on the degrees
 
         if (orientation != mOrientationDeg)
@@ -711,11 +711,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     // private HandlerThread mBackgroundHandlerThread;
     //private Handler mBackgroundHandler;
     private Size mPreviewSize;
-    //private static final int REQUEST_CAMERA_PERMISSION_RESULT=0;
-    //private CaptureRequest.Builder mCaptureRequestBuilder;
 
-    // under here is my previous code. lets see if it works?
-//nope so lets restart
+
+
     //create surface texture listener
     private TextureView mTextureView;
     private TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
@@ -899,7 +897,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     mCurrentSSvalue = result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
                     */
 
-                    //Trying to implement facial recognition
+
 
                     super.onCaptureCompleted(session, request, result);
                     //mCaptureResult = result;
@@ -3633,7 +3631,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
 
 
-            
+
 
             else if (mWBMode == -1 && ColorSpaceInputBoolean==true) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_OFF);
