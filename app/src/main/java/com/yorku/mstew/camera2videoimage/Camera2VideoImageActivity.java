@@ -235,7 +235,7 @@ import Jama.Matrix;
 public class Camera2VideoImageActivity extends Activity implements SensorEventListener {
     private SensorManager sm;
     private Button mModebutton;
-    private int ISOvalue = 0;
+    private int ISOvalue = 100;
     private int progressValue;
     private EditText mTextSeekBar;
     boolean TestBoolean=false;
@@ -1181,6 +1181,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     private void adjustWhiteBalanceOnTouch() {
         try {
+            WhiteBalanceAutoBoolean=false;
             Toast.makeText(this, "Part1", Toast.LENGTH_SHORT).show();
 
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
@@ -1213,6 +1214,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     alphaview.setAlpha(0f);
 
         }
+        startPreview();
 
 
 
@@ -3671,7 +3673,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AF_MODE_AUTO);
                 }
             }
-            if (!AutoWhiteBalancelockBoolean) {
+            if (!AutoWhiteBalancelockBoolean && !CustomeWhiteBalanceBoolean && mWBMode!=-1) {
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_LOCK, false);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AWB_MODE, mWBMode);
             }
@@ -4319,7 +4321,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         mVectorG_EVEN=1;
                                         mVectorG_ODD=1;
                                         mVectorB=(float)(totalG/totalB);
+                                        connectCamera();
                                         startPreview();
+
                                         image.close();
                                     }
                             if(ConvertRAWtoPNG){
