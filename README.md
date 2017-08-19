@@ -5,8 +5,7 @@
 Sister Application: https://github.com/minjaekim96/camera2_learn
 
 # Updates
-- made a README.md
-- small bug Changes
+- Fixed small bugs
 
 
 # Purpose
@@ -30,7 +29,7 @@ As seen below, the digital imaging pipeline follows a 12 steps process. Each ste
 
 
 # Known Bugs
-- JPEG Capture stops after Resume
+- Application glitches out after you take more than 5 pictures
 - Resolutions are not always compatable with the phone
 - Not yet optimized for all devices
 

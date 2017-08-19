@@ -381,6 +381,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int[] totalResult1D;
 
     private ColorSpaceTransform mCurrentSensorColorTranform;
+
     private int mCurrentAutoFocus;
     private Integer afStateRealTime;
     private int mNumberofFaces;
@@ -763,7 +764,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
     @Override
     protected void onResume() {
-        super.onResume();
+
+
 
         startBackgroundThread();
         if(!OpenCVLoader.initDebug()){
@@ -786,16 +788,19 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             connectCamera();
         } else {
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
-
+            //connectCamera();
             //setupCamera(Size1.getWidth(),Size1.getHeight());
 
         }
         if(previewinit)
         {
 
+
         }else{
             RefreshScreen();
+            connectCamera();
         }
+        super.onResume();
     }
 
 
@@ -4597,7 +4602,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                             counterr++;
 
                             Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT).show();
-
+                            Bytebufferplane1=null;
 
                         }
 
