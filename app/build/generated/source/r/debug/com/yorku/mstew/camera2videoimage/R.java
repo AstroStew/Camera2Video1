@@ -4084,15 +4084,14 @@ containing a value of this type.
         public static final int exposure_compensation_seekbar=0x7f060002;
         public static final int new_xml=0x7f060003;
         public static final int optical_stabilization=0x7f060004;
-        public static final int pipeline_editor=0x7f060005;
-        public static final int pref_data_sync=0x7f060006;
-        public static final int pref_general=0x7f060007;
-        public static final int pref_headers=0x7f060008;
-        public static final int pref_notification=0x7f060009;
-        public static final int resolution_xml=0x7f06000a;
-        public static final int show_real_time_info=0x7f06000b;
-        public static final int timelpase_change=0x7f06000c;
-        public static final int videosettings=0x7f06000d;
+        public static final int pref_data_sync=0x7f060005;
+        public static final int pref_general=0x7f060006;
+        public static final int pref_headers=0x7f060007;
+        public static final int pref_notification=0x7f060008;
+        public static final int resolution_xml=0x7f060009;
+        public static final int show_real_time_info=0x7f06000a;
+        public static final int timelpase_change=0x7f06000b;
+        public static final int videosettings=0x7f06000c;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionBar.

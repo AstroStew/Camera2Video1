@@ -40,13 +40,17 @@
 
         />
     <SwitchPreference
-        android:title="Read Raw pixels on Tap"
+        android:title="Custom White Balance"
         android:key="readRawonTap"
         />
     <SwitchPreference
-        android:title="Automatically Convert Raw to PNG"
+        android:title="Convert Raw to PNG"
         android:key="ConvertRAWtoPNG"
         android:dependency="readRawonTap"
+        />
+    <SwitchPreference
+        android:title="Track faces"
+        android:key="trackfaces"
         />
 
 </PreferenceScreen>

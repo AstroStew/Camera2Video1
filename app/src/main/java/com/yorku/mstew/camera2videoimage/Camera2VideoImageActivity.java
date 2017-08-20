@@ -285,6 +285,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     int hheight=0;
     int wwidth=0;
     Size Size1;
+    Boolean trackfacesbool=false;
 
 
     int[][] RedPixelValues2;
@@ -1395,6 +1396,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ConvertRAWtoPNG=sharedprefs1.getBoolean("ConvertRAWtoPNG",false);
         Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
         JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
+        trackfacesbool=sharedprefs1.getBoolean("trackfaces",false);
+
 
 
 
@@ -3718,9 +3721,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     mCurrentAperatureValue = result.get(CaptureResult.LENS_APERTURE);
                     Integer mode = result.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
                     Face[] faces = result.get(CaptureResult.STATISTICS_FACES);
+                    if(trackfacesbool && faces.length>=1){
+                        BallInspectorx=(int)Size1.getWidth()-(faces[0].getBounds().centerX()/2) ;
+                        BallInspectory=(int)Size1.getHeight()-(faces[0].getBounds().centerY()/2);
+                    }
+
                     rggbChannelVector = result.get(CaptureResult.COLOR_CORRECTION_GAINS);
                     ColorCorrectionTransform = result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
                     mNumberofFaces = faces.length;
+
 
                     //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();
 
@@ -4965,6 +4974,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         ToneMapMode=Integer.parseInt(sharedprefs1.getString("tonemap_mode","1"));
         ConvertRAWtoPNG=sharedprefs1.getBoolean("ConvertRAWtoPNG",false);
         Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
+        trackfacesbool=sharedprefs1.getBoolean("trackfaces",false);
 
 
 

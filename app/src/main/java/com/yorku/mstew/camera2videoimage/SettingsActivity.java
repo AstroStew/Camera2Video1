@@ -225,7 +225,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || VideoEditinput.class.getName().equals(fragmentName)
                 || ExportTxtFile.class.getName().equals(fragmentName)
                 || ExposureCompensation.class.getName().equals(fragmentName)
-                || PipelineEditor.class.getName().equals(fragmentName)
                 || TestingPatterns.class.getName().equals(fragmentName)
                 ;
     }
@@ -620,17 +619,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         }
     }
-    public static class PipelineEditor extends PreferenceFragment{
-        @Override
-        public void onCreate(Bundle savedInstanceState){
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pipeline_editor);
-            bindPreferenceSummaryToValue(findPreference("pipelineEditor"));
 
-
-
-        }
-    }
     public static class TestingPatterns extends PreferenceFragment{
         @Override
         public void onCreate(Bundle savedInstanceState){
