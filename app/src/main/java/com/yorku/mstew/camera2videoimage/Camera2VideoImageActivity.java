@@ -2028,7 +2028,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 if (AutoNumber == 0) {
                     AutoNumber = 1;
                     Toast.makeText(getApplicationContext(), "AUTO OFF", Toast.LENGTH_SHORT).show();
-                    mAutobutton.setText("AUTO OFF");
+                    mAutobutton.setText("Reset");
+
                     startPreview();
 
                 } else if (AutoNumber == 1) {
@@ -2036,6 +2037,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     Toast.makeText(getApplicationContext(), "AUTO ON", Toast.LENGTH_SHORT).show();
                     mAutobutton.setText("AUTO ON");
                     ColorSpaceInputBoolean = false;
+                    //connectCamera();
                     startPreview();
 
 
@@ -2134,8 +2136,6 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 ColorSpaceCheckedItem.setChecked(ColorSpaceInputBoolean);
                 final MenuItem WhiteBalanceCheckedItem=popupMenu.getMenu().findItem(R.id.CustomWhiteBalance);
                 WhiteBalanceCheckedItem.setChecked(CustomeWhiteBalanceBoolean);
-                final MenuItem WB_RAWTouchItem = popupMenu.getMenu().findItem(R.id.WB_RAWTouch);
-                WB_RAWTouchItem.setChecked(WB_RAWTouchEnabled);
 
 
 
@@ -3197,13 +3197,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 CaptureandConvertRAWtoPNG();
 
                                 break;
-                            case R.id.WB_RAWTouch:
-                                if (WB_RAWTouchEnabled) {
-                                    WB_RAWTouchEnabled = false;
-                                } else {
-                                    WB_RAWTouchEnabled = true;
-                                }
-                                startPreview();
+
 
 
                             default:
@@ -3607,11 +3601,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
                 mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, 1);
             }
-            if (AutoNumber == 1 || ISOinputboolean) {
-                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
-                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, ShutterSpeedValue);
-                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
-            }
+
 
 
             if (CustomeWhiteBalanceBoolean) {
@@ -3708,6 +3698,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
             if (mFlashMode == 3) {
                 mCaptureRequestBuilder.set(CaptureRequest.FLASH_MODE, FLASH_MODE_TORCH);
+            }
+            if (AutoNumber == 1) {
+                mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
+                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, ShutterSpeedValue);
+                mCaptureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, ISOvalue);
             }
 
 
@@ -4902,7 +4897,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             txform.postTranslate(xoff, yoff);
             mTextureView.setTransform(txform);
         }else if(rotation==Surface.ROTATION_90||rotation==Surface.ROTATION_270){
-            txform.postRotate(270);
+            txform.postRotate(90);
         }
 
 
@@ -5139,6 +5134,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
     };
     private void CaptureandConvertRAWtoPNG() {
+
+        //this method converts a White Balanced image from Raw to PNG
         String date=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
 
@@ -5173,8 +5170,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
             }
         }
-        //mMat2=new Mat(imageHeight,imageWidth,CV_16UC1);
-        //mMat3=new Mat(imageHeight,imageWidth,CV_16UC1);
+        //demoisacing is finished
 
 
         //finalMat=new Mat(imageHeight,imageWidth,CV_16UC1);
@@ -5202,6 +5198,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         if(!PNGRAWfolder.exists()){
             PNGRAWfolder.mkdirs();
         }
+
+        //s1 Raw Image is assigned colors and export
         String filename="temp"+date+".png";
         File file=new File(PNGRAWfolder,filename);
         Boolean bool=null;
@@ -5214,14 +5212,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         //sixtyFours.convertTo(sixtyFours, CV_16UC1, 255);
 
         Mat satMinusBlack = new Mat(totalResult.length, totalResult[0].length, CV_16UC1);
-                            //Core.subtract(mMat2, sixtyFours, finalMat);
-        //Core.addWeighted(mMat2,constant,sixtyFours,constant,0.0,finalMat);
+
         Core.addWeighted(s1RawImage,1.0,sixtyFours,0.0,0.0,s2BlackLightSubration);
-        //Core.addWeighted(s5WhiteBalancing,1.0,sixtyFours,0.0,0.0,s5WhiteBalancing);
 
         MatOfInt matInt2 = new MatOfInt();
         matInt2.fromArray(Imgcodecs.CV_IMWRITE_PNG_COMPRESSION, 0);
-        //File path2 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String filename2 = "s2BlackLightSubtraction"+date+".png";
         File file2 = new File(PNGRAWfolder, filename2);
         Boolean bool2 = null;
@@ -5241,6 +5236,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                //note: visibility has to be set on the same thread
                 loadingtext.setVisibility(View.INVISIBLE);
                 loadingemblem1.clearAnimation();
                 loadingAnimation.cancel();
