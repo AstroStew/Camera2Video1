@@ -633,7 +633,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         Log.d(TAG, "Sensor Changed");
         float[] values = event.values;
-        int orientation = PORTRAIT;
+        int orientation = ORIENTATION_UNKNOWN;
         float X = -values[_DATA_X];
         float Y = -values[_DATA_Y];
         float Z = -values[_DATA_Z];
