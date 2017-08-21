@@ -3767,7 +3767,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                         leftface=(((float) faces[0].getBounds().left/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth();
                         topface=(((float)faces[0].getBounds().top/(float)mSensorInfoActiveArraySize.bottom))*(float)mTextureView.getHeight();
-                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth()*2;
+                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth();
                         bottomface=(((float)faces[0].getBounds().bottom/(float)mSensorInfoActiveArraySize.bottom))*(float)mTextureView.getHeight();
                         starttrackingbool=true;
 

@@ -13,7 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a60ce1c1-0bea-4f90-9863-4e6203edeaf2" name="Default" comment="i just want to commit my changes in README.md">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Camera2Video1" afterPath="$PROJECT_DIR$/Camera2Video1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" />
     </list>
     <list id="f46cc3d8-38a4-438e-a124-1639464dc7cb" name="New changelist" comment="New changelist" />
@@ -50,15 +49,15 @@
       <file leaf-file-name="Camera2VideoImageActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="639" column="36" selection-start-line="639" selection-start-column="36" selection-end-line="639" selection-end-column="36" />
+            <state relative-caret-position="144">
+              <caret line="3771" column="47" selection-start-line="3771" selection-start-column="47" selection-end-line="3771" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#68557#85903#0" expanded="true" />
                 <element signature="e#85902#85903#0" expanded="true" />
-                <element signature="e#179643#182011#0" expanded="true" />
-                <element signature="e#182010#182011#0" expanded="true" />
-                <marker date="1503359645287" expanded="false" signature="68784:68888" ph="() → {" />
+                <element signature="e#179643#182009#0" expanded="true" />
+                <element signature="e#182008#182009#0" expanded="true" />
+                <marker date="1503359751834" expanded="false" signature="68784:68888" ph="() → {" />
               </folding>
             </state>
           </provider>
@@ -3814,15 +3813,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="639" column="36" selection-start-line="639" selection-start-column="36" selection-end-line="639" selection-end-column="36" />
+        <state relative-caret-position="144">
+          <caret line="3771" column="47" selection-start-line="3771" selection-start-column="47" selection-end-line="3771" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#68557#85903#0" expanded="true" />
             <element signature="e#85902#85903#0" expanded="true" />
-            <element signature="e#179643#182011#0" expanded="true" />
-            <element signature="e#182010#182011#0" expanded="true" />
-            <marker date="1503359645287" expanded="false" signature="68784:68888" ph="() → {" />
+            <element signature="e#179643#182009#0" expanded="true" />
+            <element signature="e#182008#182009#0" expanded="true" />
+            <marker date="1503359751834" expanded="false" signature="68784:68888" ph="() → {" />
           </folding>
         </state>
       </provider>
