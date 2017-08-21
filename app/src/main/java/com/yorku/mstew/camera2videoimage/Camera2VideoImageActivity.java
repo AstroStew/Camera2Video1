@@ -23,6 +23,8 @@ import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
+import android.graphics.Rect;
+import android.media.FaceDetector;
 
 import android.graphics.Paint;
 import android.app.Fragment;
@@ -239,6 +241,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int progressValue;
     private EditText mTextSeekBar;
     boolean TestBoolean=false;
+    Rect mSensorInfoActiveArraySize;
     private int mRawImageFormat=ImageFormat.RAW_SENSOR;
     private EditText mMinimumShutterSpeed;
     private EditText mMaximumShutterSpeed;
@@ -282,10 +285,13 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Size[] previewSizes;
     private byte JPEGQuality=85;
     private boolean previewinit=true;
+    float eyedistance1=0;
+    FaceDetector facedetector1;
     int hheight=0;
     int wwidth=0;
     Size Size1;
     Boolean trackfacesbool=false;
+    Face[] faces=null;
 
 
     int[][] RedPixelValues2;
@@ -388,6 +394,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mNumberofFaces;
     private int mCurrentISOValue = 200;
     private double mCurrentFocusDistance = 1;
+    private boolean starttrackingbool=false;
     private float mMinFocusDistance;
     private float mMaxFocusDistance = 2;
     private TextView mFocusTextView;
@@ -529,6 +536,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private static float mVectorG_EVEN = 1.0f;
     private static float mVectorG_ODD = 1.0f;
     private static float mVectorB = 1.0f;
+    private float leftface;
+    private float rightface;
+    private float bottomface;
+    private float topface;
+
     private boolean ChangeWhiteBalanceSpotRawOn = false;
     private ImageReader mRawImageReader;
     private ImageReader mImageReader;
@@ -621,7 +633,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         Log.d(TAG, "Sensor Changed");
         float[] values = event.values;
-        int orientation = ORIENTATION_UNKNOWN;
+        int orientation = PORTRAIT;
         float X = -values[_DATA_X];
         float Y = -values[_DATA_Y];
         float Z = -values[_DATA_Z];
@@ -724,6 +736,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             if(previewinit){
                 Size1=new Size(height,width);
+
             }
 
 
@@ -785,6 +798,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         if (mTextureView.isAvailable()) {
             setupCamera(Size1.getWidth(), Size1.getHeight());
+            connectfacedetection();
             //adjustAspectRatio(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
         } else {
@@ -804,6 +818,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         super.onResume();
     }
 
+    private void connectfacedetection() {
+        facedetector1=new FaceDetector(Size1.getWidth(),Size1.getHeight(),3);
+        android.media.FaceDetector.Face[] faces=new android.media.FaceDetector.Face[3];
+         int facesnumber=facedetector1.findFaces(mTextureView.getBitmap(),faces);
+        if(facesnumber>=1){
+            eyedistance1=faces[0].eyesDistance();
+        }
+
+    }
 
 
     //Creating the camera device
@@ -860,11 +883,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private CameraCaptureSession.CaptureCallback mPreviewCaptureCallback = new
             CameraCaptureSession.CaptureCallback() {
                 private void process(CaptureResult captureResult) {
-                    Integer mode = captureResult.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
-                    Face[] faces = captureResult.get(CaptureResult.STATISTICS_FACES);
-                    if (faces != null && mode != null) {
+                    //Integer mode = captureResult.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
+                    //Face[] faces = captureResult.get(CaptureResult.STATISTICS_FACES);
+                    //if (faces != null && mode != null) {
                         //Log.e("tag", "faces:"+ faces.length + ", mode" + mode);
-                    }
+                    //}
                     switch (mCaptureState) {
                         case STATE_PREVIEW:
                             //Do nothing
@@ -1078,6 +1101,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
+        mSensorInfoActiveArraySize=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
 
             NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
@@ -1813,7 +1837,23 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                                         Canvas c = holder.lockCanvas();
-                                        c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                                    c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                                    if(trackfacesbool && !previewinit &&  starttrackingbool){
+                                        Paint mypaint=new Paint();
+                                        mypaint.setColor(Color.rgb(100,100,0));
+                                        mypaint.setStrokeWidth(0);
+                                        c.drawRect(faces[0].getBounds().left,faces[0].getBounds().top,faces[0].getBounds().right,faces[0].getBounds().bottom, mypaint);
+
+                                    }
+                                    if(trackfacesbool && !previewinit &&  starttrackingbool){
+                                        Paint mypaint2=new Paint();
+                                        mypaint2.setColor(Color.rgb(100,0,100));
+                                        mypaint2.setStrokeWidth(0);
+                                        c.drawRect(leftface,topface,rightface,bottomface, mypaint2);
+
+                                    }
+
+
 
                                         if (!MovementButtonnBoolen || CaptureAveragepixelCountBooleanOn) {
                                             if (WhiteBalanceBallInspector != null) {
@@ -3720,16 +3760,30 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     mCurrentSSvalue = result.get(CaptureResult.SENSOR_EXPOSURE_TIME);
                     mCurrentAperatureValue = result.get(CaptureResult.LENS_APERTURE);
                     Integer mode = result.get(CaptureResult.STATISTICS_FACE_DETECT_MODE);
-                    Face[] faces = result.get(CaptureResult.STATISTICS_FACES);
+                     faces = result.get(CaptureResult.STATISTICS_FACES);
+
                     if(trackfacesbool && faces.length>=1){
-                        BallInspectorx=(int)Size1.getWidth()-(faces[0].getBounds().centerX()/2) ;
-                        BallInspectory=(int)Size1.getHeight()-(faces[0].getBounds().centerY()/2);
+
+
+                        leftface=(((float) faces[0].getBounds().left/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth();
+                        topface=(((float)faces[0].getBounds().top/(float)mSensorInfoActiveArraySize.bottom))*(float)mTextureView.getHeight();
+                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth()*2;
+                        bottomface=(((float)faces[0].getBounds().bottom/(float)mSensorInfoActiveArraySize.bottom))*(float)mTextureView.getHeight();
+                        starttrackingbool=true;
+
+
+                        //implement face detector with textureview bitmap
+
+
+                        //BallInspectorx=(int)(((float)faces[0].getBounds().centerX()/(float) mSensorInfoActiveArraySize.width())*mTextureView.getWidth());
+                        //BallInspectory=(int)(((float)faces[0].getBounds().centerY()/(float)mSensorInfoActiveArraySize.height())*mTextureView.getHeight());
+                    }else{
+                        starttrackingbool=false;
                     }
 
                     rggbChannelVector = result.get(CaptureResult.COLOR_CORRECTION_GAINS);
                     ColorCorrectionTransform = result.get(CaptureResult.COLOR_CORRECTION_TRANSFORM);
                     mNumberofFaces = faces.length;
-
 
                     //Toast.makeText(getApplicationContext(), ""+counter, Toast.LENGTH_SHORT).show();
 
@@ -4906,7 +4960,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             txform.postTranslate(xoff, yoff);
             mTextureView.setTransform(txform);
         }else if(rotation==Surface.ROTATION_90||rotation==Surface.ROTATION_270){
-            txform.postRotate(90);
+            txform.postRotate(0);
         }
 
 
