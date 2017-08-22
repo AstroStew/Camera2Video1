@@ -4131,7 +4131,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
-                    if (!mIsWritingRawImage) {
+                    if (!mIsWritingRawImage && !mIsWritingImage) {
                         Image image = reader.acquireLatestImage();
                         Image.Plane[] planes = image.getPlanes();
                          Bytebufferplane1 = null;
