@@ -1242,6 +1242,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         }
         startPreview();
+        isAdjustingWB2=false;
 
 
 
@@ -1504,7 +1505,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                         break;
                 }
                 isAdjustingWB=true;
-                isAdjustingWB2=true;
+                if(CustomeWhiteBalanceBoolean){
+                    isAdjustingWB2=true;
+                }
+                
 
                 return true;
             }
@@ -1686,7 +1690,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         SensorReferenceILluminantString = "D75";
                                         break;
                                     case 1:
-                                        SensorReferenceILluminantString = "Daylioght";
+                                        SensorReferenceILluminantString = "Daylight";
                                         break;
                                     case 12:
                                         SensorReferenceILluminantString = "Daylight Fluorescent";
@@ -1767,11 +1771,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                     bluePixelData = Color.blue(pixel);
                                     greePixelData = Color.green(pixel);
                                     if (wbThreadisEnabled) {
-                                        //Toast.makeText(Camera2VideoImageActivity.this, "Part 3", Toast.LENGTH_SHORT).show();
-                                        //Canvas circleCanvas=holder.lockCanvas();
-                                        //circleCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR);
+
                                         if(WhiteBalanceBallInspector!=null){
-                                            //circleCanvas.drawBitmap(WhiteBalanceBallInspector,BallInspectorx,BallInspectory,null);
+
                                         }
                                         //holder.unlockCanvasAndPost(circleCanvas);
 
