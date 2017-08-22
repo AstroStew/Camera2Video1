@@ -4411,6 +4411,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         isAdjustingWB2=false;
                                     }
                             if(ConvertRAWtoPNG && AdjustWhiteBalanceonRawCapture){
+                                isAdjustingWB2=false;
                                 CaptureandConvertRAWtoPNG();
 
 
