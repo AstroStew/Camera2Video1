@@ -1242,7 +1242,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         }
         startPreview();
-        isAdjustingWB2=false;
+
 
 
 
@@ -1399,6 +1399,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         final boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         if(RawwithJPEg){
             AdjustWhiteBalanceonRawCapture=false;
+        }else{
+            AdjustWhiteBalanceonRawCapture=true;
         }
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
@@ -1508,7 +1510,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                 if(CustomeWhiteBalanceBoolean){
                     isAdjustingWB2=true;
                 }
-                
+
 
                 return true;
             }
@@ -4252,7 +4254,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 }
                             }
                             Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
-                                //Testing MinJae's Code REEE
+                                //Testing MinJae's Code
                                 int mFilterArrangement = mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
                                     s = "RG\nGB\n\n";
@@ -4406,6 +4408,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         startPreview();
 
                                         image.close();
+                                        isAdjustingWB2=false;
                                     }
                             if(ConvertRAWtoPNG && AdjustWhiteBalanceonRawCapture){
                                 CaptureandConvertRAWtoPNG();
@@ -5018,6 +5021,12 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
 
         }
+        final boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+        if(RawwithJPEg){
+            AdjustWhiteBalanceonRawCapture=false;
+        }else{
+            AdjustWhiteBalanceonRawCapture=true;
+        }
 
         String BitEncodingRateString=sharedprefs1.getString("EncodingBitRate","8000000");
         readRawonTap=sharedprefs1.getBoolean("readRawonTap",false);
@@ -5150,7 +5159,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-        boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+        //boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         mRawImageCaptureon=RawwithJPEg;
         BooleanOpticalStabilizationOn=OpticalStabilization;
