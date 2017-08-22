@@ -12,6 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a60ce1c1-0bea-4f90-9863-4e6203edeaf2" name="Default" comment="i just want to commit my changes in README.md">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Camera2Video1" afterPath="$PROJECT_DIR$/Camera2Video1" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" />
     </list>
@@ -49,18 +53,18 @@
       <file leaf-file-name="Camera2VideoImageActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="4133" column="47" selection-start-line="4133" selection-start-column="47" selection-end-line="4133" selection-end-column="47" />
+            <state relative-caret-position="267">
+              <caret line="4377" column="25" selection-start-line="4377" selection-start-column="25" selection-end-line="4377" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#68557#85903#0" expanded="true" />
-                <element signature="e#68784#85745#0" expanded="true" />
-                <element signature="e#85744#85745#0" expanded="true" />
-                <element signature="e#85902#85903#0" expanded="true" />
-                <element signature="e#179643#182009#0" expanded="true" />
-                <element signature="e#182008#182009#0" expanded="true" />
-                <element signature="e#195764#211788#0" expanded="true" />
-                <element signature="e#211787#211788#0" expanded="true" />
+                <element signature="e#68699#86045#0" expanded="true" />
+                <element signature="e#68926#85887#0" expanded="true" />
+                <element signature="e#85886#85887#0" expanded="true" />
+                <element signature="e#86044#86045#0" expanded="true" />
+                <element signature="e#179785#182151#0" expanded="true" />
+                <element signature="e#182150#182151#0" expanded="true" />
+                <element signature="e#195906#212106#0" expanded="true" />
+                <element signature="e#212105#212106#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -3302,31 +3306,25 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4985</line>
-          <properties />
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>897</line>
+          <line>898</line>
           <properties />
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>3675</line>
+          <line>3679</line>
           <properties />
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>3767</line>
+          <line>3771</line>
           <properties />
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint type="java-method">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4613</line>
+          <line>4621</line>
           <properties method="onCaptureStarted" />
           <option name="timeStamp" value="45" />
         </line-breakpoint>
@@ -3610,6 +3608,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3815,18 +3814,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="4133" column="47" selection-start-line="4133" selection-start-column="47" selection-end-line="4133" selection-end-column="47" />
+        <state relative-caret-position="267">
+          <caret line="4377" column="25" selection-start-line="4377" selection-start-column="25" selection-end-line="4377" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#68557#85903#0" expanded="true" />
-            <element signature="e#68784#85745#0" expanded="true" />
-            <element signature="e#85744#85745#0" expanded="true" />
-            <element signature="e#85902#85903#0" expanded="true" />
-            <element signature="e#179643#182009#0" expanded="true" />
-            <element signature="e#182008#182009#0" expanded="true" />
-            <element signature="e#195764#211788#0" expanded="true" />
-            <element signature="e#211787#211788#0" expanded="true" />
+            <element signature="e#68699#86045#0" expanded="true" />
+            <element signature="e#68926#85887#0" expanded="true" />
+            <element signature="e#85886#85887#0" expanded="true" />
+            <element signature="e#86044#86045#0" expanded="true" />
+            <element signature="e#179785#182151#0" expanded="true" />
+            <element signature="e#182150#182151#0" expanded="true" />
+            <element signature="e#195906#212106#0" expanded="true" />
+            <element signature="e#212105#212106#0" expanded="true" />
           </folding>
         </state>
       </provider>

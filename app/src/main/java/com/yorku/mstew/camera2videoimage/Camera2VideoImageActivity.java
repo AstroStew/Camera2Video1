@@ -285,6 +285,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Size[] previewSizes;
     private byte JPEGQuality=85;
     private boolean previewinit=true;
+    private boolean AdjustWhiteBalanceonRawCapture=true;
     float eyedistance1=0;
     FaceDetector facedetector1;
     int hheight=0;
@@ -1398,6 +1399,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
          sharedprefs1 = PreferenceManager.getDefaultSharedPreferences(Camera2VideoImageActivity.this);
          ifOnCreate=sharedprefs1.getBoolean("onCreatePref",true);
         final boolean RawwithJPEg = sharedprefs1.getBoolean("Capture_Raw_With_JPEG", false);
+        if(RawwithJPEg){
+            AdjustWhiteBalanceonRawCapture=false;
+        }
         boolean OpticalStabilization = sharedprefs1.getBoolean("optical_stabilization", true);
         ShowRealTimeInfoboolean=sharedprefs1.getBoolean("show_real_time_info",false);
         CapturePngBoolean=sharedprefs1.getBoolean("Capture_PNG",false);
@@ -4142,6 +4146,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
                         float mSampleLocationX,mSampleLocationY;
+                        if(AdjustWhiteBalanceonRawCapture){
+
 
                         if (Bytebufferplane1 != null) {
                             temp=0;
@@ -4369,6 +4375,8 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                 for(int i= lastindex - 128; i < lastindex; i++){
                                     Bytebufferplane1.put(i+image.getWidth()*10,(byte)0);
                                 }
+                        }
+
 
 
                                 Toast.makeText(getApplicationContext(), "R: " + totalR + ", G: " + totalG + ", B: " + totalB, Toast.LENGTH_LONG).show();
@@ -4377,7 +4385,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
 
-                                    } else {
+                                    } else if(isAdjustingWB2 && AdjustWhiteBalanceonRawCapture ) {
                                         mWBMode=-1;
                                         ColorSpaceInputBoolean=true;
                                         mVectorR=(float)(totalG/totalR);
@@ -4389,7 +4397,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                         image.close();
                                     }
-                            if(ConvertRAWtoPNG){
+                            if(ConvertRAWtoPNG && AdjustWhiteBalanceonRawCapture){
                                 CaptureandConvertRAWtoPNG();
 
 
