@@ -23,6 +23,7 @@ import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.FaceDetector;
 
@@ -241,7 +242,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int progressValue;
     private EditText mTextSeekBar;
     boolean TestBoolean=false;
-    Rect mSensorInfoActiveArraySize;
+    Size mSensorInfoActiveArraySize;
     private int mRawImageFormat=ImageFormat.RAW_SENSOR;
     private EditText mMinimumShutterSpeed;
     private EditText mMaximumShutterSpeed;
@@ -393,6 +394,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     private int mCurrentAutoFocus;
     private Integer afStateRealTime;
     private int mNumberofFaces;
+    private int mNumberofFaces2;
     private int mCurrentISOValue = 200;
     private double mCurrentFocusDistance = 1;
     private boolean starttrackingbool=false;
@@ -467,6 +469,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Bitmap WhiteBalanceBallInspector;
     boolean ifOnCreate=false;
     boolean Capture_JPEG=true;
+    android.media.FaceDetector.Face[] face3;
     byte[] byteArray;
     boolean isItOka = true;
     float BallInspectorx, BallInspectory;
@@ -799,7 +802,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         if (mTextureView.isAvailable()) {
             setupCamera(Size1.getWidth(), Size1.getHeight());
-            connectfacedetection();
+
             //adjustAspectRatio(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
         } else {
@@ -819,15 +822,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         super.onResume();
     }
 
-    private void connectfacedetection() {
-        facedetector1=new FaceDetector(Size1.getWidth(),Size1.getHeight(),3);
-        android.media.FaceDetector.Face[] faces=new android.media.FaceDetector.Face[3];
-         int facesnumber=facedetector1.findFaces(mTextureView.getBitmap(),faces);
-        if(facesnumber>=1){
-            eyedistance1=faces[0].eyesDistance();
-        }
 
-    }
 
 
     //Creating the camera device
@@ -1102,9 +1097,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
-        mSensorInfoActiveArraySize=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+        mSensorInfoActiveArraySize=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE);
+        facedetector1=new FaceDetector(mTextureView.getWidth(),mTextureView.getHeight(),3);
 
-            NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
+        NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
             TestPatternModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_AVAILABLE_TEST_PATTERN_MODES)).length];
             EdgeModesAvailable=new int[(mCameraCharacteristics.get(mCameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES)).length];
         HotPixelModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES)).length];
@@ -1392,6 +1388,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
+        face3=new FaceDetector.Face[3];
 
          loadingtext=(TextView)findViewById(R.id.loadingtext);
 
@@ -1842,6 +1839,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
                                         Canvas c = holder.lockCanvas();
                                     c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                                    if(trackfacesbool && starttrackingbool){
+                                        mNumberofFaces2=facedetector1.findFaces(bitmappy2,face3);
+                                        if(mNumberofFaces2>=1){
+                                            float eyedistance;
+                                            eyedistance=face3[0].eyesDistance();
+                                        }
+
+                                    }
                                     if(trackfacesbool && !previewinit &&  starttrackingbool){
                                         Paint mypaint=new Paint();
                                         mypaint.setColor(Color.rgb(100,100,0));
@@ -3769,10 +3774,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                     if(trackfacesbool && faces.length>=1){
 
 
-                        leftface=(((float) faces[0].getBounds().left/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth();
-                        topface=(((float)faces[0].getBounds().top/(float)mSensorInfoActiveArraySize.bottom))*(float)mTextureView.getHeight();
-                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoActiveArraySize.right))*(float)mTextureView.getWidth();
-                        bottomface=(((float)faces[0].getBounds().bottom/(float)mSensorInfoActiveArraySize.bottom))*(float)mTextureView.getHeight();
+                        leftface=(((float) faces[0].getBounds().left/(float)mSensorInfoActiveArraySize.getWidth()))*(float)Size1.getWidth();
+                        topface=(((float)faces[0].getBounds().top/(float)mSensorInfoActiveArraySize.getHeight()))*(float)Size1.getHeight();
+                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoActiveArraySize.getWidth()))*(float)Size1.getWidth();
+                        bottomface=(((float)faces[0].getBounds().bottom/(float)mSensorInfoActiveArraySize.getHeight()))*(float)Size1.getHeight();
                         starttrackingbool=true;
 
 
