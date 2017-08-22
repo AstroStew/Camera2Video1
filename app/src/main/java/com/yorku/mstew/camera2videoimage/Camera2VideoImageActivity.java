@@ -469,7 +469,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     Bitmap WhiteBalanceBallInspector;
     boolean ifOnCreate=false;
     boolean Capture_JPEG=true;
-    android.media.FaceDetector.Face[] face3;
+    //android.media.FaceDetector.Face[] face3;
     byte[] byteArray;
     boolean isItOka = true;
     float BallInspectorx, BallInspectory;
@@ -1388,7 +1388,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-        face3=new FaceDetector.Face[3];
+        //face3=new FaceDetector.Face[3];
 
          loadingtext=(TextView)findViewById(R.id.loadingtext);
 
@@ -1840,14 +1840,17 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
                                         Canvas c = holder.lockCanvas();
                                     c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                                     if(trackfacesbool && starttrackingbool){
-                                        mNumberofFaces2=facedetector1.findFaces(bitmappy2,face3);
+                                       // mNumberofFaces2=facedetector1.findFaces(bitmappy2,face3);
                                         if(mNumberofFaces2>=1){
-                                            float eyedistance;
-                                            eyedistance=face3[0].eyesDistance();
+                                            //Here I was trying to implement a Face Detector, but its too slow
+
+                                           // float eyedistance;
+                                         //   eyedistance=face3[0].eyesDistance();
                                         }
 
                                     }
                                     if(trackfacesbool && !previewinit &&  starttrackingbool){
+                                        //this rectangle represents the raw data taken in from the SENSOR_ACTIVE_ARRAY
                                         Paint mypaint=new Paint();
                                         mypaint.setColor(Color.rgb(100,100,0));
                                         mypaint.setStrokeWidth(0);
