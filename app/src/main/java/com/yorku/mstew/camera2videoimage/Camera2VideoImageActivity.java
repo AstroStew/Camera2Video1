@@ -235,7 +235,7 @@ import Jama.Matrix;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Camera2VideoImageActivity extends Activity implements SensorEventListener {
+public class Camera2VideoImageActivity extends Activity  {
     private SensorManager sm;
     private Button mModebutton;
     private int ISOvalue = 100;
@@ -583,18 +583,18 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     double[] ForwardMatrix1DoubleValues=new double[9];
     double[][] ForwardMatrix1Array;
 
-    Rational[] ForwardMatrix2Values;
-    double[] ForwardMatrix2DoubleValues=new double[9];
-    double[][] ForwardMatrix2Array;
+    private Rational[] ForwardMatrix2Values;
+    private double[] ForwardMatrix2DoubleValues=new double[9];
+    private double[][] ForwardMatrix2Array;
 
-    Rational[] SensorCalibrationTransform1Values;
-    double[] SensorCalibrationTransform1DoubleValues=new double[9];
-    double[][]SensorCalibrationTransform1Array;
+    private Rational[] SensorCalibrationTransform1Values;
+    private double[] SensorCalibrationTransform1DoubleValues=new double[9];
+    private double[][]SensorCalibrationTransform1Array;
 
-    Rational[] SensorCalibrationTransform2Values;
-    double[] SensorCalibrationTransform2DoubleValues=new double[9];
-    double[][]SensorCalibrationTransform2Array;
-    SharedPreferences sharedprefs1;
+    private Rational[] SensorCalibrationTransform2Values;
+    private double[] SensorCalibrationTransform2DoubleValues=new double[9];
+    private double[][]SensorCalibrationTransform2Array;
+    private SharedPreferences sharedprefs1;
     //private Mat finalMat;
     private Mat s1RawImage;
     private Mat s2BlackLightSubration;
@@ -629,13 +629,14 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
 
-
-    @Override
+//Overides built in sensor change
+    /*@Override
     public void onSensorChanged(SensorEvent event)
     {
 
 
         Log.d(TAG, "Sensor Changed");
+        Toast.makeText(this, "Sensor", Toast.LENGTH_SHORT).show();
         float[] values = event.values;
         int orientation = ORIENTATION_UNKNOWN;
         float X = -values[_DATA_X];
@@ -679,7 +680,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
             }
 
         }
-
+        //orientsation based-this is not used in this build of the app
         if(mOrientationRounded != tempOrientRounded){
             if (tempOrientRounded == LANDSCAPE_LEFT) {
                 //Toast.makeText(this, tempOrientRounded + " Landscape Left", Toast.LENGTH_SHORT).show();
@@ -699,15 +700,15 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         }
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // TODO Auto-generated method stub
 
-    }
+    }*/
 
 
-    //firstly we want to make the window sticky. We acheive this by making system flags
-    //Making the window sticky
+    //these flags make the it full screen as opposed to a partial screen
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -795,10 +796,10 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
         //startBackgroundThread();
 
-        if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
+        /*if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
             Sensor s=sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
             sm.registerListener(this,s,SensorManager.SENSOR_DELAY_NORMAL);
-        }
+        }*/
 
         if (mTextureView.isAvailable()) {
             setupCamera(Size1.getWidth(), Size1.getHeight());
@@ -816,7 +817,9 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
 
         }else{
+
             RefreshScreen();
+            //reconnects camera
             connectCamera();
         }
         super.onResume();
@@ -1343,11 +1346,11 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
 
         super.onCreate(savedInstanceState);
 
-        sm=(SensorManager)getSystemService(SENSOR_SERVICE);
+        /*sm=(SensorManager)getSystemService(SENSOR_SERVICE);
         if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
             Sensor s=sm.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
             sm.registerListener(this,s,SensorManager.SENSOR_DELAY_NORMAL);
-        }
+        }*/
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -3851,7 +3854,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
     @Override
     protected void onPause() {
 
-        sm.unregisterListener(this);
+        //sm.unregisterListener(this);
         closeCamera();
         stopBackgroundThread();
         super.onPause();
@@ -5000,6 +5003,7 @@ public class Camera2VideoImageActivity extends Activity implements SensorEventLi
         }
     }
 
+    //Refreshes Screen reads all system preferences and applies them
     public void RefreshScreen() {
         RefreshBoolean=true;
         // SharedPreferences sharedprefs1 = null;
