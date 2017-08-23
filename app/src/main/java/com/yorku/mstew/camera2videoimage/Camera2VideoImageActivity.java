@@ -1288,19 +1288,19 @@ public class Camera2VideoImageActivity extends Activity  {
     //Adjusting orientation for calculating preview size
     private static SparseIntArray ORIENTATIONS = new SparseIntArray();
 
-    static {
+   /* static {
         ORIENTATIONS.append(Surface.ROTATION_0, 0);
         ORIENTATIONS.append(Surface.ROTATION_90, 90);
         ORIENTATIONS.append(Surface.ROTATION_180, 180);
         ORIENTATIONS.append(Surface.ROTATION_270, 270);
 
 
-    }
+    }*/
 
      private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
-        int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-        //deviceOrientation = ORIENTATIONS.get(deviceOrientation);
-        return (sensorOrientation + mDeviceOrientation + 180) % 360;
+         mDeviceOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+         //sensorOrientation = ORIENTATIONS.get(deviceOrientation);
+        return mDeviceOrientation;
 
     }
 
@@ -4617,7 +4617,7 @@ public class Camera2VideoImageActivity extends Activity  {
             } if(JPEGCaptureOn) {
                 mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
             }
-            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,(mTotalRotation+180)%360);
+            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,(mTotalRotation));
 
 
 
@@ -4985,7 +4985,7 @@ public class Camera2VideoImageActivity extends Activity  {
             txform.postTranslate(xoff, yoff);
             mTextureView.setTransform(txform);
         }else if(rotation==Surface.ROTATION_90||rotation==Surface.ROTATION_270){
-            txform.postRotate(0);
+            txform.postRotate(90);
         }
 
 
