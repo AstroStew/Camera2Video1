@@ -928,7 +928,7 @@ public class Camera2VideoImageActivity extends Activity  {
 
 
                     super.onCaptureCompleted(session, request, result);
-                    //mCaptureResult = result;
+                    mCaptureResult = result;
                     process(result);
 
                     //
@@ -1392,7 +1392,7 @@ public class Camera2VideoImageActivity extends Activity  {
 
 
 
-        //face3=new FaceDetector.Face[3];
+
 
          loadingtext=(TextView)findViewById(R.id.loadingtext);
 
@@ -4161,103 +4161,100 @@ public class Camera2VideoImageActivity extends Activity  {
 
 
                         float mSampleLocationX,mSampleLocationY;
-                        if(AdjustWhiteBalanceonRawCapture){
 
 
-                        if (Bytebufferplane1 != null) {
-                            temp=0;
-                            temp2=0;
-                            counterr = 0;
-                            if(BallInspectorx<0){
-                                mSampleLocationX=0;
-                            }else{
-                                mSampleLocationX=BallInspectorx-(WhiteBalanceBallInspector.getWidth()/8);
-                            }
-                            if(BallInspectory<0){
-                                mSampleLocationY=0;
-                            } else{
-                                mSampleLocationY=(float)(BallInspectory-WhiteBalanceBallInspector.getHeight()/8);
-                            }
-                            if(((double)mCurrentHeight/(double)mCurrentWidth)>(14.0/9.0)){
-                                height =(int)((mTextureView.getWidth()-mSampleLocationX)*(image.getHeight()*0.75/mTextureView.getWidth()))+380;
-                                width=(int)((mSampleLocationY*(image.getWidth()/mTextureView.getHeight())));
-                            }else if((((double)mCurrentHeight/(double)mCurrentWidth)<(double)14.0/9.0) &&
-                            (((double)mCurrentHeight/(double)mCurrentWidth))>(double)(1.2)){
-                                height=(int)((mTextureView.getWidth()-mSampleLocationX)*(image.getWidth()/mTextureView.getWidth()));
-                                width=(int)(mSampleLocationY*(image.getWidth()*1.33/mTextureView.getHeight()))-506;
-                                if(width<0){
-                                    width=0;
-                                }else if(width>4044-128){
-                                    width=4044-128;
+
+                            if (Bytebufferplane1 != null) {
+                                temp = 0;
+                                temp2 = 0;
+                                counterr = 0;
+                                if (BallInspectorx < 0) {
+                                    mSampleLocationX = 0;
+                                } else {
+                                    mSampleLocationX = BallInspectorx - (WhiteBalanceBallInspector.getWidth() / 8);
                                 }
-                                if(height>3040){
-                                    height=3042;
+                                if (BallInspectory < 0) {
+                                    mSampleLocationY = 0;
+                                } else {
+                                    mSampleLocationY = (float) (BallInspectory - WhiteBalanceBallInspector.getHeight() / 8);
                                 }
-                            }else if(((double)mCurrentHeight/(double)mCurrentHeight)<(1.2)){
-                                height =(int)(mSampleLocationY*(image.getHeight()/mTextureView.getWidth()))-380;
-                                width=(int)(mSampleLocationX*(image.getWidth()/mTextureView.getHeight()));
-                            }else{
-                                height=(int)(mSampleLocationY*(image.getHeight()/mTextureView.getWidth()));
-                                width=(int)(mSampleLocationX*(image.getWidth()/mTextureView.getHeight()));
+                                if (((double) mCurrentHeight / (double) mCurrentWidth) > (14.0 / 9.0)) {
+                                    height = (int) ((mTextureView.getWidth() - mSampleLocationX) * (image.getHeight() * 0.75 / mTextureView.getWidth())) + 380;
+                                    width = (int) ((mSampleLocationY * (image.getWidth() / mTextureView.getHeight())));
+                                } else if ((((double) mCurrentHeight / (double) mCurrentWidth) < (double) 14.0 / 9.0) &&
+                                        (((double) mCurrentHeight / (double) mCurrentWidth)) > (double) (1.2)) {
+                                    height = (int) ((mTextureView.getWidth() - mSampleLocationX) * (image.getWidth() / mTextureView.getWidth()));
+                                    width = (int) (mSampleLocationY * (image.getWidth() * 1.33 / mTextureView.getHeight())) - 506;
+                                    if (width < 0) {
+                                        width = 0;
+                                    } else if (width > 4044 - 128) {
+                                        width = 4044 - 128;
+                                    }
+                                    if (height > 3040) {
+                                        height = 3042;
+                                    }
+                                } else if (((double) mCurrentHeight / (double) mCurrentHeight) < (1.2)) {
+                                    height = (int) (mSampleLocationY * (image.getHeight() / mTextureView.getWidth())) - 380;
+                                    width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()));
+                                } else {
+                                    height = (int) (mSampleLocationY * (image.getHeight() / mTextureView.getWidth()));
+                                    width = (int) (mSampleLocationX * (image.getWidth() / mTextureView.getHeight()));
 
-                            }
-
-
-                                int offsetWidth=width%2;
-                                int lastindex=0;
-                                Mat mat= new Mat();
-                            //
-                            rawWidth=image.getWidth();
-                            rawHeight=image.getHeight();
-                            totalResult=new int[rawHeight][rawWidth];
-                            totalResult1D=new int [rawHeight*rawWidth];
-                                imageWidth=image.getWidth();
-                                imageHeight=image.getHeight();
-
-
-
-                                mMat=new Mat(image.getHeight(),image.getWidth(),CV_16UC1);
-                                count2=0;
-                            byte[] rawByte=new byte[Bytebufferplane1.remaining()];
-                            Bytebufferplane1.get(rawByte);
+                                }if(AdjustWhiteBalanceonRawCapture) {
 
 
+                                int offsetWidth = width % 2;
+                                int lastindex = 0;
+                                Mat mat = new Mat();
+                                //
+                                rawWidth = image.getWidth();
+                                rawHeight = image.getHeight();
+                                totalResult = new int[rawHeight][rawWidth];
+                                totalResult1D = new int[rawHeight * rawWidth];
+                                imageWidth = image.getWidth();
+                                imageHeight = image.getHeight();
+
+
+                                mMat = new Mat(image.getHeight(), image.getWidth(), CV_16UC1);
+                                count2 = 0;
+                                byte[] rawByte = new byte[Bytebufferplane1.remaining()];
+                                Bytebufferplane1.get(rawByte);
 
 
                                 //int height = (int) (BallInspectory * (image.getHeight() / mTextureView.getWidth()));
                                 //int width = (int) (BallInspectorx * (image.getWidth() / mTextureView.getHeight()));
-                                
+
                                 //Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
-                                for(int j=0;j<rawHeight;j++){
-                                    counterr=0;
-                                    for (int i=0; i<rawWidth*2;i++){
-                                        temp=rawByte[((i)+((imageWidth)*j*2))]&0xFF;
-                                        if(i%2==1){
-                                            totalResult[j][counterr]=(temp<<8)+temp2;
+                                for (int j = 0; j < rawHeight; j++) {
+                                    counterr = 0;
+                                    for (int i = 0; i < rawWidth * 2; i++) {
+                                        temp = rawByte[((i) + ((imageWidth) * j * 2))] & 0xFF;
+                                        if (i % 2 == 1) {
+                                            totalResult[j][counterr] = (temp << 8) + temp2;
                                             //totalResult1D[count2]=totalResult[j][counterr];
                                             count2++;
                                             counterr++;
-                                        }else{
-                                            temp2=temp;
+                                        } else {
+                                            temp2 = temp;
                                         }
                                     }
                                 }
-                            Toast.makeText(Camera2VideoImageActivity.this, "Finished", Toast.LENGTH_SHORT).show();
-                            for (int j = height; j < height + BAYERHEIGHT; j++) {
-                                counterr = 0;
-                                for (int i = width*2; i < (width*2) + (BAYERWIDTH * 2); i++) {
-                                    temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j*2)) & 0xFF;
-                                    if (i % 2 == 1) {
-                                        pixelValues[j - height][counterr] = (temp << 8) + temp2;
-                                        counterr++;
-                                    } else {
-                                        temp2 = temp;
+                                Toast.makeText(Camera2VideoImageActivity.this, "Finished", Toast.LENGTH_SHORT).show();
+                                for (int j = height; j < height + BAYERHEIGHT; j++) {
+                                    counterr = 0;
+                                    for (int i = width * 2; i < (width * 2) + (BAYERWIDTH * 2); i++) {
+                                        temp = Bytebufferplane1.get((i) + ((image.getWidth()) * j * 2)) & 0xFF;
+                                        if (i % 2 == 1) {
+                                            pixelValues[j - height][counterr] = (temp << 8) + temp2;
+                                            counterr++;
+                                        } else {
+                                            temp2 = temp;
+                                        }
+                                        lastindex = (i) + ((image.getWidth()) * j * 2);
                                     }
-                                    lastindex=(i)+((image.getWidth())*j*2);
                                 }
-                            }
-                            Toast.makeText(Camera2VideoImageActivity.this, "H:"+height+"W:"+width, Toast.LENGTH_SHORT).show();
-                                //Testing MinJae's Code
+                                Toast.makeText(Camera2VideoImageActivity.this, "H:" + height + "W:" + width, Toast.LENGTH_SHORT).show();
+                                //Determines Filter Arrangement
                                 int mFilterArrangement = mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
                                 if (mFilterArrangement == 0) {
                                     s = "RG\nGB\n\n";
@@ -4338,8 +4335,8 @@ public class Camera2VideoImageActivity extends Activity  {
                                     }
                                 } else if (mFilterArrangement == 3) {
                                     s = "BG\nGR\n\n";
-                                    for(int i=0;i<BAYERHEIGHT;i=i+2) {
-                                        for (int j = 0; j < BAYERWIDTH; j=j+2) {
+                                    for (int i = 0; i < BAYERHEIGHT; i = i + 2) {
+                                        for (int j = 0; j < BAYERWIDTH; j = j + 2) {
                                             /*if (i % 2 == 0) {
                                                 if (j % 2 == 0) {
                                                     totalB = totalB + pixelValues[i][j];
@@ -4369,27 +4366,30 @@ public class Camera2VideoImageActivity extends Activity  {
                                     }
                                 }
 
-                                float normal =(float) Math.sqrt(Math.pow(totalR,2)+Math.pow(totalG,2)+(Math.pow(totalB,2)));
-                                totalR = (float)((totalR/32)/normal);
-                                totalG = (float)((totalG/64)/normal);
-                                totalB = (float)((totalB)/32)/normal;
-                                for(int i=lastindex-128;i<lastindex;i++){
-                                    Bytebufferplane1.put(i,(byte)0);
+                                float normal = (float) Math.sqrt(Math.pow(totalR, 2) + Math.pow(totalG, 2) + (Math.pow(totalB, 2)));
+                                totalR = (float) ((totalR / 32) / normal);
+                                totalG = (float) ((totalG / 64) / normal);
+                                totalB = (float) ((totalB) / 32) / normal;
+                                for (int i = lastindex - 128; i < lastindex; i++) {
+                                    Bytebufferplane1.put(i, (byte) 0);
                                 }
-                                for(int i=lastindex-128;i<lastindex;i++){
+                                for (int i = lastindex - 128; i < lastindex; i++) {
                                     Bytebufferplane1.put(i + image.getWidth() * 2, (byte) 0);
                                 }
-                                for(int i = lastindex - 128; i < lastindex; i++){
+                                for (int i = lastindex - 128; i < lastindex; i++) {
                                     Bytebufferplane1.put(i + image.getWidth() * 4, (byte) 0);
-                                }for(int i = lastindex - 128; i < lastindex; i++)
-                                    { Bytebufferplane1.put(i + image.getWidth() * 6, (byte) 0);}
+                                }
+                                for (int i = lastindex - 128; i < lastindex; i++) {
+                                    Bytebufferplane1.put(i + image.getWidth() * 6, (byte) 0);
+                                }
 
-                                for(int i= lastindex - 128; i < lastindex; i++){
+                                for (int i = lastindex - 128; i < lastindex; i++) {
                                     Bytebufferplane1.put(i + image.getWidth() * 8, (byte) 0);
                                 }
-                                for(int i= lastindex - 128; i < lastindex; i++){
-                                    Bytebufferplane1.put(i+image.getWidth()*10,(byte)0);
+                                for (int i = lastindex - 128; i < lastindex; i++) {
+                                    Bytebufferplane1.put(i + image.getWidth() * 10, (byte) 0);
                                 }
+                            }
                         }
 
 
@@ -4426,7 +4426,7 @@ public class Camera2VideoImageActivity extends Activity  {
 
 
 
-                        }
+
 
                     }
                 }
