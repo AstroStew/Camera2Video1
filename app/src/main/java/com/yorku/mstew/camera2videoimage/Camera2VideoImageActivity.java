@@ -620,7 +620,7 @@ public class Camera2VideoImageActivity extends Activity  {
     Jama.Matrix SensorCalibrationTransform2MatrixInverse;
     Jama.Matrix RGGBChannelMatrix;
 
-    
+
 
 
 
@@ -1038,7 +1038,7 @@ public class Camera2VideoImageActivity extends Activity  {
             ColorSpaceTransformSensorCalibrationTransform2Values.copyElements(SensorCalibrationTransform2Values,0);
 
             PipeDreams();
-            
+
             return;
             //continue;
         } catch (CameraAccessException e) {
@@ -1510,7 +1510,7 @@ public class Camera2VideoImageActivity extends Activity  {
                         break;
                 }
                 isAdjustingWB=true;
-                if(CustomeWhiteBalanceBoolean){
+                if(readRawonTap){
                     isAdjustingWB2=true;
                 }
 
@@ -1630,7 +1630,7 @@ public class Camera2VideoImageActivity extends Activity  {
                         });
 
 
-                        
+
 
                         break;
                     case R.id.PageMenu:
@@ -1737,8 +1737,8 @@ public class Camera2VideoImageActivity extends Activity  {
                                 }
                                 if (cameraReady){
 
-                                    if(readRawonTap) {
-                                        if (isAdjustingWB && isAdjustingWB2) {
+
+                                        if (isAdjustingWB && isAdjustingWB2 && readRawonTap) {
                                             isAdjustingWB = false;
                                             if(!MovementButtonnBoolen){
                                                 /*loadingalphabool=true;
@@ -1771,7 +1771,7 @@ public class Camera2VideoImageActivity extends Activity  {
                                             }
 
                                         }
-                                    }
+
                                     redPixelData = Color.red(pixel);
                                     bluePixelData = Color.blue(pixel);
                                     greePixelData = Color.green(pixel);
@@ -3217,7 +3217,7 @@ public class Camera2VideoImageActivity extends Activity  {
 
 
 
-                                
+
 
 
 
@@ -4608,7 +4608,7 @@ public class Camera2VideoImageActivity extends Activity  {
                     e.printStackTrace();
                 }
                 //capturePng Urgh
-                
+
 
 
 
