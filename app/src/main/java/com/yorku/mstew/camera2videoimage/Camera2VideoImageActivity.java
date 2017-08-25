@@ -4955,9 +4955,9 @@ private boolean ScalarCropBool=false;
                     } finally {
                         mImage.close();
                         // media store update - images
-                        /*Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        Intent mediaStoreUpdateIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                         mediaStoreUpdateIntent.setData(Uri.fromFile(new File(mImageFileName)));
-                        sendBroadcast(mediaStoreUpdateIntent);*/
+                        sendBroadcast(mediaStoreUpdateIntent);
                         if(fileOutputStream != null){
                             try {
                                 fileOutputStream.close();
