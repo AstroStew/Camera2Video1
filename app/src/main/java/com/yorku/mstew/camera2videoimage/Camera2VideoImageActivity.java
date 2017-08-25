@@ -3401,7 +3401,7 @@ private boolean ScalarCropBool=false;
                                             xleft=Integer.parseInt(xleftedittext.getText().toString());
                                             xright=Integer.parseInt(xrighteditext.getText().toString());
                                             ybottom=Integer.parseInt(ybottomedittext.getText().toString());
-                                            
+
 
 
 
@@ -4304,6 +4304,7 @@ private boolean ScalarCropBool=false;
                     if (!isAdjustingWB2) {
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect);
                         mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
+                        mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
                         mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
                         //mBackgroundHandler.post(new ImageSaver(image, mCaptureResult, mCameraCharacteristics));
 
@@ -4739,11 +4740,13 @@ private boolean ScalarCropBool=false;
             if (mIsRecording || mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_VIDEO_SNAPSHOT);
+                mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
 
             } else if(!mIsRecording ||!mIsTimelapse) {
                 mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(
                         CameraDevice.TEMPLATE_STILL_CAPTURE);
                 mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
+                mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
             }
 
 
@@ -5084,6 +5087,8 @@ private boolean ScalarCropBool=false;
     private void setupTimelapse() throws IOException {
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_TIME_LAPSE_HIGH));
+        mMediaRecorder.setOrientationHint(mTotalRotation);
+
         mMediaRecorder.setOutputFile(mVideoFileName);
         //Frequency of how fast
         mMediaRecorder.setCaptureRate(VideoTimelapsSecondStep);

@@ -17,14 +17,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Camera2Video1" afterPath="$PROJECT_DIR$/Camera2Video1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/yorku/mstew/camera2videoimage/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/yorku/mstew/camera2videoimage/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/zoomoption1.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/zoomoption1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/zoomoption2.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/zoomoption2.xml" />
     </list>
     <list id="f46cc3d8-38a4-438e-a124-1639464dc7cb" name="New changelist" comment="New changelist" />
     <ignored path="Camera2VideoImage.iws" />
@@ -57,11 +51,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
-      <file leaf-file-name="Camera2VideoImageActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Camera2VideoImageActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="590">
-              <caret line="3403" column="44" selection-start-line="3403" selection-start-column="44" selection-end-line="3403" selection-end-column="44" />
+            <state relative-caret-position="-786">
+              <caret line="5094" column="52" selection-start-line="5094" selection-start-column="52" selection-end-line="5094" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#161602#161926#0" expanded="true" />
@@ -70,10 +64,10 @@
                 <element signature="e#163279#163280#0" expanded="true" />
                 <element signature="e#164544#164867#0" expanded="true" />
                 <element signature="e#164866#164867#0" expanded="true" />
-                <element signature="e#165008#166461#0" expanded="true" />
-                <element signature="e#166460#166461#0" expanded="true" />
-                <marker date="1503694609252" expanded="false" signature="92769:92865" ph="(view) → {" />
-                <marker date="1503694609252" expanded="false" signature="102852:102991" ph="(item) → {" />
+                <element signature="e#165008#166417#0" expanded="true" />
+                <element signature="e#166416#166417#0" expanded="true" />
+                <marker date="1503695561137" expanded="false" signature="92769:92865" ph="(view) → {" />
+                <marker date="1503695561137" expanded="false" signature="102852:102991" ph="(item) → {" />
               </folding>
             </state>
           </provider>
@@ -131,11 +125,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PinchZoomImageView.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PinchZoomImageView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/PinchZoomImageView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+            <state relative-caret-position="-2582">
+              <caret line="22" column="31" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -146,7 +140,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="20592">
               <caret line="938" column="0" selection-start-line="938" selection-start-column="0" selection-end-line="938" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="e#17162#17163#0" expanded="false" />
+                <element signature="e#17201#17202#0" expanded="false" />
+                <element signature="e#24554#24555#0" expanded="false" />
+                <element signature="e#24602#24603#0" expanded="false" />
+                <element signature="e#24658#24659#0" expanded="false" />
+                <element signature="e#24687#24688#0" expanded="false" />
+                <element signature="e#24741#24742#0" expanded="false" />
+                <element signature="e#24770#24771#0" expanded="false" />
+                <element signature="e#24847#24848#0" expanded="false" />
+                <element signature="e#24879#24880#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -3370,19 +3375,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4792</line>
+          <line>4795</line>
           <properties />
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4325</line>
+          <line>4326</line>
           <properties />
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java</url>
-          <line>4978</line>
+          <line>4981</line>
           <properties />
           <option name="timeStamp" value="67" />
         </line-breakpoint>
@@ -3863,7 +3868,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20592">
           <caret line="938" column="0" selection-start-line="938" selection-start-column="0" selection-end-line="938" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#17162#17163#0" expanded="false" />
+            <element signature="e#17201#17202#0" expanded="false" />
+            <element signature="e#24554#24555#0" expanded="false" />
+            <element signature="e#24602#24603#0" expanded="false" />
+            <element signature="e#24658#24659#0" expanded="false" />
+            <element signature="e#24687#24688#0" expanded="false" />
+            <element signature="e#24741#24742#0" expanded="false" />
+            <element signature="e#24770#24771#0" expanded="false" />
+            <element signature="e#24847#24848#0" expanded="false" />
+            <element signature="e#24879#24880#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3877,14 +3893,6 @@
             <element signature="e#1076#1077#0" expanded="false" />
             <element signature="e#1149#1150#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/PinchZoomImageView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3934,8 +3942,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/Camera2VideoImageActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="3403" column="44" selection-start-line="3403" selection-start-column="44" selection-end-line="3403" selection-end-column="44" />
+        <state relative-caret-position="-786">
+          <caret line="5094" column="52" selection-start-line="5094" selection-start-column="52" selection-end-line="5094" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#161602#161926#0" expanded="true" />
@@ -3944,11 +3952,19 @@
             <element signature="e#163279#163280#0" expanded="true" />
             <element signature="e#164544#164867#0" expanded="true" />
             <element signature="e#164866#164867#0" expanded="true" />
-            <element signature="e#165008#166461#0" expanded="true" />
-            <element signature="e#166460#166461#0" expanded="true" />
-            <marker date="1503694609252" expanded="false" signature="92769:92865" ph="(view) → {" />
-            <marker date="1503694609252" expanded="false" signature="102852:102991" ph="(item) → {" />
+            <element signature="e#165008#166417#0" expanded="true" />
+            <element signature="e#166416#166417#0" expanded="true" />
+            <marker date="1503695561137" expanded="false" signature="92769:92865" ph="(view) → {" />
+            <marker date="1503695561137" expanded="false" signature="102852:102991" ph="(item) → {" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/yorku/mstew/camera2videoimage/PinchZoomImageView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2582">
+          <caret line="22" column="31" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>
