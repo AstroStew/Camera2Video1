@@ -109,6 +109,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -145,6 +146,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import static android.R.attr.progress;
 import static org.opencv.core.Core.absdiff;
  import static org.opencv.core.CvType.CV_16SC1;
 import static org.opencv.core.CvType.CV_16U;
@@ -365,7 +368,7 @@ private boolean ScalarCropBool=false;
     private long mCurrentSSvalue = 500000000;
     private float mCurrentAperatureValue;
     private int CurrentJPEGQuality;
-    float zoomlevel=1;
+    float zoomlevel=1f;
 
 
     int redPixelData;
@@ -615,7 +618,7 @@ private boolean ScalarCropBool=false;
     private Mat s5WhiteBalancing;
     private Mat s6ColorSpace;
     ImageButton pngfromRawImageButton;
-    private float maxzoom=0;
+    private float maxzoom=1;
 
 
 
@@ -1116,7 +1119,12 @@ private boolean ScalarCropBool=false;
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
         mSensorInfoPixelArraySize=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE);
         mSensorInfoActiveArrayRect=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
-
+        cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
+        croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
+        ytop=mSensorInfoActiveArrayRect.centerY()-(int)(croph/2f);
+        xleft=mSensorInfoActiveArrayRect.centerX()-(int)(cropw/2f);
+        xright=mSensorInfoActiveArrayRect.centerX()+(int)(cropw/2f);
+        ybottom=mSensorInfoActiveArrayRect.centerY()+(int)(croph/2f);
         facedetector1=new FaceDetector(mTextureView.getWidth(),mTextureView.getHeight(),3);
 
         NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
@@ -1446,6 +1454,7 @@ private boolean ScalarCropBool=false;
         Capture_JPEG=sharedprefs1.getBoolean("Capture_JPEG",true);
         JPEGQuality=Byte.parseByte(sharedprefs1.getString("set_jpeg_quality","100"));
         trackfacesbool=sharedprefs1.getBoolean("trackfaces",false);
+
 
 
 
@@ -3270,13 +3279,50 @@ private boolean ScalarCropBool=false;
                                 Toast.makeText(Camera2VideoImageActivity.this, "Zoom Option 2", Toast.LENGTH_SHORT).show();
                                 if(!ScalarCropBool){
 
+                                    LayoutInflater inflater43=(LayoutInflater) Camera2VideoImageActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                                    View layout43=inflater43.inflate(R.layout.zoomoption2,(ViewGroup)findViewById(R.id.dialog_root));
+
+
+
+
 
                                     AlertDialog.Builder builder5=new AlertDialog.Builder(Camera2VideoImageActivity.this);
                                     builder5.setTitle("Slide the Zoom");
-                                    builder5.setView(R.layout.zoomoption2);
+                                    builder5.setView(layout43);
+
+
+                                    final TextView zoomtext=(TextView)layout43.findViewById(R.id.zoomtext);
+                                    SeekBar zoomseek=(SeekBar)layout43.findViewById(R.id.zoomseekbar3);
+                                    zoomseek.setMax((int)maxzoom-1);
+                                    zoomseek.setProgress((int)(zoomlevel-1));
+                                    zoomtext.setText("Zoom :"+ (zoomlevel));
+                                    zoomseek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                        @Override
+                                        public void onProgressChanged(SeekBar seekBar, int progress2, boolean fromUser) {
+                                            zoomlevel=(progress2+1);
+                                            zoomtext.setText("Zoom :"+ (zoomlevel));
+                                        }
+
+                                        @Override
+                                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                        }
+
+                                        @Override
+                                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                                        }
+                                    });
+
+
+
+
+
+
                                     builder5.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+
                                             //Do nothing
                                         }
                                     });
@@ -3286,11 +3332,14 @@ private boolean ScalarCropBool=false;
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             //Inputboolean=true
-                                            SeekBar zoomseek=(SeekBar)findViewById(R.id.zoomseekbar);
-                                            zoomseek.setMax((int)maxzoom);
 
 
-                                            ScalarCropBool=true;
+
+
+
+
+
+                                            //ScalarCropBool=true;
                                             cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
                                             croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
                                             ytop=mSensorInfoActiveArrayRect.centerY()-(int)(croph/2f);
@@ -3298,7 +3347,7 @@ private boolean ScalarCropBool=false;
                                             xright=mSensorInfoActiveArrayRect.centerX()+(int)(cropw/2f);
                                             ybottom=mSensorInfoActiveArrayRect.centerY()+(int)(croph/2f);
 
-
+                                            startPreview();
 
 
 
@@ -3307,7 +3356,9 @@ private boolean ScalarCropBool=false;
                                     });
                                     builder5.show();
                                 }else{
-                                    ScalarCropBool=false;
+
+
+                                    startPreview();
                                     Toast.makeText(Camera2VideoImageActivity.this, "Crop turned off", Toast.LENGTH_SHORT).show();
                                     //Do Nothing After
                                 }
@@ -3316,7 +3367,7 @@ private boolean ScalarCropBool=false;
                                 break;
                             case R.id.ZoomOption1:
                                 Toast.makeText(Camera2VideoImageActivity.this, "Zoom Option 1", Toast.LENGTH_SHORT).show();
-                                if(!ScalarCropBool){
+                                /*if(!ScalarCropBool){
 
 
                                     AlertDialog.Builder builder4=new AlertDialog.Builder(Camera2VideoImageActivity.this);
@@ -3336,7 +3387,7 @@ private boolean ScalarCropBool=false;
                                             //Inputboolean=true
 
 
-                                            ScalarCropBool=true;
+                                            //ScalarCropBool=true;
                                             cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
                                             croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
                                             ytop=mSensorInfoActiveArrayRect.centerY()-(int)(croph/2f);
@@ -3356,7 +3407,7 @@ private boolean ScalarCropBool=false;
                                     ScalarCropBool=false;
                                     Toast.makeText(Camera2VideoImageActivity.this, "Crop turned off", Toast.LENGTH_SHORT).show();
                                     //Do Nothing After
-                                }
+                                }*/
 
                                 break;
                             case R.id.devButton2:
@@ -3737,12 +3788,11 @@ private boolean ScalarCropBool=false;
             mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
             mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
             mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_MODE,ToneMapMode);
-            if(ScalarCropBool){
 
-                mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
-            }else if(!ScalarCropBool){
-                mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(0,0,mSensorInfoPixelArraySize.getWidth(),mSensorInfoPixelArraySize.getHeight()));
-            }
+            mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
+
+
+
 
             if(ToneMapMode==0){
                 //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_CURVE,)
