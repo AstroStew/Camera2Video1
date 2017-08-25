@@ -147,6 +147,7 @@ import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import static android.R.attr.layout;
 import static android.R.attr.progress;
 import static org.opencv.core.Core.absdiff;
  import static org.opencv.core.CvType.CV_16SC1;
@@ -3339,6 +3340,7 @@ private boolean ScalarCropBool=false;
 
 
 
+
                                             //ScalarCropBool=true;
                                             cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
                                             croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
@@ -3367,12 +3369,14 @@ private boolean ScalarCropBool=false;
                                 break;
                             case R.id.ZoomOption1:
                                 Toast.makeText(Camera2VideoImageActivity.this, "Zoom Option 1", Toast.LENGTH_SHORT).show();
-                                /*if(!ScalarCropBool){
+                                if(!ScalarCropBool){
+                                    LayoutInflater inflater42=(LayoutInflater) Camera2VideoImageActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                                    final View layout42=inflater42.inflate(R.layout.zoomoption1,(ViewGroup)findViewById(R.id.dialog_root_2));
 
 
                                     AlertDialog.Builder builder4=new AlertDialog.Builder(Camera2VideoImageActivity.this);
                                     builder4.setTitle("Input bounds");
-                                    builder4.setView(R.layout.zoomoption1);
+                                    builder4.setView(layout42);
                                     builder4.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -3384,16 +3388,20 @@ private boolean ScalarCropBool=false;
                                     builder4.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+
                                             //Inputboolean=true
 
 
                                             //ScalarCropBool=true;
-                                            cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
-                                            croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
-                                            ytop=mSensorInfoActiveArrayRect.centerY()-(int)(croph/2f);
-                                            xleft=mSensorInfoActiveArrayRect.centerX()-(int)(cropw/2f);
-                                            xright=mSensorInfoActiveArrayRect.centerX()+(int)(cropw/2f);
-                                            ybottom=mSensorInfoActiveArrayRect.centerY()+(int)(croph/2f);
+                                            EditText ytopedittext=(EditText)layout42.findViewById(R.id.ytop);
+                                            EditText xleftedittext=(EditText)layout42.findViewById(R.id.xleft);
+                                            EditText xrighteditext=(EditText)layout42.findViewById(R.id.xright);
+                                            EditText ybottomedittext=(EditText)layout42.findViewById(R.id.ybottom);
+                                            ytop=Integer.parseInt(ytopedittext.getText().toString());
+                                            xleft=Integer.parseInt(xleftedittext.getText().toString());
+                                            xright=Integer.parseInt(xrighteditext.getText().toString());
+                                            ybottom=Integer.parseInt(ybottomedittext.getText().toString());
+                                            
 
 
 
@@ -3403,11 +3411,7 @@ private boolean ScalarCropBool=false;
                                         }
                                     });
                                     builder4.show();
-                                }else{
-                                    ScalarCropBool=false;
-                                    Toast.makeText(Camera2VideoImageActivity.this, "Crop turned off", Toast.LENGTH_SHORT).show();
-                                    //Do Nothing After
-                                }*/
+                                }
 
                                 break;
                             case R.id.devButton2:
