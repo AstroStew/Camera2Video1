@@ -12,12 +12,12 @@
         "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\layout\\abc_alert_dialog_material.xml"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
-        "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\layout\\abc_screen_simple.xml"
-    },
-    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
         "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
+        "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\layout\\abc_screen_simple.xml"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines_media.xml",
@@ -88,6 +88,10 @@
         "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\zoomoption2.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\layout\\zoomoption2.xml"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
         "source": "C:\\Users\\mstew\\.android\\build-cache\\5f5234aa027fa6c22ec5136457f557768b4d0c26\\output\\res\\layout\\design_navigation_item_separator.xml"
     },
@@ -130,10 +134,6 @@
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_navigation_item.xml",
         "source": "C:\\Users\\mstew\\.android\\build-cache\\5f5234aa027fa6c22ec5136457f557768b4d0c26\\output\\res\\layout\\design_bottom_navigation_item.xml"
-    },
-    {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\layout\\notification_template_custom_big.xml"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
@@ -286,6 +286,10 @@
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment1.xml",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\layout\\fragment1.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\zoomoption1.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\layout\\zoomoption1.xml"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_text_input_password_icon.xml",

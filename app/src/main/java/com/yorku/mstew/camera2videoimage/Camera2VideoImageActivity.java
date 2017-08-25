@@ -90,6 +90,7 @@ import android.text.Editable;
 import android.text.Layout;
 import android.text.method.ScrollingMovementMethod;
 import android.transition.Scene;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Range;
 import android.util.Rational;
@@ -173,6 +174,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.zip.Inflater;
@@ -242,7 +244,7 @@ public class Camera2VideoImageActivity extends Activity  {
     private int progressValue;
     private EditText mTextSeekBar;
     boolean TestBoolean=false;
-    Size mSensorInfoActiveArraySize;
+    Size mSensorInfoPixelArraySize;
     private int mRawImageFormat=ImageFormat.RAW_SENSOR;
     private EditText mMinimumShutterSpeed;
     private EditText mMaximumShutterSpeed;
@@ -326,7 +328,7 @@ public class Camera2VideoImageActivity extends Activity  {
     private Mat finalMat;
     private Mat sixtyFours;
     private int pixel;
-
+private boolean ScalarCropBool=false;
     private LinearLayout mManualFocusLayout;
     private double mFocusDistance = 20;
     private float mFocusDistanceMem = 20;
@@ -352,6 +354,10 @@ public class Camera2VideoImageActivity extends Activity  {
     double[][] cArray=null;
     boolean RefreshBoolean=false;
     private String pixelData="";
+    private int xleft;
+    private int ytop;
+    private int xright;
+    private int ybottom;
 
     private TextView mTimeInterval;
     private int AutoLocks = 0;
@@ -359,6 +365,8 @@ public class Camera2VideoImageActivity extends Activity  {
     private long mCurrentSSvalue = 500000000;
     private float mCurrentAperatureValue;
     private int CurrentJPEGQuality;
+    float zoomlevel=1;
+
 
     int redPixelData;
     int bluePixelData;
@@ -424,7 +432,9 @@ public class Camera2VideoImageActivity extends Activity  {
     int DenominatorStep=1;
     private int counterr;
     private int PipelineEditorNumber=0;
-
+    private Rect mSensorInfoActiveArrayRect;
+    private float cropw;
+    private float croph;
 
     private boolean CustomeWhiteBalanceBoolean = false;
     private RggbChannelVector rggbChannelVector;
@@ -495,6 +505,7 @@ public class Camera2VideoImageActivity extends Activity  {
     public static int MaxRawValueOutput;
     int ToneMapMode=1;
     TextView pngcapturenote;
+
 
     Button readButton;
     String scannedfilestring;
@@ -568,6 +579,7 @@ public class Camera2VideoImageActivity extends Activity  {
     public static int [] AvailableTonemapModes;
     View alphaview;
     boolean loadingalphabool=false;
+     //ZoomType 0=no zoom 1=FreeForm Zoom 2=CenterZoom
 
 
 
@@ -603,6 +615,7 @@ public class Camera2VideoImageActivity extends Activity  {
     private Mat s5WhiteBalancing;
     private Mat s6ColorSpace;
     ImageButton pngfromRawImageButton;
+    private float maxzoom=0;
 
 
 
@@ -1037,6 +1050,7 @@ public class Camera2VideoImageActivity extends Activity  {
             SensorCalibrationTransform2Values=new Rational[9];
             ColorSpaceTransformSensorCalibrationTransform2Values.copyElements(SensorCalibrationTransform2Values,0);
 
+            //PipeDreams gets information from the camera
             PipeDreams();
 
             return;
@@ -1100,7 +1114,9 @@ public class Camera2VideoImageActivity extends Activity  {
             ForwardMatrix2Inverse=ForwardMatrix2.inverse();
             SensorCalibrationTransform1MatrixInverse=SensorColorTransform1Matrix.inverse();
             SensorCalibrationTransform2MatrixInverse=SensorCalibrationTransform2Matrix.inverse();
-        mSensorInfoActiveArraySize=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE);
+        mSensorInfoPixelArraySize=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE);
+        mSensorInfoActiveArrayRect=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE);
+
         facedetector1=new FaceDetector(mTextureView.getWidth(),mTextureView.getHeight(),3);
 
         NoiseReductionModes=new int[(mCameraCharacteristics.get(mCameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES)).length];
@@ -1130,8 +1146,10 @@ public class Camera2VideoImageActivity extends Activity  {
                 AvailableTonemapModes[n]=mCameraCharacteristics.get(mCameraCharacteristics.TONEMAP_AVAILABLE_TONE_MAP_MODES)[n];
             }
 
+
         int SensorinfoColorFiltering=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_COLOR_FILTER_ARRANGEMENT);
         MaxRawValueOutput=mCameraCharacteristics.get(mCameraCharacteristics.SENSOR_INFO_WHITE_LEVEL);
+        maxzoom=mCameraCharacteristics.get(mCameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
 
 
 
@@ -3212,6 +3230,7 @@ public class Camera2VideoImageActivity extends Activity  {
                                         +"\n"+"Supported Face Detection: "+ newText4
 
                                         + "\n" + "Supported Auto White Balances"
+                                        +"\n "+ "Max Zoom: "+ maxzoom
 
                                 );
 
@@ -3246,6 +3265,99 @@ public class Camera2VideoImageActivity extends Activity  {
                                 wbThreadisEnabled = !wbThreadisEnabled;
                                 isAdjustingWB2=false;
                                 //startPreview();
+                                break;
+                            case R.id.ZoomOption2:
+                                Toast.makeText(Camera2VideoImageActivity.this, "Zoom Option 2", Toast.LENGTH_SHORT).show();
+                                if(!ScalarCropBool){
+
+
+                                    AlertDialog.Builder builder5=new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                    builder5.setTitle("Slide the Zoom");
+                                    builder5.setView(R.layout.zoomoption2);
+                                    builder5.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //Do nothing
+                                        }
+                                    });
+
+                                    builder5.setCancelable(true);
+                                    builder5.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //Inputboolean=true
+                                            SeekBar zoomseek=(SeekBar)findViewById(R.id.zoomseekbar);
+                                            zoomseek.setMax((int)maxzoom);
+
+
+                                            ScalarCropBool=true;
+                                            cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
+                                            croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
+                                            ytop=mSensorInfoActiveArrayRect.centerY()-(int)(croph/2f);
+                                            xleft=mSensorInfoActiveArrayRect.centerX()-(int)(cropw/2f);
+                                            xright=mSensorInfoActiveArrayRect.centerX()+(int)(cropw/2f);
+                                            ybottom=mSensorInfoActiveArrayRect.centerY()+(int)(croph/2f);
+
+
+
+
+
+                                            Toast.makeText(Camera2VideoImageActivity.this, "We Did it!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    builder5.show();
+                                }else{
+                                    ScalarCropBool=false;
+                                    Toast.makeText(Camera2VideoImageActivity.this, "Crop turned off", Toast.LENGTH_SHORT).show();
+                                    //Do Nothing After
+                                }
+
+
+                                break;
+                            case R.id.ZoomOption1:
+                                Toast.makeText(Camera2VideoImageActivity.this, "Zoom Option 1", Toast.LENGTH_SHORT).show();
+                                if(!ScalarCropBool){
+
+
+                                    AlertDialog.Builder builder4=new AlertDialog.Builder(Camera2VideoImageActivity.this);
+                                    builder4.setTitle("Input bounds");
+                                    builder4.setView(R.layout.zoomoption1);
+                                    builder4.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //Do nothing
+                                        }
+                                    });
+
+                                    builder4.setCancelable(true);
+                                    builder4.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //Inputboolean=true
+
+
+                                            ScalarCropBool=true;
+                                            cropw=mSensorInfoActiveArrayRect.width()/zoomlevel;
+                                            croph=mSensorInfoActiveArrayRect.height()/zoomlevel;
+                                            ytop=mSensorInfoActiveArrayRect.centerY()-(int)(croph/2f);
+                                            xleft=mSensorInfoActiveArrayRect.centerX()-(int)(cropw/2f);
+                                            xright=mSensorInfoActiveArrayRect.centerX()+(int)(cropw/2f);
+                                            ybottom=mSensorInfoActiveArrayRect.centerY()+(int)(croph/2f);
+
+
+
+
+
+                                            Toast.makeText(Camera2VideoImageActivity.this, "We Did it!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    builder4.show();
+                                }else{
+                                    ScalarCropBool=false;
+                                    Toast.makeText(Camera2VideoImageActivity.this, "Crop turned off", Toast.LENGTH_SHORT).show();
+                                    //Do Nothing After
+                                }
+
                                 break;
                             case R.id.devButton2:
                                 for(int j=0;j<rawHeight;j++){
@@ -3625,6 +3737,13 @@ public class Camera2VideoImageActivity extends Activity  {
             mCaptureRequestBuilder.set(CaptureRequest.HOT_PIXEL_MODE,HotPixelMode);
             mCaptureRequestBuilder.set(CaptureRequest.JPEG_QUALITY,(byte)JPEGQuality);
             mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_MODE,ToneMapMode);
+            if(ScalarCropBool){
+
+                mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
+            }else if(!ScalarCropBool){
+                mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(0,0,mSensorInfoPixelArraySize.getWidth(),mSensorInfoPixelArraySize.getHeight()));
+            }
+
             if(ToneMapMode==0){
                 //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_CURVE,)
                 //input special custome curve code here
@@ -3784,18 +3903,18 @@ public class Camera2VideoImageActivity extends Activity  {
                     if(trackfacesbool && faces.length>=1){
 
 
-                        leftface=(((float) faces[0].getBounds().left/(float)mSensorInfoActiveArraySize.getWidth()))*(float)Size1.getWidth();
-                        topface=(((float)faces[0].getBounds().top/(float)mSensorInfoActiveArraySize.getHeight()))*(float)Size1.getHeight();
-                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoActiveArraySize.getWidth()))*(float)Size1.getWidth();
-                        bottomface=(((float)faces[0].getBounds().bottom/(float)mSensorInfoActiveArraySize.getHeight()))*(float)Size1.getHeight();
+                        leftface=(((float) faces[0].getBounds().left/(float)mSensorInfoPixelArraySize.getWidth()))*(float)Size1.getWidth();
+                        topface=(((float)faces[0].getBounds().top/(float)mSensorInfoPixelArraySize.getHeight()))*(float)Size1.getHeight();
+                        rightface=(((float)faces[0].getBounds().right/(float)mSensorInfoPixelArraySize.getWidth()))*(float)Size1.getWidth();
+                        bottomface=(((float)faces[0].getBounds().bottom/(float)mSensorInfoPixelArraySize.getHeight()))*(float)Size1.getHeight();
                         starttrackingbool=true;
 
 
                         //implement face detector with textureview bitmap
 
 
-                        //BallInspectorx=(int)(((float)faces[0].getBounds().centerX()/(float) mSensorInfoActiveArraySize.width())*mTextureView.getWidth());
-                        //BallInspectory=(int)(((float)faces[0].getBounds().centerY()/(float)mSensorInfoActiveArraySize.height())*mTextureView.getHeight());
+                        //BallInspectorx=(int)(((float)faces[0].getBounds().centerX()/(float) mSensorInfoPixelArraySize.width())*mTextureView.getWidth());
+                        //BallInspectory=(int)(((float)faces[0].getBounds().centerY()/(float)mSensorInfoPixelArraySize.height())*mTextureView.getHeight());
                     }else{
                         starttrackingbool=false;
                     }

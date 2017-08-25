@@ -13,9 +13,22 @@
     <item
         android:id="@+id/devButton2"
         android:title="Reacquire WB"/>
+
     <item
         android:id="@+id/devButton3"
         android:title="Capture PNG"/>
+    <item
+        android:title="Zoom">
+        <menu>
+            <item
+                android:id="@+id/ZoomOption2"
+                android:title="Zoom Slider"
+                />
+            <item
+                android:id="@+id/ZoomOption1"
+                android:title="Input Zoom"/>
+            </menu>
+    </item>
 
 <item
     android:id="@+id/BasicManualMode"
