@@ -75,6 +75,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -97,6 +98,7 @@ import android.util.Rational;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.ContextMenu;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -241,7 +243,7 @@ import Jama.Matrix;
 
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Camera2VideoImageActivity extends Activity  {
+public class Camera2VideoImageActivity extends Activity implements GestureDetector.OnGestureListener,GestureDetector.OnDoubleTapListener {
     private SensorManager sm;
     private Button mModebutton;
     private int ISOvalue = 100;
@@ -370,6 +372,7 @@ private boolean ScalarCropBool=false;
     private float mCurrentAperatureValue;
     private int CurrentJPEGQuality;
     float zoomlevel=1f;
+    private GestureDetectorCompat gDecetor;
 
 
     int redPixelData;
@@ -1332,6 +1335,61 @@ private boolean ScalarCropBool=false;
     }
 
 
+
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+    
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gDecetor.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return true;
+    }
+
+
     //setting preview size dimensions
     private static class CompareSizeByArea implements Comparator<Size> {
         @Override
@@ -1386,9 +1444,13 @@ private boolean ScalarCropBool=false;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         SettingresolutionChanged=false;
 
+
         WhiteBalanceBallInspector= BitmapFactory.decodeResource(getResources(),R.drawable.whitebalanceballinspector);
 
         setContentView(R.layout.activity_camera2_video_image);
+
+        this.gDecetor=new GestureDetectorCompat(this,this);
+        this.gDecetor.setOnDoubleTapListener(this);
         //RGGBChannelMatrix=new Matrix(new double[]{RggbChsnnelR,RggbChannelG_even,RggbChannelG_odd,RggbChannelBlue},1);
 
         sound=new Sound(this);
