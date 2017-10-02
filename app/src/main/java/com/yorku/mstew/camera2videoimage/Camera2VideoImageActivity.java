@@ -801,6 +801,9 @@ private boolean ScalarCropBool=false;
     long ShutterSpeedValue;
     long xx2;
 
+
+    //OnResume changes the OnResume native method for android applications
+    //Were changing this so that the OnReusme method will relaunch our background thread and to bring back our preview
     @Override
     protected void onResume() {
 
@@ -814,6 +817,7 @@ private boolean ScalarCropBool=false;
             Log.d(TAG,"OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
+
         //startBackgroundThread();
 
         /*if(sm.getSensorList(Sensor.TYPE_ACCELEROMETER).size()!=0){
@@ -1344,11 +1348,49 @@ private boolean ScalarCropBool=false;
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
+
+        if (FlipNumberBoolean) {
+
+            FlipNumberBoolean = false;
+            FlipNumber = 0;
+            mFlipCamera.setImageResource(R.drawable.flipfront);
+            closeCamera();
+            stopBackgroundThread();
+
+            startBackgroundThread();
+
+            if (mTextureView.isAvailable()) {
+                setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
+                connectCamera();
+
+            } else {
+                mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+            }
+        } else {
+
+            FlipNumberBoolean = true;
+            FlipNumber = 1;
+            mFlipCamera.setImageResource(R.drawable.flipback);
+            closeCamera();
+            stopBackgroundThread();
+            startBackgroundThread();
+            if (mTextureView.isAvailable()) {
+                setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
+                connectCamera();
+            } else {
+                mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+            }
+
+
+        }
         return true;
     }
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
+
+
+        Toast.makeText(this, "Double Tap", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -1356,7 +1398,7 @@ private boolean ScalarCropBool=false;
     public boolean onDown(MotionEvent e) {
         return true;
     }
-    
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -1600,7 +1642,7 @@ private boolean ScalarCropBool=false;
                         break;
                 }
                 isAdjustingWB=true;
-                if(readRawonTap){
+                if(readRawonTap && MovementButtonnBoolen ){
                     isAdjustingWB2=true;
                 }
 
@@ -1629,6 +1671,8 @@ private boolean ScalarCropBool=false;
         MovementButtonn = (ImageButton) findViewById(R.id.MovementButton);
 
         //final int AWBArr[]=new int [mCameraCharacteristics.get(CameraCharacteristics.CONTROL_AWB_AVAILABLE_MODES).length];
+        //OnLongClick Average out the pixels within the Movement button
+
         MovementButtonn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -1641,7 +1685,6 @@ private boolean ScalarCropBool=false;
                     Toast.makeText(getApplicationContext(), "Average Pixel Activation", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    //Toast.makeText(getApplicationContext(), "Fuck you", Toast.LENGTH_SHORT).show();
                 }
 
                 return false;
@@ -2189,6 +2232,8 @@ private boolean ScalarCropBool=false;
                     Toast.makeText(getApplicationContext(), "AUTO ON", Toast.LENGTH_SHORT).show();
                     mAutobutton.setText("AUTO ON");
                     ColorSpaceInputBoolean = false;
+                    manualFocusEnableIsChecked=false;
+
                     //connectCamera();
                     startPreview();
 
@@ -3415,7 +3460,7 @@ private boolean ScalarCropBool=false;
 
 
 
-                                            Toast.makeText(Camera2VideoImageActivity.this, "We Did it!", Toast.LENGTH_SHORT).show();
+                                           // Toast.makeText(Camera2VideoImageActivity.this, "We Did it!", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                     builder5.show();
