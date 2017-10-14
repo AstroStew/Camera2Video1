@@ -2062,7 +2062,7 @@ private boolean ScalarCropBool=false;
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
                                             + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
-                                            +"Device Rotation" 
+                                            +"Device Rotation"
 
                                     );
                                 }
