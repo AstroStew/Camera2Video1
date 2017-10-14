@@ -131,16 +131,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.Utils;
-
-import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.core.MatOfInt;
+import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.w3c.dom.Document;
@@ -810,13 +807,7 @@ private boolean ScalarCropBool=false;
 
 
         startBackgroundThread();
-        if(!OpenCVLoader.initDebug()){
-            Log.d(TAG,"Internal OpenCv library not found.Using OpenCV Manager for intialization");
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0,this, mLoaderCallback);
-        }else{
-            Log.d(TAG,"OpenCV library found inside package. Using it!");
-            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
-        }
+
 
         //startBackgroundThread();
 
@@ -5466,24 +5457,7 @@ private boolean ScalarCropBool=false;
 
 
 
-    private BaseLoaderCallback mLoaderCallback=new BaseLoaderCallback(this){
 
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status){
-                case LoaderCallbackInterface.SUCCESS:
-                {
-                    Log.i(TAG,"OPEN CV loaded successfully");
-                }break;
-                default:
-                {
-                    super.onManagerConnected(status);
-                }break;
-            }
-
-
-        }
-    };
     private void CaptureandConvertRAWtoPNG() {
 
         //this method converts a White Balanced image from Raw to PNG
@@ -5529,7 +5503,7 @@ private boolean ScalarCropBool=false;
         //cvtColor(mMat,mMat2, Imgproc.COLOR_BayerBG2RGB);
         //mMat2.convertTo(mMat3, CV_16UC1,255);
        // mMat2.convertTo(mMat2, CV_16UC1,255);
-        cvtColor(mMat,s1RawImage,Imgproc.COLOR_BayerBG2RGB);
+        cvtColor(mMat,s1RawImage, Imgproc.COLOR_BayerBG2RGB);
         cvtColor(s5WhiteBalancing,s5WhiteBalancing,Imgproc.COLOR_BayerBG2RGB);
         //s1RawImage.convertTo(mMat3,CV_16UC1,255);
         s1RawImage.convertTo(s1RawImage,CV_16UC1,35536/whitelevel);
