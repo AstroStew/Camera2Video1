@@ -567,7 +567,7 @@ private boolean ScalarCropBool=false;
     private ImageReader mRawImageReader;
     private ImageReader mImageReader;
     int TempVideoTimeLimit;
-    private static int mDeviceOrientation;
+    private static int mDeviceOrientation=0;
     public static final int UPSIDE_DOWN = 3;
     public static final int LANDSCAPE_RIGHT = 4;
     public static final int PORTRAIT = 1;
@@ -989,8 +989,7 @@ private boolean ScalarCropBool=false;
             CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(mCameraId);
 
             map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            //int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-            mTotalRotation= sensorDeviceRotation(cameraCharacteristics,mDeviceOrientation);
+
 
             boolean swapRotation = (mTotalRotation== 90 || mTotalRotation == 270);
             int rotatedWidth = width;
@@ -1318,28 +1317,6 @@ private boolean ScalarCropBool=false;
             e.printStackTrace();
         }
     }
-
-    //Adjusting orientation for calculating preview size
-    private static SparseIntArray ORIENTATIONS = new SparseIntArray();
-
-   /* static {
-        ORIENTATIONS.append(Surface.ROTATION_0, 0);
-        ORIENTATIONS.append(Surface.ROTATION_90, 90);
-        ORIENTATIONS.append(Surface.ROTATION_180, 180);
-        ORIENTATIONS.append(Surface.ROTATION_270, 270);
-
-
-    }*/
-
-     private static int sensorDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
-         mDeviceOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-         //sensorOrientation = ORIENTATIONS.get(deviceOrientation);
-        return mDeviceOrientation;
-
-    }
-
-
-
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -2067,7 +2044,7 @@ private boolean ScalarCropBool=false;
                                 } else {
                                     PixelValues = "";
                                 }
-                                mTotalRotation = sensorDeviceRotation(mCameraCharacteristics, mDeviceOrientation);
+
 
                                 if (1000000000 / mCurrentSSvalue <= 1) {
                                     convertSS = String.valueOf(mCurrentSSvalue / 1000000000);
@@ -2077,6 +2054,7 @@ private boolean ScalarCropBool=false;
                                 if (1 / mCurrentFocusDistance < 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed:" + convertSS + "\t\t\t\t" + "Focus Distance: " + String.format("%.2f", 100 / mCurrentFocusDistance) + "cm" + "\t\t\t\t" + "Faces Detected:" +
                                             mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord: " + BallInspectorx + "\t\t\t\t" + "Y-coord: " + BallInspectory + "\t\t\t\t\t"+"Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
+                                            +"Device Rotation"
 
 
                                     );
@@ -2084,6 +2062,7 @@ private boolean ScalarCropBool=false;
                                 } else if (1 / mCurrentFocusDistance > 1 / mMaxFocusDistance - 0.1) {
                                     mInfoTextView.setText("ISO: " + mCurrentISOValue + "\t\t\t\t" + "Shutter Speed: " + convertSS + "\t\t\t\t" + "Focus Distance: " + "INFINITE"
                                             + "\t\t\t\t" + "Faces Detected:" + mNumberofFaces + "\t\t\t\t" + rggbChannelVector + "\t\t\t\t" + ColorCorrectionTransform + "\t\t\t\t" + "X-coord" + BallInspectorx + "\t\t\t\t" + "Y-coord" + BallInspectory + "\t\t\t\t" + "Sensor Reference Illuminant 1: " + SensorReferenceILluminantString + "\t\t\t\t" + PixelValues
+                                            +"Device Rotation" 
 
                                     );
                                 }
@@ -3868,14 +3847,9 @@ private boolean ScalarCropBool=false;
             previewinit=false;
 
         }
+
         if(RefreshBoolean){
-
         }
-
-
-        //uh start things here?
-
-
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
 
@@ -3901,10 +3875,6 @@ private boolean ScalarCropBool=false;
             mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_MODE,ToneMapMode);
 
             mCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION,new Rect(xleft,ytop,xright,ybottom));
-
-
-
-
             if(ToneMapMode==0){
                 //mCaptureRequestBuilder.set(CaptureRequest.TONEMAP_CURVE,)
                 //input special custome curve code here
