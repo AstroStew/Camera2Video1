@@ -1467,7 +1467,7 @@ private boolean ScalarCropBool=false;
         txtfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),"Camera 2 Txt Files");
         PNGRAWfolder=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Camera2PNG_(fromRaw)");
 
-        Button testbutton1=(Button) findViewById(R.id.testbutton);
+        /*Button testbutton1=(Button) findViewById(R.id.testbutton);
         testbutton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1484,6 +1484,7 @@ private boolean ScalarCropBool=false;
 
             }
         });
+        */
 
         loadingAnimation= AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotateloading);
         loadingemblem1=(ImageView)findViewById(R.id.loadingemblem);
