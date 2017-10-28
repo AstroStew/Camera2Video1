@@ -17,7 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TabedMenuActivity extends AppCompatActivity {
 
@@ -39,7 +42,10 @@ public class TabedMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_tabed_menu);
+        ListView mListview=(ListView)findViewById(R.id.list_view);
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -51,7 +57,29 @@ public class TabedMenuActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                             @Override
+                                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                 if(position==0){
+                                                     Toast.makeText(TabedMenuActivity.this, "positon 0", Toast.LENGTH_SHORT).show();
+                                                     Intent i=new Intent(getApplicationContext(),ViewPagerMainActivity.class);
+                                                     startActivity(i);
+
+                                                 }else if(position==1){
+                                                     Toast.makeText(TabedMenuActivity.this, "positon 1", Toast.LENGTH_SHORT).show();
+
+                                                 }else if(position==2){
+                                                     Toast.makeText(TabedMenuActivity.this, "positon 2", Toast.LENGTH_SHORT).show();
+                                                     Intent ImageViewIntent=new Intent(getApplicationContext(), Page.class);
+                                                     startActivity(ImageViewIntent);
+
+                                                 }
+                                             }
+                                         });
+
+
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
