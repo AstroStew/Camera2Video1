@@ -74,6 +74,12 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="listviewentries">
+        <item>Tutorial</item>
+        <item>Email</item>
+        <item>View Images</item>
+    </string-array>
+
 
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
