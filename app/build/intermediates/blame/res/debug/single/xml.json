@@ -1,23 +1,15 @@
 [
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\show_real_time_info.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\show_real_time_info.xml"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_headers.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_headers.xml"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\new_xml.xml",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\new_xml.xml"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_general.xml"
-    },
-    {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_data_sync.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_data_sync.xml"
-    },
-    {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\videosettings.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\videosettings.xml"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\behindthescenesprefs.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\behindthescenesprefs.xml"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\export_files.xml",
@@ -28,6 +20,70 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_headers.xml"
     },
     {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_data_sync.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_data_sync.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\optical_stabilization.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\optical_stabilization.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_notification.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_notification.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\resolution_xml.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\resolution_xml.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\timelpase_change.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\timelpase_change.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\export_files.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\export_files.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\new_xml.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\new_xml.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\exposure_compensation_seekbar.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\exposure_compensation_seekbar.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\optical_stabilization.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\optical_stabilization.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\timelpase_change.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\timelpase_change.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\show_real_time_info.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\show_real_time_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_general.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\exposure_compensation_seekbar.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\exposure_compensation_seekbar.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_data_sync.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_data_sync.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\videosettings.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\videosettings.xml"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\videosettings.xml",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\videosettings.xml"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\behindthescenesprefs.xml",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\behindthescenesprefs.xml"
     },
@@ -36,19 +92,15 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_notification.xml"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\optical_stabilization.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\optical_stabilization.xml"
-    },
-    {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\timelpase_change.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\timelpase_change.xml"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\show_real_time_info.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\show_real_time_info.xml"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\resolution_xml.xml",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\resolution_xml.xml"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\exposure_compensation_seekbar.xml",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\exposure_compensation_seekbar.xml"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general.xml",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\xml\\pref_general.xml"
     }
 ]

@@ -1,6 +1,14 @@
 [
     {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
         "source": "C:\\Users\\mstew\\.android\\build-cache\\b620a26301377096abee49c0cf75e805aca61472\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     },
     {

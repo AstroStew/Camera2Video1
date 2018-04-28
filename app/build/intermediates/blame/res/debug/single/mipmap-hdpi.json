@@ -1,5 +1,73 @@
 [
     {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\exitpic.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\exitpic.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic1600.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic1600.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\whitebalancething.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\whitebalancething.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\thank.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\thank.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\thank.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\thank.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\loadingemblem.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\loadingemblem.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\whitebalancething.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\whitebalancething.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\vidpiconline.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\vidpiconline.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\loadingemblem_lowerquality.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\loadingemblem_lowerquality.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic1600.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic1600.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\wbselection.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\wbselection.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\wbselection.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\wbselection.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\campic.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\campic.png"
+    },
+    {
+        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\exitpic.png",
+        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\exitpic.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\vidpiconline.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\vidpiconline.png"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic200.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic200.png"
     },
@@ -8,32 +76,36 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic100.png"
     },
     {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\settingss.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\settingss.png"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\loadingemblem.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\loadingemblem.png"
-    },
-    {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\whitebalancething.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\whitebalancething.png"
-    },
-    {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic1600.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic1600.png"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\emblem6.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\emblem6.png"
     },
     {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic800.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic800.png"
+    },
+    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic400.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic400.png"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\thank.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\thank.png"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\emblem6.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\emblem6.png"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\btn_timelapse.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\btn_timelapse.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\busybee.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\busybee.png"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic800.png",
@@ -48,16 +120,24 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\settingss.png"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\vidpiconline.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\vidpiconline.png"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\campic.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\campic.png"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\wbselection.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\wbselection.png"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic200.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic200.png"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\campic.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\campic.png"
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic100.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic100.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\isopic400.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\isopic400.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\camerapic2.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\camerapic2.png"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\btn_timelapse.png",
@@ -68,15 +148,15 @@
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\loadingemblem_lowerquality.png"
     },
     {
-        "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\exitpic.png",
-        "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\exitpic.png"
-    },
-    {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\vidpicbusy.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\vidpicbusy.png"
     },
     {
         "merged": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\camerapic2.png",
         "source": "C:\\Users\\mstew\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\camerapic2.png"
+    },
+    {
+        "merged": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\vidpicbusy.png",
+        "source": "D:\\School\\LURA Summer 2017\\AndroidStudioProjects\\Camera2VideoImage\\app\\src\\main\\res\\mipmap-hdpi\\vidpicbusy.png"
     }
 ]
